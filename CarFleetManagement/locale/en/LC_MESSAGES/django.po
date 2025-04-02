@@ -1,0 +1,368 @@
+# English translations for Car Fleet Management.
+# Copyright (C) 2023 Car Fleet Management Team
+# This file is distributed under the same license as the Car Fleet Management package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Car Fleet Management 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-01 18:32+0200\n"
+"PO-Revision-Date: 2023-07-01 12:00+0000\n"
+"Last-Translator: Car Fleet Management Team\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\car_fleet_manager\settings.py:129
+msgid "English"
+msgstr "English"
+
+#: .\car_fleet_manager\settings.py:130
+msgid "Spanish"
+msgstr "Spanish"
+
+#: .\car_fleet_manager\settings.py:131
+msgid "French"
+msgstr "French"
+
+#: .\car_fleet_manager\settings.py:132
+#, fuzzy
+#| msgid "English"
+msgid "Polish"
+msgstr "English"
+
+#: .\car_fleet_manager\settings.py:133
+msgid "German"
+msgstr "German"
+
+#: .\templates\about.html:4 .\templates\partials\_navbar.html:11
+msgid "About"
+msgstr ""
+
+#: .\templates\about.html:4 .\templates\base.html:8 .\templates\features.html:5
+#: .\templates\partials\_footer.html:6 .\templates\partials\_navbar.html:4
+#, fuzzy
+#| msgid "Welcome to Car Fleet Manager"
+msgid "Car Fleet Manager"
+msgstr "Welcome to Car Fleet Manager"
+
+#: .\templates\about.html:10
+#, fuzzy
+#| msgid "Welcome to Car Fleet Manager"
+msgid "About Car Fleet Manager"
+msgstr "Welcome to Car Fleet Manager"
+
+#: .\templates\about.html:11
+msgid ""
+"A comprehensive fleet management system designed to leverage AI, automation, "
+"and real-time data processing to streamline vehicle operations."
+msgstr ""
+
+#: .\templates\about.html:15
+msgid "Our Mission"
+msgstr ""
+
+#: .\templates\about.html:16
+msgid ""
+"To revolutionize fleet management through cutting-edge technology that "
+"reduces costs, improves efficiency, and enhances safety for all fleet "
+"operators."
+msgstr ""
+
+#: .\templates\about.html:22
+msgid "Technology Stack"
+msgstr ""
+
+#: .\templates\about.html:24
+msgid "Django 5.0 for robust backend services"
+msgstr ""
+
+#: .\templates\about.html:25
+msgid "PyTorch and YOLOv8 for advanced computer vision"
+msgstr ""
+
+#: .\templates\about.html:26
+msgid "PostgreSQL with PostGIS for geospatial capabilities"
+msgstr ""
+
+#: .\templates\about.html:27
+msgid "Modern web technologies for responsive interfaces"
+msgstr ""
+
+#: .\templates\about.html:34
+msgid "The Team"
+msgstr ""
+
+#: .\templates\about.html:35
+msgid ""
+"Our team consists of experienced software engineers, data scientists, and "
+"fleet management experts dedicated to building the best fleet management "
+"solution on the market."
+msgstr ""
+
+#: .\templates\features.html:5 .\templates\partials\_navbar.html:14
+msgid "Features"
+msgstr ""
+
+#: .\templates\features.html:11
+msgid "System Features"
+msgstr ""
+
+#: .\templates\features.html:15
+msgid "AI-Powered Odometer Reading"
+msgstr ""
+
+#: .\templates\features.html:16
+#, python-format
+msgid ""
+"Our system can automatically extract odometer readings from both analog and "
+"digital displays with 98%% accuracy, eliminating manual data entry errors."
+msgstr ""
+
+#: .\templates\features.html:17
+msgid "Odometer Reading"
+msgstr ""
+
+#: .\templates\features.html:19
+msgid "Supports all major vehicle makes and models"
+msgstr ""
+
+#: .\templates\features.html:20
+msgid "Validates readings against historical data"
+msgstr ""
+
+#: .\templates\features.html:21
+msgid "Flags suspicious readings for review"
+msgstr ""
+
+#: .\templates\features.html:28 .\templates\features.html:30
+msgid "Damage Detection"
+msgstr ""
+
+#: .\templates\features.html:29
+msgid ""
+"Automatically identify and assess vehicle damage to streamline insurance "
+"claims and repairs."
+msgstr ""
+
+#: .\templates\features.html:32
+msgid "Detects damage to 15+ vehicle parts"
+msgstr ""
+
+#: .\templates\features.html:33
+msgid "Estimates repair costs automatically"
+msgstr ""
+
+#: .\templates\features.html:34
+msgid "Generates detailed damage reports"
+msgstr ""
+
+#: .\templates\features.html:41
+#, fuzzy
+#| msgid "Maintenance"
+msgid "Predictive Maintenance"
+msgstr "Maintenance"
+
+#: .\templates\features.html:42
+msgid ""
+"Reduce downtime with AI-driven maintenance predictions based on vehicle "
+"telemetry and usage patterns."
+msgstr ""
+
+#: .\templates\features.html:43
+msgid "Maintenance"
+msgstr "Maintenance"
+
+#: .\templates\features.html:45
+msgid "Schedule maintenance based on actual usage"
+msgstr ""
+
+#: .\templates\features.html:46
+msgid "Predict component failures before they occur"
+msgstr ""
+
+#: .\templates\features.html:47
+msgid "Optimize maintenance schedules across fleet"
+msgstr ""
+
+#: .\templates\home.html:5
+msgid "Car Fleet Manager - Modern Fleet Management"
+msgstr ""
+
+#: .\templates\home.html:12
+msgid "Modern Fleet Management for 2025"
+msgstr ""
+
+#: .\templates\home.html:13
+msgid ""
+"Leverage AI and automation to streamline your vehicle operations with our "
+"comprehensive fleet management solution."
+msgstr ""
+
+#: .\templates\home.html:15
+msgid "Get Started"
+msgstr ""
+
+#: .\templates\home.html:16
+msgid "Learn More"
+msgstr ""
+
+#: .\templates\partials\_footer.html:7
+msgid "Advanced fleet management system for 2025"
+msgstr ""
+
+#: .\templates\partials\_footer.html:10
+msgid "Links"
+msgstr ""
+
+#: .\templates\partials\_footer.html:18
+msgid "Contact"
+msgstr ""
+
+#: .\templates\partials\_footer.html:27
+msgid "2025 Car Fleet Manager. All rights reserved."
+msgstr ""
+
+#: .\templates\partials\_navbar.html:38 .\templates\registration\login.html:11
+#: .\templates\registration\login.html:32
+#: .\templates\registration\signup.html:43
+msgid "Login"
+msgstr "Login"
+
+#: .\templates\partials\_navbar.html:41 .\templates\registration\signup.html:27
+msgid "Sign Up"
+msgstr "Sign Up"
+
+#: .\templates\registration\login.html:4
+#, fuzzy
+#| msgid "Welcome to Car Fleet Manager"
+msgid "Login | Car Fleet Manager"
+msgstr "Welcome to Car Fleet Manager"
+
+#: .\templates\registration\login.html:23
+msgid "Username"
+msgstr ""
+
+#: .\templates\registration\login.html:28
+msgid "Password"
+msgstr ""
+
+#: .\templates\registration\login.html:35
+msgid "Forgot password?"
+msgstr ""
+
+#: .\templates\registration\login.html:40
+#: .\templates\registration\signup.html:31
+msgid "or"
+msgstr ""
+
+#: .\templates\registration\login.html:46
+msgid "Login with GitHub"
+msgstr ""
+
+#: .\templates\registration\login.html:53
+msgid "Don't have an account?"
+msgstr ""
+
+#: .\templates\registration\login.html:53
+#, fuzzy
+#| msgid "Sign Up"
+msgid "Sign up"
+msgstr "Sign Up"
+
+#: .\templates\registration\password_reset.html:4
+#, fuzzy
+#| msgid "Welcome to Car Fleet Manager"
+msgid "Password Reset | Car Fleet Manager"
+msgstr "Welcome to Car Fleet Manager"
+
+#: .\templates\registration\password_reset.html:11
+msgid "Password Reset"
+msgstr ""
+
+#: .\templates\registration\password_reset.html:36
+msgid "Reset Password"
+msgstr ""
+
+#: .\templates\registration\password_reset_complete.html:4
+#, fuzzy
+#| msgid "Welcome to Car Fleet Manager"
+msgid "Password Reset Complete | Car Fleet Manager"
+msgstr "Welcome to Car Fleet Manager"
+
+#: .\templates\registration\password_reset_complete.html:11
+msgid "Password Reset Complete"
+msgstr ""
+
+#: .\templates\registration\password_reset_complete.html:14
+msgid "Your password has been set. You may go ahead and log in now."
+msgstr ""
+
+#: .\templates\registration\password_reset_complete.html:18
+msgid "Log in"
+msgstr ""
+
+#: .\templates\registration\password_reset_confirm.html:4
+#, fuzzy
+#| msgid "Welcome to Car Fleet Manager"
+msgid "Reset Password | Car Fleet Manager"
+msgstr "Welcome to Car Fleet Manager"
+
+#: .\templates\registration\password_reset_confirm.html:11
+msgid "Enter new password"
+msgstr ""
+
+#: .\templates\registration\password_reset_confirm.html:36
+msgid "Change password"
+msgstr ""
+
+#: .\templates\registration\signup.html:3
+#, fuzzy
+#| msgid "Welcome to Car Fleet Manager"
+msgid "Sign Up | Car Fleet Manager"
+msgstr "Welcome to Car Fleet Manager"
+
+#: .\templates\registration\signup.html:10
+msgid "Create Account"
+msgstr ""
+
+#: .\templates\registration\signup.html:36
+msgid "Sign Up with GitHub"
+msgstr ""
+
+#: .\templates\registration\signup.html:43
+msgid "Already have an account?"
+msgstr ""
+
+#~ msgid "Logout"
+#~ msgstr "Logout"
+
+#~ msgid "Dashboard"
+#~ msgstr "Dashboard"
+
+#~ msgid "Vehicles"
+#~ msgstr "Vehicles"
+
+#~ msgid "Emergency"
+#~ msgstr "Emergency"
+
+#~ msgid "Settings"
+#~ msgstr "Settings"
+
+#~ msgid "Profile"
+#~ msgstr "Profile"
+
+#~ msgid "Dark Mode"
+#~ msgstr "Dark Mode"
+
+#~ msgid "Light Mode"
+#~ msgstr "Light Mode"
+
+#~ msgid "Language"
+#~ msgstr "Language"
+
+#~ msgid "Version"
+#~ msgstr "Version"

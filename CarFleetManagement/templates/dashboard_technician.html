@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}Technician Dashboard | Car Fleet Manager{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <h1 class="display-6 mb-4">Technician Dashboard</h1>
+  
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card text-white bg-primary">
+        <div class="card-body">
+          <h5 class="card-title">Pending Tasks</h5>
+          <p class="display-4">{% if stats.pending_tasks %}{{ stats.pending_tasks }}{% else %}0{% endif %}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="card text-white bg-warning">
+        <div class="card-body">
+          <h5 class="card-title">In Progress</h5>
+          <p class="display-4">{% if stats.in_progress_tasks %}{{ stats.in_progress_tasks }}{% else %}0{% endif %}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="card text-white bg-success">
+        <div class="card-body">
+          <h5 class="card-title">Completed Today</h5>
+          <p class="display-4">{% if stats.completed_tasks %}{{ stats.completed_tasks }}{% else %}0{% endif %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Active Maintenance Tasks</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Vehicle</th>
+                  <th>Issue</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in active_tasks %}
+                <tr>
+                  <td>{{ task.vehicle }}</td>
+                  <td>{{ task.issue_description }}</td>
+                  <td><span class="badge bg-{{ task.priority_color }}">{{ task.get_priority_display }}</span></td>
+                  <td><span class="badge bg-{{ task.status_color }}">{{ task.get_status_display }}</span></td>
+                  <td>
+                    <a href="{% url 'task_detail' task.id %}" class="btn btn-sm btn-primary">Details</a>
+                    {% if task.status == 'pending' %}
+                      <a href="{% url 'start_task' task.id %}" class="btn btn-sm btn-warning">Start</a>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="text-center">No active maintenance tasks</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Quick Actions</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-grid gap-2">
+            <a href="{% url 'create_maintenance' %}" class="btn btn-primary">Create Maintenance</a>
+            <a href="{% url 'parts_inventory' %}" class="btn btn-secondary">Parts Inventory</a>
+            <a href="{% url 'service_history' %}" class="btn btn-info">Service History</a>
+            <a href="{% url 'report_completion' %}" class="btn btn-success">Report Completion</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <h5>High Priority Tasks</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            {% for task in high_priority_tasks %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{ task.vehicle }}
+              <span class="badge bg-danger rounded-pill">{{ task.get_priority_display }}</span>
+            </li>
+            {% empty %}
+            <li class="list-group-item">No high priority tasks</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% load i18n %}
+<footer class="navbar-dark py-4 mt-5">
+  <div class="container">
+    <!-- Main footer content with three columns -->
+    <div class="row mb-4">
+      <!-- Column 1: Company Info -->
+      <div class="col-md-4 mb-4 mb-md-0">
+        <h5>{% translate "Company" %}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+          <li><a href="{% url 'about' %}">{% translate "About" %}</a></li>
+          <li><a href="{% url 'features' %}">{% translate "Features" %}</a></li>
+          <li><a href="{% url 'login' %}">{% translate "Login" %}</a></li>
+          <li><a href="{% url 'signup' %}">{% translate "Sign Up" %}</a></li>
+        </ul>
+      </div>
+      
+      <!-- Column 2: Legal -->
+      <div class="col-md-4 mb-4 mb-md-0">
+        <h5>{% translate "Legal" %}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'home' %}#terms">{% translate "Terms of Service" %}</a></li>
+          <li><a href="{% url 'home' %}#privacy">{% translate "Privacy Policy" %}</a></li>
+          <li><a href="{% url 'home' %}#cookies">{% translate "Cookie Policy" %}</a></li>
+          <li><a href="{% url 'home' %}#gdpr">{% translate "GDPR" %}</a></li>
+          <li><a href="{% url 'home' %}#data-protection">{% translate "Data Protection" %}</a></li>
+        </ul>
+      </div>
+      
+      <!-- Column 3: Contact -->
+      <div class="col-md-4 mb-4 mb-md-0">
+        <h5>{% translate "Contact" %}</h5>
+        <ul class="list-unstyled">
+          <li><i class="bi bi-envelope"></i> support@carfleet.com</li>
+          <li><i class="bi bi-telephone"></i> +1 (555) 123-4567</li>
+          <li><i class="bi bi-geo-alt"></i> {% translate "123 Fleet Street, Vehicle City" %}</li>
+          <li><i class="bi bi-clock"></i> {% translate "Mon-Fri: 9AM-5PM" %}</li>
+          <li>
+            <div class="mt-3 d-flex gap-2">
+              <a href="#" class="text-white"><i class="bi bi-facebook"></i></a>
+              <a href="#" class="text-white"><i class="bi bi-twitter"></i></a>
+              <a href="#" class="text-white"><i class="bi bi-linkedin"></i></a>
+              <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <hr class="border-color my-4">
+    
+    <!-- Bottom bar with copyright -->
+    <div class="row align-items-center">
+      <div class="col-12 text-center">
+        <small>&copy; {% translate "2025 Car Fleet Manager. All rights reserved." %}</small>
+        {% if version_info %}
+          <div class="version-info mt-1">
+            <small>Version {{ version_info.full }} ({{ version_info.status }})</small>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</footer>

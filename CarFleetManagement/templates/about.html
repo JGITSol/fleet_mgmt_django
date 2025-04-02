@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate "About" %} | {% translate "Car Fleet Manager" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <h1 class="display-4 mb-4">{% translate "About Car Fleet Manager" %}</h1>
+      <p class="lead">{% translate "A comprehensive fleet management system designed to leverage AI, automation, and real-time data processing to streamline vehicle operations." %}</p>
+      
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">{% translate "Our Mission" %}</h2>
+          <p class="card-text">{% translate "To revolutionize fleet management through cutting-edge technology that reduces costs, improves efficiency, and enhances safety for all fleet operators." %}</p>
+        </div>
+      </div>
+      
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">{% translate "Technology Stack" %}</h2>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">{% translate "Django 5.0 for robust backend services" %}</li>
+            <li class="list-group-item">{% translate "PyTorch and YOLOv8 for advanced computer vision" %}</li>
+            <li class="list-group-item">{% translate "PostgreSQL with PostGIS for geospatial capabilities" %}</li>
+            <li class="list-group-item">{% translate "Modern web technologies for responsive interfaces" %}</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">{% translate "The Team" %}</h2>
+          <p class="card-text">{% translate "Our team consists of experienced software engineers, data scientists, and fleet management experts dedicated to building the best fleet management solution on the market." %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

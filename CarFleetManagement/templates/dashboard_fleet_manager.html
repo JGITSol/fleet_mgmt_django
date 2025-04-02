@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Fleet Manager Dashboard | Car Fleet Manager{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <h1 class="display-6 mb-4">Fleet Manager Dashboard</h1>
+  
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary">
+        <div class="card-body">
+          <h5 class="card-title">Active Vehicles</h5>
+          <p class="display-4">{% if stats.active_vehicles %}{{ stats.active_vehicles }}{% else %}0{% endif %}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3">
+      <div class="card text-white bg-success">
+        <div class="card-body">
+          <h5 class="card-title">Available</h5>
+          <p class="display-4">{% if stats.available_vehicles %}{{ stats.available_vehicles }}{% else %}0{% endif %}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3">
+      <div class="card text-white bg-warning">
+        <div class="card-body">
+          <h5 class="card-title">In Maintenance</h5>
+          <p class="display-4">{% if stats.maintenance_vehicles %}{{ stats.maintenance_vehicles }}{% else %}0{% endif %}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3">
+      <div class="card text-white bg-danger">
+        <div class="card-body">
+          <h5 class="card-title">Overdue Service</h5>
+          <p class="display-4">{% if stats.overdue_vehicles %}{{ stats.overdue_vehicles }}{% else %}0{% endif %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Recent Activity</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Vehicle</th>
+                  <th>Event</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for activity in recent_activities %}
+                <tr>
+                  <td>{{ activity.timestamp|date:"M d, H:i" }}</td>
+                  <td>{{ activity.vehicle }}</td>
+                  <td>{{ activity.event_type }}</td>
+                  <td>{{ activity.details }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="4" class="text-center">No recent activity</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Upcoming Maintenance</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            {% for maintenance in upcoming_maintenance %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{ maintenance.vehicle }}
+              <span class="badge bg-primary rounded-pill">{{ maintenance.due_date|date:"M d" }}</span>
+            </li>
+            {% empty %}
+            <li class="list-group-item">No upcoming maintenance</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

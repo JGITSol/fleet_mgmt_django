@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate "Login | Car Fleet Manager" %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="card-title text-center mb-4">{% translate "Login" %}</h2>
+        
+        {% if form.errors %}
+          <div class="alert alert-danger">
+            {% translate "Your username and password didn't match. Please try again." %}
+          </div>
+        {% endif %}
+        
+        <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          
+          <div class="mb-3">
+            <label for="id_username" class="form-label">{% translate "Username" %}</label>
+            <input type="text" name="username" id="id_username" class="form-control" required>
+          </div>
+          
+          <div class="mb-3">
+            <label for="id_password" class="form-label">{% translate "Password" %}</label>
+            <input type="password" name="password" id="id_password" class="form-control" required>
+          </div>
+          
+          <button type="submit" class="btn btn-primary w-100 mb-3">{% translate "Login" %}</button>
+          
+          <div class="text-center mb-3">
+            <a href="{% url 'password_reset' %}">{% translate "Forgot password?" %}</a>
+          </div>
+          
+          <div class="d-flex align-items-center mb-3">
+            <hr class="flex-grow-1">
+            <span class="px-2">{% translate "or" %}</span>
+            <hr class="flex-grow-1">
+          </div>
+          
+          <!-- Social login temporarily disabled -->
+          <button class="btn btn-dark w-100" disabled>
+            <i class="bi bi-github me-2"></i> {% translate "Login with GitHub" %}
+          </button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="text-center mt-3">
+      {% translate "Don't have an account?" %} <a href="{% url 'signup' %}">{% translate "Sign up" %}</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

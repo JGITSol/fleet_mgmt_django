@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Driver Dashboard | Car Fleet Manager{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <h1 class="display-6 mb-4">Driver Dashboard</h1>
+  
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h5>Assigned Vehicle</h5>
+        </div>
+        <div class="card-body">
+          {% if assigned_vehicle %}
+            <h4>{{ assigned_vehicle.make }} {{ assigned_vehicle.model }}</h4>
+            <p>License: {{ assigned_vehicle.license_plate }}</p>
+            <p>Odometer: {{ assigned_vehicle.current_mileage }} miles</p>
+            <p>Last Service: {{ assigned_vehicle.last_service_date|date:"M d, Y" }}</p>
+          {% else %}
+            <p>No vehicle currently assigned</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          <h5>Today's Tasks</h5>
+        </div>
+        <div class="card-body">
+          {% if todays_tasks %}
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Location</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for task in todays_tasks %}
+                  <tr>
+                    <td>{{ task.start_time|time:"H:i" }} - {{ task.end_time|time:"H:i" }}</td>
+                    <td>{{ task.location }}</td>
+                    <td>{{ task.description }}</td>
+                    <td>
+                      <span class="badge bg-{{ task.status_color }}">{{ task.get_status_display }}</span>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p>No tasks scheduled for today</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Vehicle Status</h5>
+        </div>
+        <div class="card-body">
+          {% if assigned_vehicle %}
+            <div class="alert alert-{{ vehicle_status_alert }}">
+              {{ vehicle_status_message }}
+            </div>
+            <a href="{% url 'report_issue' %}" class="btn btn-warning">Report Issue</a>
+            <a href="{% url 'submit_odometer' %}" class="btn btn-primary">Submit Odometer</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Quick Actions</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-grid gap-2">
+            <a href="{% url 'emergency' %}" class="btn btn-danger">Emergency Assistance</a>
+            <a href="{% url 'documents' %}" class="btn btn-secondary">Vehicle Documents</a>
+            <a href="{% url 'feedback' %}" class="btn btn-info">Provide Feedback</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

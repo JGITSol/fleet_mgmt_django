@@ -1,0 +1,354 @@
+# Spanish translations for Car Fleet Management.
+# Copyright (C) 2023 Car Fleet Management Team
+# This file is distributed under the same license as the Car Fleet Management package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Car Fleet Management 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-01 18:32+0200\n"
+"PO-Revision-Date: 2023-07-01 12:00+0000\n"
+"Last-Translator: Car Fleet Management Team\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\car_fleet_manager\settings.py:129
+msgid "English"
+msgstr "Inglés"
+
+#: .\car_fleet_manager\settings.py:130
+msgid "Spanish"
+msgstr "Español"
+
+#: .\car_fleet_manager\settings.py:131
+msgid "French"
+msgstr "Francés"
+
+#: .\car_fleet_manager\settings.py:132
+msgid "Polish"
+msgstr "Polaco"
+
+#: .\car_fleet_manager\settings.py:133
+msgid "German"
+msgstr "Alemán"
+
+#: .\templates\about.html:4 .\templates\partials\_navbar.html:11
+msgid "About"
+msgstr "Acerca de"
+
+#: .\templates\about.html:4 .\templates\base.html:8 .\templates\features.html:5
+#: .\templates\partials\_footer.html:6 .\templates\partials\_navbar.html:4
+msgid "Car Fleet Manager"
+msgstr "Gestor de Flota de Vehículos"
+
+#: .\templates\about.html:10
+msgid "About Car Fleet Manager"
+msgstr "Acerca del Gestor de Flota de Vehículos"
+
+#: .\templates\about.html:11
+msgid ""
+"A comprehensive fleet management system designed to leverage AI, automation, "
+"and real-time data processing to streamline vehicle operations."
+msgstr "Un sistema integral de gestión de flotas diseñado para aprovechar la IA, la automatización y el procesamiento de datos en tiempo real para optimizar las operaciones de vehículos."
+
+#: .\templates\about.html:15
+msgid "Our Mission"
+msgstr "Nuestra Misión"
+
+#: .\templates\about.html:16
+msgid ""
+"To revolutionize fleet management through cutting-edge technology that "
+"reduces costs, improves efficiency, and enhances safety for all fleet "
+"operators."
+msgstr "Revolucionar la gestión de flotas a través de tecnología de vanguardia que reduce costos, mejora la eficiencia y aumenta la seguridad para todos los operadores de flotas."
+
+#: .\templates\about.html:22
+msgid "Technology Stack"
+msgstr "Stack Tecnológico"
+
+#: .\templates\about.html:24
+msgid "Django 5.0 for robust backend services"
+msgstr "Django 5.0 para servicios backend robustos"
+
+#: .\templates\about.html:25
+msgid "PyTorch and YOLOv8 for advanced computer vision"
+msgstr "PyTorch y YOLOv8 para visión por computadora avanzada"
+
+#: .\templates\about.html:26
+msgid "PostgreSQL with PostGIS for geospatial capabilities"
+msgstr "PostgreSQL con PostGIS para capacidades geoespaciales"
+
+#: .\templates\about.html:27
+msgid "Modern web technologies for responsive interfaces"
+msgstr "Tecnologías web modernas para interfaces responsivas"
+
+#: .\templates\about.html:34
+msgid "The Team"
+msgstr "El Equipo"
+
+#: .\templates\about.html:35
+msgid ""
+"Our team consists of experienced software engineers, data scientists, and "
+"fleet management experts dedicated to building the best fleet management "
+"solution on the market."
+msgstr "Nuestro equipo está formado por ingenieros de software experimentados, científicos de datos y expertos en gestión de flotas dedicados a construir la mejor solución de gestión de flotas del mercado."
+
+#: .\templates\features.html:5 .\templates\partials\_navbar.html:14
+msgid "Features"
+msgstr "Características"
+
+#: .\templates\features.html:11
+msgid "Key Features"
+msgstr "Características Clave"
+
+#: .\templates\features.html:11
+msgid "System Features"
+msgstr "Funciones del sistema"
+
+#: .\templates\features.html:15
+msgid "AI-Powered Odometer Reading"
+msgstr "Lectura de Odómetro con IA"
+
+#: .\templates\features.html:16
+#, python-format
+msgid ""
+"Our system can automatically extract odometer readings from both analog and "
+"digital displays with 98%% accuracy, eliminating manual data entry errors."
+msgstr "Nuestro sistema puede extraer automáticamente lecturas de odómetros tanto de pantallas analógicas como digitales con una precisión del 98%%, eliminando errores de entrada manual de datos."
+
+#: .\templates\features.html:17
+msgid "Odometer Reading"
+msgstr "Lectura de Odómetro"
+
+#: .\templates\features.html:19
+msgid "Supports all major vehicle makes and models"
+msgstr "Compatible con todas las principales marcas y modelos de vehículos"
+
+#: .\templates\features.html:20
+msgid "Validates readings against historical data"
+msgstr "Valida las lecturas con datos históricos"
+
+#: .\templates\features.html:21
+msgid "Flags suspicious readings for review"
+msgstr "Marca lecturas sospechosas para revisión"
+
+#: .\templates\features.html:28 .\templates\features.html:30
+msgid "Damage Detection"
+msgstr "Detección de Daños"
+
+#: .\templates\features.html:29
+msgid ""
+"Automatically identify and assess vehicle damage to streamline insurance "
+"claims and repairs."
+msgstr "Identifica y evalúa automáticamente los daños del vehículo para agilizar las reclamaciones de seguros y reparaciones."
+
+#: .\templates\features.html:32
+msgid "Detects damage to 15+ vehicle parts"
+msgstr "Detecta daños en más de 15 partes del vehículo"
+
+#: .\templates\features.html:33
+msgid "Estimates repair costs automatically"
+msgstr "Estima costos de reparación automáticamente"
+
+#: .\templates\features.html:34
+msgid "Generates detailed damage reports"
+msgstr "Genera informes detallados de daños"
+
+#: .\templates\features.html:41
+msgid "Predictive Maintenance"
+msgstr "Mantenimiento Predictivo"
+
+#: .\templates\features.html:42
+msgid ""
+"Reduce downtime with AI-driven maintenance predictions based on vehicle "
+"telemetry and usage patterns."
+msgstr "Reduzca el tiempo de inactividad con predicciones de mantenimiento basadas en IA a partir de la telemetría del vehículo y los patrones de uso."
+
+#: .\templates\features.html:43
+msgid "Maintenance"
+msgstr "Mantenimiento"
+
+#: .\templates\features.html:45
+msgid "Schedule maintenance based on actual usage"
+msgstr "Programar mantenimiento basado en el uso real"
+
+#: .\templates\features.html:46
+msgid "Predict component failures before they occur"
+msgstr "Predecir fallos de componentes antes de que ocurran"
+
+#: .\templates\features.html:47
+msgid "Optimize maintenance schedules across fleet"
+msgstr "Optimizar programas de mantenimiento en toda la flota"
+
+#: .\templates\home.html:5
+msgid "Car Fleet Manager - Modern Fleet Management"
+msgstr "Gestor de Flota de Vehículos - Gestión Moderna de Flotas"
+
+#: .\templates\home.html:12
+msgid "Modern Fleet Management for 2025"
+msgstr "Gestión Moderna de Flotas para 2025"
+
+#: .\templates\home.html:13
+msgid ""
+"Leverage AI and automation to streamline your vehicle operations with our "
+"comprehensive fleet management solution."
+msgstr ""
+"Aproveche la IA y la automatización para optimizar las operaciones de sus vehículos con nuestra "
+"solución integral de gestión de flotas."
+
+#: .\templates\home.html:15
+msgid "Get Started"
+msgstr "Comenzar"
+
+#: .\templates\home.html:16
+msgid "Learn More"
+msgstr "Saber Más"
+
+#: .\templates\partials\_footer.html:7
+msgid "Advanced fleet management system for 2025"
+msgstr "Sistema avanzado de gestión de flotas para 2025"
+
+#: .\templates\partials\_footer.html:10
+msgid "Links"
+msgstr "Enlaces"
+
+#: .\templates\partials\_footer.html:18
+msgid "Contact"
+msgstr "Contacto"
+
+#: .\templates\partials\_footer.html:27
+msgid "2025 Car Fleet Manager. All rights reserved."
+msgstr "2025 Gestor de Flota de Vehículos. Todos los derechos reservados."
+
+#: .\templates\partials\_navbar.html:38 .\templates\registration\login.html:11
+#: .\templates\registration\login.html:32
+#: .\templates\registration\signup.html:43
+msgid "Login"
+msgstr "Iniciar Sesión"
+
+#: .\templates\partials\_navbar.html:41 .\templates\registration\signup.html:27
+msgid "Sign Up"
+msgstr "Registrarse"
+
+#: .\templates\registration\login.html:4
+msgid "Login | Car Fleet Manager"
+msgstr "Iniciar Sesión | Gestor de Flota de Vehículos"
+
+#: .\templates\registration\login.html:23
+msgid "Username"
+msgstr "Nombre de Usuario"
+
+#: .\templates\registration\login.html:28
+msgid "Password"
+msgstr "Contraseña"
+
+#: .\templates\registration\login.html:35
+msgid "Forgot password?"
+msgstr "¿Olvidó su contraseña?"
+
+#: .\templates\registration\login.html:40
+#: .\templates\registration\signup.html:31
+msgid "or"
+msgstr "o"
+
+#: .\templates\registration\login.html:46
+msgid "Login with GitHub"
+msgstr "Iniciar sesión con GitHub"
+
+#: .\templates\registration\login.html:53
+msgid "Don't have an account?"
+msgstr "¿No tiene una cuenta?"
+
+#: .\templates\registration\login.html:53
+msgid "Sign up"
+msgstr "Registrarse"
+
+#: .\templates\registration\password_reset.html:4
+msgid "Password Reset | Car Fleet Manager"
+msgstr "Restablecer Contraseña | Gestor de Flota de Vehículos"
+
+#: .\templates\registration\password_reset.html:11
+msgid "Password Reset"
+msgstr "Restablecer Contraseña"
+
+#: .\templates\registration\password_reset.html:36
+msgid "Reset Password"
+msgstr "Restablecer Contraseña"
+
+#: .\templates\registration\password_reset_complete.html:4
+msgid "Password Reset Complete | Car Fleet Manager"
+msgstr "Restablecimiento de Contraseña Completado | Gestor de Flota de Vehículos"
+
+#: .\templates\registration\password_reset_complete.html:11
+msgid "Password Reset Complete"
+msgstr "Restablecimiento de Contraseña Completado"
+
+#: .\templates\registration\password_reset_complete.html:14
+msgid "Your password has been set. You may go ahead and log in now."
+msgstr "Su contraseña ha sido establecida. Puede continuar e iniciar sesión ahora."
+
+#: .\templates\registration\password_reset_complete.html:18
+msgid "Log in"
+msgstr "Iniciar sesión"
+
+#: .\templates\registration\password_reset_confirm.html:4
+msgid "Reset Password | Car Fleet Manager"
+msgstr "Restablecer Contraseña | Gestor de Flota de Vehículos"
+
+#: .\templates\registration\password_reset_confirm.html:11
+msgid "Enter new password"
+msgstr "Ingrese nueva contraseña"
+
+#: .\templates\registration\password_reset_confirm.html:36
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+#: .\templates\registration\signup.html:3
+msgid "Sign Up | Car Fleet Manager"
+msgstr "Registrarse | Gestor de Flota de Vehículos"
+
+#: .\templates\registration\signup.html:10
+msgid "Create Account"
+msgstr "Crear Cuenta"
+
+#: .\templates\registration\signup.html:36
+msgid "Sign Up with GitHub"
+msgstr "Registrarse con GitHub"
+
+#: .\templates\registration\signup.html:43
+msgid "Already have an account?"
+msgstr "¿Ya tiene una cuenta?"
+
+#~ msgid "Logout"
+#~ msgstr "Cerrar Sesión"
+
+#~ msgid "Dashboard"
+#~ msgstr "Panel de Control"
+
+#~ msgid "Vehicles"
+#~ msgstr "Vehículos"
+
+#~ msgid "Emergency"
+#~ msgstr "Emergencia"
+
+#~ msgid "Settings"
+#~ msgstr "Configuración"
+
+#~ msgid "Profile"
+#~ msgstr "Perfil"
+
+#~ msgid "Dark Mode"
+#~ msgstr "Modo Oscuro"
+
+#~ msgid "Light Mode"
+#~ msgstr "Modo Claro"
+
+#~ msgid "Language"
+#~ msgstr "Idioma"
+
+#~ msgid "Version"
+#~ msgstr "Versión"

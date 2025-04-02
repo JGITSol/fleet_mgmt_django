@@ -1,0 +1,48 @@
+{% load i18n %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">{% translate "Car Fleet Manager" %}</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">{% translate "About" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'features' %}">{% translate "Features" %}</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav align-items-center">
+        <!-- Language Selector -->
+        <li class="nav-item">
+          <div class="language-selector">
+            <select id="language-selector" class="form-select form-select-sm">
+              {% get_current_language as CURRENT_LANGUAGE %}
+              {% get_available_languages as AVAILABLE_LANGUAGES %}
+              {% for lang_code, lang_name in LANGUAGES %}
+                <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>{{ lang_name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </li>
+        <!-- Theme Toggle -->
+        <li class="nav-item">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="theme-toggle-checkbox" {% if current_theme == 'dark' %}checked{% endif %}>
+            <label class="form-check-label" for="theme-toggle-checkbox" style="color: var(--navbar-text);">
+              <i class="bi {% if current_theme == 'dark' %}bi-moon-stars{% else %}bi-sun{% endif %}" id="theme-toggle-icon"></i>
+            </label>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">{% translate "Login" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'signup' %}">{% translate "Sign Up" %}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
