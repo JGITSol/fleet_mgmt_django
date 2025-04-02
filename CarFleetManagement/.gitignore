@@ -138,6 +138,9 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# Debug screenshots
+debug_screenshots/*.png
+
 # Vscode config files
 .vscode/
 
