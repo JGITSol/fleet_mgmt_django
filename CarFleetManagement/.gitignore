@@ -3,6 +3,11 @@ docs/source
 # From https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore
 static/
 staticfiles/
+/staticfiles
+/static/
+/staticfiles/**/*
+/static/**/*
+
 templates/
 __pycache__/
 *.py[cod]
