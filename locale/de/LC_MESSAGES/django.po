@@ -11,3 +11,166 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Base translations
+msgid "Car Fleet Manager"
+msgstr "Fuhrparkmanager"
+
+msgid "Features"
+msgstr "Funktionen"
+
+msgid "About"
+msgstr "Über uns"
+
+msgid "Login"
+msgstr "Anmelden"
+
+msgid "Sign Up"
+msgstr "Registrieren"
+
+msgid "Home"
+msgstr "Startseite"
+
+# Features page translations
+msgid "System Features"
+msgstr "Systemfunktionen"
+
+msgid "Discover how our advanced fleet management system can transform your operations"
+msgstr "Entdecken Sie, wie unser fortschrittliches Fuhrparkmanagementsystem Ihre Abläufe transformieren kann"
+
+msgid "AI-Powered Odometer Reading"
+msgstr "KI-gestützte Kilometerstandablesung"
+
+msgid "Our system can automatically extract odometer readings from both analog and digital displays with 98% accuracy, eliminating manual data entry errors."
+msgstr "Unser System kann automatisch Kilometerstände von analogen und digitalen Anzeigen mit 98% Genauigkeit extrahieren und eliminiert manuelle Dateneingabefehler."
+
+msgid "Supports all major vehicle makes and models"
+msgstr "Unterstützt alle wichtigen Fahrzeugmarken und -modelle"
+
+msgid "Validates readings against historical data"
+msgstr "Validiert Ablesungen anhand historischer Daten"
+
+msgid "Flags suspicious readings for review"
+msgstr "Markiert verdächtige Ablesungen zur Überprüfung"
+
+msgid "Damage Detection"
+msgstr "Schadenserkennung"
+
+msgid "Automatically identify and assess vehicle damage to streamline insurance claims and repairs."
+msgstr "Automatische Identifizierung und Bewertung von Fahrzeugschäden zur Vereinfachung von Versicherungsansprüchen und Reparaturen."
+
+msgid "Detects damage to 15+ vehicle parts"
+msgstr "Erkennt Schäden an mehr als 15 Fahrzeugteilen"
+
+msgid "Estimates repair costs automatically"
+msgstr "Schätzt Reparaturkosten automatisch"
+
+msgid "Generates detailed damage reports"
+msgstr "Erstellt detaillierte Schadensberichte"
+
+msgid "Predictive Maintenance"
+msgstr "Vorausschauende Wartung"
+
+msgid "Reduce downtime with AI-driven maintenance predictions based on vehicle telemetry and usage patterns."
+msgstr "Reduzieren Sie Ausfallzeiten mit KI-gestützten Wartungsprognosen basierend auf Fahrzeugtelemetrie und Nutzungsmustern."
+
+msgid "Schedule maintenance based on actual usage"
+msgstr "Planen Sie Wartungen basierend auf der tatsächlichen Nutzung"
+
+msgid "Predict component failures before they occur"
+msgstr "Prognostizieren Sie Komponentenausfälle, bevor sie auftreten"
+
+msgid "Optimize maintenance schedules across fleet"
+msgstr "Optimieren Sie Wartungspläne für die gesamte Flotte"
+
+msgid "Fuel Management"
+msgstr "Kraftstoffmanagement"
+
+msgid "Track and optimize fuel consumption across your entire fleet with advanced analytics and reporting."
+msgstr "Verfolgen und optimieren Sie den Kraftstoffverbrauch Ihrer gesamten Flotte mit fortschrittlicher Analytik und Berichterstattung."
+
+msgid "Monitor fuel efficiency in real-time"
+msgstr "Überwachen Sie die Kraftstoffeffizienz in Echtzeit"
+
+msgid "Detect fuel theft or unauthorized usage"
+msgstr "Erkennen Sie Kraftstoffdiebstahl oder unbefugte Nutzung"
+
+msgid "Generate comprehensive fuel reports"
+msgstr "Erstellen Sie umfassende Kraftstoffberichte"
+
+msgid "Scheduling & Dispatching"
+msgstr "Planung & Disposition"
+
+msgid "Efficiently manage vehicle assignments and optimize routes with our intelligent scheduling system."
+msgstr "Verwalten Sie Fahrzeugzuweisungen effizient und optimieren Sie Routen mit unserem intelligenten Planungssystem."
+
+msgid "AI-powered route optimization"
+msgstr "KI-gestützte Routenoptimierung"
+
+msgid "Real-time vehicle tracking"
+msgstr "Echtzeit-Fahrzeugverfolgung"
+
+msgid "Automated driver assignment"
+msgstr "Automatisierte Fahrerzuweisung"
+
+# Footer translations
+msgid "Company"
+msgstr "Unternehmen"
+
+msgid "Legal"
+msgstr "Rechtliches"
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Terms of Service"
+msgstr "Nutzungsbedingungen"
+
+msgid "Privacy Policy"
+msgstr "Datenschutzrichtlinie"
+
+msgid "Cookie Policy"
+msgstr "Cookie-Richtlinie"
+
+msgid "GDPR"
+msgstr "DSGVO"
+
+msgid "Data Protection"
+msgstr "Datenschutz"
+
+msgid "123 Fleet Street, Vehicle City"
+msgstr "123 Flottenstraße, Fahrzeugstadt"
+
+msgid "Mon-Fri: 9AM-5PM"
+msgstr "Mo-Fr: 9:00-17:00 Uhr"
+
+msgid "2025 Car Fleet Manager. All rights reserved."
+msgstr "2025 Fuhrparkmanager. Alle Rechte vorbehalten."
+
+# Home page translations
+msgid "Car Fleet Manager - Modern Fleet Management"
+msgstr "Fuhrparkmanager - Modernes Flottenmanagement"
+
+msgid "Modern Fleet Management for 2025"
+msgstr "Modernes Flottenmanagement für 2025"
+
+msgid "Leverage AI and automation to streamline your vehicle operations with our comprehensive fleet management solution."
+msgstr "Nutzen Sie KI und Automatisierung, um Ihre Fahrzeugoperationen mit unserer umfassenden Flottenmanagementlösung zu optimieren."
+
+msgid "Get Started"
+msgstr "Loslegen"
+
+msgid "Learn More"
+msgstr "Mehr erfahren"
+
+msgid "Key Features"
+msgstr "Hauptfunktionen"
+
+msgid "Automatically extract odometer readings from images with our advanced computer vision technology."
+msgstr "Extrahieren Sie automatisch Kilometerstände aus Bildern mit unserer fortschrittlichen Computer-Vision-Technologie."
+
+msgid "Identify and assess vehicle damage automatically to streamline insurance claims and repairs."
+msgstr "Identifizieren und bewerten Sie Fahrzeugschäden automatisch, um Versicherungsansprüche und Reparaturen zu vereinfachen."
+
+msgid "Reduce downtime with AI-driven maintenance predictions based on vehicle telemetry."
+msgstr "Reduzieren Sie Ausfallzeiten mit KI-gestützten Wartungsprognosen basierend auf Fahrzeugtelemetrie."

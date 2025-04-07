@@ -4,48 +4,189 @@
 
 {% block title %}{% translate "Features" %} | {% translate "Car Fleet Manager" %}{% endblock %}
 
+{% block extra_css %}
+<style>
+  .feature-card {
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    border: none;
+    margin-bottom: 2rem;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+  }
+  
+  .feature-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1rem;
+    filter: invert(40%) sepia(60%) saturate(1000%) hue-rotate(190deg);
+  }
+  
+  .feature-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .feature-header h2 {
+    margin-left: 1rem;
+    margin-bottom: 0;
+  }
+  
+  .feature-list {
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  .feature-list li {
+    margin-bottom: 0.75rem;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  
+  .feature-list li:before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--success-color);
+    font-weight: bold;
+  }
+  
+  .feature-list li:last-child {
+    margin-bottom: 0;
+  }
+  
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  
+  .page-header:after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: var(--primary-color);
+    margin: 1rem auto 0;
+    border-radius: 2px;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container py-5">
+  <div class="page-header">
+    <h1 class="display-4">{% translate "System Features" %}</h1>
+    <p class="lead text-muted">{% translate "Discover how our advanced fleet management system can transform your operations" %}</p>
+  </div>
+  
   <div class="row">
-    <div class="col-lg-8 mx-auto">
-      <h1 class="display-4 mb-4">{% translate "System Features" %}</h1>
-      
-      <div class="card mb-4">
+    <div class="col-lg-4 mb-4">
+      <div class="card feature-card h-100">
         <div class="card-body">
-          <h2 class="card-title">{% translate "AI-Powered Odometer Reading" %}</h2>
+          <div class="feature-header">
+            <img src="{% static 'icons/car_gear_36dp_E3E3E3_FILL0_wght400_GRAD0_opsz40.svg' %}" alt="" class="feature-icon">
+            <h2 class="card-title h4">{% translate "AI-Powered Odometer Reading" %}</h2>
+          </div>
           <p class="card-text">{% translate "Our system can automatically extract odometer readings from both analog and digital displays with 98% accuracy, eliminating manual data entry errors." %}</p>
-          <img src="{% static 'images/hero-retro-car-bw.jpg' %}" alt="{% translate "Odometer Reading" %}" class="img-fluid rounded mb-3">
-          <ul>
-            <li>{% translate "Supports all major vehicle makes and models" %}</li>
-            <li>{% translate "Validates readings against historical data" %}</li>
-            <li>{% translate "Flags suspicious readings for review" %}</li>
-          </ul>
+          
+          <div class="feature-list">
+            <ul class="list-unstyled">
+              <li>{% translate "Supports all major vehicle makes and models" %}</li>
+              <li>{% translate "Validates readings against historical data" %}</li>
+              <li>{% translate "Flags suspicious readings for review" %}</li>
+            </ul>
+          </div>
         </div>
       </div>
-      
-      <div class="card mb-4">
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+      <div class="card feature-card h-100">
         <div class="card-body">
-          <h2 class="card-title">{% translate "Damage Detection" %}</h2>
+          <div class="feature-header">
+            <img src="{% static 'icons/flag_check_36dp_E3E3E3_FILL0_wght400_GRAD0_opsz40.svg' %}" alt="" class="feature-icon">
+            <h2 class="card-title h4">{% translate "Damage Detection" %}</h2>
+          </div>
           <p class="card-text">{% translate "Automatically identify and assess vehicle damage to streamline insurance claims and repairs." %}</p>
-          <img src="{% static 'images/hero-retro-car-bw.jpg' %}" alt="{% translate "Damage Detection" %}" class="img-fluid rounded mb-3">
-          <ul>
-            <li>{% translate "Detects damage to 15+ vehicle parts" %}</li>
-            <li>{% translate "Estimates repair costs automatically" %}</li>
-            <li>{% translate "Generates detailed damage reports" %}</li>
-          </ul>
+          
+          <div class="feature-list">
+            <ul class="list-unstyled">
+              <li>{% translate "Detects damage to 15+ vehicle parts" %}</li>
+              <li>{% translate "Estimates repair costs automatically" %}</li>
+              <li>{% translate "Generates detailed damage reports" %}</li>
+            </ul>
+          </div>
         </div>
       </div>
-      
-      <div class="card mb-4">
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+      <div class="card feature-card h-100">
         <div class="card-body">
-          <h2 class="card-title">{% translate "Predictive Maintenance" %}</h2>
+          <div class="feature-header">
+            <img src="{% static 'icons/car_repair_36dp_E3E3E3_FILL0_wght400_GRAD0_opsz40.svg' %}" alt="" class="feature-icon">
+            <h2 class="card-title h4">{% translate "Predictive Maintenance" %}</h2>
+          </div>
           <p class="card-text">{% translate "Reduce downtime with AI-driven maintenance predictions based on vehicle telemetry and usage patterns." %}</p>
-          <img src="{% static 'images/hero-retro-car-bw.jpg' %}" alt="{% translate "Maintenance" %}" class="img-fluid rounded mb-3">
-          <ul>
-            <li>{% translate "Schedule maintenance based on actual usage" %}</li>
-            <li>{% translate "Predict component failures before they occur" %}</li>
-            <li>{% translate "Optimize maintenance schedules across fleet" %}</li>
-          </ul>
+          
+          <div class="feature-list">
+            <ul class="list-unstyled">
+              <li>{% translate "Schedule maintenance based on actual usage" %}</li>
+              <li>{% translate "Predict component failures before they occur" %}</li>
+              <li>{% translate "Optimize maintenance schedules across fleet" %}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mt-5">
+    <div class="col-lg-6 mb-4">
+      <div class="card feature-card h-100">
+        <div class="card-body">
+          <div class="feature-header">
+            <img src="{% static 'icons/fluid_balance_36dp_E3E3E3_FILL0_wght400_GRAD0_opsz40.svg' %}" alt="" class="feature-icon">
+            <h2 class="card-title h4">{% translate "Fuel Management" %}</h2>
+          </div>
+          <p class="card-text">{% translate "Track and optimize fuel consumption across your entire fleet with advanced analytics and reporting." %}</p>
+          
+          <div class="feature-list">
+            <ul class="list-unstyled">
+              <li>{% translate "Monitor fuel efficiency in real-time" %}</li>
+              <li>{% translate "Detect fuel theft or unauthorized usage" %}</li>
+              <li>{% translate "Generate comprehensive fuel reports" %}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-6 mb-4">
+      <div class="card feature-card h-100">
+        <div class="card-body">
+          <div class="feature-header">
+            <img src="{% static 'icons/calendar_month_36dp_E3E3E3_FILL0_wght400_GRAD0_opsz40.svg' %}" alt="" class="feature-icon">
+            <h2 class="card-title h4">{% translate "Scheduling & Dispatching" %}</h2>
+          </div>
+          <p class="card-text">{% translate "Efficiently manage vehicle assignments and optimize routes with our intelligent scheduling system." %}</p>
+          
+          <div class="feature-list">
+            <ul class="list-unstyled">
+              <li>{% translate "AI-powered route optimization" %}</li>
+              <li>{% translate "Real-time vehicle tracking" %}</li>
+              <li>{% translate "Automated driver assignment" %}</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

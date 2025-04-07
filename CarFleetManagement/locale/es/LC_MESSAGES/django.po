@@ -172,6 +172,40 @@ msgstr "Reduzca el tiempo de inactividad con predicciones de mantenimiento basad
 msgid "Maintenance"
 msgstr "Mantenimiento"
 
+# New features page content
+msgid "Discover how our advanced fleet management system can transform your operations"
+msgstr "Descubra cómo nuestro sistema avanzado de gestión de flotas puede transformar sus operaciones"
+
+msgid "Fuel Management"
+msgstr "Gestión de Combustible"
+
+msgid "Track and optimize fuel consumption across your entire fleet with advanced analytics and reporting."
+msgstr "Rastree y optimice el consumo de combustible en toda su flota con análisis avanzados e informes."
+
+msgid "Monitor fuel efficiency in real-time"
+msgstr "Monitoree la eficiencia del combustible en tiempo real"
+
+msgid "Detect fuel theft or unauthorized usage"
+msgstr "Detecte robos de combustible o uso no autorizado"
+
+msgid "Generate comprehensive fuel reports"
+msgstr "Genere informes completos de combustible"
+
+msgid "Scheduling & Dispatching"
+msgstr "Programación y Despacho"
+
+msgid "Efficiently manage vehicle assignments and optimize routes with our intelligent scheduling system."
+msgstr "Gestione eficientemente las asignaciones de vehículos y optimice rutas con nuestro sistema inteligente de programación."
+
+msgid "AI-powered route optimization"
+msgstr "Optimización de rutas impulsada por IA"
+
+msgid "Real-time vehicle tracking"
+msgstr "Seguimiento de vehículos en tiempo real"
+
+msgid "Automated driver assignment"
+msgstr "Asignación automatizada de conductores"
+
 #: .\templates\features.html:45
 msgid "Schedule maintenance based on actual usage"
 msgstr "Programar mantenimiento basado en el uso real"

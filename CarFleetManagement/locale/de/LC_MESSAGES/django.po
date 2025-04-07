@@ -29,10 +29,8 @@ msgid "French"
 msgstr "Französisch"
 
 #: .\car_fleet_manager\settings.py:132
-#, fuzzy
-#| msgid "English"
 msgid "Polish"
-msgstr "Englisch"
+msgstr "Polnisch"
 
 #: .\car_fleet_manager\settings.py:133
 msgid "German"
@@ -150,7 +148,7 @@ msgstr "Schadenserkennung"
 msgid ""
 "Automatically identify and assess vehicle damage to streamline insurance "
 "claims and repairs."
-msgstr ""
+msgstr "Identifizieren und bewerten Sie Fahrzeugschäden automatisch, um Versicherungsansprüche und Reparaturen zu optimieren."
 
 #: .\templates\features.html:32
 msgid "Detects damage to 15+ vehicle parts"
@@ -177,6 +175,40 @@ msgstr "Reduzieren Sie Ausfallzeiten durch KI-gestützte Wartungsvorhersagen bas
 #: .\templates\features.html:43
 msgid "Maintenance"
 msgstr "Wartung"
+
+# New features page content
+msgid "Discover how our advanced fleet management system can transform your operations"
+msgstr "Entdecken Sie, wie unser fortschrittliches Flottenmanagementsystem Ihre Abläufe transformieren kann"
+
+msgid "Fuel Management"
+msgstr "Kraftstoffmanagement"
+
+msgid "Track and optimize fuel consumption across your entire fleet with advanced analytics and reporting."
+msgstr "Verfolgen und optimieren Sie den Kraftstoffverbrauch Ihrer gesamten Flotte mit fortschrittlicher Analytik und Berichterstattung."
+
+msgid "Monitor fuel efficiency in real-time"
+msgstr "Überwachen Sie die Kraftstoffeffizienz in Echtzeit"
+
+msgid "Detect fuel theft or unauthorized usage"
+msgstr "Erkennen Sie Kraftstoffdiebstahl oder unbefugte Nutzung"
+
+msgid "Generate comprehensive fuel reports"
+msgstr "Erstellen Sie umfassende Kraftstoffberichte"
+
+msgid "Scheduling & Dispatching"
+msgstr "Planung & Disposition"
+
+msgid "Efficiently manage vehicle assignments and optimize routes with our intelligent scheduling system."
+msgstr "Verwalten Sie Fahrzeugzuweisungen effizient und optimieren Sie Routen mit unserem intelligenten Planungssystem."
+
+msgid "AI-powered route optimization"
+msgstr "KI-gestützte Routenoptimierung"
+
+msgid "Real-time vehicle tracking"
+msgstr "Echtzeit-Fahrzeugverfolgung"
+
+msgid "Automated driver assignment"
+msgstr "Automatisierte Fahrerzuweisung"
 
 #: .\templates\features.html:45
 msgid "Schedule maintenance based on actual usage"

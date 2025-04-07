@@ -1,19 +1,20 @@
-# Polish translation file for Car Fleet Manager
+# Polish translations for Car Fleet Management.
+# Copyright (C) 2023 Car Fleet Management Team
+# This file is distributed under the same license as the Car Fleet Management package.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Car Fleet Manager 1.0\n"
+"Project-Id-Version: Car Fleet Management 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-01 18:32+0200\n"
-"PO-Revision-Date: 2025-01-01 12:00+0000\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2023-07-01 12:00+0000\n"
+"Last-Translator: Car Fleet Management Team\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
-"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
-"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: .\car_fleet_manager\settings.py:129
 msgid "English"
@@ -37,20 +38,17 @@ msgstr "Niemiecki"
 
 #: .\templates\about.html:4 .\templates\partials\_navbar.html:11
 msgid "About"
-msgstr "O nas"
+msgstr "O Systemie"
 
-# Footer
 #: .\templates\about.html:4 .\templates\base.html:8 .\templates\features.html:5
 #: .\templates\partials\_footer.html:6 .\templates\partials\_navbar.html:4
 msgid "Car Fleet Manager"
-msgstr "Zarządzanie Flotą Pojazdów"
+msgstr "System Zarządzania Flotą Pojazdów"
 
 # Footer
 #: .\templates\about.html:10
-#, fuzzy
-#| msgid "Car Fleet Manager"
 msgid "About Car Fleet Manager"
-msgstr "Zarządzanie Flotą Pojazdów"
+msgstr "O Systemie Zarządzania Flotą Pojazdów"
 
 #: .\templates\about.html:11
 msgid ""
@@ -114,14 +112,14 @@ msgstr "Funkcje systemu"
 
 #: .\templates\features.html:15
 msgid "AI-Powered Odometer Reading"
-msgstr "Odczyt Licznika Wspomagany AI"
+msgstr "Inteligentny Odczyt Licznika Pojazdu"
 
 #: .\templates\features.html:16
 #, python-format
 msgid ""
 "Our system can automatically extract odometer readings from both analog and "
 "digital displays with 98%% accuracy, eliminating manual data entry errors."
-msgstr "Nasz system automatycznie odczytuje liczniki z analogowych i cyfrowych wyświetlaczy z 98%% dokładnością, eliminując błędy ręcznego wprowadzania danych."
+msgstr "Nasz system automatycznie odczytuje wskazania liczników z analogowych i cyfrowych wyświetlaczy z dokładnością 98%%, eliminując błędy ręcznego wprowadzania danych."
 
 #: .\templates\features.html:17
 msgid "Odometer Reading"
@@ -141,13 +139,12 @@ msgstr "Oznacza podejrzane odczyty do weryfikacji"
 
 #: .\templates\features.html:28 .\templates\features.html:30
 msgid "Damage Detection"
-msgstr "Wykrywanie Uszkodzeń"
+msgstr "Automatyczne Wykrywanie Uszkodzeń"
 
 #: .\templates\features.html:29
 msgid ""
-"Automatically identify and assess vehicle damage to streamline insurance "
-"claims and repairs."
-msgstr "Automatyczna identyfikacja i ocena uszkodzeń pojazdów w celu usprawnienia procesów likwidacji szkód i napraw."
+"Automatically identify and assess vehicle damage to streamline insurance claims and repairs."
+msgstr "Automatyczna identyfikacja i ocena uszkodzeń pojazdów usprawniająca procesy likwidacji szkód i napraw."
 
 #: .\templates\features.html:32
 msgid "Detects damage to 15+ vehicle parts"
@@ -163,13 +160,13 @@ msgstr "Generuje szczegółowe raporty uszkodzeń"
 
 #: .\templates\features.html:41
 msgid "Predictive Maintenance"
-msgstr "Konserwacja Predykcyjna"
+msgstr "Predykcyjna Konserwacja Pojazdów"
 
 #: .\templates\features.html:42
 msgid ""
 "Reduce downtime with AI-driven maintenance predictions based on vehicle "
 "telemetry and usage patterns."
-msgstr "Zmniejsz przestoje dzięki prognozom konserwacji opartym na sztucznej inteligencji i danych telemetrycznych pojazdów."
+msgstr "Zminimalizuj przestoje dzięki inteligentnym prognozom konserwacji opartym na analizie danych telemetrycznych pojazdów i wzorców użytkowania."
 
 #: .\templates\features.html:43
 msgid "Maintenance"
@@ -189,10 +186,8 @@ msgstr "Optymalizacja harmonogramów konserwacji w całej flocie"
 
 # Home page
 #: .\templates\home.html:5
-#, fuzzy
-#| msgid "Modern Fleet Management for 2025"
 msgid "Car Fleet Manager - Modern Fleet Management"
-msgstr "Nowoczesne zarządzanie flotą na rok 2025"
+msgstr "Zarządzanie Flotą Pojazdów - Nowoczesne zarządzanie flotą"
 
 # Home page
 #: .\templates\home.html:12
@@ -217,21 +212,61 @@ msgstr "Dowiedz się więcej"
 
 #: .\templates\partials\_footer.html:7
 msgid "Advanced fleet management system for 2025"
-msgstr "Zaawansowany system zarządzania flotą na rok 2025"
+msgstr "Zaawansowany system zarządzania flotą pojazdów na rok 2025"
+
+#: .\templates\partials\_footer.html:7
+msgid "Company"
+msgstr "Firma"
 
 #: .\templates\partials\_footer.html:10
 msgid "Links"
 msgstr "Linki"
+
+#: .\templates\partials\_footer.html:20
+msgid "Legal"
+msgstr "Informacje Prawne"
 
 #: .\templates\partials\_footer.html:18
 msgid "Contact"
 msgstr "Kontakt"
 
 #: .\templates\partials\_footer.html:27
-#, fuzzy
-#| msgid "All rights reserved."
 msgid "2025 Car Fleet Manager. All rights reserved."
-msgstr "Wszelkie prawa zastrzeżone."
+msgstr "2025 Zarządzanie Flotą Pojazdów. Wszelkie prawa zastrzeżone."
+
+# New features page content
+msgid "Discover how our advanced fleet management system can transform your operations"
+msgstr "Odkryj, jak nasz zaawansowany system zarządzania flotą może przekształcić Twoje operacje"
+
+msgid "Fuel Management"
+msgstr "Zarządzanie Paliwem"
+
+msgid "Track and optimize fuel consumption across your entire fleet with advanced analytics and reporting."
+msgstr "Śledź i optymalizuj zużycie paliwa w całej flocie dzięki zaawansowanej analityce i raportowaniu."
+
+msgid "Monitor fuel efficiency in real-time"
+msgstr "Monitoruj wydajność paliwa w czasie rzeczywistym"
+
+msgid "Detect fuel theft or unauthorized usage"
+msgstr "Wykrywaj kradzież paliwa lub nieautoryzowane użycie"
+
+msgid "Generate comprehensive fuel reports"
+msgstr "Generuj kompleksowe raporty dotyczące paliwa"
+
+msgid "Scheduling & Dispatching"
+msgstr "Planowanie i Dysponowanie"
+
+msgid "Efficiently manage vehicle assignments and optimize routes with our intelligent scheduling system."
+msgstr "Efektywnie zarządzaj przydziałami pojazdów i optymalizuj trasy dzięki naszemu inteligentnemu systemowi planowania."
+
+msgid "AI-powered route optimization"
+msgstr "Optymalizacja tras oparta na sztucznej inteligencji"
+
+msgid "Real-time vehicle tracking"
+msgstr "Śledzenie pojazdów w czasie rzeczywistym"
+
+msgid "Automated driver assignment"
+msgstr "Automatyczne przydzielanie kierowców"
 
 #: .\templates\partials\_navbar.html:38 .\templates\registration\login.html:11
 #: .\templates\registration\login.html:32
@@ -245,10 +280,8 @@ msgstr "Rejestracja"
 
 # Footer
 #: .\templates\registration\login.html:4
-#, fuzzy
-#| msgid "Car Fleet Manager"
 msgid "Login | Car Fleet Manager"
-msgstr "Zarządzanie Flotą Pojazdów"
+msgstr "Logowanie | Zarządzanie Flotą Pojazdów"
 
 #: .\templates\registration\login.html:23
 msgid "Username"
@@ -280,17 +313,13 @@ msgid "Your username and password didn't match. Please try again."
 msgstr "Twoja nazwa użytkownika i hasło nie pasują do siebie. Spróbuj ponownie."
 
 #: .\templates\registration\login.html:53
-#, fuzzy
-#| msgid "Sign Up"
 msgid "Sign up"
-msgstr "Rejestracja"
+msgstr "Zarejestruj się"
 
 # Footer
 #: .\templates\registration\password_reset.html:4
-#, fuzzy
-#| msgid "Car Fleet Manager"
 msgid "Password Reset | Car Fleet Manager"
-msgstr "Zarządzanie Flotą Pojazdów"
+msgstr "Resetowanie hasła | Zarządzanie Flotą Pojazdów"
 
 #: .\templates\registration\password_reset.html:11
 msgid "Password Reset"
@@ -318,10 +347,8 @@ msgstr "Zaloguj się"
 
 # Footer
 #: .\templates\registration\password_reset_confirm.html:4
-#, fuzzy
-#| msgid "Car Fleet Manager"
 msgid "Reset Password | Car Fleet Manager"
-msgstr "Zarządzanie Flotą Pojazdów"
+msgstr "Zmiana hasła | Zarządzanie Flotą Pojazdów"
 
 #: .\templates\registration\password_reset_confirm.html:11
 msgid "Enter new password"
@@ -333,10 +360,8 @@ msgstr "Zmień hasło"
 
 # Footer
 #: .\templates\registration\signup.html:3
-#, fuzzy
-#| msgid "Car Fleet Manager"
 msgid "Sign Up | Car Fleet Manager"
-msgstr "Zarządzanie Flotą Pojazdów"
+msgstr "Rejestracja | System Zarządzania Flotą Pojazdów"
 
 #: .\templates\registration\signup.html:10
 msgid "Create Account"
@@ -356,3 +381,25 @@ msgstr "Masz już konto?"
 
 #~ msgid "Logout"
 #~ msgstr "Wyloguj"
+
+msgid "Automatically extract odometer readings from images with our advanced computer vision technology."
+msgstr "Automatyczne odczytywanie liczników z obrazów za pomocą naszej zaawansowanej technologii widzenia komputerowego."
+
+msgid "Terms of Service"
+msgstr "Warunki Usługi"
+msgid "Privacy Policy"
+msgstr "Polityka Prywatności"
+msgid "Cookie Policy"
+msgstr "Polityka Cookies"
+msgid "GDPR"
+msgstr "RODO"
+msgid "Data Protection"
+msgstr "Ochrona Danych"
+
+#: .\templates\partials\_footer.html:33
+msgid "123 Fleet Street, Vehicle City"
+msgstr "ul. Flotowa 123, Miasto Pojazdów"
+
+#: .\templates\partials\_footer.html:34
+msgid "Mon-Fri: 9AM-5PM"
+msgstr "Pon-Pt: 9:00-17:00"

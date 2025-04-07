@@ -29,10 +29,8 @@ msgid "French"
 msgstr "French"
 
 #: .\car_fleet_manager\settings.py:132
-#, fuzzy
-#| msgid "English"
 msgid "Polish"
-msgstr "English"
+msgstr "Polish"
 
 #: .\car_fleet_manager\settings.py:133
 msgid "German"
@@ -40,14 +38,12 @@ msgstr "German"
 
 #: .\templates\about.html:4 .\templates\partials\_navbar.html:11
 msgid "About"
-msgstr ""
+msgstr "About"
 
 #: .\templates\about.html:4 .\templates\base.html:8 .\templates\features.html:5
 #: .\templates\partials\_footer.html:6 .\templates\partials\_navbar.html:4
-#, fuzzy
-#| msgid "Welcome to Car Fleet Manager"
 msgid "Car Fleet Manager"
-msgstr "Welcome to Car Fleet Manager"
+msgstr "Car Fleet Manager"
 
 #: .\templates\about.html:10
 #, fuzzy
