@@ -150,6 +150,7 @@ LANGUAGES = [
 # Location of translation files
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
+    Path(BASE_DIR).parent / 'locale',  # Add parent directory locale path
 ]
 
 # Static files (CSS, JavaScript, Images)
