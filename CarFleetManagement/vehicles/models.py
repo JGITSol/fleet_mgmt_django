@@ -44,3 +44,10 @@ class Vehicle(models.Model):
     
     def __str__(self):
         return f"{self.brand} {self.model} ({self.license_plate})"
+        
+    def is_service_due(self):
+        """Check if service is due based on next_service_date."""
+        from django.utils import timezone
+        if not self.next_service_date:
+            return False
+        return self.next_service_date <= timezone.now().date()

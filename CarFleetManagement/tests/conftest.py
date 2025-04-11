@@ -1,12 +1,21 @@
+import os
+import sys
+import django
 import pytest
-from django.contrib.auth import get_user_model
-from django.utils import timezone
 from datetime import timedelta
 
+# Configure Django settings before importing any models
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "car_fleet_manager.settings")
+django.setup()
+
+# Now it's safe to import Django models
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+
 from vehicles.models import Vehicle
-from accounts.models import UserProfile, DriverLicense
-from maintenance.models import MaintenanceRecord, ServiceSchedule
-from emergency.models import EmergencyContact, EmergencyReport
+from accounts.models import CustomUser, Driver
+from maintenance.models import Maintenance
+from emergency.models import EmergencyContact, EmergencyIncident
 
 
 User = get_user_model()
@@ -23,31 +32,30 @@ def user():
 
 
 @pytest.fixture
-def user_profile(user):
-    """Create and return a test user profile."""
-    return UserProfile.objects.create(
-        user=user,
-        phone_number='+1234567890',
-        address='123 Test St, Test City',
-        emergency_contact_name='Emergency Contact',
-        emergency_contact_phone='+0987654321',
-        employee_id='EMP12345',
-        department='IT',
-        position='Developer'
-    )
+def custom_user(user):
+    """Create and return a test custom user."""
+    from accounts.models import UserRole
+    role, _ = UserRole.objects.get_or_create(name=UserRole.DRIVER, defaults={'description': 'Driver role'})
+    user.role = role
+    user.phone_number = '+1234567890'
+    user.save()
+    return user
 
 
 @pytest.fixture
-def driver_license(user_profile):
-    """Create and return a test driver license."""
-    return DriverLicense.objects.create(
-        user_profile=user_profile,
-        license_number='DL12345678',
-        license_class='B',
-        issue_date='2020-01-01',
-        expiry_date='2025-01-01',
-        issuing_authority='Test DMV',
-        restrictions='None'
+def driver(custom_user):
+    """Create and return a test driver."""
+    today = timezone.now().date()
+    return Driver.objects.create(
+        user=custom_user,
+        first_name='Test',
+        last_name='Driver',
+        email='driver@example.com',
+        phone_number='+1234567890',
+        driver_license_number='DL12345678',
+        license_expiry_date=today + timedelta(days=365),
+        status='ACTIVE',
+        hire_date=today - timedelta(days=90)
     )
 
 
@@ -77,60 +85,58 @@ def vehicle():
 
 
 @pytest.fixture
-def maintenance_record(vehicle):
+def maintenance(vehicle):
     """Create and return a test maintenance record."""
-    return MaintenanceRecord.objects.create(
+    return Maintenance.objects.create(
         vehicle=vehicle,
-        service_date=timezone.now().date() - timedelta(days=30),
-        service_type='Oil Change',
+        maintenance_type='ROUTINE',
+        status='COMPLETED',
         description='Regular oil change and filter replacement',
+        scheduled_date=timezone.now().date() - timedelta(days=30),
+        completed_date=timezone.now().date() - timedelta(days=30),
+        odometer_reading=14500,
         cost=50.00,
-        mileage=14500,
-        performed_by='Test Mechanic',
+        service_provider='Test Mechanic',
         notes='Everything looks good'
     )
 
 
 @pytest.fixture
-def service_schedule(vehicle):
-    """Create and return a test service schedule."""
-    return ServiceSchedule.objects.create(
+def scheduled_maintenance(vehicle):
+    """Create and return a test scheduled maintenance."""
+    return Maintenance.objects.create(
         vehicle=vehicle,
-        service_type='Regular Maintenance',
+        maintenance_type='ROUTINE',
+        status='SCHEDULED',
         description='Full vehicle inspection and maintenance',
-        interval_months=6,
-        interval_miles=5000,
-        last_service_date=timezone.now().date() - timedelta(days=90),
-        next_service_date=timezone.now().date() + timedelta(days=90),
-        estimated_cost=200.00,
+        scheduled_date=timezone.now().date() + timedelta(days=90),
+        odometer_reading=15000,
+        cost=200.00,
+        service_provider='Test Service Center',
         notes='Includes oil change, filter replacement, and inspection'
     )
 
 
 @pytest.fixture
-def emergency_contact(user_profile):
+def emergency_contact(custom_user):
     """Create and return a test emergency contact."""
     return EmergencyContact.objects.create(
-        user_profile=user_profile,
+        user=custom_user,
         name='Emergency Person',
         relationship='Family',
-        phone_number='+1122334455',
-        email='emergency@example.com',
-        address='456 Emergency St, Safety City'
+        phone_number='+1122334455'
     )
 
 
 @pytest.fixture
-def emergency_report(vehicle, user):
-    """Create and return a test emergency report."""
-    return EmergencyReport.objects.create(
+def emergency_incident(vehicle, custom_user, driver):
+    """Create and return a test emergency incident."""
+    return EmergencyIncident.objects.create(
         vehicle=vehicle,
-        reporter=user,
-        incident_date=timezone.now(),
-        incident_type='Accident',
-        description='Minor collision with another vehicle',
+        driver=driver,
+        reported_by=custom_user,
+        emergency_type='ACCIDENT',
+        status='REPORTED',
         location='Intersection of Test St and Example Ave',
-        severity='Medium',
-        actions_taken='Called insurance, took photos',
-        resolved=False
+        description='Minor collision with another vehicle'
     )

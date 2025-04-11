@@ -43,7 +43,7 @@ class EmergencyResponse(models.Model):
         return f"Response to {self.incident} by {self.responder.username}"
 
 class EmergencyContact(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='emergency_contacts')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='emergency_contact_list')
     name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15)
     relationship = models.CharField(max_length=50)
