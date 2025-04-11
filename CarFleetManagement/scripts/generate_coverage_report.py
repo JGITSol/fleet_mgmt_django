@@ -35,10 +35,20 @@ def run_coverage():
     
     # Run the tests with coverage
     os.chdir(project_root)
+    # First, make sure all test directories are proper Python packages
+    for app_dir in project_root.glob('*/'):
+        tests_dir = app_dir / 'tests'
+        if tests_dir.exists() and tests_dir.is_dir():
+            init_file = tests_dir / '__init__.py'
+            if not init_file.exists() or os.path.getsize(init_file) == 0:
+                print(f"Ensuring {tests_dir} is a proper Python package...")
+                with open(init_file, 'w') as f:
+                    f.write('# This file makes the tests directory a Python package\n')
+    
     result = subprocess.run(
         [
             sys.executable, "manage.py", "test",
-            "--settings=car_fleet_manager.settings"
+            "--settings=test_settings"
         ],
         env={**os.environ, "COVERAGE_PROCESS_START": ".coveragerc"},
         check=False
@@ -82,7 +92,7 @@ exclude_lines =
     
     # Run coverage
     subprocess.run(
-        [sys.executable, "-m", "coverage", "run", "--source=.", "manage.py", "test"],
+        [sys.executable, "-m", "coverage", "run", "--source=.", "manage.py", "test", "--settings=test_settings"],
         check=True
     )
     
@@ -106,6 +116,11 @@ exclude_lines =
     print(f"\n✅ Coverage reports generated successfully!")
     print(f"\n📁 HTML report: {html_dir}")
     print(f"📄 XML report: {xml_path}")
+    
+    # Clean up temporary test settings file
+    if test_settings_path.exists():
+        os.remove(test_settings_path)
+        print("Cleaned up temporary test settings file.")
     
     return True
 
