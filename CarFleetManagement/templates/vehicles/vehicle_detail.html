@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Vehicle Details</h2>
+<ul class="list-group mb-3">
+  <li class="list-group-item"><strong>ID:</strong> {{ object.id }}</li>
+  <li class="list-group-item"><strong>Make:</strong> {{ object.make }}</li>
+  <li class="list-group-item"><strong>Model:</strong> {{ object.model }}</li>
+  <li class="list-group-item"><strong>Year:</strong> {{ object.year }}</li>
+  <li class="list-group-item"><strong>Status:</strong> {{ object.status }}</li>
+</ul>
+<a class="btn btn-secondary" href="{% url 'vehicle-list' %}">Back to List</a>
+{% if user.is_authenticated and (user.is_admin or user.is_manager or user.is_coordinator) %}
+  <a class="btn btn-warning" href="{% url 'vehicle-update' object.id %}">Edit</a>
+  <a class="btn btn-danger" href="{% url 'vehicle-delete' object.id %}">Delete</a>
+{% endif %}
+{% endblock %}

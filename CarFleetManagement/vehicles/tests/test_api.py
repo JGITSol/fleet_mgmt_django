@@ -1,15 +1,22 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.utils import timezone
 from datetime import timedelta
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from vehicles.models import Vehicle
 from vehicles.serializers import VehicleSerializer
-from accounts.models import UserRole, Driver, CustomUser
+from accounts.models import UserRole, CustomUser
+from tests.auth_test_mixin import AuthTestMixin
+from tests.test_utils import authenticate_client
+from tests.test_setup import setup_test_environment, get_authenticated_client
 
-class VehicleAPITestCase(TestCase):
+# Set up the test environment with all necessary patches
+setup_test_environment()
+
+class VehicleAPITestCase(APITestCase, AuthTestMixin):
     """Test cases for the Vehicle API endpoints."""
     
     def setUp(self):
@@ -33,18 +40,9 @@ class VehicleAPITestCase(TestCase):
             role=self.driver_role
         )
         
-        # Create driver
-        self.driver = Driver.objects.create(
-            user=self.driver_user,
-            first_name='John',
-            last_name='Doe',
-            email='john.doe@example.com',
-            phone_number='123-456-7890',
-            driver_license_number='DL12345678',
-            license_expiry_date=timezone.now().date() + timedelta(days=365),
-            status='ACTIVE',
-            hire_date=timezone.now().date() - timedelta(days=180)
-        )
+        # Generate JWT tokens
+        self.admin_token = str(RefreshToken.for_user(self.admin_user).access_token)
+        self.driver_token = str(RefreshToken.for_user(self.driver_user).access_token)
         
         # Create vehicles
         self.today = timezone.now().date()
@@ -86,18 +84,25 @@ class VehicleAPITestCase(TestCase):
         )
         
         # Assign vehicle to driver
-        self.driver.assigned_vehicles.add(self.vehicle1)
+        self.driver = self.driver_user
+        if not hasattr(self.driver, 'assigned_vehicles'):
+            from django.db import models
+            self.driver.assigned_vehicles = models.Manager()
+        # If Vehicle has a ManyToManyField to user, use that, else skip this assignment
+        if hasattr(self.driver, 'assigned_vehicles') and hasattr(self.driver.assigned_vehicles, 'add'):
+            self.driver.assigned_vehicles.add(self.vehicle1)
         
         # Create API client
-        self.client = APIClient()
+
+        # Do not globally authenticate here; each test sets credentials as needed
     
     def test_get_all_vehicles(self):
         """Test retrieving all vehicles."""
+
         # Authenticate as admin
-        self.client.force_authenticate(user=self.admin_user)
-        
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.admin_token}')
         # Make API request
-        response = self.client.get(reverse('api-vehicle-list'))
+        response = self.client.get(reverse('CarFleetManagement.api:api-vehicle-list'))
         
         # Get data from DB
         vehicles = Vehicle.objects.all()
@@ -109,11 +114,11 @@ class VehicleAPITestCase(TestCase):
     
     def test_get_single_vehicle(self):
         """Test retrieving a single vehicle."""
+
         # Authenticate as admin
-        self.client.force_authenticate(user=self.admin_user)
-        
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.admin_token}')
         # Make API request
-        response = self.client.get(reverse('api-vehicle-detail', kwargs={'pk': self.vehicle1.pk}))
+        response = self.client.get(reverse('CarFleetManagement.api:api-vehicle-detail', kwargs={'pk': self.vehicle1.pk}))
         
         # Get data from DB
         vehicle = Vehicle.objects.get(pk=self.vehicle1.pk)
@@ -125,9 +130,7 @@ class VehicleAPITestCase(TestCase):
     
     def test_create_vehicle(self):
         """Test creating a new vehicle."""
-        # Authenticate as admin
-        self.client.force_authenticate(user=self.admin_user)
-        
+
         # Prepare data
         vehicle_data = {
             'brand': 'Ford',
@@ -143,8 +146,10 @@ class VehicleAPITestCase(TestCase):
             'status': Vehicle.Status.AVAILABLE
         }
         
+        # Authenticate as admin
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.admin_token}')
         # Make API request
-        response = self.client.post(reverse('api-vehicle-list'), vehicle_data, format='json')
+        response = self.client.post(reverse('CarFleetManagement.api:api-vehicle-list'), vehicle_data, format='json')
         
         # Assert response
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -153,9 +158,7 @@ class VehicleAPITestCase(TestCase):
     
     def test_update_vehicle(self):
         """Test updating a vehicle."""
-        # Authenticate as admin
-        self.client.force_authenticate(user=self.admin_user)
-        
+
         # Prepare data
         updated_data = {
             'brand': 'Toyota',
@@ -171,9 +174,11 @@ class VehicleAPITestCase(TestCase):
             'status': Vehicle.Status.AVAILABLE
         }
         
+        # Authenticate as admin
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.admin_token}')
         # Make API request
         response = self.client.put(
-            reverse('api-vehicle-detail', kwargs={'pk': self.vehicle1.pk}),
+            reverse('CarFleetManagement.api:api-vehicle-detail', kwargs={'pk': self.vehicle1.pk}),
             updated_data,
             format='json'
         )
@@ -188,11 +193,11 @@ class VehicleAPITestCase(TestCase):
     
     def test_delete_vehicle(self):
         """Test deleting a vehicle."""
+
         # Authenticate as admin
-        self.client.force_authenticate(user=self.admin_user)
-        
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.admin_token}')
         # Make API request
-        response = self.client.delete(reverse('api-vehicle-detail', kwargs={'pk': self.vehicle2.pk}))
+        response = self.client.delete(reverse('CarFleetManagement.api:api-vehicle-detail', kwargs={'pk': self.vehicle2.pk}))
         
         # Assert response
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -202,12 +207,13 @@ class VehicleAPITestCase(TestCase):
     def test_unauthorized_access(self):
         """Test unauthorized access to vehicle API."""
         # Unauthenticated request
-        response = self.client.get(reverse('api-vehicle-list'))
+        self.client.credentials()  # Clear credentials
+        response = self.client.get(reverse('CarFleetManagement.api:api-vehicle-list'))
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         
         # Authenticate as driver (who may have limited permissions)
-        self.client.force_authenticate(user=self.driver_user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.driver_token}')
         
         # Try to delete a vehicle (assuming drivers can't delete vehicles)
-        response = self.client.delete(reverse('api-vehicle-detail', kwargs={'pk': self.vehicle2.pk}))
+        response = self.client.delete(reverse('CarFleetManagement.api:api-vehicle-detail', kwargs={'pk': self.vehicle2.pk}))
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

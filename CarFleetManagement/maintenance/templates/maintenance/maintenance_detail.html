@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Maintenance Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Maintenance Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ maintenance.description }}</h5>
+            <p class="card-text"><strong>Vehicle:</strong> {{ maintenance.vehicle.brand }} {{ maintenance.vehicle.model }}</p>
+            <p class="card-text"><strong>Type:</strong> {{ maintenance.get_maintenance_type_display }}</p>
+            <p class="card-text"><strong>Status:</strong> {{ maintenance.get_status_display }}</p>
+            <p class="card-text"><strong>Scheduled Date:</strong> {{ maintenance.scheduled_date }}</p>
+            
+            {% if maintenance.completed_date %}
+            <p class="card-text"><strong>Completed Date:</strong> {{ maintenance.completed_date }}</p>
+            {% endif %}
+            
+            <p class="card-text"><strong>Odometer Reading:</strong> {{ maintenance.odometer_reading }} km</p>
+            <p class="card-text"><strong>Cost:</strong> ${{ maintenance.cost }}</p>
+            <p class="card-text"><strong>Service Provider:</strong> {{ maintenance.service_provider }}</p>
+            
+            {% if maintenance.notes %}
+            <p class="card-text"><strong>Notes:</strong> {{ maintenance.notes }}</p>
+            {% endif %}
+            
+            <div class="mt-3">
+                <a href="{% url 'maintenance_update' maintenance.pk %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'maintenance_list' %}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

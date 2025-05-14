@@ -56,13 +56,74 @@ git push origin main
 You are now ready to start development on your project!
 The CI/CD pipeline will be triggered when you open a pull request, merge to main, or when you create a new release.
 
+### 5. Authentication (JWT)
+
+This project uses **JWT authentication** exclusively via [djangorestframework-simplejwt](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/). Legacy token auth is removed.
+
+**Endpoints:**
+- `POST /api/auth/register/` — Register a new user (returns JWT tokens)
+- `POST /api/auth/login/` — Login (returns JWT tokens)
+- `POST /api/auth/logout/` — Logout (client-side token removal)
+- `GET /api/auth/profile/` — User profile (requires JWT access token)
+
+**How to authenticate:**
+- Obtain tokens from `/api/auth/login/` or `/api/auth/register/`
+- Include the `access` token in the `Authorization` header:
+  
+  ```http
+  Authorization: Bearer <access_token>
+  ```
+
+### 6. API Documentation
+
+API docs are auto-generated with [drf-spectacular](https://drf-spectacular.readthedocs.io/en/latest/):
+- **OpenAPI schema:** [http://localhost:8000/api/schema/](http://localhost:8000/api/schema/)
+- **Swagger UI:** [http://localhost:8000/api/docs/](http://localhost:8000/api/docs/)
+
+You can use Swagger UI to explore and test endpoints interactively.
+
+### 7. Running Tests & Coverage
+
+This project uses pytest for testing. To run the tests, use:
+
+```bash
+pytest
+```
+
+To run tests with coverage and generate a report:
+
+```bash
+pytest --cov --cov-report=html
+```
+
+The HTML coverage report will be available at `htmlcov/index.html`.
+
+### 8. Developer Documentation (Sphinx)
+
+Some modules use Python docstrings and Sphinx for developer documentation. To build the docs locally:
+
+```bash
+cd docs
+make html
+```
+
+The documentation will be available in `docs/_build/html/index.html`.
+
+### 9. Django Project Structure
+
+The project is organized into the following main apps:
+
+- **accounts**: User management and authentication
+- **vehicles**: Vehicle management and tracking
+- **maintenance**: Maintenance records and scheduling
+- **emergency**: Emergency incident reporting and management
+- **api**: REST API endpoints for the application
+
 To finalize the set-up for publishing to PyPI, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/publishing/#set-up-for-pypi).
 For activating the automatic documentation with MkDocs, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/mkdocs/#enabling-the-documentation-on-github).
 To enable the code coverage reports, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/codecov/).
 
 ## Releasing a new version
-
-
 
 ---
 

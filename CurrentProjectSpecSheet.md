@@ -1,31 +1,81 @@
 # Fleet Manager Project Specification
 
+## Overview
+
+This document outlines the specifications for the Fleet Manager project, including database models, API endpoints, and testing configuration.
+
 ## Database Models
 
-### Driver Model
+### User Roles & Custom User Model
 ```python
 from django.db import models
-from django.core.validators import RegexValidator
-from django.utils.translation import gettext_lazy as _
-from vehicles.models import Vehicle
+from django.contrib.auth.models import AbstractUser
 
-class DriverStatus(models.TextChoices):
-    ACTIVE = 'ACTIVE', _('Active')
-    INACTIVE = 'INACTIVE', _('Inactive')
-    SUSPENDED = 'SUSPENDED', _('Suspended')
+class UserRole(models.Model):
+    """
+    Represents a user role in the system, such as Admin, Manager, Coordinator, Driver, or TestUser.
+    """
+    ADMIN = 'admin'
+    MANAGER = 'manager'
+    COORDINATOR = 'coordinator'
+    DRIVER = 'driver'
+    TESTUSER = 'testuser'
 
-class Driver(models.Model):
-    first_name = models.CharField(max_length=50, verbose_name=_('First Name'))
-    last_name = models.CharField(max_length=50, verbose_name=_('Last Name'))
-    email = models.EmailField(unique=True, verbose_name=_('Email Address'))
-    phone_number = models.CharField(max_length=17, blank=True, verbose_name=_('Phone Number'))
-    driver_license_number = models.CharField(max_length=20, unique=True, verbose_name=_('Driver License Number'))
-    license_expiry_date = models.DateField(verbose_name=_('License Expiry Date'))
-    status = models.CharField(max_length=10, choices=DriverStatus.choices, default=DriverStatus.ACTIVE, verbose_name=_('Driver Status'))
-    assigned_vehicles = models.ManyToManyField(Vehicle, related_name='assigned_drivers', blank=True, verbose_name=_('Assigned Vehicles'))
-    hire_date = models.DateField(verbose_name=_('Hire Date'))
-    termination_date = models.DateField(null=True, blank=True, verbose_name=_('Termination Date'))
+    ROLE_CHOICES = [
+        (ADMIN, 'Admin'),
+        (MANAGER, 'Manager'),
+        (COORDINATOR, 'Coordinator'),
+        (DRIVER, 'Driver'),
+        (TESTUSER, 'Test User'),
+    ]
+
+    name = models.CharField(max_length=32, choices=ROLE_CHOICES, unique=True)
+    description = models.TextField(blank=True)
+    permissions = models.JSONField(default=dict, blank=True)
+
+    def __str__(self):
+        return self.get_name_display()
+
+class CustomUser(AbstractUser):
+    """
+    Custom user model with support for role-based access and extra profile fields.
+    """
+    role = models.ForeignKey(UserRole, on_delete=models.SET_NULL, null=True, related_name='users')
+    phone_number = models.CharField(max_length=20, blank=True)
+    emergency_contact = models.CharField(max_length=100, blank=True)
+
+    @property
+    def is_admin(self):
+        return self.role and self.role.name == UserRole.ADMIN
+
+    @property
+    def is_manager(self):
+        return self.role and self.role.name == UserRole.MANAGER
+
+    @property
+    def is_coordinator(self):
+        return self.role and self.role.name == UserRole.COORDINATOR
+
+    @property
+    def is_driver(self):
+        return self.role and self.role.name == UserRole.DRIVER
+
+    @property
+    def is_testuser(self):
+        return self.role and self.role.name == UserRole.TESTUSER
 ```
+
+#### Roles Defined
+- **Admin**: Full system access and management
+- **Manager**: Manages fleet and users, but cannot perform all admin operations
+- **Coordinator**: Handles assignments, scheduling, and incident coordination
+- **Driver**: Assigned to vehicles, can view and update their own info
+- **TestUser**: Used for development/testing, limited permissions
+
+#### Role-based Access
+- Role is assigned via a ForeignKey to `UserRole` on each `CustomUser`
+- Helper properties (`is_admin`, `is_manager`, etc.) allow for easy role checks in code
+- Permissions can be extended via the `permissions` JSON field in `UserRole`
 
 ### Vehicle Model
 ```python

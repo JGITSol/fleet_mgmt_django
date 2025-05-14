@@ -1,0 +1,67 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\REPOS\fleet_mgmt_django\venv\Scripts\pytest.exe\__main__.py", line 7, in <module>
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\_pytest\config\__init__.py", line 201, in console_main
+    code = main()
+           ^^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\_pytest\config\__init__.py", line 156, in main
+    config = _prepareconfig(args, plugins)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\_pytest\config\__init__.py", line 341, in _prepareconfig
+    config = pluginmanager.hook.pytest_cmdline_parse(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\pluggy\_hooks.py", line 513, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\pluggy\_callers.py", line 139, in _multicall
+    raise exception.with_traceback(exception.__traceback__)
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\pluggy\_callers.py", line 122, in _multicall
+    teardown.throw(exception)  # type: ignore[union-attr]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\_pytest\helpconfig.py", line 105, in pytest_cmdline_parse
+    config = yield
+             ^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\pluggy\_callers.py", line 103, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\_pytest\config\__init__.py", line 1140, in pytest_cmdline_parse
+    self.parse(args)
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\_pytest\config\__init__.py", line 1494, in parse
+    self._preparse(args, addopts=addopts)
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\_pytest\config\__init__.py", line 1398, in _preparse
+    self.hook.pytest_load_initial_conftests(
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\pluggy\_hooks.py", line 513, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\pluggy\_callers.py", line 139, in _multicall
+    raise exception.with_traceback(exception.__traceback__)
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\pluggy\_callers.py", line 122, in _multicall
+    teardown.throw(exception)  # type: ignore[union-attr]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\_pytest\warnings.py", line 151, in pytest_load_initial_conftests
+    return (yield)
+            ^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\pluggy\_callers.py", line 122, in _multicall
+    teardown.throw(exception)  # type: ignore[union-attr]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\_pytest\capture.py", line 172, in pytest_load_initial_conftests
+    yield
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\pluggy\_callers.py", line 103, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\pytest_django\plugin.py", line 356, in pytest_load_initial_conftests
+    with _handle_import_error(_django_project_scan_outcome):
+  File "C:\Users\jedrz\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\REPOS\fleet_mgmt_django\venv\Lib\site-packages\pytest_django\plugin.py", line 184, in _handle_import_error
+    raise ImportError(msg) from None
+ImportError: No module named 'CarFleetManagement'
+
+pytest-django did not search for Django projects since it is disabled in the configuration ("django_find_project = false")

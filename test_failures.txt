@@ -1,0 +1,131 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.3, pytest-8.3.5, pluggy-1.5.0 -- D:\REPOS\fleet_mgmt_django\venv\Scripts\python.exe
+cachedir: .pytest_cache
+django: version: 5.1.7, settings: CarFleetManagement.settings (from ini)
+rootdir: D:\REPOS\fleet_mgmt_django
+configfile: pytest.ini
+plugins: cov-6.1.1, django-4.11.1
+collecting ... collected 182 items
+
+CarFleetManagement/api/tests/test_management_commands.py::OpenRouterAnalyzeCommandTestCase::test_analyze_command PASSED [  0%]
+CarFleetManagement/api/tests/test_management_commands.py::OpenRouterAnalyzeCommandTestCase::test_analyze_error PASSED [  1%]
+CarFleetManagement/api/tests/test_management_commands.py::OpenRouterAnalyzeCommandTestCase::test_analyze_with_output PASSED [  1%]
+CarFleetManagement/api/tests/test_management_commands.py::OpenRouterAnalyzeCommandTestCase::test_analyze_with_prompt PASSED [  2%]
+CarFleetManagement/api/tests/test_management_commands.py::OpenRouterAnalyzeCommandTestCase::test_batch PASSED [  2%]
+CarFleetManagement/api/tests/test_management_commands.py::OpenRouterAnalyzeCommandTestCase::test_batch_filters PASSED [  3%]
+CarFleetManagement/api/tests/test_management_commands.py::OpenRouterAnalyzeCommandTestCase::test_command_without_subcommand PASSED [  3%]
+CarFleetManagement/api/tests/test_management_commands.py::OpenRouterAnalyzeCommandTestCase::test_report PASSED [  4%]
+CarFleetManagement/api/tests/test_openrouter_client.py::OpenRouterClientTestCase::test_analyze_screenshot_api_error PASSED [  4%]
+CarFleetManagement/api/tests/test_openrouter_client.py::OpenRouterClientTestCase::test_analyze_screenshot_file_not_found PASSED [  5%]
+CarFleetManagement/api/tests/test_openrouter_client.py::OpenRouterClientTestCase::test_analyze_screenshot_success PASSED [  6%]
+CarFleetManagement/api/tests/test_openrouter_client.py::OpenRouterClientTestCase::test_analyze_screenshot_with_custom_prompt PASSED [  6%]
+CarFleetManagement/api/tests/test_openrouter_client.py::OpenRouterClientTestCase::test_batch_analyze_screenshots PASSED [  7%]
+CarFleetManagement/api/tests/test_openrouter_client.py::OpenRouterClientTestCase::test_batch_analyze_screenshots_directory_not_found PASSED [  7%]
+CarFleetManagement/api/tests/test_openrouter_client.py::OpenRouterClientTestCase::test_batch_analyze_screenshots_with_filters PASSED [  8%]
+CarFleetManagement/api/tests/test_openrouter_client.py::OpenRouterClientTestCase::test_get_client PASSED [  8%]
+CarFleetManagement/api/tests/test_openrouter_client.py::OpenRouterClientTestCase::test_init_with_api_key PASSED [  9%]
+CarFleetManagement/api/tests/test_openrouter_client.py::OpenRouterClientTestCase::test_init_without_api_key PASSED [  9%]
+CarFleetManagement/api/tests/test_openrouter_client.py::OpenRouterClientTestCase::test_init_without_api_key_and_env PASSED [ 10%]
+CarFleetManagement/api/tests/test_report_generator.py::ScreenshotAnalysisReportTestCase::test_generate_html_report_content PASSED [ 10%]
+CarFleetManagement/api/tests/test_report_generator.py::ScreenshotAnalysisReportTestCase::test_generate_html_report_custom_output PASSED [ 11%]
+CarFleetManagement/api/tests/test_report_generator.py::ScreenshotAnalysisReportTestCase::test_generate_html_report_default_output PASSED [ 12%]
+CarFleetManagement/api/tests/test_report_generator.py::ScreenshotAnalysisReportTestCase::test_generate_report_function PASSED [ 12%]
+CarFleetManagement/api/tests/test_report_generator.py::ScreenshotAnalysisReportTestCase::test_init_file_not_found PASSED [ 13%]
+CarFleetManagement/api/tests/test_report_generator.py::ScreenshotAnalysisReportTestCase::test_init_with_valid_file PASSED [ 13%]
+CarFleetManagement/api/tests/test_views.py::AnalyzeScreenshotViewTestCase::test_post_with_client_error FAILED [ 14%]
+CarFleetManagement/api/tests/test_views.py::AnalyzeScreenshotViewTestCase::test_post_with_screenshot FAILED [ 14%]
+CarFleetManagement/api/tests/test_views.py::AnalyzeScreenshotViewTestCase::test_post_with_screenshot_and_prompt FAILED [ 15%]
+CarFleetManagement/api/tests/test_views.py::AnalyzeScreenshotViewTestCase::test_post_without_screenshot PASSED [ 15%]
+CarFleetManagement/api/tests/test_views.py::BatchAnalyzeScreenshotsViewTestCase::test_post_with_client_error PASSED [ 16%]
+CarFleetManagement/api/tests/test_views.py::BatchAnalyzeScreenshotsViewTestCase::test_post_with_language_filter FAILED [ 17%]
+CarFleetManagement/api/tests/test_views.py::BatchAnalyzeScreenshotsViewTestCase::test_post_with_multiple_filters FAILED [ 17%]
+CarFleetManagement/api/tests/test_views.py::BatchAnalyzeScreenshotsViewTestCase::test_post_with_no_matching_screenshots FAILED [ 18%]
+CarFleetManagement/api/tests/test_views.py::BatchAnalyzeScreenshotsViewTestCase::test_post_with_page_filter FAILED [ 18%]
+CarFleetManagement/api/tests/test_views.py::BatchAnalyzeScreenshotsViewTestCase::test_post_with_theme_filter FAILED [ 19%]
+CarFleetManagement/api/tests/test_views.py::BatchAnalyzeScreenshotsViewTestCase::test_post_without_filters FAILED [ 19%]
+CarFleetManagement/api/tests/test_views.py::GenerateReportViewTestCase::test_post_with_analysis_data FAILED [ 20%]
+
+================================== FAILURES ===================================
+__________ AnalyzeScreenshotViewTestCase.test_post_with_client_error __________
+CarFleetManagement\api\tests\test_views.py:133: in test_post_with_client_error
+    self.assertEqual(response.data['error'], 'Test error')
+E   AssertionError: "cannot identify image file 'D:\\\\REPOS\[60 chars]png'" != 'Test error'
+E   - cannot identify image file 'D:\\REPOS\\fleet_mgmt_django\\temp_screenshots\\test_screenshot.png'
+E   + Test error
+------------------------------ Captured log call ------------------------------
+ERROR    django.request:log.py:248 Internal Server Error: /api/screenshots/analyze/
+___________ AnalyzeScreenshotViewTestCase.test_post_with_screenshot ___________
+CarFleetManagement\api\tests\test_views.py:73: in test_post_with_screenshot
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+E   AssertionError: 500 != 200
+------------------------------ Captured log call ------------------------------
+ERROR    django.request:log.py:248 Internal Server Error: /api/screenshots/analyze/
+_____ AnalyzeScreenshotViewTestCase.test_post_with_screenshot_and_prompt ______
+CarFleetManagement\api\tests\test_views.py:108: in test_post_with_screenshot_and_prompt
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+E   AssertionError: 500 != 200
+------------------------------ Captured log call ------------------------------
+ERROR    django.request:log.py:248 Internal Server Error: /api/screenshots/analyze/
+_____ BatchAnalyzeScreenshotsViewTestCase.test_post_with_language_filter ______
+CarFleetManagement\api\tests\test_views.py:216: in test_post_with_language_filter
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+E   AssertionError: 500 != 200
+------------------------------ Captured log call ------------------------------
+ERROR    django.request:log.py:248 Internal Server Error: /api/screenshots/batch-analyze/
+_____ BatchAnalyzeScreenshotsViewTestCase.test_post_with_multiple_filters _____
+CarFleetManagement\api\tests\test_views.py:297: in test_post_with_multiple_filters
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+E   AssertionError: 500 != 200
+------------------------------ Captured log call ------------------------------
+ERROR    django.request:log.py:248 Internal Server Error: /api/screenshots/batch-analyze/
+_ BatchAnalyzeScreenshotsViewTestCase.test_post_with_no_matching_screenshots __
+CarFleetManagement\api\tests\test_views.py:313: in test_post_with_no_matching_screenshots
+    self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+E   AssertionError: 500 != 404
+------------------------------ Captured log call ------------------------------
+ERROR    django.request:log.py:248 Internal Server Error: /api/screenshots/batch-analyze/
+_______ BatchAnalyzeScreenshotsViewTestCase.test_post_with_page_filter ________
+CarFleetManagement\api\tests\test_views.py:266: in test_post_with_page_filter
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+E   AssertionError: 500 != 200
+------------------------------ Captured log call ------------------------------
+ERROR    django.request:log.py:248 Internal Server Error: /api/screenshots/batch-analyze/
+_______ BatchAnalyzeScreenshotsViewTestCase.test_post_with_theme_filter _______
+CarFleetManagement\api\tests\test_views.py:241: in test_post_with_theme_filter
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+E   AssertionError: 500 != 200
+------------------------------ Captured log call ------------------------------
+ERROR    django.request:log.py:248 Internal Server Error: /api/screenshots/batch-analyze/
+________ BatchAnalyzeScreenshotsViewTestCase.test_post_without_filters ________
+CarFleetManagement\api\tests\test_views.py:190: in test_post_without_filters
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+E   AssertionError: 500 != 200
+------------------------------ Captured log call ------------------------------
+ERROR    django.request:log.py:248 Internal Server Error: /api/screenshots/batch-analyze/
+___________ GenerateReportViewTestCase.test_post_with_analysis_data ___________
+CarFleetManagement\api\tests\test_views.py:400: in test_post_with_analysis_data
+    self.assertEqual(response.content.decode(), report_content)
+E   AssertionError: '\n        <!DOCTYPE html>\n        <html>[2216 chars]tml>' != '<html><body>Test Report</body></html>'
+E   Diff is 2334 characters long. Set self.maxDiff to None to see it.
+============================== warnings summary ===============================
+CarFleetManagement\tests\test_setup.py:28
+  D:\REPOS\fleet_mgmt_django\CarFleetManagement\tests\test_setup.py:28: PytestCollectionWarning: cannot collect test class 'TestUserSerializer' because it has a __init__ constructor (from: CarFleetManagement/tests/test_setup.py)
+    class TestUserSerializer(serializers.ModelSerializer):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED CarFleetManagement/api/tests/test_views.py::AnalyzeScreenshotViewTestCase::test_post_with_client_error - AssertionError: "cannot identify image file 'D:\\\\REPOS\[60 chars]png'" != 'Test error'
+- cannot identify image file 'D:\\REPOS\\fleet_mgmt_django\\temp_screenshots\\test_screenshot.png'
++ Test error
+FAILED CarFleetManagement/api/tests/test_views.py::AnalyzeScreenshotViewTestCase::test_post_with_screenshot - AssertionError: 500 != 200
+FAILED CarFleetManagement/api/tests/test_views.py::AnalyzeScreenshotViewTestCase::test_post_with_screenshot_and_prompt - AssertionError: 500 != 200
+FAILED CarFleetManagement/api/tests/test_views.py::BatchAnalyzeScreenshotsViewTestCase::test_post_with_language_filter - AssertionError: 500 != 200
+FAILED CarFleetManagement/api/tests/test_views.py::BatchAnalyzeScreenshotsViewTestCase::test_post_with_multiple_filters - AssertionError: 500 != 200
+FAILED CarFleetManagement/api/tests/test_views.py::BatchAnalyzeScreenshotsViewTestCase::test_post_with_no_matching_screenshots - AssertionError: 500 != 404
+FAILED CarFleetManagement/api/tests/test_views.py::BatchAnalyzeScreenshotsViewTestCase::test_post_with_page_filter - AssertionError: 500 != 200
+FAILED CarFleetManagement/api/tests/test_views.py::BatchAnalyzeScreenshotsViewTestCase::test_post_with_theme_filter - AssertionError: 500 != 200
+FAILED CarFleetManagement/api/tests/test_views.py::BatchAnalyzeScreenshotsViewTestCase::test_post_without_filters - AssertionError: 500 != 200
+FAILED CarFleetManagement/api/tests/test_views.py::GenerateReportViewTestCase::test_post_with_analysis_data - AssertionError: '\n        <!DOCTYPE html>\n        <html>[2216 chars]tml>' != '<html><body>Test Report</body></html>'
+Diff is 2334 characters long. Set self.maxDiff to None to see it.
+!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 10 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+================== 10 failed, 27 passed, 1 warning in 19.67s ==================

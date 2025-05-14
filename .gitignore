@@ -1,2 +1,36 @@
+# Virtual Environment
 venv/
 venv
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+coverage.xml
+coverage.json
+.pytest_cache/
+
+# Django stuff
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Temporary test scripts
+# Commented out to allow creating test scripts
+# run_*.py
+*.bat
+# Commented out to allow access to test files
+# test_*_*.py

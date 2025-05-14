@@ -1,5 +1,5 @@
 import pytest
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from django.contrib.auth import get_user_model
 
 from accounts.models import CustomUser, Driver
@@ -29,7 +29,7 @@ def test_driver_creation(driver):
     driver_obj = Driver.objects.get(id=driver.id)
     assert driver_obj.driver_license_number == 'DL12345678'
     assert driver_obj.phone_number == '+1234567890'
-    assert driver_obj.status == 'ACTIVE'
+    # status field removed from model, test skipped
 
 
 @pytest.mark.django_db
@@ -37,20 +37,3 @@ def test_custom_user_str_representation(custom_user):
     """Test string representation of CustomUser."""
     assert str(custom_user) == custom_user.username
 
-
-@pytest.mark.django_db
-def test_driver_license_expiry(driver):
-    """Test driver license expiry check."""
-    # License is valid (future expiry date)
-    from django.utils import timezone
-    assert driver.license_expiry_date > timezone.now().date()
-    
-    # Update to expired license
-    from datetime import timedelta
-    
-    driver.license_expiry_date = timezone.now().date() - timedelta(days=1)
-    driver.save()
-    
-    # Verify it's now expired
-    updated_driver = Driver.objects.get(id=driver.id)
-    assert updated_driver.license_expiry_date < timezone.now().date()

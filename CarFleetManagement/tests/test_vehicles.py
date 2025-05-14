@@ -1,12 +1,12 @@
 import pytest
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from django.utils import timezone
 from datetime import timedelta
 
 from vehicles.models import Vehicle
 
 # Import tests from the app-specific test directory
-from vehicles.tests.test_models import VehicleTestCase
+
 
 
 # Add additional tests that might require fixtures from conftest.py

@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard | Car Fleet Manager{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <h1 class="display-6 mb-4">Administrator Dashboard</h1>
+  
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary">
+        <div class="card-body">
+          <h5 class="card-title">Total Vehicles</h5>
+          <p class="display-4">{% if stats.total_vehicles %}{{ stats.total_vehicles }}{% else %}0{% endif %}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3">
+      <div class="card text-white bg-success">
+        <div class="card-body">
+          <h5 class="card-title">Total Drivers</h5>
+          <p class="display-4">{% if stats.total_drivers %}{{ stats.total_drivers }}{% else %}0{% endif %}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3">
+      <div class="card text-white bg-info">
+        <div class="card-body">
+          <h5 class="card-title">Total Users</h5>
+          <p class="display-4">{% if stats.total_users %}{{ stats.total_users }}{% else %}0{% endif %}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3">
+      <div class="card text-white bg-danger">
+        <div class="card-body">
+          <h5 class="card-title">Active Incidents</h5>
+          <p class="display-4">{% if stats.active_incidents %}{{ stats.active_incidents }}{% else %}0{% endif %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5>Recent Emergency Incidents</h5>
+        </div>
+        <div class="card-body">
+          {% if recent_incidents %}
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Vehicle</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for incident in recent_incidents %}
+                  <tr>
+                    <td>{{ incident.reported_time|date:"M d, Y" }}</td>
+                    <td>{{ incident.vehicle }}</td>
+                    <td>{{ incident.get_emergency_type_display }}</td>
+                    <td>
+                      {% if incident.status == 'REPORTED' %}
+                        <span class="badge bg-warning">Reported</span>
+                      {% elif incident.status == 'RESPONDING' %}
+                        <span class="badge bg-info">Responding</span>
+                      {% elif incident.status == 'RESOLVED' %}
+                        <span class="badge bg-success">Resolved</span>
+                      {% elif incident.status == 'CLOSED' %}
+                        <span class="badge bg-secondary">Closed</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p>No recent incidents</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+          <h5>Recent Maintenance Activities</h5>
+        </div>
+        <div class="card-body">
+          {% if recent_maintenance %}
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Vehicle</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for maintenance in recent_maintenance %}
+                  <tr>
+                    <td>{{ maintenance.scheduled_date|date:"M d, Y" }}</td>
+                    <td>{{ maintenance.vehicle }}</td>
+                    <td>{{ maintenance.get_maintenance_type_display }}</td>
+                    <td>
+                      {% if maintenance.status == 'SCHEDULED' %}
+                        <span class="badge bg-warning">Scheduled</span>
+                      {% elif maintenance.status == 'IN_PROGRESS' %}
+                        <span class="badge bg-info">In Progress</span>
+                      {% elif maintenance.status == 'COMPLETED' %}
+                        <span class="badge bg-success">Completed</span>
+                      {% elif maintenance.status == 'CANCELLED' %}
+                        <span class="badge bg-danger">Cancelled</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p>No recent maintenance activities</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header bg-dark text-white">
+          <h5>System Management</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3 mb-3">
+              <a href="{% url 'admin:index' %}" class="btn btn-primary w-100">
+                <i class="bi bi-gear-fill me-2"></i> Django Admin
+              </a>
+            </div>
+            <div class="col-md-3 mb-3">
+              <a href="#" class="btn btn-success w-100">
+                <i class="bi bi-people-fill me-2"></i> Manage Users
+              </a>
+            </div>
+            <div class="col-md-3 mb-3">
+              <a href="#" class="btn btn-info w-100">
+                <i class="bi bi-file-earmark-text-fill me-2"></i> Reports
+              </a>
+            </div>
+            <div class="col-md-3 mb-3">
+              <a href="#" class="btn btn-warning w-100">
+                <i class="bi bi-sliders me-2"></i> System Settings
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

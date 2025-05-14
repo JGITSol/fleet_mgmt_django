@@ -1,0 +1,25 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.3, pytest-8.3.5, pluggy-1.5.0 -- D:\REPOS\fleet_mgmt_django\venv\Scripts\python.exe
+cachedir: .pytest_cache
+django: version: 5.1.7, settings: CarFleetManagement.settings (from ini)
+rootdir: D:\REPOS\fleet_mgmt_django
+configfile: pytest.ini
+testpaths: CarFleetManagement/accounts/tests, CarFleetManagement/api/tests, CarFleetManagement/vehicles/tests, CarFleetManagement/maintenance/tests, CarFleetManagement/emergency/tests
+plugins: cov-6.1.1, django-4.11.1
+collecting ... collected 167 items
+
+CarFleetManagement/accounts/tests/test_api.py::DriverAPITestCase::test_create_driver ERROR [  0%]
+
+=================================== ERRORS ====================================
+___________ ERROR at setup of DriverAPITestCase.test_create_driver ____________
+ScopeMismatch: You tried to access the function scoped fixture django_db_setup with a class scoped request object. Requesting fixture stack:
+venv\Lib\site-packages\pytest_django\plugin.py:555:  def _django_setup_unittest(request: 'pytest.FixtureRequest', django_db_blocker: 'DjangoDbBlocker') -> 'Generator[None, None, None]'
+Requested fixture:
+conftest.py:26:  def django_db_setup(django_db_blocker)
+=========================== short test summary info ===========================
+ERROR CarFleetManagement/accounts/tests/test_api.py::DriverAPITestCase::test_create_driver - Failed: ScopeMismatch: You tried to access the function scoped fixture django_db_setup with a class scoped request object. Requesting fixture stack:
+venv\Lib\site-packages\pytest_django\plugin.py:555:  def _django_setup_unittest(request: 'pytest.FixtureRequest', django_db_blocker: 'DjangoDbBlocker') -> 'Generator[None, None, None]'
+Requested fixture:
+conftest.py:26:  def django_db_setup(django_db_blocker)
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+============================== 1 error in 0.54s ===============================

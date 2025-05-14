@@ -1,14 +1,14 @@
 import os
 import json
 from unittest import mock
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from django.conf import settings
 from pathlib import Path
 
 from api.report_generator import ScreenshotAnalysisReport, generate_report
 
 
-class ScreenshotAnalysisReportTestCase(TestCase):
+class ScreenshotAnalysisReportTestCase(APITestCase):
     """Test cases for the ScreenshotAnalysisReport class."""
     
     def setUp(self):

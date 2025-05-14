@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{{ vehicle.brand }} {{ vehicle.model }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ vehicle.brand }} {{ vehicle.model }}</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ vehicle.year }} {{ vehicle.brand }} {{ vehicle.model }}</h5>
+            <p class="card-text"><strong>License Plate:</strong> {{ vehicle.license_plate }}</p>
+            <p class="card-text"><strong>VIN:</strong> {{ vehicle.vin }}</p>
+            <p class="card-text"><strong>Color:</strong> {{ vehicle.color }}</p>
+            <p class="card-text"><strong>Fuel Type:</strong> {{ vehicle.get_fuel_type_display }}</p>
+            <p class="card-text"><strong>Transmission:</strong> {{ vehicle.get_transmission_display }}</p>
+            <p class="card-text"><strong>Vehicle Type:</strong> {{ vehicle.get_vehicle_type_display }}</p>
+            <p class="card-text"><strong>Mileage:</strong> {{ vehicle.mileage }} km</p>
+            <p class="card-text"><strong>Status:</strong> {{ vehicle.get_status_display }}</p>
+            
+            {% if vehicle.last_service_date %}
+            <p class="card-text"><strong>Last Service:</strong> {{ vehicle.last_service_date }}</p>
+            {% endif %}
+            
+            {% if vehicle.next_service_date %}
+            <p class="card-text"><strong>Next Service:</strong> {{ vehicle.next_service_date }}</p>
+            {% endif %}
+            
+            {% if vehicle.insurance_expiry %}
+            <p class="card-text"><strong>Insurance Expiry:</strong> {{ vehicle.insurance_expiry }}</p>
+            {% endif %}
+            
+            <div class="mt-3">
+                <a href="{% url 'vehicle_update' vehicle.pk %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'vehicle_list' %}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

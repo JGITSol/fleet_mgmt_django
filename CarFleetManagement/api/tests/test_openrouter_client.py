@@ -1,14 +1,14 @@
 import os
 import json
 from unittest import mock
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from django.conf import settings
 from pathlib import Path
 
 from api.openrouter_client import OpenRouterClient, get_client
 
 
-class OpenRouterClientTestCase(TestCase):
+class OpenRouterClientTestCase(APITestCase):
     """Test cases for the OpenRouterClient class."""
     
     def setUp(self):
@@ -20,20 +20,30 @@ class OpenRouterClientTestCase(TestCase):
         self.test_dir = os.path.join(settings.BASE_DIR, 'test_screenshots')
         os.makedirs(self.test_dir, exist_ok=True)
         
-        # Create a test screenshot file
+        # Create a valid PNG image as the test screenshot file
+        from PIL import Image
         self.test_screenshot = os.path.join(self.test_dir, 'home_en_dark_20250331-201208.png')
-        with open(self.test_screenshot, 'w') as f:
-            f.write('test image content')
+        img = Image.new('RGB', (100, 100), color = (73, 109, 137))
+        img.save(self.test_screenshot, 'PNG')
     
     def tearDown(self):
         """Clean up test environment."""
-        # Remove test screenshot file
-        if os.path.exists(self.test_screenshot):
-            os.remove(self.test_screenshot)
-        
-        # Remove test directory
+        # Remove all files in the test directory
         if os.path.exists(self.test_dir):
-            os.rmdir(self.test_dir)
+            for filename in os.listdir(self.test_dir):
+                file_path = os.path.join(self.test_dir, filename)
+                try:
+                    if os.path.isfile(file_path) or os.path.islink(file_path):
+                        os.unlink(file_path)
+                    elif os.path.isdir(file_path):
+                        import shutil
+                        shutil.rmtree(file_path)
+                except Exception:
+                    pass
+            try:
+                os.rmdir(self.test_dir)
+            except Exception:
+                pass
     
     def test_init_with_api_key(self):
         """Test initialization with API key."""
@@ -169,8 +179,10 @@ class OpenRouterClientTestCase(TestCase):
         self.assertIn('home_en_dark_20250331-201208.png', result)
         
         # Clean up additional test files
-        os.remove(test_screenshot2)
-        os.remove(test_screenshot3)
+        if os.path.exists(test_screenshot2):
+            os.remove(test_screenshot2)
+        if os.path.exists(test_screenshot3):
+            os.remove(test_screenshot3)
     
     def test_get_client(self):
         """Test get_client function."""

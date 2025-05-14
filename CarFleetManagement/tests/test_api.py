@@ -1,5 +1,6 @@
 import pytest
-from django.test import TestCase, Client
+from rest_framework.test import APITestCase
+from rest_framework.test import APIClient
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient

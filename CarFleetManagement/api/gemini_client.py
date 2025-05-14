@@ -19,8 +19,6 @@ import google.generativeai as genai
 env_path = Path(settings.BASE_DIR) / '.env'
 load_dotenv(dotenv_path=env_path)
 
-# Get API key from environment variables
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 
 # Constants for rate limiting and image processing
 MAX_REQUESTS_PER_MINUTE = 10  # Adjust based on Gemini API limits
@@ -36,7 +34,10 @@ class GeminiClient:
         Args:
             api_key (str, optional): API key for Gemini. Defaults to the one in .env file.
         """
-        self.api_key = api_key or GEMINI_API_KEY
+        if api_key is not None:
+            self.api_key = api_key
+        else:
+            self.api_key = os.getenv('GEMINI_API_KEY')
         if not self.api_key:
             raise ValueError("Gemini API key is not set. Please add GEMINI_API_KEY to your .env file.")
         

@@ -1,4 +1,4 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -11,9 +11,15 @@ from maintenance.serializers import MaintenanceSerializer
 from vehicles.models import Vehicle
 from accounts.models import UserRole, CustomUser
 
-class MaintenanceAPITestCase(TestCase):
-    """Test cases for the Maintenance API endpoints."""
-    
+from rest_framework.test import APIClient
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
+from rest_framework_simplejwt.tokens import RefreshToken
+
+class MaintenanceAPITestCase(APITestCase):
     def setUp(self):
         """Set up test environment."""
         # Create roles
@@ -34,6 +40,10 @@ class MaintenanceAPITestCase(TestCase):
             password='password123',
             role=self.maintenance_role
         )
+        
+        # Generate JWT tokens
+        self.admin_token = str(RefreshToken.for_user(self.admin_user).access_token)
+        self.maintenance_token = str(RefreshToken.for_user(self.maintenance_user).access_token)
         
         # Create vehicle
         self.today = timezone.now().date()
@@ -72,15 +82,15 @@ class MaintenanceAPITestCase(TestCase):
         )
         
         # Create API client
-        self.client = APIClient()
+
     
     def test_get_all_maintenance(self):
         """Test retrieving all maintenance records."""
         # Authenticate as admin
-        self.client.force_authenticate(user=self.admin_user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.admin_token}')
         
         # Make API request
-        response = self.client.get(reverse('api-maintenance-list'))
+        response = self.client.get(reverse('CarFleetManagement.api:api-maintenance-list'))
         
         # Get data from DB
         maintenance_records = Maintenance.objects.all()
@@ -93,10 +103,10 @@ class MaintenanceAPITestCase(TestCase):
     def test_get_single_maintenance(self):
         """Test retrieving a single maintenance record."""
         # Authenticate as maintenance staff
-        self.client.force_authenticate(user=self.maintenance_user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.maintenance_token}')
         
         # Make API request
-        response = self.client.get(reverse('api-maintenance-detail', kwargs={'pk': self.routine_maintenance.pk}))
+        response = self.client.get(reverse('CarFleetManagement.api:api-maintenance-detail', kwargs={'pk': self.routine_maintenance.pk}))
         
         # Get data from DB
         maintenance = Maintenance.objects.get(pk=self.routine_maintenance.pk)
@@ -109,7 +119,7 @@ class MaintenanceAPITestCase(TestCase):
     def test_create_maintenance(self):
         """Test creating a new maintenance record."""
         # Authenticate as maintenance staff
-        self.client.force_authenticate(user=self.maintenance_user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.maintenance_token}')
         
         # Prepare data
         maintenance_data = {
@@ -125,7 +135,7 @@ class MaintenanceAPITestCase(TestCase):
         }
         
         # Make API request
-        response = self.client.post(reverse('api-maintenance-list'), maintenance_data, format='json')
+        response = self.client.post(reverse('CarFleetManagement.api:api-maintenance-list'), maintenance_data, format='json')
         
         # Assert response
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -135,7 +145,7 @@ class MaintenanceAPITestCase(TestCase):
     def test_update_maintenance(self):
         """Test updating a maintenance record."""
         # Authenticate as maintenance staff
-        self.client.force_authenticate(user=self.maintenance_user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.maintenance_token}')
         
         # Prepare data - mark maintenance as completed
         updated_data = {
@@ -153,7 +163,7 @@ class MaintenanceAPITestCase(TestCase):
         
         # Make API request
         response = self.client.put(
-            reverse('api-maintenance-detail', kwargs={'pk': self.repair_maintenance.pk}),
+            reverse('CarFleetManagement.api:api-maintenance-detail', kwargs={'pk': self.repair_maintenance.pk}),
             updated_data,
             format='json'
         )
@@ -169,10 +179,10 @@ class MaintenanceAPITestCase(TestCase):
     def test_delete_maintenance(self):
         """Test deleting a maintenance record."""
         # Authenticate as admin
-        self.client.force_authenticate(user=self.admin_user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.admin_token}')
         
         # Make API request
-        response = self.client.delete(reverse('api-maintenance-detail', kwargs={'pk': self.routine_maintenance.pk}))
+        response = self.client.delete(reverse('CarFleetManagement.api:api-maintenance-detail', kwargs={'pk': self.routine_maintenance.pk}))
         
         # Assert response
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -182,7 +192,8 @@ class MaintenanceAPITestCase(TestCase):
     def test_unauthorized_access(self):
         """Test unauthorized access to maintenance API."""
         # Unauthenticated request
-        response = self.client.get(reverse('api-maintenance-list'))
+        self.client.credentials()  # Clear credentials
+        response = self.client.get(reverse('CarFleetManagement.api:api-maintenance-list'))
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         
         # Create a regular user without maintenance permissions
@@ -193,8 +204,10 @@ class MaintenanceAPITestCase(TestCase):
         )
         
         # Authenticate as regular user
-        self.client.force_authenticate(user=regular_user)
+        from rest_framework_simplejwt.tokens import RefreshToken
+        regular_token = str(RefreshToken.for_user(regular_user).access_token)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {regular_token}')
         
         # Try to delete a maintenance record
-        response = self.client.delete(reverse('api-maintenance-detail', kwargs={'pk': self.routine_maintenance.pk}))
+        response = self.client.delete(reverse('CarFleetManagement.api:api-maintenance-detail', kwargs={'pk': self.routine_maintenance.pk}))
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

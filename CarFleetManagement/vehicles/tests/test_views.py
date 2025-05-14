@@ -1,22 +1,74 @@
-from django.test import TestCase, Client
+from rest_framework.test import APITestCase
+from rest_framework.test import APIClient
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from datetime import timedelta
 
 from vehicles.models import Vehicle
-from accounts.models import UserRole, Driver
+from accounts.models import UserRole
 
 User = get_user_model()
 
-class VehicleViewsTestCase(TestCase):
+# ========================
+# Appended from project-level tests/test_vehicles.py
+# ========================
+import pytest
+from rest_framework.test import APITestCase
+from django.utils import timezone
+from datetime import timedelta
+
+from vehicles.models import Vehicle
+
+# Import tests from the app-specific test directory
+from .test_models import VehicleTestCase
+
+# Add additional tests that might require fixtures from conftest.py
+@pytest.mark.django_db
+def test_vehicle_status_update(vehicle):
+    """Test updating vehicle status."""
+    # Test changing status
+    vehicle.status = Vehicle.Status.MAINTENANCE
+    vehicle.save()
+    
+    # Retrieve from DB and verify
+    updated_vehicle = Vehicle.objects.get(id=vehicle.id)
+    assert updated_vehicle.status == Vehicle.Status.MAINTENANCE
+
+@pytest.mark.django_db
+def test_vehicle_mileage_update(vehicle):
+    """Test updating vehicle mileage."""
+    # Update mileage
+    new_mileage = vehicle.mileage + 1000
+    vehicle.mileage = new_mileage
+    vehicle.save()
+    
+    # Retrieve from DB and verify
+    updated_vehicle = Vehicle.objects.get(id=vehicle.id)
+    assert updated_vehicle.mileage == new_mileage
+
+@pytest.mark.django_db
+def test_vehicle_service_due(vehicle):
+    """Test service due calculation."""
+    # Set next service date to yesterday
+    yesterday = timezone.now().date() - timedelta(days=1)
+    vehicle.next_service_date = yesterday
+    vehicle.save()
+    
+    # Retrieve from DB and verify
+    updated_vehicle = Vehicle.objects.get(id=vehicle.id)
+    assert updated_vehicle.is_service_due()
+
+from rest_framework_simplejwt.tokens import RefreshToken
+
+class VehicleViewsTestCase(APITestCase):
     """Test cases for the vehicles app views."""
     
     def setUp(self):
         """Set up test environment."""
         # Create roles
         self.admin_role = UserRole.objects.create(name=UserRole.ADMIN, description='Administrator role')
-        self.fleet_manager_role = UserRole.objects.create(name=UserRole.FLEET_MANAGER, description='Fleet Manager role')
+        self.fleet_manager_role = UserRole.objects.create(name=UserRole.MANAGER, description='Fleet Manager role')
         
         # Create users
         self.admin_user = User.objects.create_user(
@@ -73,37 +125,33 @@ class VehicleViewsTestCase(TestCase):
         )
         
         # Create client
-        self.client = Client()
+
+        
+    def authenticate_as(self, user):
+        """Authenticate as a user using JWT."""
+        refresh = RefreshToken.for_user(user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
     
     def test_vehicle_list_view(self):
         """Test vehicle list view."""
-        # Login as admin
-        self.client.login(username='admin_user', password='password123')
-        
-        # Test vehicle list view
-        response = self.client.get(reverse('vehicle_list'))
+        self.authenticate_as(self.admin_user)
+        response = self.client.get(reverse('vehicles:vehicle_list'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Toyota Camry')
         self.assertContains(response, 'Honda Civic')
     
     def test_vehicle_detail_view(self):
         """Test vehicle detail view."""
-        # Login as admin
-        self.client.login(username='admin_user', password='password123')
-        
-        # Test vehicle detail view
-        response = self.client.get(reverse('vehicle_detail', kwargs={'pk': self.vehicle1.pk}))
+        self.authenticate_as(self.admin_user)
+        response = self.client.get(reverse('vehicles:vehicle_detail', kwargs={'pk': self.vehicle1.pk}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Toyota Camry')
         self.assertContains(response, 'ABC-123')
     
     def test_vehicle_create_view(self):
         """Test vehicle create view."""
-        # Login as fleet manager
-        self.client.login(username='fleet_manager', password='password123')
-        
-        # Test GET request
-        response = self.client.get(reverse('vehicle_create'))
+        self.authenticate_as(self.fleet_manager_user)
+        response = self.client.get(reverse('vehicles:vehicle_create'))
         self.assertEqual(response.status_code, 200)
         
         # Test POST request
@@ -121,7 +169,7 @@ class VehicleViewsTestCase(TestCase):
             'status': Vehicle.Status.AVAILABLE
         }
         
-        response = self.client.post(reverse('vehicle_create'), vehicle_data)
+        response = self.client.post(reverse('vehicles:vehicle_create'), vehicle_data)
         self.assertEqual(response.status_code, 302)  # Redirect after successful creation
         
         # Verify vehicle was created
@@ -129,11 +177,8 @@ class VehicleViewsTestCase(TestCase):
     
     def test_vehicle_update_view(self):
         """Test vehicle update view."""
-        # Login as fleet manager
-        self.client.login(username='fleet_manager', password='password123')
-        
-        # Test GET request
-        response = self.client.get(reverse('vehicle_update', kwargs={'pk': self.vehicle1.pk}))
+        self.authenticate_as(self.fleet_manager_user)
+        response = self.client.get(reverse('vehicles:vehicle_update', kwargs={'pk': self.vehicle1.pk}))
         self.assertEqual(response.status_code, 200)
         
         # Test POST request
@@ -147,14 +192,23 @@ class VehicleViewsTestCase(TestCase):
             'fuel_type': Vehicle.FuelType.HYBRID,
             'transmission': Vehicle.TransmissionType.AUTOMATIC,
             'vehicle_type': Vehicle.VehicleType.SUV,
-            'mileage': 16000,  # Updated mileage
+            'mileage': 16000,
             'status': Vehicle.Status.AVAILABLE
         }
         
-        response = self.client.post(reverse('vehicle_update', kwargs={'pk': self.vehicle1.pk}), updated_data)
+        response = self.client.post(reverse('vehicles:vehicle_update', kwargs={'pk': self.vehicle1.pk}), updated_data)
         self.assertEqual(response.status_code, 302)  # Redirect after successful update
         
         # Verify vehicle was updated
         self.vehicle1.refresh_from_db()
         self.assertEqual(self.vehicle1.color, 'Green')
         self.assertEqual(self.vehicle1.mileage, 16000)
+        
+    def test_vehicle_delete_view(self):
+        """Test vehicle delete view."""
+        self.authenticate_as(self.fleet_manager_user)
+        response = self.client.delete(reverse('vehicles:vehicle_delete', kwargs={'pk': self.vehicle2.pk}))
+        self.assertEqual(response.status_code, 302) # Redirect after successful deletion
+        
+        # Verify vehicle was deleted
+        self.assertFalse(Vehicle.objects.filter(pk=self.vehicle2.pk).exists())

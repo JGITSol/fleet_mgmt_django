@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Vehicles{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Vehicle List</h1>
+    <a href="{% url 'vehicle_create' %}" class="btn btn-primary mb-3">Add New Vehicle</a>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>License Plate</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vehicle in vehicles %}
+                <tr>
+                    <td>{{ vehicle.brand }}</td>
+                    <td>{{ vehicle.model }}</td>
+                    <td>{{ vehicle.year }}</td>
+                    <td>{{ vehicle.license_plate }}</td>
+                    <td>{{ vehicle.get_status_display }}</td>
+                    <td>
+                        <a href="{% url 'vehicle_detail' vehicle.pk %}" class="btn btn-sm btn-info">View</a>
+                        <a href="{% url 'vehicle_update' vehicle.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No vehicles found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

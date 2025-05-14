@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Maintenance Records{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Maintenance Records</h1>
+    <a href="{% url 'maintenance_create' %}" class="btn btn-primary mb-3">Add New Maintenance Record</a>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Vehicle</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Description</th>
+                    <th>Scheduled Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for maintenance in maintenance_list %}
+                <tr>
+                    <td>{{ maintenance.vehicle.brand }} {{ maintenance.vehicle.model }}</td>
+                    <td>{{ maintenance.get_maintenance_type_display }}</td>
+                    <td>{{ maintenance.get_status_display }}</td>
+                    <td>{{ maintenance.description }}</td>
+                    <td>{{ maintenance.scheduled_date }}</td>
+                    <td>
+                        <a href="{% url 'maintenance_detail' maintenance.pk %}" class="btn btn-sm btn-info">View</a>
+                        <a href="{% url 'maintenance_update' maintenance.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No maintenance records found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

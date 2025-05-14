@@ -1,0 +1,126 @@
+Last test run: 2025-04-14 11:16:03.024808
+Log file: test_logs\test_log_20250414-111559.txt
+
+STDOUT:
+============================= test session starts =============================
+platform win32 -- Python 3.11.3, pytest-8.3.5, pluggy-1.5.0 -- D:\REPOS\fleet_mgmt_django\venv\Scripts\python.exe
+cachedir: .pytest_cache
+django: version: 5.1.7
+rootdir: D:\REPOS\fleet_mgmt_django\CarFleetManagement
+configfile: pytest.ini
+testpaths: tests
+plugins: cov-6.1.1, django-4.11.1
+collecting ... collected 61 items
+
+tests/test_accounts.py::UserRoleTestCase::test_role_creation <- accounts\tests\test_models.py PASSED [  1%]
+tests/test_accounts.py::CustomUserTestCase::test_user_creation <- accounts\tests\test_models.py PASSED [  3%]
+tests/test_accounts.py::CustomUserTestCase::test_user_role_properties <- accounts\tests\test_models.py PASSED [  4%]
+tests/test_accounts.py::DriverTestCase::test_driver_creation <- accounts\tests\test_models.py PASSED [  6%]
+tests/test_accounts.py::DriverTestCase::test_driver_full_name_property <- accounts\tests\test_models.py PASSED [  8%]
+tests/test_accounts.py::DriverTestCase::test_driver_string_representation <- accounts\tests\test_models.py PASSED [  9%]
+tests/test_accounts.py::DriverTestCase::test_driver_vehicle_assignment <- accounts\tests\test_models.py PASSED [ 11%]
+tests/test_accounts.py::EmergencyContactTestCase::test_emergency_contact_creation <- accounts\tests\test_models.py PASSED [ 13%]
+tests/test_accounts.py::EmergencyContactTestCase::test_emergency_contact_string_representation <- accounts\tests\test_models.py PASSED [ 14%]
+tests/test_accounts.py::test_custom_user_creation PASSED                 [ 16%]
+tests/test_accounts.py::test_driver_creation PASSED                      [ 18%]
+tests/test_accounts.py::test_custom_user_str_representation PASSED       [ 19%]
+tests/test_accounts.py::test_driver_license_expiry PASSED                [ 21%]
+tests/test_api.py::test_user_creation PASSED                             [ 22%]
+tests/test_api_views.py::TestAuthViews::test_user_profile_view PASSED    [ 24%]
+tests/test_api_views.py::TestAuthViews::test_unauthenticated_access PASSED [ 26%]
+tests/test_api_views.py::TestVehicleViews::test_vehicle_list_view SKIPPED [ 27%]
+tests/test_api_views.py::TestVehicleViews::test_vehicle_detail_view SKIPPED [ 29%]
+tests/test_api_views.py::TestMaintenanceViews::test_maintenance_list_view PASSED [ 31%]
+tests/test_api_views.py::TestMaintenanceViews::test_maintenance_detail_view PASSED [ 32%]
+tests/test_emergency.py::EmergencyIncidentTestCase::test_incident_creation <- emergency\tests\test_models.py PASSED [ 34%]
+tests/test_emergency.py::EmergencyIncidentTestCase::test_incident_status_update <- emergency\tests\test_models.py PASSED [ 36%]
+tests/test_emergency.py::EmergencyIncidentTestCase::test_incident_string_representation <- emergency\tests\test_models.py PASSED [ 37%]
+tests/test_emergency.py::EmergencyResponseTestCase::test_response_creation <- emergency\tests\test_models.py PASSED [ 39%]
+tests/test_emergency.py::EmergencyResponseTestCase::test_response_string_representation <- emergency\tests\test_models.py PASSED [ 40%]
+tests/test_emergency.py::EmergencyContactTestCase::test_emergency_contact_creation <- emergency\tests\test_models.py PASSED [ 42%]
+tests/test_emergency.py::EmergencyContactTestCase::test_emergency_contact_string_representation <- emergency\tests\test_models.py PASSED [ 44%]
+tests/test_emergency.py::test_emergency_contact_creation PASSED          [ 45%]
+tests/test_emergency.py::test_emergency_incident_creation PASSED         [ 47%]
+tests/test_emergency.py::test_emergency_contact_str_representation PASSED [ 49%]
+tests/test_emergency.py::test_emergency_incident_status_update PASSED    [ 50%]
+tests/test_maintenance.py::test_maintenance_creation PASSED              [ 52%]
+tests/test_maintenance_fixed.py::test_maintenance_simple PASSED          [ 54%]
+tests/test_maintenance_methods.py::TestMaintenanceMethods::test_days_until_scheduled_with_future_date PASSED [ 55%]
+tests/test_maintenance_methods.py::TestMaintenanceMethods::test_days_until_scheduled_with_past_date PASSED [ 57%]
+tests/test_maintenance_methods.py::TestMaintenanceMethods::test_days_until_scheduled_with_today PASSED [ 59%]
+tests/test_maintenance_methods.py::TestMaintenanceMethods::test_days_until_scheduled_with_no_date PASSED [ 60%]
+tests/test_maintenance_methods.py::TestMaintenanceMethods::test_maintenance_status_update PASSED [ 62%]
+tests/test_patches.py::test_user_serializer_patch PASSED                 [ 63%]
+tests/test_serializers.py::TestDriverSerializer::test_serializer_output PASSED [ 65%]
+tests/test_serializers.py::TestVehicleSerializer::test_serializer_output PASSED [ 67%]
+tests/test_serializers.py::TestMaintenanceSerializer::test_serializer_output PASSED [ 68%]
+tests/test_setup.py::test_setup_environment PASSED                       [ 70%]
+tests/test_setup.py::test_get_authenticated_client PASSED                [ 72%]
+tests/test_utils.py::test_get_tokens_for_user PASSED                     [ 73%]
+tests/test_utils.py::test_authenticate_client PASSED                     [ 75%]
+tests/test_vehicle_methods.py::TestVehicleMethods::test_is_service_due_with_future_date PASSED [ 77%]
+tests/test_vehicle_methods.py::TestVehicleMethods::test_is_service_due_with_past_date PASSED [ 78%]
+tests/test_vehicle_methods.py::TestVehicleMethods::test_is_service_due_with_today PASSED [ 80%]
+tests/test_vehicle_methods.py::TestVehicleMethods::test_is_service_due_with_no_date PASSED [ 81%]
+tests/test_vehicle_methods.py::TestVehicleMethods::test_update_mileage PASSED [ 83%]
+tests/test_vehicle_methods.py::TestVehicleMethods::test_vehicle_status_update PASSED [ 85%]
+tests/test_vehicles.py::VehicleTestCase::test_vehicle_creation <- vehicles\tests\test_models.py PASSED [ 86%]
+tests/test_vehicles.py::VehicleTestCase::test_vehicle_fuel_type_choices <- vehicles\tests\test_models.py PASSED [ 88%]
+tests/test_vehicles.py::VehicleTestCase::test_vehicle_status_choices <- vehicles\tests\test_models.py PASSED [ 90%]
+tests/test_vehicles.py::VehicleTestCase::test_vehicle_string_representation <- vehicles\tests\test_models.py PASSED [ 91%]
+tests/test_vehicles.py::VehicleTestCase::test_vehicle_transmission_choices <- vehicles\tests\test_models.py PASSED [ 93%]
+tests/test_vehicles.py::VehicleTestCase::test_vehicle_type_choices <- vehicles\tests\test_models.py PASSED [ 95%]
+tests/test_vehicles.py::test_vehicle_status_update PASSED                [ 96%]
+tests/test_vehicles.py::test_vehicle_mileage_update PASSED               [ 98%]
+tests/test_vehicles.py::test_vehicle_service_due PASSED                  [100%]
+
+============================== warnings summary ===============================
+tests\test_patches.py:11
+  D:\REPOS\fleet_mgmt_django\CarFleetManagement\tests\test_patches.py:11: PytestCollectionWarning: cannot collect test class 'TestUserSerializer' because it has a __init__ constructor (from: tests/test_patches.py)
+    class TestUserSerializer(serializers.ModelSerializer):
+
+tests\test_setup.py:28
+  D:\REPOS\fleet_mgmt_django\CarFleetManagement\tests\test_setup.py:28: PytestCollectionWarning: cannot collect test class 'TestUserSerializer' because it has a __init__ constructor (from: tests/test_setup.py)
+    class TestUserSerializer(serializers.ModelSerializer):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.11.3-final-0 _______________
+
+Name                         Stmts   Miss  Cover
+------------------------------------------------
+accounts\__init__.py             0      0   100%
+accounts\forms.py               17      5    71%
+accounts\models.py              62      0   100%
+accounts\serializers.py         10      0   100%
+accounts\tests.py                1      1     0%
+accounts\views.py              102     66    35%
+api\__init__.py                  0      0   100%
+api\auth_views.py               39     15    62%
+api\gemini_client.py            69     69     0%
+api\models.py                    1      0   100%
+api\openrouter_client.py        70     47    33%
+api\report_generator.py         58     45    22%
+api\serializers.py              26      9    65%
+api\views.py                   130     65    50%
+api\views_new.py               109    109     0%
+emergency\__init__.py            0      0   100%
+emergency\models.py             44      0   100%
+emergency\tests.py               1      1     0%
+emergency\views.py              75     29    61%
+maintenance\__init__.py          0      0   100%
+maintenance\models.py           38      1    97%
+maintenance\serializers.py      12      0   100%
+maintenance\tests.py             1      1     0%
+maintenance\views.py            52     14    73%
+vehicles\__init__.py             0      0   100%
+vehicles\models.py              44      0   100%
+vehicles\serializers.py         14      0   100%
+vehicles\tests.py                1      1     0%
+vehicles\views.py               47     11    77%
+------------------------------------------------
+TOTAL                         1023    489    52%
+================== 59 passed, 2 skipped, 2 warnings in 2.25s ==================
+
+
+STDERR:

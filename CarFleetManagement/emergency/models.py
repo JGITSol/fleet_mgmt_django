@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from accounts.models import CustomUser
+from accounts.models import CustomUser, Driver
 from vehicles.models import Vehicle
 
 class EmergencyType(models.TextChoices):
@@ -18,7 +18,7 @@ class EmergencyStatus(models.TextChoices):
 
 class EmergencyIncident(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name='emergency_incidents')
-    driver = models.ForeignKey('accounts.Driver', on_delete=models.SET_NULL, null=True, blank=True, related_name='emergency_incidents')
+    driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True, blank=True, related_name='emergency_incidents')
     reported_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reported_incidents')
     emergency_type = models.CharField(max_length=20, choices=EmergencyType.choices, default=EmergencyType.OTHER)
     status = models.CharField(max_length=20, choices=EmergencyStatus.choices, default=EmergencyStatus.REPORTED)
@@ -34,9 +34,9 @@ class EmergencyIncident(models.Model):
 
 class EmergencyResponse(models.Model):
     incident = models.ForeignKey(EmergencyIncident, on_delete=models.CASCADE, related_name='responses')
-    responder = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='emergency_responses')
+    responder = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='emergency_responses')
     response_time = models.DateTimeField(auto_now_add=True)
-    action_taken = models.TextField()
+    action_taken = models.TextField(null=True, blank=True)
     notes = models.TextField(blank=True)
     
     def __str__(self):
@@ -49,4 +49,4 @@ class EmergencyContact(models.Model):
     relationship = models.CharField(max_length=50)
     
     def __str__(self):
-        return f"{self.name} ({self.relationship} of {self.user.username})"
+        return f"{self.name} ({self.relationship}) - {self.phone_number}"

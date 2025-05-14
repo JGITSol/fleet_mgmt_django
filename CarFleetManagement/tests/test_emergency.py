@@ -1,13 +1,13 @@
 import pytest
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from django.utils import timezone
 from datetime import timedelta
 
-from emergency.models import EmergencyContact, EmergencyIncident
+from CarFleetManagement.emergency.models import EmergencyContact, EmergencyIncident
 
 # Import tests from the app-specific test directory if they exist
 try:
-    from emergency.tests.test_models import *
+    from CarFleetManagement.emergency.tests.test_models import *
 except ImportError:
     pass
 

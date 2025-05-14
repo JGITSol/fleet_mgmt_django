@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 from .serializers import UserRegistrationSerializer, LoginSerializer, UserSerializer
 
@@ -15,14 +15,28 @@ class RegisterView(APIView):
     permission_classes = [AllowAny]
     
     def post(self, request):
+        """
+        Register a new user and return JWT tokens.
+
+        Parameters
+        ----------
+        request : rest_framework.request.Request
+            The HTTP request containing registration data.
+
+        Returns
+        -------
+        rest_framework.response.Response
+            JSON with user data and JWT tokens or validation errors.
+        """
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            # Create token for the new user
-            token, created = Token.objects.get_or_create(user=user)
+            # Generate JWT tokens for the new user
+            refresh = RefreshToken.for_user(user)
             return Response({
                 'user': UserSerializer(user).data,
-                'token': token.key
+                'refresh': str(refresh),
+                'access': str(refresh.access_token)
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -35,14 +49,28 @@ class LoginView(APIView):
     permission_classes = [AllowAny]
     
     def post(self, request):
+        """
+        Register a new user and return JWT tokens.
+
+        Parameters
+        ----------
+        request : rest_framework.request.Request
+            The HTTP request containing registration data.
+
+        Returns
+        -------
+        rest_framework.response.Response
+            JSON with user data and JWT tokens or validation errors.
+        """
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data['user']
-            # Get or create token
-            token, created = Token.objects.get_or_create(user=user)
+            # Generate JWT tokens for the user
+            refresh = RefreshToken.for_user(user)
             return Response({
                 'user': UserSerializer(user).data,
-                'token': token.key
+                'refresh': str(refresh),
+                'access': str(refresh.access_token)
             })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -55,6 +83,19 @@ class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
+        """
+        Retrieve the authenticated user's profile.
+
+        Parameters
+        ----------
+        request : rest_framework.request.Request
+            The HTTP request (must be authenticated).
+
+        Returns
+        -------
+        rest_framework.response.Response
+            JSON with user profile data.
+        """
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
 
@@ -67,9 +108,22 @@ class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
     
     def post(self, request):
-        # Delete the user's token to logout
-        request.user.auth_token.delete()
-        return Response({"message": "Successfully logged out."}, status=status.HTTP_200_OK)
+        """
+        Register a new user and return JWT tokens.
+
+        Parameters
+        ----------
+        request : rest_framework.request.Request
+            The HTTP request containing registration data.
+
+        Returns
+        -------
+        rest_framework.response.Response
+            JSON with user data and JWT tokens or validation errors.
+        """
+        # For JWT, logout is handled client-side by deleting the token. If using JWT blacklist, blacklist the refresh token here.
+
+        return Response({"message": "Successfully logged out (JWT token deleted on client)."}, status=status.HTTP_200_OK)
 
 
 class ValidateTokenView(APIView):
@@ -80,6 +134,19 @@ class ValidateTokenView(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
+        """
+        Retrieve the authenticated user's profile.
+
+        Parameters
+        ----------
+        request : rest_framework.request.Request
+            The HTTP request (must be authenticated).
+
+        Returns
+        -------
+        rest_framework.response.Response
+            JSON with user profile data.
+        """
         return Response({
             "is_valid": True,
             "user": UserSerializer(request.user).data

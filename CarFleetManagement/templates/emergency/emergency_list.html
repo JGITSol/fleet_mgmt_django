@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Emergency Incidents{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Emergency Incidents</h1>
+    <a href="{% url 'emergency_create' %}" class="btn btn-primary mb-3">Report New Incident</a>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Vehicle</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for incident in incidents %}
+                <tr>
+                    <td>{{ incident.vehicle.brand }} {{ incident.vehicle.model }}</td>
+                    <td>{{ incident.emergency_type }}</td>
+                    <td>{{ incident.location }}</td>
+                    <td>{{ incident.reported_time|date:"Y-m-d H:i" }}</td>
+                    <td>{{ incident.get_status_display }}</td>
+                    <td>
+                        <a href="{% url 'emergency_detail' incident.pk %}" class="btn btn-sm btn-info">View</a>
+                        <a href="{% url 'emergency_update' incident.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No emergency incidents found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

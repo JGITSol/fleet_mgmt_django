@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Vehicle
-from accounts.models import Driver
+# from accounts.models import Driver
 
 class DriverNestedSerializer(serializers.ModelSerializer):
     class Meta:

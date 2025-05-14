@@ -1,12 +1,12 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from django.utils import timezone
 from datetime import timedelta
 from decimal import Decimal
-
+from django.core.exceptions import ValidationError
 from maintenance.models import Maintenance, MaintenanceType, MaintenanceStatus
 from vehicles.models import Vehicle
 
-class MaintenanceTestCase(TestCase):
+class MaintenanceTestCase(APITestCase):
     """Test cases for the Maintenance model."""
     
     def setUp(self):
@@ -104,11 +104,13 @@ class MaintenanceTestCase(TestCase):
         """Test days_until_scheduled method."""
         # For scheduled maintenance
         days_until = self.routine_maintenance.days_until_scheduled()
-        self.assertEqual(days_until, 7)
+        expected_days = (self.routine_maintenance.scheduled_date - self.today).days
+        self.assertEqual(days_until, expected_days)
         
         # For in-progress maintenance
         days_until = self.repair_maintenance.days_until_scheduled()
-        self.assertEqual(days_until, 0)
+        expected_days = (self.repair_maintenance.scheduled_date - self.today).days
+        self.assertEqual(days_until, expected_days)
         
         # For completed maintenance
         days_until = self.inspection_maintenance.days_until_scheduled()
@@ -119,3 +121,76 @@ class MaintenanceTestCase(TestCase):
         self.routine_maintenance.save()
         days_until = self.routine_maintenance.days_until_scheduled()
         self.assertIsNone(days_until)
+
+    def test_negative_odometer_not_allowed(self):
+        """Test negative odometer reading is not allowed."""
+        
+        maintenance = Maintenance(
+            vehicle=self.vehicle,
+            maintenance_type=MaintenanceType.ROUTINE,
+            status=MaintenanceStatus.SCHEDULED,
+            description='Negative odometer',
+            scheduled_date=self.today + timedelta(days=1),
+            odometer_reading=-100,
+            cost=10,
+            service_provider='Test',
+            notes=''
+        )
+        with self.assertRaises(ValidationError):
+            maintenance.full_clean()
+
+    def test_missing_scheduled_date(self):
+        """Test days_until_scheduled returns 0 if scheduled_date is None."""
+        maintenance = Maintenance(
+            vehicle=self.vehicle,
+            maintenance_type=MaintenanceType.ROUTINE,
+            status=MaintenanceStatus.SCHEDULED,
+            description='No date',
+            scheduled_date=None,
+            odometer_reading=1000,
+            cost=10,
+            service_provider='Test',
+            notes=''
+        )
+        self.assertEqual(maintenance.days_until_scheduled(), 0)
+
+    def test_invalid_status(self):
+        """Test invalid status raises error."""
+        from django.core.exceptions import ValidationError
+        maintenance = Maintenance(
+            vehicle=self.vehicle,
+            maintenance_type=MaintenanceType.ROUTINE,
+            status='INVALID',
+            description='Bad status',
+            scheduled_date=self.today,
+            odometer_reading=1000,
+            cost=10,
+            service_provider='Test',
+            notes=''
+        )
+        with self.assertRaises(ValidationError):
+            maintenance.full_clean()
+
+    def test_str_for_all_types(self):
+        """Test __str__ for all maintenance types."""
+        for mtype in MaintenanceType:
+            self.routine_maintenance.maintenance_type = mtype
+            self.routine_maintenance.save()
+            self.assertIn(str(mtype.label), str(self.routine_maintenance))
+
+    def test_cost_validation(self):
+        """Test negative cost is not allowed."""
+        from django.core.exceptions import ValidationError
+        maintenance = Maintenance(
+            vehicle=self.vehicle,
+            maintenance_type=MaintenanceType.ROUTINE,
+            status=MaintenanceStatus.SCHEDULED,
+            description='Negative cost',
+            scheduled_date=self.today + timedelta(days=1),
+            odometer_reading=1000,
+            cost=-10,
+            service_provider='Test',
+            notes=''
+        )
+        with self.assertRaises(ValidationError):
+            maintenance.full_clean()

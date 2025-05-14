@@ -1,10 +1,10 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from django.utils import timezone
 from datetime import timedelta
 
 from vehicles.models import Vehicle
 
-class VehicleTestCase(TestCase):
+class VehicleTestCase(APITestCase):
     """Test cases for the Vehicle model."""
     
     def setUp(self):

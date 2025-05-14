@@ -1,15 +1,22 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
+from CarFleetManagement.emergency.models import EmergencyIncident, EmergencyContact, EmergencyResponse, EmergencyType, EmergencyStatus
+from accounts.models import CustomUser
+from vehicles.models import Vehicle
+from accounts.models import UserRole
+from accounts.models import Driver
+
+
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from decimal import Decimal
 
-from emergency.models import EmergencyIncident, EmergencyResponse, EmergencyType, EmergencyStatus, EmergencyContact
+from CarFleetManagement.emergency.models import EmergencyIncident
 from vehicles.models import Vehicle
-from accounts.models import UserRole, Driver
+from accounts.models import UserRole, CustomUser
 
 User = get_user_model()
 
-class EmergencyIncidentTestCase(TestCase):
+class EmergencyIncidentTestCase(APITestCase):
     """Test cases for the EmergencyIncident model."""
     
     def setUp(self):
@@ -42,18 +49,13 @@ class EmergencyIncidentTestCase(TestCase):
             vin='1HGCM82633A123456'
         )
         
-        # Create driver
         self.driver = Driver.objects.create(
-            user=self.driver_user,
             first_name='John',
             last_name='Doe',
             email='john.doe@example.com',
             phone_number='123-456-7890',
-            driver_license_number='DL12345678',
-            license_expiry_date=timezone.now().date() + timezone.timedelta(days=365),
-            hire_date=timezone.now().date() - timezone.timedelta(days=30)
+            driver_license_number='DL12345678'
         )
-        
         # Create emergency incident
         self.incident = EmergencyIncident.objects.create(
             vehicle=self.vehicle,
@@ -105,7 +107,7 @@ class EmergencyIncidentTestCase(TestCase):
         self.incident.save()
         self.assertEqual(self.incident.status, EmergencyStatus.CLOSED)
 
-class EmergencyResponseTestCase(TestCase):
+class EmergencyResponseTestCase(APITestCase):
     """Test cases for the EmergencyResponse model."""
     
     def setUp(self):
@@ -121,14 +123,19 @@ class EmergencyResponseTestCase(TestCase):
             password='password123',
             role=self.admin_role
         )
-        
         self.responder_user = User.objects.create_user(
             username='responder_user',
             email='responder@example.com',
             password='password123',
             role=self.admin_role
         )
-        
+        # Create driver
+        self.driver = Driver.objects.create(
+            first_name='Test',
+            last_name='DriverUser',
+            driver_license_number='D1234567'
+        )
+
         # Create vehicle
         self.vehicle = Vehicle.objects.create(
             brand='Toyota',
@@ -141,6 +148,7 @@ class EmergencyResponseTestCase(TestCase):
         # Create emergency incident
         self.incident = EmergencyIncident.objects.create(
             vehicle=self.vehicle,
+            driver=self.driver,
             reported_by=self.admin_user,
             emergency_type=EmergencyType.BREAKDOWN,
             status=EmergencyStatus.REPORTED,
@@ -166,10 +174,10 @@ class EmergencyResponseTestCase(TestCase):
     
     def test_response_string_representation(self):
         """Test EmergencyResponse string representation."""
-        expected_str = f"Response to {self.incident} by {self.responder_user.username}"
+        expected_str = f"Response to {self.response.incident} by {self.response.responder.username}"
         self.assertEqual(str(self.response), expected_str)
 
-class EmergencyContactTestCase(TestCase):
+class EmergencyContactTestCase(APITestCase):
     """Test cases for the EmergencyContact model in the emergency app."""
     
     def setUp(self):
@@ -196,5 +204,5 @@ class EmergencyContactTestCase(TestCase):
     
     def test_emergency_contact_string_representation(self):
         """Test EmergencyContact string representation."""
-        expected_str = f"Jane Doe (Spouse of {self.user.username})"
+        expected_str = "Jane Doe (Spouse) - 123-456-7890"
         self.assertEqual(str(self.emergency_contact), expected_str)

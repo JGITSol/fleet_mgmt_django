@@ -1,0 +1,53 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.3, pytest-8.3.5, pluggy-1.5.0 -- D:\REPOS\fleet_mgmt_django\venv\Scripts\python.exe
+cachedir: .pytest_cache
+django: version: 5.1.7, settings: CarFleetManagement.settings (from ini)
+rootdir: D:\REPOS\fleet_mgmt_django
+configfile: pytest.ini
+plugins: cov-6.1.1, django-4.11.1
+collecting ... collected 182 items
+
+CarFleetManagement/api/tests/test_management_commands.py::OpenRouterAnalyzeCommandTestCase::test_analyze_command FAILED [  0%]
+
+================================== FAILURES ===================================
+____________ OpenRouterAnalyzeCommandTestCase.test_analyze_command ____________
+
+self = <CarFleetManagement.api.tests.test_management_commands.OpenRouterAnalyzeCommandTestCase testMethod=test_analyze_command>
+mock_get_client = <MagicMock name='get_client' id='2073731709968'>
+
+    @mock.patch('CarFleetManagement.api.management.commands.openrouter_analyze.get_client')
+    def test_analyze_command(self, mock_get_client):
+        """Test 'analyze' subcommand."""
+        # Mock the OpenRouter client
+        mock_client = mock.Mock()
+        mock_client.analyze_screenshot.return_value = {
+            'choices': [
+                {
+                    'message': {
+                        'content': 'Analysis result'
+                    }
+                }
+            ]
+        }
+        mock_get_client.return_value = mock_client
+    
+        # Call the command
+        out = StringIO()
+        call_command(
+            'openrouter_analyze',
+            'analyze',
+            self.test_screenshot,
+            stdout=out
+        )
+    
+        # Verify the output
+        output = out.getvalue()
+        self.assertIn(f"Analyzing screenshot: {self.test_screenshot}", output)
+>       self.assertIn("Analysis: Analysis result", output)
+E       AssertionError: 'Analysis: Analysis result' not found in 'Analyzing screenshot: D:\\REPOS\\fleet_mgmt_django\\test_screenshots\\home_en_dark_20250331-201208.png\nAnalysis: Error: 401 Client Error: Unauthorized for url: https://openrouter.ai/api/v1/chat/completions\n'
+
+CarFleetManagement\api\tests\test_management_commands.py:130: AssertionError
+=========================== short test summary info ===========================
+FAILED CarFleetManagement/api/tests/test_management_commands.py::OpenRouterAnalyzeCommandTestCase::test_analyze_command - AssertionError: 'Analysis: Analysis result' not found in 'Analyzing screenshot: D:\\REPOS\\fleet_mgmt_django\\test_screenshots\\home_en_dark_20250331-201208.png\nAnalysis: Error: 401 Client Error: Unauthorized for url: https://openrouter.ai/api/v1/chat/completions\n'
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+======================== 1 failed, 1 warning in 20.63s ========================
