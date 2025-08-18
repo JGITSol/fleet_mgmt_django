@@ -5,7 +5,7 @@ from rest_framework.test import APITestCase
 from django.conf import settings
 from pathlib import Path
 
-from api.openrouter_client import OpenRouterClient, get_client
+from CarFleetManagement.api.openrouter_client import OpenRouterClient, get_client
 
 
 class OpenRouterClientTestCase(APITestCase):

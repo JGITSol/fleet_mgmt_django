@@ -1,0 +1,28 @@
+{
+  "name": "car-fleet-manager-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@alpinejs/intersect": "^3.13.3",
+    "@alpinejs/persist": "^3.13.3",
+    "alpinejs": "^3.13.3",
+    "autoprefixer": "^10.4.16",
+    "django-htmx": "^1.9.0",
+    "htmx.org": "^1.9.11",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12",
+    "vite-plugin-static-copy": "^0.13.0"
+  }
+}

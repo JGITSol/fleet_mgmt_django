@@ -4,12 +4,12 @@ from datetime import timedelta, datetime
 from unittest.mock import patch, MagicMock
 from rest_framework.test import APITestCase
 
-from accounts.models import UserRole, Driver
-from accounts.serializers import DriverSerializer
-from vehicles.models import Vehicle
-from vehicles.serializers import VehicleSerializer
-from maintenance.models import Maintenance
-from maintenance.serializers import MaintenanceSerializer
+from CarFleetManagement.accounts.models import UserRole, Driver
+from CarFleetManagement.accounts.serializers import DriverSerializer
+from CarFleetManagement.vehicles.models import Vehicle
+from CarFleetManagement.vehicles.serializers import VehicleSerializer
+from CarFleetManagement.maintenance.models import Maintenance
+from CarFleetManagement.maintenance.serializers import MaintenanceSerializer
 from django.contrib.auth import get_user_model
 
 User = get_user_model()

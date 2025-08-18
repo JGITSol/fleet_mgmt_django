@@ -1,8 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
-from CarFleetManagement.emergency.models import EmergencyContact, EmergencyIncident
-from vehicles.models import Vehicle
-from accounts.models import Driver
+# Model imports moved into fixture functions
 
 @pytest.fixture
 def custom_user(db):
@@ -11,12 +9,14 @@ def custom_user(db):
 
 @pytest.fixture
 def vehicle(db):
+    from CarFleetManagement.vehicles.models import Vehicle
     return Vehicle.objects.create(
         brand='Toyota', model='Camry', year=2020, license_plate='ABC-123', vin='VIN123', status='AVAILABLE'
     )
 
 @pytest.fixture
 def driver(db):
+    from CarFleetManagement.accounts.models import Driver
     return Driver.objects.create(
         first_name='John',
         last_name='Doe',
@@ -27,10 +27,12 @@ def driver(db):
 
 @pytest.fixture
 def emergency_contact(db, custom_user):
+    from CarFleetManagement.emergency.models import EmergencyContact
     return EmergencyContact.objects.create(user=custom_user, name='Jane Doe', phone_number='1234567890', relationship='Spouse')
 
 @pytest.fixture
 def emergency_incident(db, vehicle, driver, custom_user):
+    from CarFleetManagement.emergency.models import EmergencyIncident
     return EmergencyIncident.objects.create(
         vehicle=vehicle,
         driver=driver,

@@ -12,7 +12,7 @@ class JWTAuthTestMixin:
         user = User.objects.create_user(username=username, password=password)
         # Assign role if roles are used
         if hasattr(user, 'role'):
-            from accounts.models import UserRole
+            from CarFleetManagement.accounts.models import UserRole
             role, _ = UserRole.objects.get_or_create(name=role_name)
             user.role = role
             user.save()

@@ -7,10 +7,7 @@ from datetime import timedelta
 from decimal import Decimal
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from maintenance.models import Maintenance, MaintenanceType, MaintenanceStatus
-from vehicles.models import Vehicle
-from accounts.models import UserRole
-
+# Model imports moved into test methods/setUp
 User = get_user_model()
 
 # ========================
@@ -20,12 +17,13 @@ import pytest
 from django.utils import timezone
 from datetime import timedelta
 
-from maintenance.models import Maintenance
-from vehicles.models import Vehicle
+# Model imports for test_maintenance_creation moved into the function
 
 @pytest.mark.django_db
 def test_maintenance_creation():
     """Test maintenance record creation."""
+    from CarFleetManagement.vehicles.models import Vehicle
+    from CarFleetManagement.maintenance.models import Maintenance
     # Create test vehicle
     vehicle = Vehicle.objects.create(
         brand='Test Brand',
@@ -61,9 +59,19 @@ class MaintenanceViewsTestCase(APITestCase):
     
     def setUp(self):
         """Set up test environment."""
+        from CarFleetManagement.accounts.models import UserRole
+        from CarFleetManagement.vehicles.models import Vehicle
+        from CarFleetManagement.maintenance.models import Maintenance, MaintenanceType, MaintenanceStatus
+        
+        self.UserRole = UserRole
+        self.Vehicle = Vehicle
+        self.Maintenance = Maintenance
+        self.MaintenanceType = MaintenanceType
+        self.MaintenanceStatus = MaintenanceStatus
+        
         # Create roles
-        self.admin_role = UserRole.objects.create(name=UserRole.ADMIN, description='Administrator role')
-        self.maintenance_role = UserRole.objects.create(name=UserRole.MAINTENANCE_STAFF, description='Maintenance Staff role')
+        self.admin_role = self.UserRole.objects.create(name=self.UserRole.ADMIN, description='Administrator role')
+        self.maintenance_role = self.UserRole.objects.create(name=self.UserRole.MAINTENANCE_STAFF, description='Maintenance Staff role')
         
         # Create users
         self.admin_user = User.objects.create_user(
@@ -82,7 +90,7 @@ class MaintenanceViewsTestCase(APITestCase):
         
         # Create vehicle
         self.today = timezone.now().date()
-        self.vehicle = Vehicle.objects.create(
+        self.vehicle = self.Vehicle.objects.create(
             brand='Toyota',
             model='Camry',
             year=2022,
@@ -91,10 +99,10 @@ class MaintenanceViewsTestCase(APITestCase):
         )
         
         # Create maintenance records
-        self.routine_maintenance = Maintenance.objects.create(
+        self.routine_maintenance = self.Maintenance.objects.create(
             vehicle=self.vehicle,
-            maintenance_type=MaintenanceType.ROUTINE,
-            status=MaintenanceStatus.SCHEDULED,
+            maintenance_type=self.MaintenanceType.ROUTINE,
+            status=self.MaintenanceStatus.SCHEDULED,
             description='Regular oil change and inspection',
             scheduled_date=self.today + timedelta(days=7),
             odometer_reading=15000,
@@ -103,10 +111,10 @@ class MaintenanceViewsTestCase(APITestCase):
             notes='Reminder to check brake pads'
         )
         
-        self.repair_maintenance = Maintenance.objects.create(
+        self.repair_maintenance = self.Maintenance.objects.create(
             vehicle=self.vehicle,
-            maintenance_type=MaintenanceType.REPAIR,
-            status=MaintenanceStatus.IN_PROGRESS,
+            maintenance_type=self.MaintenanceType.REPAIR,
+            status=self.MaintenanceStatus.IN_PROGRESS,
             description='Replace faulty alternator',
             scheduled_date=self.today,
             completed_date=None,
@@ -146,8 +154,8 @@ class MaintenanceViewsTestCase(APITestCase):
         # Test POST request
         maintenance_data = {
             'vehicle': self.vehicle.id,
-            'maintenance_type': MaintenanceType.INSPECTION,
-            'status': MaintenanceStatus.SCHEDULED,
+            'maintenance_type': self.MaintenanceType.INSPECTION,
+            'status': self.MaintenanceStatus.SCHEDULED,
             'description': 'Annual vehicle inspection',
             'scheduled_date': self.today + timedelta(days=14),
             'odometer_reading': 17000,
@@ -160,7 +168,7 @@ class MaintenanceViewsTestCase(APITestCase):
         self.assertEqual(response.status_code, 302)  # Redirect after successful creation
         
         # Verify maintenance record was created
-        self.assertTrue(Maintenance.objects.filter(description='Annual vehicle inspection').exists())
+        self.assertTrue(self.Maintenance.objects.filter(description='Annual vehicle inspection').exists())
     
     def test_maintenance_update_view(self):
         """Test maintenance update view."""
@@ -171,8 +179,8 @@ class MaintenanceViewsTestCase(APITestCase):
         # Test POST request - mark maintenance as completed
         updated_data = {
             'vehicle': self.vehicle.id,
-            'maintenance_type': MaintenanceType.REPAIR,
-            'status': MaintenanceStatus.COMPLETED,  # Changed from IN_PROGRESS to COMPLETED
+            'maintenance_type': self.MaintenanceType.REPAIR,
+            'status': self.MaintenanceStatus.COMPLETED,  # Changed from IN_PROGRESS to COMPLETED
             'description': 'Replace faulty alternator',
             'scheduled_date': self.today,
             'completed_date': self.today,  # Added completion date
@@ -187,5 +195,5 @@ class MaintenanceViewsTestCase(APITestCase):
         
         # Verify maintenance record was updated
         self.repair_maintenance.refresh_from_db()
-        self.assertEqual(self.repair_maintenance.status, MaintenanceStatus.COMPLETED)
+        self.assertEqual(self.repair_maintenance.status, self.MaintenanceStatus.COMPLETED)
         self.assertEqual(self.repair_maintenance.notes, 'Repair completed successfully')

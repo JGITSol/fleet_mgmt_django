@@ -43,7 +43,7 @@ from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, BasePermission
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from accounts.models import UserRole, CustomUser
+from CarFleetManagement.accounts.models import UserRole, CustomUser
 
 # Store original permission methods
 _original_is_authenticated = IsAuthenticated.has_permission
@@ -86,6 +86,9 @@ class AuthUtils:
     def create_user(username, email, password, role_name, is_staff=False):
         """Create a user with the specified role for testing."""
         role, _ = UserRole.objects.get_or_create(name=role_name, description=f'{role_name} role')
+        # If creating an admin role, ensure is_staff=True to be compatible with IsAdminUser
+        if role_name == UserRole.ADMIN:
+            is_staff = True
         user = CustomUser.objects.create_user(
             username=username,
             email=email,

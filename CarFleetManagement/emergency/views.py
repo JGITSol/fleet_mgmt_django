@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404
 
 from .models import EmergencyIncident, EmergencyResponse
-from vehicles.models import Vehicle
+from CarFleetManagement.vehicles.models import Vehicle
 
 # Emergency Incident Views
 class EmergencyIncidentListView(LoginRequiredMixin, ListView):

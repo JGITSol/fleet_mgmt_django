@@ -2,7 +2,7 @@
 Authentication test mixin for the Car Fleet Management project.
 """
 from rest_framework.test import APIClient
-from accounts.models import UserRole, CustomUser
+from CarFleetManagement.accounts.models import UserRole, CustomUser
 from tests.auth_utils import authenticate_client
 
 class AuthTestMixin:

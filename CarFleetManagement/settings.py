@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_spectacular',
     'django_filters',
-    'accounts',
+    'CarFleetManagement.accounts',
     'CarFleetManagement.api.apps.ApiConfig',
     'CarFleetManagement.vehicles.apps.VehiclesConfig',
     'CarFleetManagement.maintenance.apps.MaintenanceConfig',

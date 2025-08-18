@@ -2,8 +2,8 @@ import pytest
 from django.utils import timezone
 from datetime import timedelta
 
-from maintenance.models import Maintenance
-from vehicles.models import Vehicle
+from CarFleetManagement.maintenance.models import Maintenance
+from CarFleetManagement.vehicles.models import Vehicle
 
 
 @pytest.mark.django_db

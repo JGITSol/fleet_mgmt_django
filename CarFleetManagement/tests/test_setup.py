@@ -21,11 +21,11 @@ django.setup()
 # Now it's safe to import Django models
 from django.conf import settings
 from rest_framework import serializers
-from accounts.models import CustomUser, UserRole
+from CarFleetManagement.accounts.models import CustomUser, UserRole
 from tests.auth_utils import authenticate_client
 
 # Custom UserSerializer for tests that works with CustomUser model
-class TestUserSerializer(serializers.ModelSerializer):
+class AppTestUserSerializer(serializers.ModelSerializer):
     """Serializer for the CustomUser model for tests."""
     class Meta:
         model = CustomUser
@@ -40,7 +40,7 @@ def setup_test_environment():
     """
     # Patch the UserSerializer in api.serializers
     import api.serializers
-    api.serializers.UserSerializer = TestUserSerializer
+    api.serializers.UserSerializer = AppTestUserSerializer
     api.serializers.User = CustomUser
     
     # Patch permission classes for testing if needed

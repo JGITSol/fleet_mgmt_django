@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from accounts.models import CustomUser, Driver
-from vehicles.models import Vehicle
+from CarFleetManagement.accounts.models import CustomUser, Driver
+from CarFleetManagement.vehicles.models import Vehicle
 
 class EmergencyType(models.TextChoices):
     ACCIDENT = 'ACCIDENT', _('Accident')

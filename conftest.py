@@ -9,20 +9,20 @@ import django
 from django.conf import settings
 
 # Add the project directory to the Python path
-project_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, project_dir)
+# project_dir = os.path.dirname(os.path.abspath(__file__))
+# sys.path.insert(0, project_dir)
 
 # The actual Django app is in the CarFleetManagement subdirectory
-django_app_dir = os.path.join(project_dir, 'CarFleetManagement')
-sys.path.insert(0, django_app_dir)
+# django_app_dir = os.path.join(project_dir, 'CarFleetManagement')
+# sys.path.insert(0, django_app_dir)
 
 # Set dummy OpenRouter API key for tests
 os.environ['OPENROUTER_API_KEY'] = 'test-api-key'
 # Configure Django settings before any tests run
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarFleetManagement.settings")
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarFleetManagement.settings")
 
 # Setup Django
-django.setup()
+# django.setup()
 
 # Define a pytest fixture to provide a database transaction for tests
 @pytest.fixture(scope='session')

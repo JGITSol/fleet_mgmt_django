@@ -6,7 +6,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, BasePermission
-from accounts.models import UserRole
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from CarFleetManagement.accounts.models import UserRole
 
 class IsAdminOrMaintenanceStaff(BasePermission):
     def has_permission(self, request, view):
@@ -19,6 +20,18 @@ class IsAdminOrMaintenanceStaff(BasePermission):
             )
         )
 
+
+class IsAdminRole(BasePermission):
+    """Allow access for users with role == ADMIN or is_staff flag set."""
+    def has_permission(self, request, view):
+        if not (request.user and getattr(request.user, 'is_authenticated', False)):
+            return False
+        # Allow Django superusers/staffs
+        if getattr(request.user, 'is_staff', False) or getattr(request.user, 'is_superuser', False):
+            return True
+        role = getattr(request.user, 'role', None)
+        return bool(role and getattr(role, 'name', None) == UserRole.ADMIN)
+
 import os
 import json
 
@@ -26,12 +39,12 @@ from .openrouter_client import get_client
 from .report_generator import generate_report
 
 # Import models and serializers
-from vehicles.models import Vehicle
-from vehicles.serializers import VehicleSerializer
-from maintenance.models import Maintenance
-from maintenance.serializers import MaintenanceSerializer
-from accounts.models import Driver
-from accounts.serializers import DriverSerializer
+from CarFleetManagement.vehicles.models import Vehicle
+from CarFleetManagement.vehicles.serializers import VehicleSerializer
+from CarFleetManagement.maintenance.models import Maintenance
+from CarFleetManagement.maintenance.serializers import MaintenanceSerializer
+from CarFleetManagement.accounts.models import Driver
+from CarFleetManagement.accounts.serializers import DriverSerializer
 from CarFleetManagement.emergency.models import EmergencyIncident
 from CarFleetManagement.emergency.models import EmergencyResponse
 from CarFleetManagement.emergency.serializers import EmergencyIncidentSerializer, EmergencyResponseSerializer
@@ -50,14 +63,19 @@ class EmergencyIncidentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestr
 class EmergencyIncidentUpdateAPIView(generics.UpdateAPIView):
     queryset = EmergencyIncident.objects.all()
     serializer_class = EmergencyIncidentSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminRole]
 
 class EmergencyIncidentDeleteAPIView(generics.DestroyAPIView):
     queryset = EmergencyIncident.objects.all()
     serializer_class = EmergencyIncidentSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminRole]
 
-class EmergencyResponseCreateView(generics.CreateAPIView):
+class EmergencyResponseListCreateAPIView(generics.ListCreateAPIView):
+    queryset = EmergencyResponse.objects.all()
+    serializer_class = EmergencyResponseSerializer
+    permission_classes = [IsAuthenticated]
+
+class EmergencyResponseRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = EmergencyResponse.objects.all()
     serializer_class = EmergencyResponseSerializer
     permission_classes = [IsAuthenticated]
@@ -216,11 +234,13 @@ class GenerateReportView(APIView):
     responses={200: VehicleSerializer(many=True)},
     request=VehicleSerializer,
 )
+
 class VehicleListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating vehicles."""
+    authentication_classes = [JWTAuthentication]
     queryset = Vehicle.objects.all()
     serializer_class = VehicleSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminRole]
 
     def perform_create(self, serializer):
         serializer.save()
@@ -228,9 +248,10 @@ class VehicleListCreateAPIView(generics.ListCreateAPIView):
 
 class VehicleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     """API view for retrieving, updating, and deleting a vehicle."""
+    authentication_classes = [JWTAuthentication]
     queryset = Vehicle.objects.all()
     serializer_class = VehicleSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminRole]
 
 
 # Maintenance API Views
@@ -256,7 +277,7 @@ class DriverListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating drivers."""
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminRole]
 
     def perform_create(self, serializer):
         serializer.save()
@@ -266,7 +287,7 @@ class DriverRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     """API view for retrieving, updating, and deleting a driver."""
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminRole]
 
 
 class AssignDriverToVehicleAPIView(generics.UpdateAPIView):

@@ -3,18 +3,23 @@ from django.utils import timezone
 from datetime import timedelta
 from decimal import Decimal
 from django.core.exceptions import ValidationError
-from maintenance.models import Maintenance, MaintenanceType, MaintenanceStatus
-from vehicles.models import Vehicle
 
 class MaintenanceTestCase(APITestCase):
     """Test cases for the Maintenance model."""
     
     def setUp(self):
         """Set up test environment."""
+        from CarFleetManagement.maintenance.models import Maintenance, MaintenanceType, MaintenanceStatus
+        from CarFleetManagement.vehicles.models import Vehicle
+        self.Maintenance = Maintenance
+        self.MaintenanceType = MaintenanceType
+        self.MaintenanceStatus = MaintenanceStatus
+        self.Vehicle = Vehicle
+
         self.today = timezone.now().date()
         
         # Create a test vehicle
-        self.vehicle = Vehicle.objects.create(
+        self.vehicle = self.Vehicle.objects.create(
             brand='Toyota',
             model='Camry',
             year=2022,
@@ -23,10 +28,10 @@ class MaintenanceTestCase(APITestCase):
         )
         
         # Create maintenance records
-        self.routine_maintenance = Maintenance.objects.create(
+        self.routine_maintenance = self.Maintenance.objects.create(
             vehicle=self.vehicle,
-            maintenance_type=MaintenanceType.ROUTINE,
-            status=MaintenanceStatus.SCHEDULED,
+            maintenance_type=self.MaintenanceType.ROUTINE,
+            status=self.MaintenanceStatus.SCHEDULED,
             description='Regular oil change and inspection',
             scheduled_date=self.today + timedelta(days=7),
             odometer_reading=15000,
@@ -35,10 +40,10 @@ class MaintenanceTestCase(APITestCase):
             notes='Reminder to check brake pads'
         )
         
-        self.repair_maintenance = Maintenance.objects.create(
+        self.repair_maintenance = self.Maintenance.objects.create(
             vehicle=self.vehicle,
-            maintenance_type=MaintenanceType.REPAIR,
-            status=MaintenanceStatus.IN_PROGRESS,
+            maintenance_type=self.MaintenanceType.REPAIR,
+            status=self.MaintenanceStatus.IN_PROGRESS,
             description='Replace faulty alternator',
             scheduled_date=self.today,
             completed_date=None,
@@ -48,10 +53,10 @@ class MaintenanceTestCase(APITestCase):
             notes='Parts on order'
         )
         
-        self.inspection_maintenance = Maintenance.objects.create(
+        self.inspection_maintenance = self.Maintenance.objects.create(
             vehicle=self.vehicle,
-            maintenance_type=MaintenanceType.INSPECTION,
-            status=MaintenanceStatus.COMPLETED,
+            maintenance_type=self.MaintenanceType.INSPECTION,
+            status=self.MaintenanceStatus.COMPLETED,
             description='Annual vehicle inspection',
             scheduled_date=self.today - timedelta(days=5),
             completed_date=self.today - timedelta(days=5),
@@ -64,8 +69,8 @@ class MaintenanceTestCase(APITestCase):
     def test_maintenance_creation(self):
         """Test Maintenance creation."""
         self.assertEqual(self.routine_maintenance.vehicle, self.vehicle)
-        self.assertEqual(self.routine_maintenance.maintenance_type, MaintenanceType.ROUTINE)
-        self.assertEqual(self.routine_maintenance.status, MaintenanceStatus.SCHEDULED)
+        self.assertEqual(self.routine_maintenance.maintenance_type, self.MaintenanceType.ROUTINE)
+        self.assertEqual(self.routine_maintenance.status, self.MaintenanceStatus.SCHEDULED)
         self.assertEqual(self.routine_maintenance.description, 'Regular oil change and inspection')
         self.assertEqual(self.routine_maintenance.scheduled_date, self.today + timedelta(days=7))
         self.assertEqual(self.routine_maintenance.odometer_reading, 15000)
@@ -80,25 +85,25 @@ class MaintenanceTestCase(APITestCase):
     
     def test_maintenance_type_choices(self):
         """Test Maintenance type choices."""
-        self.assertEqual(self.routine_maintenance.maintenance_type, MaintenanceType.ROUTINE)
-        self.assertEqual(self.repair_maintenance.maintenance_type, MaintenanceType.REPAIR)
-        self.assertEqual(self.inspection_maintenance.maintenance_type, MaintenanceType.INSPECTION)
+        self.assertEqual(self.routine_maintenance.maintenance_type, self.MaintenanceType.ROUTINE)
+        self.assertEqual(self.repair_maintenance.maintenance_type, self.MaintenanceType.REPAIR)
+        self.assertEqual(self.inspection_maintenance.maintenance_type, self.MaintenanceType.INSPECTION)
         
         # Test changing maintenance type
-        self.routine_maintenance.maintenance_type = MaintenanceType.OTHER
+        self.routine_maintenance.maintenance_type = self.MaintenanceType.OTHER
         self.routine_maintenance.save()
-        self.assertEqual(self.routine_maintenance.maintenance_type, MaintenanceType.OTHER)
+        self.assertEqual(self.routine_maintenance.maintenance_type, self.MaintenanceType.OTHER)
     
     def test_maintenance_status_choices(self):
         """Test Maintenance status choices."""
-        self.assertEqual(self.routine_maintenance.status, MaintenanceStatus.SCHEDULED)
-        self.assertEqual(self.repair_maintenance.status, MaintenanceStatus.IN_PROGRESS)
-        self.assertEqual(self.inspection_maintenance.status, MaintenanceStatus.COMPLETED)
+        self.assertEqual(self.routine_maintenance.status, self.MaintenanceStatus.SCHEDULED)
+        self.assertEqual(self.repair_maintenance.status, self.MaintenanceStatus.IN_PROGRESS)
+        self.assertEqual(self.inspection_maintenance.status, self.MaintenanceStatus.COMPLETED)
         
         # Test changing maintenance status
-        self.routine_maintenance.status = MaintenanceStatus.CANCELLED
+        self.routine_maintenance.status = self.MaintenanceStatus.CANCELLED
         self.routine_maintenance.save()
-        self.assertEqual(self.routine_maintenance.status, MaintenanceStatus.CANCELLED)
+        self.assertEqual(self.routine_maintenance.status, self.MaintenanceStatus.CANCELLED)
     
     def test_days_until_scheduled(self):
         """Test days_until_scheduled method."""
@@ -117,7 +122,7 @@ class MaintenanceTestCase(APITestCase):
         self.assertIsNone(days_until)
         
         # For cancelled maintenance
-        self.routine_maintenance.status = MaintenanceStatus.CANCELLED
+        self.routine_maintenance.status = self.MaintenanceStatus.CANCELLED
         self.routine_maintenance.save()
         days_until = self.routine_maintenance.days_until_scheduled()
         self.assertIsNone(days_until)
@@ -125,10 +130,10 @@ class MaintenanceTestCase(APITestCase):
     def test_negative_odometer_not_allowed(self):
         """Test negative odometer reading is not allowed."""
         
-        maintenance = Maintenance(
+        maintenance = self.Maintenance(
             vehicle=self.vehicle,
-            maintenance_type=MaintenanceType.ROUTINE,
-            status=MaintenanceStatus.SCHEDULED,
+            maintenance_type=self.MaintenanceType.ROUTINE,
+            status=self.MaintenanceStatus.SCHEDULED,
             description='Negative odometer',
             scheduled_date=self.today + timedelta(days=1),
             odometer_reading=-100,
@@ -141,10 +146,10 @@ class MaintenanceTestCase(APITestCase):
 
     def test_missing_scheduled_date(self):
         """Test days_until_scheduled returns 0 if scheduled_date is None."""
-        maintenance = Maintenance(
+        maintenance = self.Maintenance(
             vehicle=self.vehicle,
-            maintenance_type=MaintenanceType.ROUTINE,
-            status=MaintenanceStatus.SCHEDULED,
+            maintenance_type=self.MaintenanceType.ROUTINE,
+            status=self.MaintenanceStatus.SCHEDULED,
             description='No date',
             scheduled_date=None,
             odometer_reading=1000,
@@ -157,9 +162,9 @@ class MaintenanceTestCase(APITestCase):
     def test_invalid_status(self):
         """Test invalid status raises error."""
         from django.core.exceptions import ValidationError
-        maintenance = Maintenance(
+        maintenance = self.Maintenance(
             vehicle=self.vehicle,
-            maintenance_type=MaintenanceType.ROUTINE,
+            maintenance_type=self.MaintenanceType.ROUTINE,
             status='INVALID',
             description='Bad status',
             scheduled_date=self.today,
@@ -173,7 +178,7 @@ class MaintenanceTestCase(APITestCase):
 
     def test_str_for_all_types(self):
         """Test __str__ for all maintenance types."""
-        for mtype in MaintenanceType:
+        for mtype in self.MaintenanceType:
             self.routine_maintenance.maintenance_type = mtype
             self.routine_maintenance.save()
             self.assertIn(str(mtype.label), str(self.routine_maintenance))
@@ -181,10 +186,10 @@ class MaintenanceTestCase(APITestCase):
     def test_cost_validation(self):
         """Test negative cost is not allowed."""
         from django.core.exceptions import ValidationError
-        maintenance = Maintenance(
+        maintenance = self.Maintenance(
             vehicle=self.vehicle,
-            maintenance_type=MaintenanceType.ROUTINE,
-            status=MaintenanceStatus.SCHEDULED,
+            maintenance_type=self.MaintenanceType.ROUTINE,
+            status=self.MaintenanceStatus.SCHEDULED,
             description='Negative cost',
             scheduled_date=self.today + timedelta(days=1),
             odometer_reading=1000,

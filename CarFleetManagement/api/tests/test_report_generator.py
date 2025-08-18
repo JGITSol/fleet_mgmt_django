@@ -5,7 +5,7 @@ from rest_framework.test import APITestCase
 from django.conf import settings
 from pathlib import Path
 
-from api.report_generator import ScreenshotAnalysisReport, generate_report
+from CarFleetManagement.api.report_generator import ScreenshotAnalysisReport, generate_report
 
 
 class ScreenshotAnalysisReportTestCase(APITestCase):

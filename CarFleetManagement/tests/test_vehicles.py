@@ -3,7 +3,7 @@ from rest_framework.test import APITestCase
 from django.utils import timezone
 from datetime import timedelta
 
-from vehicles.models import Vehicle
+from CarFleetManagement.vehicles.models import Vehicle
 
 # Import tests from the app-specific test directory
 

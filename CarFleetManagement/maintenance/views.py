@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 
 from .models import Maintenance
-from vehicles.models import Vehicle
+from CarFleetManagement.vehicles.models import Vehicle
 from .serializers import MaintenanceSerializer
 
 # Maintenance Views

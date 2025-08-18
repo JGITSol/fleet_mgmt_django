@@ -13,12 +13,12 @@ from .openrouter_client import get_client
 from .report_generator import generate_report
 
 # Import models and serializers
-from vehicles.models import Vehicle
-from vehicles.serializers import VehicleSerializer
-from maintenance.models import Maintenance
-from maintenance.serializers import MaintenanceSerializer
-# from accounts.models import Driver
-# from accounts.serializers import DriverSerializer
+from CarFleetManagement.vehicles.models import Vehicle
+from CarFleetManagement.vehicles.serializers import VehicleSerializer
+from CarFleetManagement.maintenance.models import Maintenance
+from CarFleetManagement.maintenance.serializers import MaintenanceSerializer
+# from CarFleetManagement.accounts.models import Driver
+# from CarFleetManagement.accounts.serializers import DriverSerializer
 
 
 class AnalyzeScreenshotView(APIView):

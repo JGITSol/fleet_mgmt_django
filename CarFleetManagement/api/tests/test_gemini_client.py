@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from api.gemini_client import GeminiClient, get_client
+from CarFleetManagement.api.gemini_client import GeminiClient, get_client
 import io
 
 @pytest.fixture

@@ -5,8 +5,8 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from datetime import timedelta
 
-from vehicles.models import Vehicle
-from accounts.models import UserRole
+from CarFleetManagement.vehicles.models import Vehicle
+from CarFleetManagement.accounts.models import UserRole
 
 User = get_user_model()
 
@@ -18,7 +18,7 @@ from rest_framework.test import APITestCase
 from django.utils import timezone
 from datetime import timedelta
 
-from vehicles.models import Vehicle
+from CarFleetManagement.vehicles.models import Vehicle
 
 # Import tests from the app-specific test directory
 from .test_models import VehicleTestCase

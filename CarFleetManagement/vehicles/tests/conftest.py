@@ -1,10 +1,10 @@
 import pytest
-from vehicles.models import Vehicle
 from django.utils import timezone
 from datetime import timedelta
 
 @pytest.fixture
 def vehicle(db):
+    from CarFleetManagement.vehicles.models import Vehicle
     today = timezone.now().date()
     next_service = today + timedelta(days=90)
     insurance_expiry = today + timedelta(days=365)

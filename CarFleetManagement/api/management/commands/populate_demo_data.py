@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from api.models import Vehicle  # Example, adjust as needed
+from CarFleetManagement.api.models import Vehicle  # Example, adjust as needed
 
 class Command(BaseCommand):
     help = 'Populate the database with demo vehicles for testing and demos.'

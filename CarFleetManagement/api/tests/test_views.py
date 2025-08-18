@@ -8,9 +8,9 @@ from django.conf import settings
 from rest_framework.test import APIClient, APITestCase
 from rest_framework import status
 from django.core.files.uploadedfile import SimpleUploadedFile
-from vehicles.models import Vehicle
-from vehicles.serializers import VehicleSerializer
-from accounts.models import CustomUser, UserRole
+# Vehicle model import moved to relevant test class setUp methods
+from CarFleetManagement.vehicles.serializers import VehicleSerializer # Serializer import retained for now
+# CustomUser and UserRole model imports moved to relevant test class setUp methods
 from .jwt_test_mixin import JWTAuthTestMixin
 
 
@@ -432,26 +432,21 @@ class GenerateReportViewTestCase(JWTAuthTestMixin, APITestCase):
 
 class TestVehicleAPI(JWTAuthTestMixin, APITestCase):
     def setUp(self):
-        Vehicle.objects.all().delete()
-        self.admin_user = self.authenticate_client(role_name='ADMIN')
+        from CarFleetManagement.vehicles.models import Vehicle
+        from CarFleetManagement.accounts.models import CustomUser, UserRole # Keep for type hinting if needed elsewhere
+        self.Vehicle = Vehicle
+        self.CustomUser = CustomUser
+        self.UserRole = UserRole
+
+        # Ensure a clean slate for vehicle objects if necessary for these tests
+        self.Vehicle.objects.all().delete()
+
+        # Authenticate the client with an admin user. The mixin handles user/role creation.
+        # self.client will be authenticated, and self.admin_user will hold the user instance.
+        # self.admin_user = self.authenticate_client(role_name='ADMIN') # Moved to individual tests
         self.url = reverse('CarFleetManagement.api:api-vehicle-list')
-        # Create a user role
-        self.admin_role = UserRole.objects.create(name=UserRole.ADMIN)
         
-        # Create a test user with appropriate permissions
-        self.user = CustomUser.objects.create_user(
-            username='testuser',
-            email='test@example.com',
-            password='testpassword',
-            is_staff=True,
-            is_superuser=True
-        )
-        self.user.role = self.admin_role
-        self.user.save()
-        
-        # Authenticate the client using JWTAuthTestMixin (sets JWT token)
-        self.authenticate_client(user=self.user, role_name='ADMIN')
-        
+        # Vehicle data for tests
         self.vehicle_data = {
             'brand': 'Toyota',
             'model': 'Corolla',
@@ -459,59 +454,77 @@ class TestVehicleAPI(JWTAuthTestMixin, APITestCase):
             'license_plate': 'XYZ-123',
             'vin': '1HGCM82633A123456'
         }
-        self.vehicle = Vehicle.objects.create(**self.vehicle_data)
+        # Create a vehicle instance for tests that need an existing vehicle (e.g., detail, update, delete)
+        self.vehicle = self.Vehicle.objects.create(**self.vehicle_data)
 
     def test_vehicle_list(self):
-        url = reverse('CarFleetManagement.api:api-vehicle-list')
-        response = self.client.get(url)
-        vehicles = Vehicle.objects.all()
-        serializer = VehicleSerializer(vehicles, many=True)
+        self.authenticate_client(role_name='ADMIN')
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, serializer.data)
+        # Assuming default pagination, check for 'results' key
+        self.assertIn('results', response.data)
+        # One vehicle is created in setUp
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['brand'], self.vehicle_data['brand'])
 
     def test_vehicle_create(self):
-        url = reverse('CarFleetManagement.api:api-vehicle-create')
-        # Create data for the new vehicle, ensuring uniqueness for relevant fields
+        self.authenticate_client(role_name='ADMIN')
+        # Create data for a new vehicle, ensuring uniqueness for relevant fields
         create_data = self.vehicle_data.copy()
-        create_data['license_plate'] = 'NEW-789' # Ensure this is unique
-        create_data['vin'] = 'NEWVIN1234567890' # Ensure this is unique
+        create_data['license_plate'] = 'NEW-789'  # Ensure this is unique
+        create_data['vin'] = 'NEWVIN1234567890'    # Ensure this is unique
 
-        response = self.client.post(url, create_data)
+        response = self.client.post(self.url, create_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Vehicle.objects.count(), 2) # One from setUp, one from this test
-        # Verify the newly created vehicle, not the one from setUp
-        new_vehicle = Vehicle.objects.get(id=response.data['id'])
+        # We expect 2 vehicles now: one from setUp, one created here
+        self.assertEqual(self.Vehicle.objects.count(), 2)
+        # Verify the newly created vehicle by its ID from the response
+        new_vehicle = self.Vehicle.objects.get(id=response.data['id'])
         self.assertEqual(new_vehicle.brand, create_data['brand'])
         self.assertEqual(new_vehicle.license_plate, create_data['license_plate'])
 
     def test_vehicle_detail(self):
-        url = reverse('CarFleetManagement.api:api-vehicle-detail', args=[self.vehicle.id])
-        response = self.client.get(url)
+        self.authenticate_client(role_name='ADMIN')
+        # Use self.vehicle created in setUp
+        detail_url = reverse('CarFleetManagement.api:api-vehicle-detail', kwargs={'pk': self.vehicle.pk})
+        response = self.client.get(detail_url)
         serializer = VehicleSerializer(self.vehicle)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, serializer.data)
 
     def test_vehicle_update(self):
-        url = reverse('CarFleetManagement.api:api-vehicle-update', args=[self.vehicle.id])
+        self.authenticate_client(role_name='ADMIN')
+        # Use self.vehicle created in setUp
+        detail_url = reverse('CarFleetManagement.api:api-vehicle-detail', kwargs={'pk': self.vehicle.pk})
         updated_data = self.vehicle_data.copy()
         updated_data['brand'] = 'Honda'
-        response = self.client.put(url, updated_data)
+        # Ensure we are updating a field that is different from the original self.vehicle_data
+        self.assertNotEqual(self.vehicle.brand, updated_data['brand'])
+
+        response = self.client.put(detail_url, updated_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.vehicle.refresh_from_db()
         self.assertEqual(self.vehicle.brand, 'Honda')
 
     def test_vehicle_delete(self):
-        url = reverse('CarFleetManagement.api:api-vehicle-delete', args=[self.vehicle.id])
-        response = self.client.delete(url)
+        self.authenticate_client(role_name='ADMIN')
+        # Use self.vehicle created in setUp
+        initial_count = self.Vehicle.objects.count()
+        detail_url = reverse('CarFleetManagement.api:api-vehicle-detail', kwargs={'pk': self.vehicle.pk})
+        response = self.client.delete(detail_url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Vehicle.objects.count(), 0)
+        self.assertEqual(self.Vehicle.objects.count(), initial_count - 1)
 
 
 class TestVehicleAPIPermissions(JWTAuthTestMixin, APITestCase):
     def setUp(self):
-        from accounts.models import UserRole, CustomUser
-        from vehicles.models import Vehicle
-        Vehicle.objects.all().delete()
+        from CarFleetManagement.accounts.models import UserRole, CustomUser
+        from CarFleetManagement.vehicles.models import Vehicle
+        self.Vehicle = Vehicle
+        self.CustomUser = CustomUser
+        self.UserRole = UserRole
+
+        self.Vehicle.objects.all().delete()
         self.admin_user = self.authenticate_client(role_name='ADMIN')
         self.admin_role, _ = UserRole.objects.get_or_create(name=UserRole.ADMIN)
         self.driver_role, _ = UserRole.objects.get_or_create(name=UserRole.DRIVER)

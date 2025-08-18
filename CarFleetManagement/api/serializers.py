@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from accounts.models import CustomUser, UserRole
+from CarFleetManagement.accounts.models import CustomUser, UserRole
 from django.contrib.auth import authenticate
 
 

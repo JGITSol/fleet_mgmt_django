@@ -4,9 +4,7 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from datetime import timedelta
 
-from CarFleetManagement.emergency.models import EmergencyIncident
-from vehicles.models import Vehicle
-from accounts.models import UserRole, CustomUser
+# Model imports moved into setUp methods or test functions
 from .jwt_test_mixin import JWTAuthTestMixin
 
 User = get_user_model()
@@ -18,17 +16,13 @@ import pytest
 from django.utils import timezone
 from datetime import timedelta
 
-from CarFleetManagement.emergency.models import EmergencyIncident, EmergencyContact, EmergencyResponse, EmergencyType, EmergencyStatus
-from accounts.models import CustomUser
-from vehicles.models import Vehicle
-from accounts.models import UserRole
-from accounts.models import Driver
-
+# Model imports moved into test functions or handled by fixtures
 
 # Add additional tests that might require fixtures from conftest.py
 @pytest.mark.django_db
 def test_emergency_contact_creation(emergency_contact, custom_user):
     """Test emergency contact creation using fixture."""
+    from CarFleetManagement.emergency.models import EmergencyContact
     # Retrieve from DB and verify
     contact = EmergencyContact.objects.get(user=custom_user)
     assert contact.name == 'Jane Doe'
@@ -38,6 +32,7 @@ def test_emergency_contact_creation(emergency_contact, custom_user):
 @pytest.mark.django_db
 def test_emergency_incident_creation(emergency_incident, vehicle, custom_user):
     """Test emergency incident creation using fixture."""
+    from CarFleetManagement.emergency.models import EmergencyIncident
     # Retrieve from DB and verify
     incident = EmergencyIncident.objects.get(vehicle=vehicle)
     assert incident.emergency_type == 'ACCIDENT'
@@ -61,6 +56,7 @@ def test_emergency_incident_status_update(emergency_incident):
     emergency_incident.save()
     
     # Verify it's now resolved
+    from CarFleetManagement.emergency.models import EmergencyIncident # Import for this specific call
     updated_incident = EmergencyIncident.objects.get(id=emergency_incident.id)
     assert updated_incident.status == 'RESOLVED'
     assert updated_incident.resolved_time is not None
@@ -72,9 +68,21 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
     
     def setUp(self):
         """Set up test environment."""
+        from CarFleetManagement.accounts.models import UserRole, Driver
+        from CarFleetManagement.vehicles.models import Vehicle
+        from CarFleetManagement.emergency.models import EmergencyIncident, EmergencyType, EmergencyStatus, EmergencyResponse
+
+        self.UserRole = UserRole
+        self.Driver = Driver
+        self.Vehicle = Vehicle
+        self.EmergencyIncident = EmergencyIncident
+        self.EmergencyType = EmergencyType
+        self.EmergencyStatus = EmergencyStatus
+        self.EmergencyResponse = EmergencyResponse
+
         # Create roles
-        self.admin_role = UserRole.objects.create(name=UserRole.ADMIN, description='Administrator role')
-        self.driver_role = UserRole.objects.create(name=UserRole.DRIVER, description='Driver role')
+        self.admin_role = self.UserRole.objects.create(name=self.UserRole.ADMIN, description='Administrator role')
+        self.driver_role = self.UserRole.objects.create(name=self.UserRole.DRIVER, description='Driver role')
         # Create users
         self.admin_user = User.objects.create_user(
             username='admin_user',
@@ -92,7 +100,7 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
         self.authenticate_client(user=self.admin_user)
 
         # Create vehicle
-        self.vehicle = Vehicle.objects.create(
+        self.vehicle = self.Vehicle.objects.create(
             brand='Toyota',
             model='Camry',
             year=2022,
@@ -100,7 +108,7 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
             vin='1HGCM82633A123456'
         )
         # Create driver
-        self.driver = Driver.objects.create(
+        self.driver = self.Driver.objects.create(
             first_name='John',
             last_name='Doe',
             email='john.doe@example.com',
@@ -109,12 +117,12 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
         )
         
         # Create emergency incident
-        self.incident = EmergencyIncident.objects.create(
+        self.incident = self.EmergencyIncident.objects.create(
             vehicle=self.vehicle,
             driver=self.driver,
             reported_by=self.admin_user,  # Always use authenticated user for reported_by
-            emergency_type=EmergencyType.BREAKDOWN,
-            status=EmergencyStatus.REPORTED,
+            emergency_type=self.EmergencyType.BREAKDOWN,
+            status=self.EmergencyStatus.REPORTED,
             location='Highway 101, Mile Marker 25',
             latitude=37.7749,
             longitude=-122.4194,
@@ -122,7 +130,7 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
         )
         
         # Create emergency response
-        self.response = EmergencyResponse.objects.create(
+        self.response = self.EmergencyResponse.objects.create(
             incident=self.incident,
             responder=self.admin_user,
             action_taken='Dispatched tow truck to location.',
@@ -137,7 +145,7 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
         self.authenticate_client(user=self.admin_user)
         
         # Test emergency list view
-        response = self.client.get(reverse('emergency_list'))
+        response = self.client.get(reverse('CarFleetManagement.api:api-emergency-list'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Highway 101, Mile Marker 25')
         self.assertContains(response, 'BREAKDOWN')
@@ -148,7 +156,7 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
         self.authenticate_client(user=self.admin_user)
         
         # Test emergency detail view
-        response = self.client.get(reverse('emergency_detail', kwargs={'pk': self.incident.pk}))
+        response = self.client.get(reverse('CarFleetManagement.api:api-emergency-detail', kwargs={'pk': self.incident.pk}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Vehicle broke down with engine failure')
         self.assertContains(response, 'John Doe')
@@ -159,24 +167,24 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
         self.authenticate_client(user=self.driver_user)
 
         # Test GET request
-        response = self.client.get(reverse('emergency:emergency_create'))
+        response = self.client.get(reverse('CarFleetManagement.api:api-emergency-list'))
         self.assertEqual(response.status_code, 200)
         
         # Test POST request
         # Do not include 'reported_by' in form data; view sets it automatically
         incident_data = {
             'vehicle': self.vehicle.id,
-            'emergency_type': EmergencyType.ACCIDENT,
+            'emergency_type': self.EmergencyType.ACCIDENT,
             'location': 'Elm Street, Near Main Ave',
-            'status': EmergencyStatus.REPORTED,
+            'status': self.EmergencyStatus.REPORTED,
             'description': 'Minor fender bender, no injuries'
         }
         
-        response = self.client.post(reverse('emergency:emergency_create'), incident_data)
+        response = self.client.post(reverse('CarFleetManagement.api:api-emergency-list'), incident_data)
         self.assertEqual(response.status_code, 302)  # Redirect after successful creation
         
         # Verify incident was created
-        self.assertTrue(EmergencyIncident.objects.filter(description='Minor fender bender, no injuries').exists())
+        self.assertTrue(self.EmergencyIncident.objects.filter(description='Minor fender bender, no injuries').exists())
     
     def test_emergency_update_view(self):
         """Test emergency incident update view."""
@@ -184,22 +192,22 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
         self.authenticate_client(user=self.admin_user)
         
         # Test GET request
-        response = self.client.get(reverse('emergency_update', kwargs={'pk': self.incident.pk}))
+        response = self.client.get(reverse('CarFleetManagement.api:api-emergency-detail', kwargs={'pk': self.incident.pk}))
         self.assertEqual(response.status_code, 200)
         
         # Test POST request - update status
         updated_data = {
             'vehicle': self.vehicle.id,
             'driver': self.driver.id,
-            'emergency_type': EmergencyType.BREAKDOWN,
-            'status': EmergencyStatus.RESPONDING,  # Changed from REPORTED to RESPONDING
+            'emergency_type': self.EmergencyType.BREAKDOWN,
+            'status': self.EmergencyStatus.RESPONDING,  # Changed from REPORTED to RESPONDING
             'location': 'Highway 101, Mile Marker 25',
             'latitude': 37.7749,
             'longitude': -122.4194,
             'description': 'Vehicle broke down with engine failure'
         }
         
-        response = self.client.post(reverse('emergency_update', kwargs={'pk': self.incident.pk}), updated_data)
+        response = self.client.post(reverse('CarFleetManagement.api:api-emergency-detail', kwargs={'pk': self.incident.pk}), updated_data)
         self.assertEqual(response.status_code, 302)  # Redirect after successful update
          
         # Verify incident was updated
@@ -212,7 +220,7 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
         self.authenticate_client(user=self.admin_user)
         
         # Test GET request
-        response = self.client.get(reverse('emergency_response_create', kwargs={'incident_id': self.incident.pk}))
+        response = self.client.get(reverse('CarFleetManagement.api:api-emergency-response-list')) # GET not typical for create, but reflects old test
         self.assertEqual(response.status_code, 200)
         
         # Test POST request
@@ -221,7 +229,8 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
     'notes': 'Vehicle being towed to service center'
 }
         
-        response = self.client.post(reverse('emergency_response_create', kwargs={'incident_id': self.incident.pk}), response_data)
+        response_data['incident'] = self.incident.pk # Add incident_id to POST data
+        response = self.client.post(reverse('CarFleetManagement.api:api-emergency-response-list'), response_data)
         self.assertEqual(response.status_code, 302)  # Redirect after successful creation
         
         # Verify response was created

@@ -3,8 +3,8 @@ from django.utils import timezone
 from datetime import timedelta, date
 from unittest.mock import patch
 
-from vehicles.models import Vehicle
-from maintenance.models import Maintenance
+from CarFleetManagement.vehicles.models import Vehicle
+from CarFleetManagement.maintenance.models import Maintenance
 
 
 @pytest.mark.django_db

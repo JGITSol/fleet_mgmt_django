@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Maintenance
-from vehicles.serializers import VehicleSerializer
+from CarFleetManagement.vehicles.serializers import VehicleSerializer
 
 class MaintenanceSerializer(serializers.ModelSerializer):
     """

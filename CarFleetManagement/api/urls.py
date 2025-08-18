@@ -8,6 +8,22 @@ app_name = "CarFleetManagement.api"
 from django.urls import path
 from . import views
 from . import auth_views
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+class ApiRootView(APIView):
+    def get(self, request, *args, **kwargs):
+        return Response({
+            "message": "Welcome to the Car Fleet Management API.",
+            "endpoints": [
+                "/api/auth/",
+                "/api/screenshots/",
+                "/api/vehicles/",
+                "/api/maintenance/",
+                "/api/drivers/",
+                "/api/emergencies/"
+            ]
+        })
 
 # Authentication URLs for Lynx JS mobile app
 auth_urlpatterns = [
@@ -28,16 +44,8 @@ screenshot_urlpatterns = [
 
 # Vehicle API URLs
 vehicle_urlpatterns = [
-    path('vehicles/', views.VehicleListCreateAPIView.as_view(), name='vehicle_list'),
     path('vehicles/', views.VehicleListCreateAPIView.as_view(), name='api-vehicle-list'),
-    path('vehicles/create/', views.VehicleListCreateAPIView.as_view(), name='vehicle_create'),
-    path('vehicles/create/', views.VehicleListCreateAPIView.as_view(), name='api-vehicle-create'),
-    path('vehicles/<int:pk>/', views.VehicleRetrieveUpdateDestroyAPIView.as_view(), name='vehicle_detail'),
     path('vehicles/<int:pk>/', views.VehicleRetrieveUpdateDestroyAPIView.as_view(), name='api-vehicle-detail'),
-    path('vehicles/<int:pk>/update/', views.VehicleRetrieveUpdateDestroyAPIView.as_view(), name='vehicle_update'),
-    path('vehicles/<int:pk>/update/', views.VehicleRetrieveUpdateDestroyAPIView.as_view(), name='api-vehicle-update'),
-    path('vehicles/<int:pk>/delete/', views.VehicleRetrieveUpdateDestroyAPIView.as_view(), name='vehicle_delete'),
-    path('vehicles/<int:pk>/delete/', views.VehicleRetrieveUpdateDestroyAPIView.as_view(), name='api-vehicle-delete'),
 ]
 
 # Maintenance API URLs
@@ -62,19 +70,13 @@ driver_urlpatterns = [
 
 # Emergency API URLs
 emergency_urlpatterns = [
-    path('emergencies/', views.EmergencyIncidentListCreateAPIView.as_view(), name='emergency_list'),
     path('emergencies/', views.EmergencyIncidentListCreateAPIView.as_view(), name='api-emergency-list'),
-    path('emergencies/create/', views.EmergencyIncidentListCreateAPIView.as_view(), name='emergency_create'),
-    path('emergencies/create/', views.EmergencyIncidentListCreateAPIView.as_view(), name='api-emergency-create'),
-    path('emergencies/<int:pk>/', views.EmergencyIncidentRetrieveUpdateDestroyAPIView.as_view(), name='emergency_detail'),
     path('emergencies/<int:pk>/', views.EmergencyIncidentRetrieveUpdateDestroyAPIView.as_view(), name='api-emergency-detail'),
-    path('emergencies/<int:pk>/update/', views.EmergencyIncidentUpdateAPIView.as_view(), name='emergency_update'),
-    path('emergencies/<int:pk>/update/', views.EmergencyIncidentUpdateAPIView.as_view(), name='api-emergency-update'),
-    path('emergencies/<int:pk>/delete/', views.EmergencyIncidentDeleteAPIView.as_view(), name='emergency_delete'),
-    path('emergencies/<int:pk>/delete/', views.EmergencyIncidentDeleteAPIView.as_view(), name='api-emergency-delete'),
-    path('emergencies/<int:incident_id>/response/create/', views.EmergencyResponseCreateView.as_view(), name='emergency_response_create'),
-    path('emergencies/<int:incident_id>/response/create/', views.EmergencyResponseCreateView.as_view(), name='api-emergency-response-create'),
+    path('emergencies/responses/', views.EmergencyResponseListCreateAPIView.as_view(), name='api-emergency-response-list'),
+    path('emergencies/responses/<int:pk>/', views.EmergencyResponseRetrieveUpdateDestroyAPIView.as_view(), name='api-emergency-response-detail'),
 ]
 
 # Combine all URL patterns
-urlpatterns = auth_urlpatterns + screenshot_urlpatterns + vehicle_urlpatterns + maintenance_urlpatterns + driver_urlpatterns + emergency_urlpatterns
+urlpatterns = [
+    path('', ApiRootView.as_view(), name='api-root'),
+] + auth_urlpatterns + screenshot_urlpatterns + vehicle_urlpatterns + maintenance_urlpatterns + driver_urlpatterns + emergency_urlpatterns

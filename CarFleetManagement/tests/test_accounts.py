@@ -2,11 +2,11 @@ import pytest
 from rest_framework.test import APITestCase
 from django.contrib.auth import get_user_model
 
-from accounts.models import CustomUser, Driver
+from CarFleetManagement.accounts.models import CustomUser, Driver
 
 # Import tests from the app-specific test directory if they exist
 try:
-    from accounts.tests.test_models import *
+    from CarFleetManagement.accounts.tests.test_models import *
 except ImportError:
     pass
 

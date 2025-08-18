@@ -4,9 +4,9 @@ from rest_framework.test import APIClient, APITestCase
 from rest_framework import status
 
 from django.contrib.auth import get_user_model
-from accounts.models import UserRole, Driver
-from vehicles.models import Vehicle
-from maintenance.models import Maintenance
+from CarFleetManagement.accounts.models import UserRole, Driver
+from CarFleetManagement.vehicles.models import Vehicle
+from CarFleetManagement.maintenance.models import Maintenance
 from tests.auth_test_mixin import AuthTestMixin
 from tests.auth_utils import authenticate_client
 from tests.test_setup import setup_test_environment, get_authenticated_client

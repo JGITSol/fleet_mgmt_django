@@ -28,9 +28,9 @@ django.setup()
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
-from vehicles.models import Vehicle
-from accounts.models import CustomUser, Driver
-from maintenance.models import Maintenance
+from CarFleetManagement.vehicles.models import Vehicle
+from CarFleetManagement.accounts.models import CustomUser, Driver
+from CarFleetManagement.maintenance.models import Maintenance
 from CarFleetManagement.emergency.models import EmergencyContact, EmergencyIncident
 
 
@@ -63,7 +63,7 @@ def user():
 @pytest.fixture
 def custom_user(user):
     """Create and return a test custom user."""
-    from accounts.models import UserRole
+    from CarFleetManagement.accounts.models import UserRole
     role, _ = UserRole.objects.get_or_create(name=UserRole.DRIVER, defaults={'description': 'Driver role'})
     user.role = role
     user.phone_number = '+1234567890'
