@@ -72,11 +72,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install bun (required by Reflex runtime)
-        run: |
-          curl -fsSL https://bun.sh/install | bash || true
-          echo "BUN_INSTALL_DIR=$HOME/.bun/bin" >> $GITHUB_ENV
-          echo "$HOME/.bun/bin" >> $GITHUB_PATH
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+
+      - name: Cache bun
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.bun
+          key: ${{ runner.os }}-bun-${{ hashFiles('car_fleet_manager_frontend/requirements.txt') }}
+
+      - name: Setup bun (official action)
+        uses: oven-sh/setup-bun@v1
+        with:
+          version: '1'
 
       - name: Build Reflex frontend
         working-directory: ./car_fleet_manager_frontend
