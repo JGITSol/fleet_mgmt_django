@@ -7,12 +7,16 @@ from django.contrib import messages
 from .models import Maintenance
 from CarFleetManagement.vehicles.models import Vehicle
 from .serializers import MaintenanceSerializer
+from CarFleetManagement.accounts.models import UserRole
 
 # Maintenance Views
 class MaintenanceListView(LoginRequiredMixin, ListView):
     model = Maintenance
     template_name = 'maintenance/maintenance_list.html'
-    context_object_name = 'maintenance_records'
+    # tests and templates expect the context variable name 'maintenance_list'
+    # (Django's ListView default is '<model>_list'). Keep that name so
+    # test-created objects appear in the template loop.
+    context_object_name = 'maintenance_list'
     
     def get_queryset(self):
         return Maintenance.objects.all().order_by('-scheduled_date')
@@ -40,8 +44,13 @@ class MaintenanceCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView)
         return super().form_valid(form)
     
     def test_func(self):
-        # Only maintenance staff and admins can create maintenance records
-        return self.request.user.is_staff or hasattr(self.request.user, 'role') and self.request.user.role.name in ['ADMIN', 'MAINTENANCE_STAFF']
+        # Only maintenance staff and admins can create maintenance records.
+        # Use the project's UserRole constants (which store lowercase names).
+        if self.request.user.is_staff:
+            return True
+        if hasattr(self.request.user, 'role') and self.request.user.role is not None:
+            return self.request.user.role.name in [UserRole.ADMIN, UserRole.MAINTENANCE_STAFF]
+        return False
 
 class MaintenanceUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Maintenance
@@ -57,8 +66,12 @@ class MaintenanceUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
         return super().form_valid(form)
     
     def test_func(self):
-        # Only maintenance staff and admins can update maintenance records
-        return self.request.user.is_staff or hasattr(self.request.user, 'role') and self.request.user.role.name in ['ADMIN', 'MAINTENANCE_STAFF']
+        # Only maintenance staff and admins can update maintenance records.
+        if self.request.user.is_staff:
+            return True
+        if hasattr(self.request.user, 'role') and self.request.user.role is not None:
+            return self.request.user.role.name in [UserRole.ADMIN, UserRole.MAINTENANCE_STAFF]
+        return False
 
 class MaintenanceDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Maintenance
@@ -70,5 +83,9 @@ class MaintenanceDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView)
         return super().delete(request, *args, **kwargs)
     
     def test_func(self):
-        # Only maintenance staff and admins can delete maintenance records
-        return self.request.user.is_staff or hasattr(self.request.user, 'role') and self.request.user.role.name in ['ADMIN', 'MAINTENANCE_STAFF']
+        # Only maintenance staff and admins can delete maintenance records.
+        if self.request.user.is_staff:
+            return True
+        if hasattr(self.request.user, 'role') and self.request.user.role is not None:
+            return self.request.user.role.name in [UserRole.ADMIN, UserRole.MAINTENANCE_STAFF]
+        return False

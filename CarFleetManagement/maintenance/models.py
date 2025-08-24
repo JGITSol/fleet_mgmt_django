@@ -87,13 +87,10 @@ class Maintenance(models.Model):
         # Handle case where scheduled_date is None
         if not self.scheduled_date:
             return 0 # Consistent with existing test_missing_scheduled_date
-        
+
         today = timezone.now().date()
-        
-        # If scheduled date is in the past (and not completed/cancelled), return None
-        if self.scheduled_date < today:
-            return None
-        
+
         # Calculate days difference using timezone-aware date
         delta = self.scheduled_date - today
+        # Return negative values for past dates (tests expect negative numbers)
         return delta.days

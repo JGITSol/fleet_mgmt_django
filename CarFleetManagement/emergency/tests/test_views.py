@@ -190,11 +190,13 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
         """Test emergency incident update view."""
         # Login as admin
         self.authenticate_client(user=self.admin_user)
-        
+
         # Test GET request
-        response = self.client.get(reverse('CarFleetManagement.api:api-emergency-detail', kwargs={'pk': self.incident.pk}))
+        response = self.client.get(
+            reverse('CarFleetManagement.api:api-emergency-detail', kwargs={'pk': self.incident.pk})
+        )
         self.assertEqual(response.status_code, 200)
-        
+
         # Test POST request - update status
         updated_data = {
             'vehicle': self.vehicle.id,
@@ -206,13 +208,17 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
             'longitude': -122.4194,
             'description': 'Vehicle broke down with engine failure'
         }
-        
-        response = self.client.post(reverse('CarFleetManagement.api:api-emergency-detail', kwargs={'pk': self.incident.pk}), updated_data)
+
+        response = self.client.post(
+            reverse('CarFleetManagement.api:api-emergency-detail', kwargs={'pk': self.incident.pk}),
+            updated_data,
+        )
         self.assertEqual(response.status_code, 302)  # Redirect after successful update
-         
+
         # Verify incident was updated
         self.incident.refresh_from_db()
-        self.assertEqual(self.incident.status, EmergencyStatus.RESPONDING)
+        self.assertEqual(self.incident.status, self.EmergencyStatus.RESPONDING)
+
     
     def test_emergency_response_create_view(self):
         """Test emergency response create view."""
@@ -225,13 +231,14 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
         
         # Test POST request
         response_data = {
-    'action_taken': 'Towed vehicle to service center',
-    'notes': 'Vehicle being towed to service center'
-}
-        
-        response_data['incident'] = self.incident.pk # Add incident_id to POST data
+            'action_taken': 'Towed vehicle to service center',
+            'notes': 'Vehicle being towed to service center'
+        }
+
+        response_data['incident'] = self.incident.pk  # Add incident_id to POST data
         response = self.client.post(reverse('CarFleetManagement.api:api-emergency-response-list'), response_data)
         self.assertEqual(response.status_code, 302)  # Redirect after successful creation
-        
+
         # Verify response was created
-        self.assertTrue(EmergencyResponse.objects.filter(notes='Vehicle being towed to service center').exists())
+        self.assertTrue(self.EmergencyResponse.objects.filter(notes='Vehicle being towed to service center').exists())
+

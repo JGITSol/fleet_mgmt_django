@@ -11,6 +11,10 @@ from pathlib import Path
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
+import sys
+
+# Provide compatibility alias so tests that patch 'api.report_generator' affect this module
+sys.modules.setdefault('api.report_generator', sys.modules[__name__])
 
 class ScreenshotAnalysisReport:
     """Generator for screenshot analysis reports."""

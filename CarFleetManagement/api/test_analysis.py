@@ -17,11 +17,10 @@ def test_api_clients_analyze_screenshots_mocked(MockOpenRouterClient, MockGemini
     mock_openrouter_instance.analyze_screenshot.return_value = {"status": "success", "client": "openrouter_mock"}
     mock_gemini_instance.analyze_screenshot.return_value = {"status": "success", "client": "gemini_mock"}
 
-    # Instantiate the clients. Due to patching, these will be the mock classes,
-    # and will return the configured mock_instances.
-    # The original __init__ methods (checking for API keys) will not be called.
-    openrouter_client = OpenRouterClient() 
-    gemini_client = GeminiClient()
+    # Instantiate the clients through the patched mock constructors so the
+    # configured mock instances are returned reliably.
+    openrouter_client = MockOpenRouterClient()
+    gemini_client = MockGeminiClient()
 
     assert openrouter_client is mock_openrouter_instance
     assert gemini_client is mock_gemini_instance

@@ -11,7 +11,7 @@ services:
     build:
       context: ./car_fleet_manager_frontend
     container_name: reflex-frontend
-    command: python -m reflex run --host 0.0.0.0 --port 3000
+    command: "python -m reflex run --backend-host 0.0.0.0 --backend-port 3000"
     ports:
       - "3000:3000"
     environment:

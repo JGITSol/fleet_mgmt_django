@@ -207,7 +207,7 @@ class VehicleAPITestCase(APITestCase, AuthTestMixin):
         
         # Assert response
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Vehicle.objects.count(), 1)
+    self.assertEqual(self.Vehicle.objects.count(), 1)
         self.assertFalse(Vehicle.objects.filter(pk=self.vehicle2.pk).exists())
     
     def test_unauthorized_access(self):

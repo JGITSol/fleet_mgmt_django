@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from CarFleetManagement.accounts.models import UserRole
 from django.contrib import messages
 
 from .models import Vehicle
@@ -34,8 +35,12 @@ class VehicleCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return super().form_valid(form)
     
     def test_func(self):
-        # Only fleet managers and admins can create vehicles
-        return self.request.user.is_staff or hasattr(self.request.user, 'role') and self.request.user.role.name in ['ADMIN', 'FLEET_MANAGER']
+        # Only fleet managers (manager role) and admins can create vehicles
+        if not (self.request.user and getattr(self.request.user, 'is_authenticated', False)):
+            return False
+        if getattr(self.request.user, 'is_staff', False) or getattr(self.request.user, 'is_superuser', False):
+            return True
+        return hasattr(self.request.user, 'role') and self.request.user.role.name in [UserRole.ADMIN, UserRole.MANAGER]
 
 class VehicleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Vehicle
@@ -52,8 +57,12 @@ class VehicleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
     
     def test_func(self):
-        # Only fleet managers and admins can update vehicles
-        return self.request.user.is_staff or hasattr(self.request.user, 'role') and self.request.user.role.name in ['ADMIN', 'FLEET_MANAGER']
+        # Only fleet managers (manager role) and admins can update vehicles
+        if not (self.request.user and getattr(self.request.user, 'is_authenticated', False)):
+            return False
+        if getattr(self.request.user, 'is_staff', False) or getattr(self.request.user, 'is_superuser', False):
+            return True
+        return hasattr(self.request.user, 'role') and self.request.user.role.name in [UserRole.ADMIN, UserRole.MANAGER]
 
 class VehicleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Vehicle
@@ -65,5 +74,9 @@ class VehicleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return super().delete(request, *args, **kwargs)
     
     def test_func(self):
-        # Only fleet managers and admins can delete vehicles
-        return self.request.user.is_staff or hasattr(self.request.user, 'role') and self.request.user.role.name in ['ADMIN', 'FLEET_MANAGER']
+        # Only fleet managers (manager role) and admins can delete vehicles
+        if not (self.request.user and getattr(self.request.user, 'is_authenticated', False)):
+            return False
+        if getattr(self.request.user, 'is_staff', False) or getattr(self.request.user, 'is_superuser', False):
+            return True
+        return hasattr(self.request.user, 'role') and self.request.user.role.name in [UserRole.ADMIN, UserRole.MANAGER]

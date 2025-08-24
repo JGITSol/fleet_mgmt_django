@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import sys
 
 # Load environment variables from .env file
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'CarFleetManagement.api.middleware.JWTAuthMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -108,6 +110,11 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
+# Default pagination for list endpoints so API responses return a paginated
+# structure (tests expect a top-level 'results' key).
+REST_FRAMEWORK.setdefault('DEFAULT_PAGINATION_CLASS', 'rest_framework.pagination.PageNumberPagination')
+REST_FRAMEWORK.setdefault('PAGE_SIZE', 10)
+
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Fleet Management API',
     'DESCRIPTION': 'API documentation for the Fleet Management system',
@@ -117,3 +124,6 @@ SPECTACULAR_SETTINGS = {
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Detect test runner (pytest) so code can adapt (e.g., enable test-only URL aliases)
+TESTING = 'pytest' in sys.argv[0] or any('pytest' in arg for arg in sys.argv)

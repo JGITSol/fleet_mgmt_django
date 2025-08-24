@@ -86,7 +86,7 @@ def test_setup_environment():
     
     # Verify the UserSerializer is patched
     import api.serializers
-    assert api.serializers.UserSerializer == TestUserSerializer
+    assert api.serializers.UserSerializer == AppTestUserSerializer
     assert api.serializers.User == CustomUser
 
 @pytest.mark.django_db

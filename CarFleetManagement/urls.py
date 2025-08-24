@@ -1,10 +1,16 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 
 # Import the app-specific url modules to access their urlpatterns and app_name
 from CarFleetManagement.vehicles import urls as vehicle_urls
 from CarFleetManagement.maintenance import urls as maintenance_urls
 from CarFleetManagement.emergency import urls as emergency_urls
+
+# Import view callables for optional non-namespaced aliases (DEV only)
+from CarFleetManagement.vehicles import views as vehicle_views
+from CarFleetManagement.maintenance import views as maintenance_views
+from CarFleetManagement.emergency import views as emergency_views
 
 from django.http import HttpResponse
 
@@ -19,12 +25,39 @@ urlpatterns = [
     path('', root_view, name='root'),
     path('admin/', admin.site.urls),
 
-    # Web app (HTML) views
+    # Web app (HTML) views - include each app's urls once (non-namespaced)
     path('accounts/', include('CarFleetManagement.accounts.urls')),
-    path('vehicles/', include((vehicle_urls, 'vehicles'), namespace='vehicles')),
-    path('maintenance/', include((maintenance_urls, 'maintenance'), namespace='maintenance')),
-    path('emergency/', include((emergency_urls, 'emergency'), namespace='emergency')),
+    path('vehicles/', include(vehicle_urls)),
+    path('maintenance/', include(maintenance_urls)),
+    path('emergency/', include(emergency_urls)),
 
     # API (DRF) endpoints
     path('api/', include(('CarFleetManagement.api.urls', 'CarFleetManagement.api'), namespace='CarFleetManagement.api')),
 ]
+
+# Backwards-compatible, non-namespaced aliases for legacy templates/tests.
+# Added only when DEBUG=True to avoid duplicate namespace warnings in production.
+if settings.DEBUG or getattr(settings, 'TESTING', False):
+    urlpatterns += [
+        # Vehicles (non-namespaced aliases)
+        path('vehicles/', vehicle_views.VehicleListView.as_view(), name='vehicle_list'),
+        path('vehicles/<int:pk>/', vehicle_views.VehicleDetailView.as_view(), name='vehicle_detail'),
+        path('vehicles/create/', vehicle_views.VehicleCreateView.as_view(), name='vehicle_create'),
+        path('vehicles/<int:pk>/update/', vehicle_views.VehicleUpdateView.as_view(), name='vehicle_update'),
+        path('vehicles/<int:pk>/delete/', vehicle_views.VehicleDeleteView.as_view(), name='vehicle_delete'),
+
+        # Maintenance (non-namespaced aliases)
+        path('maintenance/', maintenance_views.MaintenanceListView.as_view(), name='maintenance_list'),
+        path('maintenance/<int:pk>/', maintenance_views.MaintenanceDetailView.as_view(), name='maintenance_detail'),
+        path('maintenance/create/', maintenance_views.MaintenanceCreateView.as_view(), name='maintenance_create'),
+        path('maintenance/<int:pk>/update/', maintenance_views.MaintenanceUpdateView.as_view(), name='maintenance_update'),
+        path('maintenance/<int:pk>/delete/', maintenance_views.MaintenanceDeleteView.as_view(), name='maintenance_delete'),
+
+        # Emergency (non-namespaced aliases)
+        path('emergency/', emergency_views.EmergencyIncidentListView.as_view(), name='emergency_list'),
+        path('emergency/<int:pk>/', emergency_views.EmergencyIncidentDetailView.as_view(), name='emergency_detail'),
+        path('emergency/create/', emergency_views.EmergencyIncidentCreateView.as_view(), name='emergency_create'),
+        path('emergency/<int:pk>/update/', emergency_views.EmergencyIncidentUpdateView.as_view(), name='emergency_update'),
+        path('emergency/<int:pk>/delete/', emergency_views.EmergencyIncidentDeleteView.as_view(), name='emergency_delete'),
+        path('emergency/<int:incident_id>/response/create/', emergency_views.EmergencyResponseCreateView.as_view(), name='emergency_response_create'),
+    ]
