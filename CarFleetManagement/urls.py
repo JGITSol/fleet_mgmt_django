@@ -1,22 +1,22 @@
-from django.contrib import admin
-from django.urls import path, include
 from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.shortcuts import render
+from django.urls import include, path
 
-# Import the app-specific url modules to access their urlpatterns and app_name
-from CarFleetManagement.vehicles import urls as vehicle_urls
-from CarFleetManagement.maintenance import urls as maintenance_urls
 from CarFleetManagement.emergency import urls as emergency_urls
+from CarFleetManagement.emergency import views as emergency_views
+from CarFleetManagement.maintenance import urls as maintenance_urls
+from CarFleetManagement.maintenance import views as maintenance_views
 
 # Import view callables for optional non-namespaced aliases (DEV only)
+# Import the app-specific url modules to access their urlpatterns and app_name
+from CarFleetManagement.vehicles import urls as vehicle_urls
 from CarFleetManagement.vehicles import views as vehicle_views
-from CarFleetManagement.maintenance import views as maintenance_views
-from CarFleetManagement.emergency import views as emergency_views
-
-from django.http import HttpResponse
 
 
 def root_view(request):
-    return HttpResponse("<h2>Welcome to the Car Fleet Management</h2><p>See <a href='/api/'>/api/</a> for API endpoints.</p>")
+    return render(request, 'home.html')
 
 # NOTE: keep all DRF API endpoints under the /api/ prefix. The web views
 # (HTML pages) should be mounted at top-level paths to avoid colliding with
@@ -61,3 +61,8 @@ if settings.DEBUG or getattr(settings, 'TESTING', False):
         path('emergency/<int:pk>/delete/', emergency_views.EmergencyIncidentDeleteView.as_view(), name='emergency_delete'),
         path('emergency/<int:incident_id>/response/create/', emergency_views.EmergencyResponseCreateView.as_view(), name='emergency_response_create'),
     ]
+
+# Serve static files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0] if settings.STATICFILES_DIRS else None)

@@ -1,5 +1,7 @@
 from django.contrib import admin
+
 from .models import EmergencyContact, EmergencyIncident, EmergencyResponse
+
 
 @admin.register(EmergencyIncident)
 class EmergencyIncidentAdmin(admin.ModelAdmin):

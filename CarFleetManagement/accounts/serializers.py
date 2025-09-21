@@ -1,6 +1,11 @@
+from typing import ClassVar
+
 from rest_framework import serializers
-from .models import CustomUser, UserRole, Driver
+
 from CarFleetManagement.vehicles.models import Vehicle
+
+from .models import CustomUser, Driver, UserRole
+
 
 class UserRoleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,6 +36,7 @@ class VehicleNestedSerializer(serializers.ModelSerializer):
 class DriverSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
     assigned_vehicles = VehicleNestedSerializer(many=True, read_only=True)
+    
     class Meta:
         model = Driver
         fields = ['id', 'first_name', 'last_name', 'full_name', 'driver_license_number', 'assigned_vehicles', 'phone_number', 'email']

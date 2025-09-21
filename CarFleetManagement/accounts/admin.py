@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, UserRole, Driver
+
+from .models import CustomUser, Driver, UserRole
+
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):

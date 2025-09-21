@@ -1,5 +1,6 @@
-import requests
 from typing import Optional
+
+import requests
 
 API_BASE_URL = "http://localhost:8000/api"
 

@@ -1,7 +1,9 @@
-from django.db import models
 from django.core.validators import MinValueValidator
+from django.db import models
 from django.utils.translation import gettext_lazy as _
+
 from CarFleetManagement.vehicles.models import Vehicle
+
 
 class MaintenanceType(models.TextChoices):
     """Enumeration for maintenance types."""
@@ -67,11 +69,11 @@ class Maintenance(models.Model):
     notes = models.TextField(
         blank=True, verbose_name=_('Additional Notes'), help_text="Additional notes about the maintenance."
     )
-    
+
     def __str__(self):
         """Return a string representation of the maintenance record."""
         return f"{self.get_maintenance_type_display()} for {self.vehicle} on {self.scheduled_date}"
-    
+
     def days_until_scheduled(self):
         """
         Calculate the number of days until the scheduled maintenance date.
@@ -80,10 +82,11 @@ class Maintenance(models.Model):
             int or None: Days until scheduled date, or None if not applicable.
         """
         from django.utils import timezone
+
         # Return None for completed or cancelled maintenance
         if self.status in [MaintenanceStatus.COMPLETED, MaintenanceStatus.CANCELLED]:
             return None
-        
+
         # Handle case where scheduled_date is None
         if not self.scheduled_date:
             return 0 # Consistent with existing test_missing_scheduled_date

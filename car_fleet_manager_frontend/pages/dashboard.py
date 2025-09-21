@@ -1,6 +1,7 @@
 import reflex as rx
-from components.header import header
 from components.footer import footer
+from components.header import header
+
 
 def page():
     return rx.box(

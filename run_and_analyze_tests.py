@@ -5,8 +5,8 @@ run_and_analyze_tests.py
 Runs all pytest tests, parses the results, and performs root cause analysis on any failures.
 Prints a summary of failures and their likely root causes.
 """
-import subprocess
 import re
+import subprocess
 import sys
 
 
@@ -97,7 +97,7 @@ def print_results_table(test_results):
     skipped = sum(1 for _, status in test_results if status == 'SKIPPED')
     total = len(test_results)
     coverage = 100.0 * passed / total if total else 0.0
-    print(f"\nTest Results Summary:")
+    print("\nTest Results Summary:")
     print(f"  Total tests:   {total}")
     print(f"  Passed:        {passed}")
     print(f"  Failed:        {failed}")

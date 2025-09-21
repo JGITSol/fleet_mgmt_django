@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from vehicles.models import Vehicle
 
+
 class Command(BaseCommand):
     help = 'Populate the database with demo vehicles for testing and demos.'
 

@@ -1,5 +1,6 @@
-from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
+from rest_framework_simplejwt.tokens import RefreshToken
+
 
 class JWTAuthTestMixin:
     """
@@ -25,16 +26,16 @@ class JWTAuthTestMixin:
         if not hasattr(self, 'client'):
             from rest_framework.test import APIClient
             self.client = APIClient()
-        
+
         if user is None:
             username = f'testuser_{role_name.lower()}'
             password = 'testpass123'
-            
+
             # Determine staff/superuser status
             # Default to True for ADMIN if not explicitly provided
             final_is_staff = is_staff if is_staff is not None else (role_name == 'ADMIN')
             final_is_superuser = is_superuser if is_superuser is not None else (role_name == 'ADMIN')
-            
+
             user = self.create_user_with_role(
                 username,
                 password,
@@ -42,7 +43,7 @@ class JWTAuthTestMixin:
                 is_staff=final_is_staff,
                 is_superuser=final_is_superuser
             )
-            
+
         refresh = RefreshToken.for_user(user)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {str(refresh.access_token)}')
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token!s}')
         return user

@@ -1,0 +1,80 @@
+{% extends "rest_framework/base.html" %}
+
+{% block page_title %}{{ name }}{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            {% if description %}
+                <div class="description">
+                    {{ description }}
+                </div>
+            {% endif %}
+            
+            {% if available_formats %}
+                <div class="request-forms" id="request-forms-content">
+                    {% for format in available_formats %}
+                        <div class="format-selection">
+                            <a class="btn btn-primary" href="?format={{ format }}" rel="nofollow">{{ format }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="response" id="response-content">
+                {% if content %}
+                    <pre class="prettyprint">{{ content }}</pre>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Additional API-specific styling */
+    .description {
+        background-color: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: var(--card-border-radius);
+        margin-bottom: 2rem;
+        border: 1px solid var(--border-color);
+    }
+    
+    .format-selection {
+        margin-bottom: 1rem;
+    }
+    
+    .format-selection .btn {
+        margin-right: 0.5rem;
+    }
+    
+    .response {
+        margin-top: 2rem;
+    }
+    
+    .response .prettyprint {
+        background-color: var(--bg-secondary) !important;
+        color: var(--text-primary) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: var(--card-border-radius);
+        padding: 1.5rem;
+        font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        overflow-x: auto;
+    }
+    
+    /* JSON syntax highlighting for dark theme */
+    .prettyprint .str { color: #98c379; } /* strings */
+    .prettyprint .kwd { color: #c678dd; } /* keywords */
+    .prettyprint .com { color: #5c6370; } /* comments */
+    .prettyprint .typ { color: #e06c75; } /* types */
+    .prettyprint .lit { color: #d19a66; } /* literals */
+    .prettyprint .pun { color: #abb2bf; } /* punctuation */
+    .prettyprint .pln { color: #abb2bf; } /* plain text */
+    .prettyprint .tag { color: #e06c75; } /* tags */
+    .prettyprint .atn { color: #d19a66; } /* attribute names */
+    .prettyprint .atv { color: #98c379; } /* attribute values */
+</style>
+{% endblock %}

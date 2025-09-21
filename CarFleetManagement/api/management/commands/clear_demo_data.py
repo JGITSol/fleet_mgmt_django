@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand
+
 from CarFleetManagement.api.models import Vehicle  # Example, adjust as needed
+
 
 class Command(BaseCommand):
     help = 'Remove all demo vehicles from the database.'

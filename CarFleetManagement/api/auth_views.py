@@ -1,10 +1,12 @@
+from typing import ClassVar
+
 from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth.models import User
-from .serializers import UserRegistrationSerializer, LoginSerializer, UserSerializer
+
+from .serializers import LoginSerializer, UserRegistrationSerializer, UserSerializer
 
 
 class RegisterView(APIView):
@@ -12,8 +14,8 @@ class RegisterView(APIView):
     
     Allows new users to register with the application.
     """
-    permission_classes = [AllowAny]
-    
+    permission_classes: ClassVar[list] = [AllowAny]
+
     def post(self, request):
         """
         Register a new user and return JWT tokens.
@@ -46,8 +48,8 @@ class LoginView(APIView):
     
     Authenticates user credentials and returns a token.
     """
-    permission_classes = [AllowAny]
-    
+    permission_classes: ClassVar[list] = [AllowAny]
+
     def post(self, request):
         """
         Register a new user and return JWT tokens.
@@ -80,8 +82,8 @@ class UserProfileView(APIView):
     
     Requires authentication token.
     """
-    permission_classes = [IsAuthenticated]
-    
+    permission_classes: ClassVar[list] = [IsAuthenticated]
+
     def get(self, request):
         """
         Retrieve the authenticated user's profile.
@@ -105,8 +107,8 @@ class LogoutView(APIView):
     
     Deletes the user's authentication token.
     """
-    permission_classes = [IsAuthenticated]
-    
+    permission_classes: ClassVar[list] = [IsAuthenticated]
+
     def post(self, request):
         """
         Register a new user and return JWT tokens.
@@ -131,8 +133,8 @@ class ValidateTokenView(APIView):
     
     Used by the Lynx mobile app to check if a stored token is still valid.
     """
-    permission_classes = [IsAuthenticated]
-    
+    permission_classes: ClassVar[list] = [IsAuthenticated]
+
     def get(self, request):
         """
         Retrieve the authenticated user's profile.

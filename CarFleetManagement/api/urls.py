@@ -6,10 +6,11 @@ including the screenshot analysis endpoints and authentication endpoints for Lyn
 
 app_name = "CarFleetManagement.api"
 from django.urls import path
-from . import views
-from . import auth_views
-from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from . import auth_views, views
+
 
 class ApiRootView(APIView):
     def get(self, request, *args, **kwargs):

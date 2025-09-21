@@ -1,19 +1,21 @@
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated, SAFE_METHODS
+import os
+
 from accounts.models import CustomUser, Driver
+from accounts.permissions import IsAdmin, IsAdminOrManager, IsCoordinator, IsManager
 from accounts.serializers import CustomUserSerializer, DriverSerializer
-from vehicles.models import Vehicle
-from vehicles.serializers import VehicleSerializer
+from django.conf import settings
+from emergency.serializers import EmergencyIncidentSerializer
 from maintenance.models import Maintenance
 from maintenance.serializers import MaintenanceSerializer
-from emergency.serializers import EmergencyIncidentSerializer
-from accounts.permissions import IsAdmin, IsManager, IsCoordinator, IsDriver, IsAdminOrManager
-from rest_framework.views import APIView
+from rest_framework import status, viewsets
+from rest_framework.permissions import SAFE_METHODS, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status
-from django.conf import settings
+from rest_framework.views import APIView
+from vehicles.models import Vehicle
+from vehicles.serializers import VehicleSerializer
+
 from .openrouter_client import get_client
-import os
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
@@ -39,6 +41,7 @@ class MaintenanceViewSet(viewsets.ModelViewSet):
         return [IsAdmin() or IsManager() or IsCoordinator()]
 
 from CarFleetManagement.emergency.models import EmergencyIncident
+
 
 class EmergencyIncidentViewSet(viewsets.ModelViewSet):
     queryset = EmergencyIncident.objects.all()

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Profile - Car Fleet Management{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">User Profile</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Account Information</h5>
+                            <p><strong>Username:</strong> {{ user.username }}</p>
+                            <p><strong>Email:</strong> {{ user.email|default:"Not provided" }}</p>
+                            <p><strong>First Name:</strong> {{ user.first_name|default:"Not provided" }}</p>
+                            <p><strong>Last Name:</strong> {{ user.last_name|default:"Not provided" }}</p>
+                            <p><strong>Date Joined:</strong> {{ user.date_joined|date:"F d, Y" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Role Information</h5>
+                            {% if user.role %}
+                                <p><strong>Role:</strong> {{ user.role.get_name_display }}</p>
+                                <p><strong>Role Description:</strong> {{ user.role.description|default:"No description" }}</p>
+                            {% else %}
+                                <p><strong>Role:</strong> No role assigned</p>
+                            {% endif %}
+                            
+                            <h5>Contact Information</h5>
+                            <p><strong>Phone:</strong> {{ user.phone_number|default:"Not provided" }}</p>
+                            <p><strong>Emergency Contact:</strong> {{ user.emergency_contact|default:"Not provided" }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'accounts:logout' %}" class="btn btn-secondary">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/vehicles/" class="btn btn-outline-primary">View Vehicles</a>
+                        <a href="/maintenance/" class="btn btn-outline-primary">View Maintenance</a>
+                        <a href="/emergency/" class="btn btn-outline-primary">View Emergencies</a>
+                        <a href="/api/" class="btn btn-outline-secondary">API Documentation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

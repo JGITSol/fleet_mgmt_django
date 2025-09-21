@@ -1,6 +1,11 @@
+from typing import ClassVar
+
 from rest_framework import serializers
-from .models import Vehicle
+
 from CarFleetManagement.accounts.models import Driver
+
+from .models import Vehicle
+
 
 class DriverNestedSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()

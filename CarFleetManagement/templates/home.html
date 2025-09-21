@@ -1,57 +1,107 @@
 {% extends 'base.html' %}
-{% load static %}
-{% load i18n %}
 
-{% block title %}{% translate "Car Fleet Manager - Modern Fleet Management" %}{% endblock %}
+{% block title %}Home - Car Fleet Management{% endblock %}
 
 {% block content %}
-<div class="hero-section py-5" style="background-color: var(--bg-secondary);">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-md-6">
-        <h1 class="display-4 fw-bold">{% translate "Modern Fleet Management for 2025" %}</h1>
-        <p class="lead">{% translate "Leverage AI and automation to streamline your vehicle operations with our comprehensive fleet management solution." %}</p>
-        <div class="d-grid gap-2 d-md-flex">
-          <a href="{% url 'signup' %}" class="btn btn-primary btn-lg px-4 me-md-2">{% translate "Get Started" %}</a>
-          <a href="{% url 'features' %}" class="btn btn-outline-secondary btn-lg px-4">{% translate "Learn More" %}</a>
+<div class="row">
+    <div class="col-12">
+        <div class="jumbotron bg-primary text-white p-5 rounded mb-4">
+            <h1 class="display-4">Welcome to Car Fleet Management</h1>
+            <p class="lead">Manage your vehicle fleet, maintenance schedules, and emergency responses all in one place.</p>
+            {% if not user.is_authenticated %}
+                <hr class="my-4">
+                <p>Get started by creating an account or logging in.</p>
+                <a class="btn btn-light btn-lg me-2" href="{% url 'accounts:register' %}" role="button">Sign Up</a>
+                <a class="btn btn-outline-light btn-lg" href="{% url 'accounts:login' %}" role="button">Login</a>
+            {% endif %}
         </div>
-      </div>
-      <div class="col-md-6">
-        <img src="{% static 'images/hero-retro-car.jpg' %}" alt="Modern Fleet Management" class="img-fluid rounded shadow">
-      </div>
     </div>
-  </div>
 </div>
 
-<section class="py-5">
-  <div class="container">
-    <h2 class="text-center mb-5">{% translate "Key Features" %}</h2>
-    <div class="row g-4">
-      <div class="col-md-4">
+<div class="row">
+    <div class="col-md-4">
         <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">{% translate "AI-Powered Odometer Reading" %}</h5>
-            <p class="card-text">{% translate "Automatically extract odometer readings from images with our advanced computer vision technology." %}</p>
-          </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    🚗 Vehicle Management
+                </h5>
+                <p class="card-text">Track and manage your entire vehicle fleet with detailed information and status updates.</p>
+                <a href="{% url 'vehicle_list' %}" class="btn btn-primary">View Vehicles</a>
+            </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">{% translate "Damage Detection" %}</h5>
-            <p class="card-text">{% translate "Identify and assess vehicle damage automatically to streamline insurance claims and repairs." %}</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">{% translate "Predictive Maintenance" %}</h5>
-            <p class="card-text">{% translate "Reduce downtime with AI-driven maintenance predictions based on vehicle telemetry." %}</p>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-</section>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">
+                    🔧 Maintenance
+                </h5>
+                <p class="card-text">Schedule and track maintenance activities to keep your fleet running smoothly.</p>
+                <a href="{% url 'maintenance_list' %}" class="btn btn-primary">View Maintenance</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">
+                    ⚠️ Emergency Response
+                </h5>
+                <p class="card-text">Manage emergency incidents and coordinate response efforts effectively.</p>
+                <a href="{% url 'emergency_list' %}" class="btn btn-primary">View Emergencies</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if user.is_authenticated %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="{% url 'vehicle_create' %}" class="btn btn-success btn-block mb-2">Add Vehicle</a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{% url 'maintenance_create' %}" class="btn btn-warning btn-block mb-2">Schedule Maintenance</a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{% url 'emergency_create' %}" class="btn btn-danger btn-block mb-2">Report Emergency</a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="/api/" class="btn btn-info btn-block mb-2">API Documentation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">System Features</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li>✅ Comprehensive vehicle tracking and management</li>
+                    <li>✅ Automated maintenance scheduling and reminders</li>
+                    <li>✅ Emergency incident reporting and response coordination</li>
+                    <li>✅ RESTful API for integration with other systems</li>
+                    <li>✅ Role-based access control and user management</li>
+                    <li>✅ Real-time status updates and notifications</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
 {% endblock %}

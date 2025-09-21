@@ -4,9 +4,10 @@ All fixtures are documented for coverage compliance.
 """
 import os
 import sys
+from datetime import timedelta
+
 import django
 import pytest
-from datetime import timedelta
 
 # Add the project directory to the Python path
 project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -17,7 +18,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarFleetManagement.settings")
 
 # This will make sure the app is always imported when Django starts
 # so that shared_task will use this app
-from django.conf import settings
 
 # Setup Django
 django.setup()
@@ -28,11 +28,10 @@ django.setup()
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
-from CarFleetManagement.vehicles.models import Vehicle
-from CarFleetManagement.accounts.models import CustomUser, Driver
-from CarFleetManagement.maintenance.models import Maintenance
+from CarFleetManagement.accounts.models import Driver
 from CarFleetManagement.emergency.models import EmergencyContact, EmergencyIncident
-
+from CarFleetManagement.maintenance.models import Maintenance
+from CarFleetManagement.vehicles.models import Vehicle
 
 User = get_user_model()
 
@@ -89,7 +88,7 @@ def vehicle():
     today = timezone.now().date()
     next_service = today + timedelta(days=90)
     insurance_expiry = today + timedelta(days=365)
-    
+
     return Vehicle.objects.create(
         brand='Toyota',
         model='Camry',

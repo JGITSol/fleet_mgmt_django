@@ -1,6 +1,5 @@
 import reflex as rx
-from pages import dashboard, vehicles, drivers, maintenance, login
-from api_utils import api_client
+from pages import dashboard, drivers, login, maintenance, vehicles
 
 app = rx.App()
 

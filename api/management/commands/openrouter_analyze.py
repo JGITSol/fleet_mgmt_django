@@ -1,9 +1,12 @@
-import os
 import json
+import os
+
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
+
 from api.openrouter_client import OpenRouterClient
 from api.report_generator import generate_report
-from django.conf import settings
+
 
 class Command(BaseCommand):
     help = 'Analyze screenshots using OpenRouter API and generate reports.'
@@ -64,7 +67,6 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(f'Analysis saved to {output_file}'))
 
     def batch_analyze(self, batch_dir, output_file=None, language=None, theme=None, prompt=None):
-        from api.openrouter_client import OpenRouterClient
         if not batch_dir or not os.path.isdir(batch_dir):
             self.stdout.write(self.style.ERROR(f'Directory not found: {batch_dir}'))
             raise CommandError(f'Directory not found: {batch_dir}')

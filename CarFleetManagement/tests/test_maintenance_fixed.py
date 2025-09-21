@@ -1,6 +1,7 @@
+from datetime import timedelta
+
 import pytest
 from django.utils import timezone
-from datetime import timedelta
 
 from CarFleetManagement.maintenance.models import Maintenance
 from CarFleetManagement.vehicles.models import Vehicle
@@ -18,7 +19,7 @@ def test_maintenance_simple():
         vin='TEST12345678901234',
         status='AVAILABLE'
     )
-    
+
     # Create a maintenance record
     future_date = timezone.now().date() + timedelta(days=5)
     maintenance = Maintenance.objects.create(
@@ -31,12 +32,12 @@ def test_maintenance_simple():
         cost=100.00,
         service_provider='Test Provider'
     )
-    
+
     # Basic assertions
     assert maintenance.vehicle == vehicle
     assert maintenance.maintenance_type == 'ROUTINE'
     assert maintenance.status == 'SCHEDULED'
-    
+
     # Test days_until_scheduled
     days = maintenance.days_until_scheduled()
     assert isinstance(days, int)

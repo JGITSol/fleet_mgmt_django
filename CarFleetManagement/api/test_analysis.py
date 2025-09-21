@@ -1,9 +1,8 @@
 import os
-import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
+
 from django.conf import settings
-from CarFleetManagement.api.openrouter_client import OpenRouterClient  # Ensure this is the client intended to be instantiated
-from CarFleetManagement.api.gemini_client import GeminiClient      # Ensure this is the client intended to be instantiated
+
 
 @patch('CarFleetManagement.api.gemini_client.GeminiClient')
 @patch('CarFleetManagement.api.openrouter_client.OpenRouterClient')
@@ -24,10 +23,10 @@ def test_api_clients_analyze_screenshots_mocked(MockOpenRouterClient, MockGemini
 
     assert openrouter_client is mock_openrouter_instance
     assert gemini_client is mock_gemini_instance
-    
+
     screenshot_filename = 'home_en_dark_20250331-201208.png' # Example file
     screenshot_path = os.path.join(settings.BASE_DIR, 'debug_screenshots', screenshot_filename)
-    
+
     # Create a dummy screenshot file if it doesn't exist, to prevent FileNotFoundError
     # In a real CI environment, test assets should be committed or generated reliably.
     if not os.path.exists(screenshot_path):
@@ -41,7 +40,7 @@ def test_api_clients_analyze_screenshots_mocked(MockOpenRouterClient, MockGemini
     openrouter_result = openrouter_client.analyze_screenshot(screenshot_path)
     assert openrouter_result == {"status": "success", "client": "openrouter_mock"}
     mock_openrouter_instance.analyze_screenshot.assert_called_once_with(screenshot_path)
-    
+
     # Test Gemini analysis
     gemini_result = gemini_client.analyze_screenshot(screenshot_path)
     assert gemini_result == {"status": "success", "client": "gemini_mock"}

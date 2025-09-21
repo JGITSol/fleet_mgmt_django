@@ -1,9 +1,12 @@
-import os
 import json
-from django.core.management.base import BaseCommand, CommandError
+import os
+
+from django.conf import settings
+from django.core.management.base import BaseCommand
+
 from CarFleetManagement.api.openrouter_client import OpenRouterClient
 from CarFleetManagement.api.report_generator import generate_report
-from django.conf import settings
+
 
 class Command(BaseCommand):
     help = 'Analyze screenshots using OpenRouter API and generate reports.'
@@ -45,7 +48,7 @@ class Command(BaseCommand):
         client = get_client()
         result = client.analyze_screenshot(screenshot_path, prompt=prompt)
         content = ''
-        if 'choices' in result and result['choices']:
+        if result.get('choices'):
             content = result['choices'][0]['message']['content']
         elif 'error' in result:
             content = f"Error: {result['error']}"
@@ -59,7 +62,7 @@ class Command(BaseCommand):
         if not input_file or not os.path.exists(input_file):
             self.stdout.write(self.style.ERROR(f'Input file not found: {input_file}'))
             return
-        with open(input_file, 'r') as f:
+        with open(input_file) as f:
             screenshots = [line.strip() for line in f if line.strip()]
         client = get_client()
         results = {}

@@ -2,7 +2,31 @@
 
 ## Overview
 
-This document outlines the specifications for the Fleet Manager project, including database models, API endpoints, and testing configuration.
+This document outlines the comprehensive specifications for the Car Fleet Management System, a Django-based application with REST API, JWT authentication, and mobile integration capabilities. The system manages vehicles, drivers, maintenance schedules, and emergency incidents with role-based access control.
+
+## System Architecture
+
+### Technology Stack
+- **Backend Framework**: Django 5.1.7 with Django REST Framework 3.16.0
+- **Authentication**: JWT (djangorestframework-simplejwt 5.5.0)
+- **Database**: SQLite (development), PostgreSQL (production)
+- **API Documentation**: drf-spectacular 0.28.0
+- **Testing**: pytest-django 4.11.1 with 56% coverage
+- **AI Integration**: Google Generative AI for screenshot analysis
+- **Mobile Integration**: Lynx JS client support
+
+### Project Structure
+```
+CarFleetManagement/
+├── accounts/           # User management and authentication
+├── api/               # REST API endpoints and middleware
+├── vehicles/          # Vehicle management
+├── maintenance/       # Maintenance scheduling and tracking
+├── emergency/         # Emergency incident management
+├── static/           # Static files and assets
+├── templates/        # HTML templates
+└── tests/            # Shared test utilities
+```
 
 ## Database Models
 

@@ -1,8 +1,9 @@
 # This file can be populated with DRF serializers for the emergency app's models.
 from rest_framework import serializers
-from .models import EmergencyIncident, EmergencyResponse
+
 from CarFleetManagement.accounts.serializers import DriverSerializer
 
+from .models import EmergencyIncident, EmergencyResponse
 
 
 class EmergencyIncidentSerializer(serializers.ModelSerializer):

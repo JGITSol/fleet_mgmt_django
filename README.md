@@ -1,63 +1,232 @@
-Car Fleet Manager — repozytorium
+# Car Fleet Management System
 
-Cel: szybkie uruchomienie projektu Django z REST API (MVP). Ten README ma szybkie instrukcje uruchomienia deweloperskiego, testów i dockera.
+A comprehensive Django-based fleet management system with REST API, JWT authentication, and mobile app integration.
 
-Szybki start (lokalnie)
+## 🚀 Quick Start
 
-1. Skopiuj przykładowy plik zmiennych środowiskowych:
+### Prerequisites
+- Python 3.11+
+- pip
+- Git
 
-   cp .env.example .env
-   # Windows PowerShell:
-   # Copy-Item .env.example .env
+### Local Development Setup
 
-2. (opcjonalnie) Stwórz virtualenv i aktywuj:
-
+1. **Clone and setup environment**:
+   ```bash
+   git clone <repository-url>
+   cd fleet_mgmt_django
+   
+   # Create virtual environment
    python -m venv venv
+   
+   # Activate virtual environment
+   # Windows PowerShell:
    .\venv\Scripts\Activate.ps1
+   # Linux/Mac:
+   source venv/bin/activate
+   ```
 
-3. Zainstaluj zależności:
-
+2. **Install dependencies**:
+   ```bash
    pip install -r requirements.txt
+   ```
 
-4. Uruchom migracje i stwórz superusera:
+3. **Configure environment**:
+   ```bash
+   # Windows PowerShell:
+   Copy-Item .env.example .env
+   # Linux/Mac:
+   cp .env.example .env
+   ```
 
+4. **Setup database**:
+   ```bash
+   cd CarFleetManagement
    python manage.py migrate
    python manage.py createsuperuser
+   ```
 
-5. Uruchom serwer deweloperski:
-
+5. **Run development server**:
+   ```bash
    python manage.py runserver
+   ```
 
-Uruchamianie testów
+Visit `http://localhost:8000` for the web interface or `http://localhost:8000/api/` for the API.
 
-W PowerShell uruchom:
+## 🧪 Testing
 
-   .\run_tests.ps1
+### Run Tests
+```bash
+# Quick test run
+.\run_tests.ps1
 
-Lub bez skryptu:
+# Manual test execution
+pytest -q
 
-   .\venv\Scripts\Activate.ps1; pytest -q
+# With coverage report
+pytest --cov=CarFleetManagement --cov-report=html
+```
 
-Docker
+### Current Test Status
+- **Coverage**: 56% (improved from 17%)
+- **Total Tests**: 167 tests across all modules
+- **Status**: Most core functionality tested, authentication tests require patches
 
-Uruchomienie przez docker-compose (wymaga Docker):
+## 🐳 Docker Deployment
 
-   docker-compose up --build
+```bash
+# Development
+docker-compose up --build
 
-Co dodałem (szybkie zmiany infra)
+# Production (when available)
+docker-compose -f docker-compose.prod.yml up -d
+```
 
-- `.env.example` — przykładowy plik środowiskowy
-- `.github/workflows/ci.yml` — podstawowy CI uruchamiający testy
-- `run_tests.ps1` — prosty skrypt uruchamiający testy w PowerShell
+## 📋 Features
 
-Następne kroki (zalecane)
+### Core Functionality
+- **Vehicle Management**: Track vehicles, status, assignments, maintenance history
+- **Driver Management**: Driver profiles, licenses, vehicle assignments
+- **Maintenance Scheduling**: Schedule and track maintenance with cost tracking
+- **Emergency Response**: Incident reporting and response coordination
+- **User Roles**: Admin, Manager, Coordinator, Driver, TestUser permissions
 
-1. Naprawić redirecty z widoków do /accounts/login/ i zapewnić, że API zwraca poprawne kody (401/403) dla żądań nieautoryzowanych — obecnie wiele testów oczekuje JWT/401, a zachowanie to redirect 302.
-2. Ujednolicić autentykację: użyć wyłącznie JWT dla API (REST endpoints) i Session/Auth mixinów tylko dla HTML views.
-3. Dodać `.env` do `.gitignore` i dokumentację dla zmiennych produkcyjnych (sekrety, DB).
-4. Dodać prosty skrypt do budowy obrazu produkcyjnego i wskazówki deploy.
+### Technical Features
+- **JWT Authentication**: Secure API access with token-based auth
+- **REST API**: Complete API for mobile app integration (Lynx JS)
+- **AI Integration**: Screenshot analysis using OpenRouter/Google AI
+- **Internationalization**: Multi-language support
+- **Comprehensive Testing**: pytest with coverage reporting
+- **API Documentation**: Auto-generated with drf-spectacular
 
-Jeżeli chcesz, mogę teraz:
-- spróbować naprawić testy związane z redirectami (najpierw przeanalizować middleware i dekoratory używane w `CarFleetManagement/api/urls.py` i endpointach),
-- poprawić testy wymagające API-keys przez mockowanie lub bezpieczne domyślne wartości,
-- ujednolicić konfigurację REST_FRAMEWORK i LOGIN_URL tak, by API odpowiadało JSON 401 zamiast redirect.
+## 🔧 API Endpoints
+
+### Authentication
+- `POST /api/auth/login/` - User login (JWT tokens)
+- `POST /api/auth/register/` - User registration
+- `GET /api/auth/profile/` - User profile
+- `POST /api/auth/validate-token/` - Token validation
+
+### Core Resources
+- `GET|POST /api/vehicles/` - Vehicle list/create
+- `GET|PUT|DELETE /api/vehicles/{id}/` - Vehicle detail operations
+- `GET|POST /api/drivers/` - Driver list/create
+- `GET|PUT|DELETE /api/drivers/{id}/` - Driver detail operations
+- `GET|POST /api/maintenance/` - Maintenance records
+- `GET|POST /api/emergencies/` - Emergency incidents
+
+### AI Features
+- `POST /api/screenshots/analyze/` - Single screenshot analysis
+- `POST /api/screenshots/batch-analyze/` - Batch analysis
+- `POST /api/screenshots/generate-report/` - Generate reports
+
+## 🏗️ Architecture
+
+### Project Structure
+```
+CarFleetManagement/
+├── accounts/           # User management & authentication
+├── api/               # REST API endpoints & middleware
+├── vehicles/          # Vehicle management
+├── maintenance/       # Maintenance scheduling
+├── emergency/         # Emergency incident management
+├── static/           # Static files (CSS, JS, images)
+├── templates/        # HTML templates
+└── tests/            # Shared test utilities
+```
+
+### Technology Stack
+- **Backend**: Django 5.1.7 + Django REST Framework 3.16.0
+- **Authentication**: JWT (djangorestframework-simplejwt 5.5.0)
+- **Database**: SQLite (dev), PostgreSQL (production ready)
+- **Testing**: pytest-django 4.11.1
+- **AI**: Google Generative AI
+- **Documentation**: drf-spectacular 0.28.0
+
+## 🔐 Authentication
+
+The system uses JWT authentication for API access:
+
+```python
+# Login to get tokens
+POST /api/auth/login/
+{
+    "username": "your_username",
+    "password": "your_password"
+}
+
+# Use access token in API calls
+Authorization: Bearer <access_token>
+```
+
+## 📊 Current Status
+
+### ✅ Completed
+- Core models (Vehicle, Driver, Maintenance, Emergency)
+- JWT authentication system
+- REST API endpoints
+- Basic web interface
+- Test infrastructure (56% coverage)
+- Docker configuration
+- AI screenshot analysis integration
+
+### 🔄 In Progress
+- Test stability improvements
+- Authentication test patches
+- API documentation completion
+- Frontend enhancements
+
+### 📋 Next Steps
+1. **Stabilize Tests**: Fix authentication-related test failures
+2. **Improve Coverage**: Increase test coverage to 80%+
+3. **API Consistency**: Standardize error responses and status codes
+4. **Documentation**: Complete API documentation with examples
+5. **Production Setup**: Add production deployment guides
+6. **Performance**: Optimize database queries and add caching
+
+## 🛠️ Development
+
+### Code Style
+- Follow PEP 8 guidelines
+- Use type hints where appropriate
+- Maintain comprehensive docstrings
+- Write tests for new features
+
+### Contributing
+1. Fork the repository
+2. Create a feature branch
+3. Write tests for new functionality
+4. Ensure all tests pass
+5. Submit a pull request
+
+## 📚 Documentation
+
+- **Complete Documentation**: See [DOCUMENTATION.md](DOCUMENTATION.md)
+- **Project Specification**: See [CurrentProjectSpecSheet.md](CurrentProjectSpecSheet.md)
+- **Current State**: See [CurrentStateOfTheProject.md](CurrentStateOfTheProject.md)
+- **API Schema**: Available at `/api/schema/` when running
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Authentication Errors**:
+- Ensure JWT tokens are properly formatted
+- Check token expiry and refresh as needed
+
+**Test Failures**:
+- Use patched test runners for authentication tests
+- Clear pytest cache: `pytest --cache-clear`
+
+**Import Errors**:
+- Verify virtual environment is activated
+- Check INSTALLED_APPS configuration
+
+### Getting Help
+- Check the [DOCUMENTATION.md](DOCUMENTATION.md) for detailed guides
+- Review test logs in `test_logs/` directory
+- Check Django debug output for detailed error information
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

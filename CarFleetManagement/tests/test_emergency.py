@@ -1,7 +1,6 @@
+
 import pytest
-from rest_framework.test import APITestCase
 from django.utils import timezone
-from datetime import timedelta
 
 from CarFleetManagement.emergency.models import EmergencyContact, EmergencyIncident
 
@@ -49,7 +48,7 @@ def test_emergency_incident_status_update(emergency_incident):
     emergency_incident.status = 'RESOLVED'
     emergency_incident.resolved_time = timezone.now()
     emergency_incident.save()
-    
+
     # Verify it's now resolved
     updated_incident = EmergencyIncident.objects.get(id=emergency_incident.id)
     assert updated_incident.status == 'RESOLVED'

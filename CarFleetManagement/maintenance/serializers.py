@@ -1,6 +1,11 @@
+from typing import ClassVar
+
 from rest_framework import serializers
-from .models import Maintenance
+
 from CarFleetManagement.vehicles.serializers import VehicleSerializer
+
+from .models import Maintenance
+
 
 class MaintenanceSerializer(serializers.ModelSerializer):
     """
@@ -31,6 +36,6 @@ class MaintenanceSerializer(serializers.ModelSerializer):
             'service_provider': {'help_text': 'Provider performing the maintenance.'},
             'notes': {'help_text': 'Additional notes about the maintenance.'},
         }
-    
+
     def get_days_until_scheduled(self, obj):
         return obj.days_until_scheduled()

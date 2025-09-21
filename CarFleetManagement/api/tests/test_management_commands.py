@@ -1,11 +1,12 @@
 import json
-from unittest import mock
-from io import StringIO
 import os
-from rest_framework.test import APITestCase
-from django.core.management import call_command
+from io import StringIO
+from unittest import mock
+
 from django.conf import settings
+from django.core.management import call_command
 from dotenv import load_dotenv
+from rest_framework.test import APITestCase
 
 # Load environment variables for API key
 load_dotenv(dotenv_path=os.path.join(settings.BASE_DIR, '.env'), override=False)

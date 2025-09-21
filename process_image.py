@@ -1,6 +1,6 @@
-from PIL import Image
 import os
-import shutil
+
+from PIL import Image
 
 # Define paths
 source_image = os.path.join('img_src', 'muscle-car-retro-vintage-car-sunset-neon-5k-3840x2160-1229.jpg')

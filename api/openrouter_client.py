@@ -1,4 +1,5 @@
 import os
+
 import requests
 
 OPENROUTER_API_KEY = os.environ.get('OPENROUTER_API_KEY')

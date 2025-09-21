@@ -6,14 +6,15 @@ and image resizing to prevent hitting API limits.
 """
 
 import os
-import requests
+import sys
 import time
 from io import BytesIO
 from pathlib import Path
-from PIL import Image
-from dotenv import load_dotenv
+
+import requests
 from django.conf import settings
-import sys
+from dotenv import load_dotenv
+from PIL import Image
 
 # Load environment variables from .env file (safe even if missing)
 env_path = Path(settings.BASE_DIR) / '.env'
@@ -59,7 +60,7 @@ class OpenRouterClient:
 
         # Rate limiting attributes
         self.last_request_time = 0
-    
+
     def _resize_image(self, image_path):
         """Resize image to FullHD resolution if larger.
         
@@ -87,18 +88,18 @@ class OpenRouterClient:
             img_byte_arr.seek(0)
 
             return img_byte_arr
-    
+
     def _apply_rate_limit(self):
         """Apply rate limiting to avoid hitting API limits."""
         current_time = time.time()
         time_since_last_request = current_time - self.last_request_time
-        
+
         if time_since_last_request < REQUEST_INTERVAL:
             sleep_time = REQUEST_INTERVAL - time_since_last_request
             time.sleep(sleep_time)
-        
+
         self.last_request_time = time.time()
-    
+
     def analyze_screenshot(self, screenshot_path, prompt=None):
         """Analyze a screenshot using OpenRouter's vision capabilities.
         
@@ -111,34 +112,34 @@ class OpenRouterClient:
         """
         if not os.path.exists(screenshot_path) and not getattr(self, '_test_mode', False):
             raise FileNotFoundError(f"Screenshot not found at {screenshot_path}")
-        
+
         # Default prompt if none provided
         if not prompt:
             prompt = "Analyze this UI screenshot. Focus on critical layout issues "\
                     "and text rendering problems. Keep response concise and actionable."
-        
+
         # Prepare the API request
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"
         }
-        
+
         # Apply rate limiting
         self._apply_rate_limit()
-        
+
         # Resize image if needed
         img_data = self._resize_image(screenshot_path)
-        
+
         # Encode the image as base64
         import base64
         image_data = base64.b64encode(img_data.getvalue()).decode('utf-8')
-        
+
         # Use a vision-capable model and format the request properly
         payload = {
             "model": "anthropic/claude-3-opus",  # Vision-capable model
             "messages": [
                 {
-                    "role": "user", 
+                    "role": "user",
                     "content": [
                         {"type": "text", "text": prompt},
                         {"type": "image", "image": {"data": f"data:image/png;base64,{image_data}"}}
@@ -146,7 +147,7 @@ class OpenRouterClient:
                 }
             ]
         }
-        
+
         if getattr(self, '_test_mode', False):
             # Return a deterministic stub for tests
             return {"choices": [{"message": {"content": "stubbed openrouter response"}}]}
@@ -162,7 +163,7 @@ class OpenRouterClient:
             return response.json()
         except Exception as e:
             return {"error": str(e)}
-    
+
     def batch_analyze_screenshots(self, screenshot_dir, language=None, theme=None):
         """Analyze multiple screenshots in a directory.
         
@@ -175,23 +176,23 @@ class OpenRouterClient:
             dict: Analysis results for each screenshot
         """
         results = {}
-        
+
         if not os.path.isdir(screenshot_dir):
             raise NotADirectoryError(f"{screenshot_dir} is not a valid directory")
-        
+
         # Get all PNG files in the directory
         screenshots = [f for f in os.listdir(screenshot_dir) if f.endswith('.png')]
-        
+
         # Apply filters if specified
         if language:
             screenshots = [s for s in screenshots if f"_{language}_" in s]
         if theme:
             screenshots = [s for s in screenshots if f"_{theme}_" in s]
-        
+
         for screenshot in screenshots:
             screenshot_path = os.path.join(screenshot_dir, screenshot)
             results[screenshot] = self.analyze_screenshot(screenshot_path)
-        
+
         return results
 
 

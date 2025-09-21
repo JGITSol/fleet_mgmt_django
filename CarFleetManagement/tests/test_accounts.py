@@ -1,5 +1,4 @@
 import pytest
-from rest_framework.test import APITestCase
 from django.contrib.auth import get_user_model
 
 from CarFleetManagement.accounts.models import CustomUser, Driver

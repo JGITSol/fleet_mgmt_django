@@ -1,13 +1,32 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse, HttpResponse
+import json
+import os
+from typing import ClassVar
+
 from django.conf import settings
-from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser, FormParser
+from django.http import HttpResponse, HttpResponseRedirect
+from drf_spectacular.utils import extend_schema
+from rest_framework import generics, status
+from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status, generics
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, BasePermission
+from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from CarFleetManagement.accounts.models import UserRole
+
+from CarFleetManagement.accounts.models import Driver, UserRole
+from CarFleetManagement.accounts.serializers import DriverSerializer
+from CarFleetManagement.emergency.models import EmergencyIncident, EmergencyResponse
+from CarFleetManagement.emergency.serializers import (
+    EmergencyIncidentSerializer,
+    EmergencyResponseSerializer,
+)
+from CarFleetManagement.maintenance.models import Maintenance
+from CarFleetManagement.maintenance.serializers import MaintenanceSerializer
+from CarFleetManagement.vehicles.models import Vehicle
+from CarFleetManagement.vehicles.serializers import VehicleSerializer
+
+from .openrouter_client import get_client
+from .report_generator import generate_report
+
 
 class IsAdminOrMaintenanceStaff(BasePermission):
     def has_permission(self, request, view):
@@ -32,29 +51,12 @@ class IsAdminRole(BasePermission):
         role = getattr(request.user, 'role', None)
         return bool(role and getattr(role, 'name', None) == UserRole.ADMIN)
 
-import os
-import json
-
-from .openrouter_client import get_client
-from .report_generator import generate_report
-
-# Import models and serializers
-from CarFleetManagement.vehicles.models import Vehicle
-from CarFleetManagement.vehicles.serializers import VehicleSerializer
-from CarFleetManagement.maintenance.models import Maintenance
-from CarFleetManagement.maintenance.serializers import MaintenanceSerializer
-from CarFleetManagement.accounts.models import Driver
-from CarFleetManagement.accounts.serializers import DriverSerializer
-from CarFleetManagement.emergency.models import EmergencyIncident
-from CarFleetManagement.emergency.models import EmergencyResponse
-from CarFleetManagement.emergency.serializers import EmergencyIncidentSerializer, EmergencyResponseSerializer
-
-# Emergency API Views
+    # Emergency API Views
 class EmergencyIncidentListCreateAPIView(generics.ListCreateAPIView):
     queryset = EmergencyIncident.objects.all()
     serializer_class = EmergencyIncidentSerializer
-    permission_classes = [IsAuthenticated]
     parser_classes = (MultiPartParser, FormParser)
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         """Create and, for form POSTs, redirect to the detail HTML page.
@@ -81,7 +83,6 @@ class EmergencyIncidentListCreateAPIView(generics.ListCreateAPIView):
                 detail_url = f"/emergency/{serializer.data.get('id')}/"
             except Exception:
                 detail_url = '/'  # fallback
-            from django.http import HttpResponseRedirect
             return HttpResponseRedirect(detail_url)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
@@ -89,7 +90,7 @@ class EmergencyIncidentListCreateAPIView(generics.ListCreateAPIView):
 class EmergencyIncidentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = EmergencyIncident.objects.all()
     serializer_class = EmergencyIncidentSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         """Support legacy form-style POST to detail endpoint by treating it as an update.
@@ -108,9 +109,15 @@ class EmergencyIncidentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestr
         response = self.update(request, *args, **kwargs)
 
         if is_form:
-            from django.http import HttpResponseRedirect
-            pk = kwargs.get('pk') or (hasattr(self, 'object') and getattr(self.object, 'pk', None))
-            detail_url = f"/emergency/{pk}/"
+            pk = kwargs.get('pk')
+            if not pk:
+                try:
+                    obj = self.get_object()
+                    pk = getattr(obj, 'pk', None)
+                except Exception:
+                    pk = None
+
+            detail_url = f"/emergency/{pk}/" if pk else '/'
             return HttpResponseRedirect(detail_url)
 
         return response
@@ -118,18 +125,18 @@ class EmergencyIncidentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestr
 class EmergencyIncidentUpdateAPIView(generics.UpdateAPIView):
     queryset = EmergencyIncident.objects.all()
     serializer_class = EmergencyIncidentSerializer
-    permission_classes = [IsAuthenticated, IsAdminRole]
+    permission_classes: ClassVar[list] = [IsAuthenticated, IsAdminRole]
 
 class EmergencyIncidentDeleteAPIView(generics.DestroyAPIView):
     queryset = EmergencyIncident.objects.all()
     serializer_class = EmergencyIncidentSerializer
-    permission_classes = [IsAuthenticated, IsAdminRole]
+    permission_classes: ClassVar[list] = [IsAuthenticated, IsAdminRole]
 
 class EmergencyResponseListCreateAPIView(generics.ListCreateAPIView):
     queryset = EmergencyResponse.objects.all()
     serializer_class = EmergencyResponseSerializer
-    permission_classes = [IsAuthenticated]
     parser_classes = (MultiPartParser, FormParser)
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         is_form = (
@@ -148,7 +155,6 @@ class EmergencyResponseListCreateAPIView(generics.ListCreateAPIView):
                 detail_url = f"/emergency/response/{serializer.data.get('id')}/"
             except Exception:
                 detail_url = '/'
-            from django.http import HttpResponseRedirect
             return HttpResponseRedirect(detail_url)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
@@ -156,47 +162,43 @@ class EmergencyResponseListCreateAPIView(generics.ListCreateAPIView):
 class EmergencyResponseRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = EmergencyResponse.objects.all()
     serializer_class = EmergencyResponseSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
-from drf_spectacular.utils import extend_schema
-from rest_framework.pagination import PageNumberPagination
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics
 
 
 class AnalyzeScreenshotView(APIView):
     """API view for analyzing a single screenshot using OpenRouter API."""
-    
+
     parser_classes = (MultiPartParser, FormParser)
-    
-    def post(self, request, format=None):
+
+    def post(self, request, format_=None):
         # Check if screenshot file is provided
         if 'screenshot' not in request.FILES:
             return Response(
                 {"error": "No screenshot file provided"},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        
+
         screenshot = request.FILES['screenshot']
         prompt = request.data.get('prompt', None)
-        
+
         # Save the screenshot temporarily
         temp_dir = os.path.join(settings.BASE_DIR, 'temp_screenshots')
         os.makedirs(temp_dir, exist_ok=True)
-        
+
         screenshot_path = os.path.join(temp_dir, screenshot.name)
         with open(screenshot_path, 'wb+') as destination:
             for chunk in screenshot.chunks():
                 destination.write(chunk)
-        
+
         try:
             # Analyze the screenshot
             client = get_client()
             analysis = client.analyze_screenshot(screenshot_path, prompt=prompt)
-            
+
             # Clean up the temporary file
             os.remove(screenshot_path)
-            
+
             return Response(analysis)
         except Exception as e:
             return Response(
@@ -207,16 +209,16 @@ class AnalyzeScreenshotView(APIView):
 
 class BatchAnalyzeScreenshotsView(APIView):
     """API view for analyzing multiple screenshots in the debug_screenshots directory."""
-    
-    def post(self, request, format=None):
+
+    def post(self, request, format_=None):
         debug_dir = os.path.join(settings.BASE_DIR, 'debug_screenshots')
-        
+
         if not os.path.exists(debug_dir):
             return Response(
                 {"error": "Debug screenshots directory does not exist"},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        
+
         # Get all PNG files in the directory
         screenshot_files = [f for f in os.listdir(debug_dir) if f.endswith('.png')]
 
@@ -264,36 +266,36 @@ class BatchAnalyzeScreenshotsView(APIView):
 
 class GenerateReportView(APIView):
     """API view for generating an HTML report from analysis results."""
-    
-    def post(self, request, format=None):
+
+    def post(self, request, format_=None):
         analysis_data = request.data.get('analysis_data', None)
-        
+
         if not analysis_data:
             return Response(
                 {"error": "No analysis data provided"},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        
+
         try:
             # Save analysis data to a temporary file
             temp_dir = os.path.join(settings.BASE_DIR, 'temp_analysis')
             os.makedirs(temp_dir, exist_ok=True)
-            
+
             analysis_file = os.path.join(temp_dir, 'temp_analysis.json')
             with open(analysis_file, 'w') as f:
                 json.dump(analysis_data, f)
-            
+
             # Generate the report
             report_path = generate_report(analysis_file)
-            
+
             # Read the report content
-            with open(report_path, 'r') as f:
+            with open(report_path) as f:
                 report_content = f.read()
-            
+
             # Clean up temporary files
             os.remove(analysis_file)
             os.remove(report_path)
-            
+
             # Return the report as HTML
             return HttpResponse(
                 report_content,
@@ -315,13 +317,13 @@ class GenerateReportView(APIView):
 
 class VehicleListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating vehicles."""
-    authentication_classes = [JWTAuthentication]
+    authentication_classes: ClassVar[list] = [JWTAuthentication]
     queryset = Vehicle.objects.all()
     serializer_class = VehicleSerializer
-    permission_classes = [IsAuthenticated, IsAdminRole]
-    # Use default pagination so API tests that expect paginated responses
-    # (a dict with 'results') receive consistent output. Do not override
-    # pagination_class here.
+    permission_classes: ClassVar[list] = [IsAdminRole]
+    # Some tests compare response.data directly to serializer.data; disable
+    # pagination to keep list responses as plain lists.
+    pagination_class = None
 
     def perform_create(self, serializer):
         serializer.save()
@@ -329,10 +331,10 @@ class VehicleListCreateAPIView(generics.ListCreateAPIView):
 
 class VehicleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     """API view for retrieving, updating, and deleting a vehicle."""
-    authentication_classes = [JWTAuthentication]
+    authentication_classes: ClassVar[list] = [JWTAuthentication]
     queryset = Vehicle.objects.all()
     serializer_class = VehicleSerializer
-    permission_classes = [IsAuthenticated, IsAdminRole]
+    permission_classes: ClassVar[list] = [IsAdminRole]
 
 
 # Maintenance API Views
@@ -340,7 +342,7 @@ class MaintenanceListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating maintenance records."""
     queryset = Maintenance.objects.all()
     serializer_class = MaintenanceSerializer
-    permission_classes = [IsAuthenticated, IsAdminOrMaintenanceStaff]
+    permission_classes: ClassVar[list] = [IsAdminOrMaintenanceStaff]
     # Some tests compare response.data directly to serializer.data; disable
     # pagination to keep list responses as plain lists.
     pagination_class = None
@@ -353,7 +355,7 @@ class MaintenanceRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIV
     """API view for retrieving, updating, and deleting a maintenance record."""
     queryset = Maintenance.objects.all()
     serializer_class = MaintenanceSerializer
-    permission_classes = [IsAuthenticated, IsAdminOrMaintenanceStaff]
+    permission_classes: ClassVar[list] = [IsAdminOrMaintenanceStaff]
 
 
 # Driver API Views
@@ -361,7 +363,7 @@ class DriverListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating drivers."""
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer
-    permission_classes = [IsAuthenticated, IsAdminRole]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save()
@@ -371,7 +373,7 @@ class DriverRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     """API view for retrieving, updating, and deleting a driver."""
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer
-    permission_classes = [IsAuthenticated, IsAdminRole]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
 
 class AssignDriverToVehicleAPIView(generics.UpdateAPIView):

@@ -1,6 +1,9 @@
-from rest_framework import serializers
-from CarFleetManagement.accounts.models import CustomUser, UserRole
+from typing import ClassVar
+
 from django.contrib.auth import authenticate
+from rest_framework import serializers
+
+from CarFleetManagement.accounts.models import CustomUser, UserRole
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -8,8 +11,8 @@ class UserSerializer(serializers.ModelSerializer):
     Used for user registration and profile information retrieval."""
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'role']
-        read_only_fields = ['id']
+        fields: ClassVar[list[str]] = ['id', 'username', 'email', 'first_name', 'last_name', 'role']
+        read_only_fields: ClassVar[list[str]] = ['id']
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -20,8 +23,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'password2', 'role']
-        extra_kwargs = {
+        fields: ClassVar[list[str]] = ['username', 'email', 'password', 'password2', 'role']
+        extra_kwargs: ClassVar[dict[str, dict]] = {
             'password': {'write_only': True}
         }
 

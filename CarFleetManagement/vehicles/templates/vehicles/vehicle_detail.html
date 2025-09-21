@@ -30,8 +30,8 @@
             {% endif %}
             
             <div class="mt-3">
-                <a href="{% url 'vehicle_update' vehicle.pk %}" class="btn btn-warning">Edit</a>
-                <a href="{% url 'vehicle_list' %}" class="btn btn-secondary">Back to List</a>
+                <a href="{% url 'vehicles:vehicle_update' vehicle.pk %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'vehicles:vehicle_list' %}" class="btn btn-secondary">Back to List</a>
             </div>
         </div>
     </div>

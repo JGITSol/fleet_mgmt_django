@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+
 import django
 
 # Add the project directory to the Python path
@@ -16,15 +17,16 @@ django.setup()
 # Import the JWT patch
 from tests.jwt_auth_patch import jwt_auth_patch
 
+
 def run_test_file(test_file):
     """Run a single test file and return the exit code."""
     print(f"\n\n=== Running {test_file} ===")
-    
+
     # Apply the JWT authentication patch
     print("Applying JWT authentication patch...")
     jwt_auth_patch.apply()
     print("Patch applied successfully!")
-    
+
     try:
         result = subprocess.run(
             [sys.executable, "-m", "pytest", test_file, "-v"],
@@ -51,20 +53,20 @@ def main():
     print("1. Patching permission classes to handle both authenticated and unauthenticated test cases")
     print("2. Providing utilities to authenticate test clients with JWT tokens")
     print("3. Ensuring proper JWT authentication is used instead of force_authenticate")
-    
+
     tests_dir = os.path.join(os.getcwd(), "tests")
     test_files = [
-        os.path.join("tests", f) 
-        for f in os.listdir(tests_dir) 
+        os.path.join("tests", f)
+        for f in os.listdir(tests_dir)
         if f.startswith("test_") and f.endswith(".py")
     ]
-    
+
     failed_files = []
     for test_file in test_files:
         exit_code = run_test_file(test_file)
         if exit_code != 0:
             failed_files.append(test_file)
-    
+
     if failed_files:
         print("\n\n❌ The following test files failed:")
         for f in failed_files:

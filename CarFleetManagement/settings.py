@@ -1,14 +1,15 @@
 import os
-from pathlib import Path
-from dotenv import load_dotenv
 import sys
+from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Load environment variables from .env file
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'replace-this-with-a-secure-key')
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
@@ -108,6 +109,12 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'CarFleetManagement.api.renderers.CustomBrowsableAPIRenderer',
+    ],
+    'DEFAULT_METADATA_CLASS': 'rest_framework.metadata.SimpleMetadata',
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
 }
 
 # Default pagination for list endpoints so API responses return a paginated
@@ -122,6 +129,11 @@ SPECTACULAR_SETTINGS = {
 }
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+# Authentication settings
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/accounts/profile/'
+LOGOUT_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

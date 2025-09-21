@@ -35,15 +35,16 @@ Usage:
     def test_something(self):
         # Test code here
 """
-import functools
 import contextlib
+import functools
 import inspect
-from django.urls import resolve, Resolver404
+
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.test import APIClient
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, BasePermission
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from CarFleetManagement.accounts.models import UserRole, CustomUser
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from CarFleetManagement.accounts.models import CustomUser, UserRole
 
 # Store original permission methods
 _original_is_authenticated = IsAuthenticated.has_permission
@@ -65,7 +66,7 @@ class AuthUtils:
     Provides methods for patching permissions, creating test users,
     and authenticating test clients.
     """
-    
+
     @staticmethod
     def get_tokens_for_user(user):
         """Generate JWT tokens for a user."""
@@ -74,14 +75,14 @@ class AuthUtils:
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }
-    
+
     @staticmethod
     def authenticate_client(client, user):
         """Authenticate a test client with JWT tokens."""
         tokens = AuthUtils.get_tokens_for_user(user)
         client.credentials(HTTP_AUTHORIZATION=f'Bearer {tokens["access"]}')
         return client
-    
+
     @staticmethod
     def create_user(username, email, password, role_name, is_staff=False):
         """Create a user with the specified role for testing."""
@@ -97,7 +98,7 @@ class AuthUtils:
             is_staff=is_staff
         )
         return user
-    
+
     @staticmethod
     def create_admin_user():
         """Create an admin user with staff permissions for testing."""
@@ -108,7 +109,7 @@ class AuthUtils:
             role_name=UserRole.ADMIN,
             is_staff=True
         )
-    
+
     @staticmethod
     def create_driver_user():
         """Create a driver user for testing."""
@@ -119,7 +120,7 @@ class AuthUtils:
             role_name=UserRole.DRIVER,
             is_staff=False
         )
-    
+
     @staticmethod
     def create_fleet_manager_user():
         """Create a fleet manager user for testing."""
@@ -130,7 +131,7 @@ class AuthUtils:
             role_name=UserRole.FLEET_MANAGER,
             is_staff=False
         )
-    
+
     @staticmethod
     def create_maintenance_user():
         """Create a maintenance user for testing."""
@@ -141,7 +142,7 @@ class AuthUtils:
             role_name=UserRole.MAINTENANCE,
             is_staff=False
         )
-    
+
     @staticmethod
     def patch_permissions():
         """
@@ -167,30 +168,30 @@ class AuthUtils:
                     frame = frame.f_back
             finally:
                 del frame
-            
+
             # For all other tests, return True to make tests pass
             return True
-        
+
         def patched_is_admin(self, request, view):
             # For admin user tests, check if the user has is_staff=True
             if hasattr(request, 'user') and hasattr(request.user, 'is_staff'):
                 return request.user.is_staff
             # For non-admin users, return False
             return False
-        
+
         def patched_jwt_authenticate(self, request):
             # If Authorization header is present, use original method
             if _original_jwt_authenticate and 'HTTP_AUTHORIZATION' in request.META:
                 return _original_jwt_authenticate(self, request)
             # Otherwise, return None to indicate no authentication
             return None
-        
+
         # Apply the patches
         IsAuthenticated.has_permission = patched_is_authenticated
         IsAdminUser.has_permission = patched_is_admin
         if _original_jwt_authenticate:
             JWTAuthentication.authenticate = patched_jwt_authenticate
-    
+
     @staticmethod
     def restore_permissions():
         """Restore original permission classes."""
@@ -198,7 +199,7 @@ class AuthUtils:
         IsAdminUser.has_permission = _original_is_admin
         if _original_jwt_authenticate:
             JWTAuthentication.authenticate = _original_jwt_authenticate
-    
+
     @staticmethod
     @contextlib.contextmanager
     def jwt_auth_patch():
@@ -208,7 +209,7 @@ class AuthUtils:
             yield
         finally:
             AuthUtils.restore_permissions()
-    
+
     # Alias methods for backward compatibility
     apply_jwt_patch = staticmethod(patch_permissions)
     restore_jwt_patch = staticmethod(restore_permissions)
@@ -226,7 +227,7 @@ def get_authenticated_client(user=None):
     """Get an authenticated client for the given user."""
     if user is None:
         user = AuthUtils.create_admin_user()
-    
+
     client = APIClient()
     AuthUtils.authenticate_client(client, user)
     return client, user
@@ -262,31 +263,31 @@ class AuthTestMixin:
     Mixin class for test cases that need authentication.
     Provides methods for creating test users and authenticating clients.
     """
-    
+
     def create_admin_user(self):
         """Create an admin user for testing."""
         return AuthUtils.create_admin_user()
-    
+
     def create_driver_user(self):
         """Create a driver user for testing."""
         return AuthUtils.create_driver_user()
-    
+
     def create_fleet_manager_user(self):
         """Create a fleet manager user for testing."""
         return AuthUtils.create_fleet_manager_user()
-    
+
     def create_maintenance_user(self):
         """Create a maintenance user for testing."""
         return AuthUtils.create_maintenance_user()
-    
+
     def authenticate_client(self, client, user):
         """Authenticate a test client with JWT tokens."""
         return AuthUtils.authenticate_client(client, user)
-    
+
     def get_authenticated_client(self, user=None):
         """Get an authenticated client for the given user."""
         return get_authenticated_client(user)
-    
+
     def get_unauthenticated_client(self):
         """Get an unauthenticated client for testing."""
         return get_unauthenticated_client()

@@ -1,16 +1,17 @@
-import pytest
-from django.utils import timezone
-from datetime import timedelta, date
+from datetime import timedelta
 from unittest.mock import patch
 
-from CarFleetManagement.vehicles.models import Vehicle
+import pytest
+from django.utils import timezone
+
 from CarFleetManagement.maintenance.models import Maintenance
+from CarFleetManagement.vehicles.models import Vehicle
 
 
 @pytest.mark.django_db
 class TestMaintenanceMethods:
     """Test Maintenance model methods."""
-    
+
     def test_days_until_scheduled_with_future_date(self):
         """Test days_until_scheduled method with a future date."""
         # Create a vehicle
@@ -22,11 +23,11 @@ class TestMaintenanceMethods:
             vin='1HGCM82633A123456',
             status='AVAILABLE'
         )
-        
+
         # Create maintenance with scheduled date in the future
         today = timezone.now().date()
         future_date = today + timedelta(days=30)
-        
+
         maintenance = Maintenance.objects.create(
             vehicle=vehicle,
             maintenance_type='ROUTINE',
@@ -37,14 +38,14 @@ class TestMaintenanceMethods:
             cost=50.00,
             service_provider='Test Mechanic'
         )
-        
+
         # Mock today's date to ensure consistent test results
         with patch('datetime.date') as mock_date:
             mock_date.today.return_value = today
             # Days until scheduled should be positive
             days = maintenance.days_until_scheduled()
             assert days == 30
-    
+
     def test_days_until_scheduled_with_past_date(self):
         """Test days_until_scheduled method with a past date."""
         # Create a vehicle
@@ -56,11 +57,11 @@ class TestMaintenanceMethods:
             vin='1HGCM82633A123456',
             status='AVAILABLE'
         )
-        
+
         # Create maintenance with scheduled date in the past
         today = timezone.now().date()
         past_date = today - timedelta(days=30)
-        
+
         maintenance = Maintenance.objects.create(
             vehicle=vehicle,
             maintenance_type='ROUTINE',
@@ -71,14 +72,14 @@ class TestMaintenanceMethods:
             cost=50.00,
             service_provider='Test Mechanic'
         )
-        
+
         # Mock today's date to ensure consistent test results
         with patch('datetime.date') as mock_date:
             mock_date.today.return_value = today
             # Days until scheduled should be negative
             days = maintenance.days_until_scheduled()
             assert days == -30
-    
+
     def test_days_until_scheduled_with_today(self):
         """Test days_until_scheduled method with today's date."""
         # Create a vehicle
@@ -90,10 +91,10 @@ class TestMaintenanceMethods:
             vin='1HGCM82633A123456',
             status='AVAILABLE'
         )
-        
+
         # Create maintenance with scheduled date as today
         today = timezone.now().date()
-        
+
         maintenance = Maintenance.objects.create(
             vehicle=vehicle,
             maintenance_type='ROUTINE',
@@ -104,14 +105,14 @@ class TestMaintenanceMethods:
             cost=50.00,
             service_provider='Test Mechanic'
         )
-        
+
         # Mock today's date to ensure consistent test results
         with patch('datetime.date') as mock_date:
             mock_date.today.return_value = today
             # Days until scheduled should be 0
             days = maintenance.days_until_scheduled()
             assert days == 0
-    
+
     def test_days_until_scheduled_with_no_date(self):
         """Test days_until_scheduled method with no scheduled date."""
         # Create a vehicle
@@ -123,7 +124,7 @@ class TestMaintenanceMethods:
             vin='1HGCM82633A123456',
             status='AVAILABLE'
         )
-        
+
         # Since scheduled_date is NOT NULL in the database, we'll use a mock approach
         # to test the method's behavior when scheduled_date is None
         today = timezone.now().date()
@@ -137,21 +138,21 @@ class TestMaintenanceMethods:
             cost=50.00,
             service_provider='Test Mechanic'
         )
-        
+
         # Use a better approach to mock the method itself rather than trying to mock the property
         original_method = Maintenance.days_until_scheduled
-        
+
         try:
             # Replace the method with a mock that always returns 0
             Maintenance.days_until_scheduled = lambda self: 0
-            
+
             # Test the mocked method
             days = maintenance.days_until_scheduled()
             assert days == 0
         finally:
             # Restore the original method after the test
             Maintenance.days_until_scheduled = original_method
-    
+
     def test_maintenance_status_update(self):
         """Test updating maintenance status."""
         # Create a vehicle
@@ -163,7 +164,7 @@ class TestMaintenanceMethods:
             vin='1HGCM82633A123456',
             status='AVAILABLE'
         )
-        
+
         # Create maintenance
         maintenance = Maintenance.objects.create(
             vehicle=vehicle,
@@ -175,12 +176,12 @@ class TestMaintenanceMethods:
             cost=50.00,
             service_provider='Test Mechanic'
         )
-        
+
         # Update status
         maintenance.status = 'COMPLETED'
         maintenance.completed_date = timezone.now().date()
         maintenance.save()
-        
+
         # Verify status was updated
         updated_maintenance = Maintenance.objects.get(id=maintenance.id)
         assert updated_maintenance.status == 'COMPLETED'

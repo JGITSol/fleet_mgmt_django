@@ -1,7 +1,7 @@
-import pytest
-from rest_framework.test import APITestCase
-from django.utils import timezone
 from datetime import timedelta
+
+import pytest
+from django.utils import timezone
 
 from CarFleetManagement.vehicles.models import Vehicle
 
@@ -16,7 +16,7 @@ def test_vehicle_status_update(vehicle):
     # Test changing status
     vehicle.status = Vehicle.Status.MAINTENANCE
     vehicle.save()
-    
+
     # Retrieve from DB and verify
     updated_vehicle = Vehicle.objects.get(id=vehicle.id)
     assert updated_vehicle.status == Vehicle.Status.MAINTENANCE
@@ -29,7 +29,7 @@ def test_vehicle_mileage_update(vehicle):
     new_mileage = vehicle.mileage + 1000
     vehicle.mileage = new_mileage
     vehicle.save()
-    
+
     # Retrieve from DB and verify
     updated_vehicle = Vehicle.objects.get(id=vehicle.id)
     assert updated_vehicle.mileage == new_mileage
@@ -42,7 +42,7 @@ def test_vehicle_service_due(vehicle):
     yesterday = timezone.now().date() - timedelta(days=1)
     vehicle.next_service_date = yesterday
     vehicle.save()
-    
+
     # Retrieve from DB and verify
     updated_vehicle = Vehicle.objects.get(id=vehicle.id)
     assert updated_vehicle.is_service_due()

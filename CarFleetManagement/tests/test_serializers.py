@@ -1,16 +1,16 @@
-import pytest
-from django.utils import timezone
-from datetime import timedelta, datetime
-from unittest.mock import patch, MagicMock
-from rest_framework.test import APITestCase
+from datetime import datetime, timedelta
+from unittest.mock import patch
 
-from CarFleetManagement.accounts.models import UserRole, Driver
+import pytest
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+
+from CarFleetManagement.accounts.models import Driver
 from CarFleetManagement.accounts.serializers import DriverSerializer
-from CarFleetManagement.vehicles.models import Vehicle
-from CarFleetManagement.vehicles.serializers import VehicleSerializer
 from CarFleetManagement.maintenance.models import Maintenance
 from CarFleetManagement.maintenance.serializers import MaintenanceSerializer
-from django.contrib.auth import get_user_model
+from CarFleetManagement.vehicles.models import Vehicle
+from CarFleetManagement.vehicles.serializers import VehicleSerializer
 
 User = get_user_model()
 
@@ -18,7 +18,7 @@ User = get_user_model()
 @pytest.mark.django_db
 class TestDriverSerializer:
     """Test the DriverSerializer."""
-    
+
     def test_serializer_output(self):
         """Test serializer output format."""
         # Create a user
@@ -27,7 +27,7 @@ class TestDriverSerializer:
             email='test@example.com',
             password='testpassword'
         )
-        
+
         # Create a vehicle
         vehicle = Vehicle.objects.create(
             brand='Toyota',
@@ -37,7 +37,7 @@ class TestDriverSerializer:
             vin='1HGCM82633A123456',
             status='AVAILABLE'
         )
-        
+
         # Create a driver
         today = timezone.now().date()
         driver = Driver.objects.create(
@@ -47,14 +47,14 @@ class TestDriverSerializer:
             phone_number='+1234567890',
             driver_license_number='DL12345678',
         )
-        
+
         # Add vehicle to driver
         driver.assigned_vehicles.add(vehicle)
-        
+
         # Serialize the driver
         serializer = DriverSerializer(driver)
         data = serializer.data
-        
+
         # Check serialized data
         assert data['first_name'] == 'Test'
         assert data['last_name'] == 'Driver'
@@ -70,7 +70,7 @@ class TestDriverSerializer:
 @pytest.mark.django_db
 class TestVehicleSerializer:
     """Test the VehicleSerializer."""
-    
+
     def test_serializer_output(self):
         """Test serializer output format."""
         # Create a driver
@@ -81,7 +81,7 @@ class TestVehicleSerializer:
             phone_number='+1234567890',
             driver_license_number='DL12345678',
         )
-        
+
         # Create a vehicle
         today = timezone.now().date()
         vehicle = Vehicle.objects.create(
@@ -100,14 +100,14 @@ class TestVehicleSerializer:
             insurance_expiry=today + timedelta(days=365),
             status='AVAILABLE'
         )
-        
+
         # Assign driver to vehicle (ensure bidirectional relationship)
         vehicle.drivers.add(driver)
-        
+
         # Serialize the vehicle
         serializer = VehicleSerializer(vehicle)
         data = serializer.data
-        
+
         # Check serialized data
         assert data['brand'] == 'Toyota'
         assert data['model'] == 'Camry'
@@ -125,7 +125,7 @@ class TestVehicleSerializer:
 @pytest.mark.django_db
 class TestMaintenanceSerializer:
     """Test the MaintenanceSerializer."""
-    
+
     def test_serializer_output(self):
         """Test serializer output format."""
         # Create a vehicle
@@ -137,7 +137,7 @@ class TestMaintenanceSerializer:
             vin='1HGCM82633A123456',
             status='AVAILABLE'
         )
-        
+
         # Create maintenance record
         today = timezone.now().date()
         future_date = today + timedelta(days=30)
@@ -152,11 +152,11 @@ class TestMaintenanceSerializer:
             service_provider='Test Mechanic',
             notes='Everything looks good'
         )
-        
+
         # Serialize the maintenance record
         serializer = MaintenanceSerializer(maintenance)
         data = serializer.data
-        
+
         # Check serialized data
         assert data['vehicle'] == vehicle.id
         assert data['maintenance_type'] == 'ROUTINE'
@@ -165,7 +165,7 @@ class TestMaintenanceSerializer:
         assert data['odometer_reading'] == 15000
         assert float(data['cost']) == 50.00
         assert data['service_provider'] == 'Test Mechanic'
-        
+
         # Mock the date calculation to ensure consistent test results
         with patch('django.utils.timezone.now') as mock_now:
             mock_now.return_value = timezone.make_aware(datetime.combine(today, datetime.min.time()))
@@ -173,7 +173,7 @@ class TestMaintenanceSerializer:
             serializer = MaintenanceSerializer(maintenance)
             data = serializer.data
             assert data['days_until_scheduled'] == 30
-            
+
         assert data['vehicle_details']['brand'] == 'Toyota'
         assert data['vehicle_details']['model'] == 'Camry'
 

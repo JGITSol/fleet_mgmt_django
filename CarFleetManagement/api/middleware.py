@@ -1,5 +1,6 @@
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+
 class JWTAuthMiddleware:
     """Middleware that attempts to authenticate users from the Authorization
     header using JWTAuthentication and sets request.user accordingly.
@@ -31,7 +32,6 @@ class JWTAuthMiddleware:
 
         return self.get_response(request)
 from django.utils.deprecation import MiddlewareMixin
-from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class JWTAuthMiddleware(MiddlewareMixin):

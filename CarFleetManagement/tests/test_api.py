@@ -1,10 +1,5 @@
 import pytest
-from rest_framework.test import APITestCase
-from rest_framework.test import APIClient
-from django.urls import reverse
 from django.contrib.auth import get_user_model
-from rest_framework.test import APIClient
-from rest_framework import status
 
 # No need to import tests from the app-specific test directory
 # We'll focus on basic model testing instead
@@ -18,7 +13,7 @@ def test_user_creation(user):
     """Test that the user fixture works correctly."""
     assert user.username == 'testuser'
     assert user.email == 'test@example.com'
-    
+
     # Create another user manually
     new_user = User.objects.create_user(
         username='testuser2',

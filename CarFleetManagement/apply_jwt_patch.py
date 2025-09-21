@@ -5,6 +5,7 @@ This script applies the JWT authentication patch and runs the tests.
 """
 import os
 import sys
+
 import django
 import pytest
 

@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+
 class Vehicle(models.Model):
     class VehicleType(models.TextChoices):
         TRUCK = 'TRUCK', _('Truck')
@@ -38,13 +39,13 @@ class Vehicle(models.Model):
     next_service_date = models.DateField(null=True, blank=True, verbose_name=_('Next Service Date'))
     insurance_expiry = models.DateField(null=True, blank=True, verbose_name=_('Insurance Expiry Date'))
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.AVAILABLE, verbose_name=_('Status'))
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return f"{self.brand} {self.model} ({self.license_plate})"
-        
+
     def is_service_due(self):
         """Check if service is due based on next_service_date."""
         from django.utils import timezone

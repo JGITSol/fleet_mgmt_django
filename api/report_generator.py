@@ -4,13 +4,12 @@ This module provides functionality to generate HTML reports from
 the screenshot analysis results produced by the OpenRouter API.
 """
 
-import os
 import json
+import os
 from datetime import datetime
-from pathlib import Path
+
 from django.conf import settings
-from django.template.loader import render_to_string
-from django.utils.safestring import mark_safe
+
 
 class ScreenshotAnalysisReport:
     """Generator for screenshot analysis reports."""

@@ -4,21 +4,19 @@ This module provides functionality to generate HTML reports from
 the screenshot analysis results produced by the OpenRouter API.
 """
 
-import os
 import json
-from datetime import datetime
-from pathlib import Path
-from django.conf import settings
-from django.template.loader import render_to_string
-from django.utils.safestring import mark_safe
+import os
 import sys
+from datetime import datetime
+
+from django.conf import settings
 
 # Provide compatibility alias so tests that patch 'api.report_generator' affect this module
 sys.modules.setdefault('api.report_generator', sys.modules[__name__])
 
 class ScreenshotAnalysisReport:
     """Generator for screenshot analysis reports."""
-    
+
     def __init__(self, analysis_file):
         """Initialize the report generator.
         
@@ -27,7 +25,7 @@ class ScreenshotAnalysisReport:
         """
         self.analysis_file = analysis_file
         self.analysis_data = self._load_analysis_data()
-        
+
     def _load_analysis_data(self):
         """Load analysis data from the JSON file.
         
@@ -36,10 +34,10 @@ class ScreenshotAnalysisReport:
         """
         if not os.path.exists(self.analysis_file):
             raise FileNotFoundError(f"Analysis file not found: {self.analysis_file}")
-        
-        with open(self.analysis_file, 'r') as f:
+
+        with open(self.analysis_file) as f:
             return json.load(f)
-    
+
     def generate_html_report(self, output_file=None):
         """Generate an HTML report from the analysis data.
         
@@ -53,7 +51,7 @@ class ScreenshotAnalysisReport:
         if not output_file:
             timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
             output_file = os.path.join(settings.BASE_DIR, f'screenshot_analysis_report_{timestamp}.html')
-        
+
         # Organize data by page, language, and theme
         organized_data = {}
         for screenshot, analysis in self.analysis_data.items():
@@ -63,26 +61,26 @@ class ScreenshotAnalysisReport:
                 page_name = parts[0]
                 lang = parts[1]
                 theme = parts[2]
-                
+
                 # Initialize nested dictionaries if they don't exist
                 if page_name not in organized_data:
                     organized_data[page_name] = {}
                 if lang not in organized_data[page_name]:
                     organized_data[page_name][lang] = {}
-                
+
                 # Extract the analysis content
                 content = ""
-                if 'choices' in analysis and analysis['choices']:
+                if analysis.get('choices'):
                     content = analysis['choices'][0]['message']['content']
                 elif 'error' in analysis:
                     content = f"Error: {analysis['error']}"
-                
+
                 # Store the analysis
                 organized_data[page_name][lang][theme] = {
                     'screenshot': screenshot,
                     'analysis': content
                 }
-        
+
         # Prepare context for the template
         context = {
             'title': 'Screenshot Analysis Report',
@@ -90,18 +88,18 @@ class ScreenshotAnalysisReport:
             'data': organized_data,
             'screenshot_dir': os.path.join(settings.BASE_DIR, 'debug_screenshots')
         }
-        
+
         # Generate HTML content
         # In a real implementation, you would use Django's template system
         # Here we're creating a simple HTML structure
         html_content = self._generate_html_template(context)
-        
+
         # Write to file
         with open(output_file, 'w') as f:
             f.write(html_content)
-        
+
         return output_file
-    
+
     def _generate_html_template(self, context):
         """Generate HTML content for the report.
         
@@ -134,14 +132,14 @@ class ScreenshotAnalysisReport:
             <h1>{context['title']}</h1>
             <div class="meta">Generated at: {context['generated_at']}</div>
         """
-        
+
         # Add content for each page
         for page_name, languages in context['data'].items():
             html += f"""
             <div class="page-section">
                 <h2>Page: {page_name}</h2>
             """
-            
+
             # Add content for each language
             for lang, themes in languages.items():
                 html += f"""
@@ -149,7 +147,7 @@ class ScreenshotAnalysisReport:
                     <h3>Language: {lang}</h3>
                     <div class="theme-comparison">
                 """
-                
+
                 # Add content for each theme
                 for theme, data in themes.items():
                     screenshot_path = os.path.join(context['screenshot_dir'], data['screenshot'])
@@ -160,11 +158,11 @@ class ScreenshotAnalysisReport:
                         <div class="analysis">{data['analysis']}</div>
                     </div>
                     """
-                
+
                 html += "</div></div>"
-            
+
             html += "</div>"
-        
+
         html += "</body></html>"
         return html
 

@@ -4,17 +4,17 @@ This module provides functionality to interact with the Google Gemini API
 for AI-powered analysis of screenshots and other data.
 """
 
-import os
 import base64
+import os
+import sys
 import time
-import requests
 from io import BytesIO
 from pathlib import Path
-from PIL import Image
-from dotenv import load_dotenv
-from django.conf import settings
+
 import google.generativeai as genai
-import sys
+from django.conf import settings
+from dotenv import load_dotenv
+from PIL import Image
 
 # Load environment variables from .env file (safe even if .env missing)
 env_path = Path(settings.BASE_DIR) / '.env'
@@ -73,7 +73,7 @@ class GeminiClient:
 
         # Rate limiting attributes
         self.last_request_time = 0
-    
+
     def _resize_image(self, image_path):
         """Resize image to FullHD resolution if larger.
         
@@ -99,18 +99,18 @@ class GeminiClient:
             img_byte_arr.seek(0)
 
             return img_byte_arr
-    
+
     def _apply_rate_limit(self):
         """Apply rate limiting to avoid hitting API limits."""
         current_time = time.time()
         time_since_last_request = current_time - self.last_request_time
-        
+
         if time_since_last_request < REQUEST_INTERVAL:
             sleep_time = REQUEST_INTERVAL - time_since_last_request
             time.sleep(sleep_time)
-        
+
         self.last_request_time = time.time()
-    
+
     def analyze_screenshot(self, screenshot_path, prompt=None):
         """Analyze a screenshot using Gemini's vision capabilities.
         
@@ -123,7 +123,7 @@ class GeminiClient:
         """
         if not os.path.exists(screenshot_path):
             raise FileNotFoundError(f"Screenshot not found at {screenshot_path}")
-        
+
         # Default prompt if none provided
         if not prompt:
             prompt = "Analyze this UI screenshot focusing on UI/UX aspects: "\
@@ -132,7 +132,7 @@ class GeminiClient:
                     "3. Layout spacing and alignment "\
                     "4. Accessibility concerns "\
                     "5. Visual hierarchy and element relationships"
-        
+
         try:
             # If in test mode return deterministic stub avoid calling genai
             if getattr(self, '_test_mode', False):
@@ -175,7 +175,7 @@ class GeminiClient:
             return formatted_response
         except Exception as e:
             return {"error": str(e)}
-    
+
     def batch_analyze_screenshots(self, screenshot_dir, language=None, theme=None):
         """Analyze multiple screenshots in a directory.
         
@@ -188,23 +188,23 @@ class GeminiClient:
             dict: Analysis results for each screenshot
         """
         results = {}
-        
+
         if not os.path.isdir(screenshot_dir):
             raise NotADirectoryError(f"{screenshot_dir} is not a valid directory")
-        
+
         # Get all PNG files in the directory
         screenshots = [f for f in os.listdir(screenshot_dir) if f.endswith('.png')]
-        
+
         # Apply filters if specified
         if language:
             screenshots = [s for s in screenshots if f"_{language}_" in s]
         if theme:
             screenshots = [s for s in screenshots if f"_{theme}_" in s]
-        
+
         for screenshot in screenshots:
             screenshot_path = os.path.join(screenshot_dir, screenshot)
             results[screenshot] = self.analyze_screenshot(screenshot_path)
-        
+
         return results
 
 

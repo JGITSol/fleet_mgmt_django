@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Car Fleet Management API{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    
+    <!-- DRF API CSS with custom overrides -->
+    <style>
+        /* Override DRF default styles to maintain consistent dark theme */
+        body {
+            background-color: var(--bg-primary) !important;
+            color: var(--text-primary) !important;
+        }
+        
+        .navbar-dark {
+            background-color: var(--navbar-bg) !important;
+        }
+        
+        .container-fluid {
+            background-color: var(--bg-primary) !important;
+            color: var(--text-primary) !important;
+        }
+        
+        /* Ensure API content area maintains theme */
+        .content-main {
+            background-color: var(--bg-primary) !important;
+            color: var(--text-primary) !important;
+        }
+        
+        /* Override any white backgrounds in DRF */
+        .well, .form-control, .btn-default {
+            background-color: var(--card-bg) !important;
+            color: var(--text-primary) !important;
+            border-color: var(--border-color) !important;
+        }
+        
+        /* Code blocks styling */
+        pre, code {
+            background-color: var(--bg-secondary) !important;
+            color: var(--text-primary) !important;
+            border-color: var(--border-color) !important;
+        }
+        
+        /* Form styling */
+        .form-control:focus {
+            background-color: var(--card-bg) !important;
+            color: var(--text-primary) !important;
+            border-color: var(--primary-color) !important;
+            box-shadow: var(--input-focus-ring) !important;
+        }
+        
+        /* Button styling */
+        .btn-primary {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        
+        .btn-default {
+            background-color: var(--card-bg) !important;
+            color: var(--text-primary) !important;
+            border-color: var(--border-color) !important;
+        }
+        
+        /* Disable DRF theme toggle functionality */
+        .theme-toggle, .theme-switch {
+            display: none !important;
+        }
+        
+        /* Override any forced white backgrounds */
+        * {
+            background-color: inherit !important;
+        }
+        
+        /* Specific overrides for DRF elements */
+        .navbar, .navbar-default {
+            background-color: var(--navbar-bg) !important;
+        }
+        
+        .content {
+            background-color: var(--bg-primary) !important;
+        }
+        
+        /* Ensure text remains visible */
+        .text-muted {
+            color: var(--text-secondary) !important;
+        }
+        
+        /* JSON response styling */
+        .response .prettyprint {
+            background-color: var(--bg-secondary) !important;
+            color: var(--text-primary) !important;
+            border: 1px solid var(--border-color) !important;
+        }
+        
+        /* Tab styling */
+        .nav-tabs .nav-link {
+            background-color: var(--card-bg) !important;
+            color: var(--text-primary) !important;
+            border-color: var(--border-color) !important;
+        }
+        
+        .nav-tabs .nav-link.active {
+            background-color: var(--bg-primary) !important;
+            color: var(--text-primary) !important;
+            border-color: var(--border-color) !important;
+        }
+        
+        /* Ensure all content areas maintain theme */
+        .tab-content {
+            background-color: var(--bg-primary) !important;
+            color: var(--text-primary) !important;
+        }
+    </style>
+    
+    {% block style %}{% endblock %}
+</head>
+
+<body class="{% block bodyclass %}{% endblock %}">
+    <div class="wrapper">
+        {% block navbar %}
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <strong>Car Fleet Management API</strong>
+                </a>
+                
+                <div class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <span class="navbar-text me-3">
+                            Welcome, {{ user.username }}
+                        </span>
+                        <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                        <a class="nav-link" href="/accounts/logout/">Logout</a>
+                    {% else %}
+                        <a class="nav-link" href="/accounts/login/">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+        {% endblock %}
+
+        <div class="container-fluid">
+            <div class="content-main">
+                {% block breadcrumbs %}
+                <ul class="breadcrumb">
+                    {% for breadcrumb_name, breadcrumb_url in breadcrumblist %}
+                        {% if forloop.last %}
+                            <li class="breadcrumb-item active">{{ breadcrumb_name }}</li>
+                        {% else %}
+                            <li class="breadcrumb-item"><a href="{{ breadcrumb_url }}">{{ breadcrumb_name }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                {% endblock %}
+
+                <!-- Page header -->
+                <div class="page-header">
+                    <h1>{% block page_title %}{% endblock %}</h1>
+                </div>
+
+                <div class="request-info" style="clear: both">
+                    <pre class="prettyprint"><b>{{ request.method }}</b> {{ request.get_full_path }}</pre>
+                </div>
+
+                <div class="response-info">
+                    <pre class="prettyprint"><span class="status">HTTP {{ response.status_code }} {{ response.status_text }}</span></pre>
+                </div>
+
+                {% block content %}
+                {{ content }}
+                {% endblock content %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom script to prevent theme switching -->
+    <script>
+        // Disable any DRF theme toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Remove any theme toggle buttons
+            const themeToggles = document.querySelectorAll('.theme-toggle, .theme-switch, [data-toggle="theme"]');
+            themeToggles.forEach(toggle => toggle.remove());
+            
+            // Prevent theme switching by overriding any theme functions
+            if (window.toggleTheme) {
+                window.toggleTheme = function() {
+                    // Do nothing - prevent theme switching
+                    return false;
+                };
+            }
+            
+            // Force maintain our custom theme
+            document.body.style.backgroundColor = 'var(--bg-primary)';
+            document.body.style.color = 'var(--text-primary)';
+            
+            // Override any click handlers that might change themes
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('theme-toggle') || 
+                    e.target.getAttribute('data-toggle') === 'theme' ||
+                    e.target.textContent.toLowerCase().includes('theme')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            }, true);
+        });
+        
+        // Prevent any external theme changes
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    // Ensure body maintains our theme classes
+                    if (!document.body.style.backgroundColor) {
+                        document.body.style.backgroundColor = 'var(--bg-primary)';
+                        document.body.style.color = 'var(--text-primary)';
+                    }
+                }
+            });
+        });
+        
+        observer.observe(document.body, {
+            attributes: true,
+            attributeFilter: ['class', 'style']
+        });
+    </script>
+    
+    {% block script %}{% endblock %}
+</body>
+</html>

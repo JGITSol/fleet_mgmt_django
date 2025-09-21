@@ -1,10 +1,10 @@
 import pytest
-from django.contrib.auth import get_user_model
+
 # Models imported inside test function
 
 @pytest.mark.django_db
 def test_create_all_roles():
-    from CarFleetManagement.accounts.models import UserRole, CustomUser
+    from CarFleetManagement.accounts.models import CustomUser, UserRole
     roles = [UserRole.ADMIN, UserRole.MANAGER, UserRole.COORDINATOR, UserRole.DRIVER, UserRole.TESTUSER]
     role_objs = {}
     for role_name in roles:

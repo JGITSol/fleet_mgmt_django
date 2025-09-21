@@ -1,7 +1,8 @@
 import reflex as rx
-from components.header import header
-from components.footer import footer
 from api_utils import api_client
+from components.footer import footer
+from components.header import header
+
 
 class DriversState(rx.State):
     drivers: list = []

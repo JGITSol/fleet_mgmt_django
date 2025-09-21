@@ -1,9 +1,10 @@
+
 import pytest
 from django.utils import timezone
-from datetime import timedelta
 
 from CarFleetManagement.maintenance.models import Maintenance
 from CarFleetManagement.vehicles.models import Vehicle
+
 
 @pytest.mark.django_db
 def test_maintenance_creation():
@@ -17,7 +18,7 @@ def test_maintenance_creation():
         vin='TEST12345678901234',
         status='AVAILABLE'
     )
-    
+
     # Create test maintenance
     maintenance = Maintenance.objects.create(
         vehicle=vehicle,
@@ -31,7 +32,7 @@ def test_maintenance_creation():
         service_provider='Test Provider',
         notes='Test notes'
     )
-    
+
     # Verify the maintenance was created
     assert maintenance.id is not None
     assert maintenance.vehicle == vehicle

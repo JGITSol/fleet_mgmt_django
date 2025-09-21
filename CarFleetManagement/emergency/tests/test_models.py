@@ -1,7 +1,8 @@
-from rest_framework.test import APITestCase
-from django.utils import timezone
-from django.contrib.auth import get_user_model
 from decimal import Decimal
+
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+from rest_framework.test import APITestCase
 
 # Model imports moved into setUp methods
 
@@ -9,12 +10,16 @@ User = get_user_model()
 
 class EmergencyIncidentTestCase(APITestCase):
     """Test cases for the EmergencyIncident model."""
-    
+
     def setUp(self):
         """Set up test environment."""
-        from CarFleetManagement.accounts.models import UserRole, Driver
+        from CarFleetManagement.accounts.models import Driver, UserRole
+        from CarFleetManagement.emergency.models import (
+            EmergencyIncident,
+            EmergencyStatus,
+            EmergencyType,
+        )
         from CarFleetManagement.vehicles.models import Vehicle
-        from CarFleetManagement.emergency.models import EmergencyIncident, EmergencyType, EmergencyStatus
 
         self.UserRole = UserRole
         self.Driver = Driver
@@ -26,7 +31,7 @@ class EmergencyIncidentTestCase(APITestCase):
         # Create roles
         self.driver_role = self.UserRole.objects.create(name=self.UserRole.DRIVER)
         self.admin_role = self.UserRole.objects.create(name=self.UserRole.ADMIN)
-        
+
         # Create users
         self.admin_user = User.objects.create_user(
             username='admin_user',
@@ -34,14 +39,14 @@ class EmergencyIncidentTestCase(APITestCase):
             password='password123',
             role=self.admin_role
         )
-        
+
         self.driver_user = User.objects.create_user(
             username='driver_user',
             email='driver@example.com',
             password='password123',
             role=self.driver_role
         )
-        
+
         # Create vehicle
         self.vehicle = self.Vehicle.objects.create(
             brand='Toyota',
@@ -50,7 +55,7 @@ class EmergencyIncidentTestCase(APITestCase):
             license_plate='ABC-123',
             vin='1HGCM82633A123456'
         )
-        
+
         self.driver = self.Driver.objects.create(
             first_name='John',
             last_name='Doe',
@@ -70,7 +75,7 @@ class EmergencyIncidentTestCase(APITestCase):
             longitude=Decimal('-122.4194'),
             description='Vehicle involved in a minor collision.'
         )
-    
+
     def test_incident_creation(self):
         """Test EmergencyIncident creation."""
         self.assertEqual(self.incident.vehicle, self.vehicle)
@@ -84,26 +89,26 @@ class EmergencyIncidentTestCase(APITestCase):
         self.assertEqual(self.incident.description, 'Vehicle involved in a minor collision.')
         self.assertIsNotNone(self.incident.reported_time)
         self.assertIsNone(self.incident.resolved_time)
-    
+
     def test_incident_string_representation(self):
         """Test EmergencyIncident string representation."""
         expected_str = f"Accident - Toyota Camry (ABC-123) - {self.incident.reported_time.strftime('%Y-%m-%d %H:%M')}"
         self.assertEqual(str(self.incident), expected_str)
-    
+
     def test_incident_status_update(self):
         """Test updating EmergencyIncident status."""
         # Update to responding
         self.incident.status = self.EmergencyStatus.RESPONDING
         self.incident.save()
         self.assertEqual(self.incident.status, self.EmergencyStatus.RESPONDING)
-        
+
         # Update to resolved
         self.incident.status = self.EmergencyStatus.RESOLVED
         self.incident.resolved_time = timezone.now()
         self.incident.save()
         self.assertEqual(self.incident.status, self.EmergencyStatus.RESOLVED)
         self.assertIsNotNone(self.incident.resolved_time)
-        
+
         # Update to closed
         self.incident.status = self.EmergencyStatus.CLOSED
         self.incident.save()
@@ -111,12 +116,17 @@ class EmergencyIncidentTestCase(APITestCase):
 
 class EmergencyResponseTestCase(APITestCase):
     """Test cases for the EmergencyResponse model."""
-    
+
     def setUp(self):
         """Set up test environment."""
-        from CarFleetManagement.accounts.models import UserRole, Driver
+        from CarFleetManagement.accounts.models import Driver, UserRole
+        from CarFleetManagement.emergency.models import (
+            EmergencyIncident,
+            EmergencyResponse,
+            EmergencyStatus,
+            EmergencyType,
+        )
         from CarFleetManagement.vehicles.models import Vehicle
-        from CarFleetManagement.emergency.models import EmergencyIncident, EmergencyType, EmergencyStatus, EmergencyResponse
 
         self.UserRole = UserRole
         self.Driver = Driver
@@ -129,7 +139,7 @@ class EmergencyResponseTestCase(APITestCase):
         # Create roles
         self.driver_role = self.UserRole.objects.create(name=self.UserRole.DRIVER)
         self.admin_role = self.UserRole.objects.create(name=self.UserRole.ADMIN)
-        
+
         # Create users
         self.admin_user = User.objects.create_user(
             username='admin_user',
@@ -158,7 +168,7 @@ class EmergencyResponseTestCase(APITestCase):
             license_plate='ABC-123',
             vin='1HGCM82633A123456'
         )
-        
+
         # Create emergency incident
         self.incident = self.EmergencyIncident.objects.create(
             vehicle=self.vehicle,
@@ -169,7 +179,7 @@ class EmergencyResponseTestCase(APITestCase):
             location='Highway 101, Mile Marker 25',
             description='Vehicle engine failure.'
         )
-        
+
         # Create emergency response
         self.response = self.EmergencyResponse.objects.create(
             incident=self.incident,
@@ -177,7 +187,7 @@ class EmergencyResponseTestCase(APITestCase):
             action_taken='Dispatched tow truck to location.',
             notes='ETA 30 minutes.'
         )
-    
+
     def test_response_creation(self):
         """Test EmergencyResponse creation."""
         self.assertEqual(self.response.incident, self.incident)
@@ -185,7 +195,7 @@ class EmergencyResponseTestCase(APITestCase):
         self.assertEqual(self.response.action_taken, 'Dispatched tow truck to location.')
         self.assertEqual(self.response.notes, 'ETA 30 minutes.')
         self.assertIsNotNone(self.response.response_time)
-    
+
     def test_response_string_representation(self):
         """Test EmergencyResponse string representation."""
         expected_str = f"Response to {self.response.incident} by {self.response.responder.username}"
@@ -193,7 +203,7 @@ class EmergencyResponseTestCase(APITestCase):
 
 class EmergencyContactTestCase(APITestCase):
     """Test cases for the EmergencyContact model in the emergency app."""
-    
+
     def setUp(self):
         """Set up test environment."""
         from CarFleetManagement.emergency.models import EmergencyContact
@@ -204,21 +214,21 @@ class EmergencyContactTestCase(APITestCase):
             email='user@example.com',
             password='password123'
         )
-        
+
         self.emergency_contact = self.EmergencyContact.objects.create(
             user=self.user,
             name='Jane Doe',
             phone_number='123-456-7890',
             relationship='Spouse'
         )
-    
+
     def test_emergency_contact_creation(self):
         """Test EmergencyContact creation."""
         self.assertEqual(self.emergency_contact.name, 'Jane Doe')
         self.assertEqual(self.emergency_contact.phone_number, '123-456-7890')
         self.assertEqual(self.emergency_contact.relationship, 'Spouse')
         self.assertEqual(self.emergency_contact.user, self.user)
-    
+
     def test_emergency_contact_string_representation(self):
         """Test EmergencyContact string representation."""
         expected_str = "Jane Doe (Spouse) - 123-456-7890"

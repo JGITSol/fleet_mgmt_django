@@ -1,5 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
+
 # Model imports moved into fixture functions
 
 @pytest.fixture

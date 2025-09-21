@@ -1,6 +1,8 @@
+from datetime import timedelta
+
 import pytest
 from django.utils import timezone
-from datetime import timedelta
+
 
 @pytest.fixture
 def vehicle(db):

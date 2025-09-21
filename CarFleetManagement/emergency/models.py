@@ -1,7 +1,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
 from CarFleetManagement.accounts.models import CustomUser, Driver
 from CarFleetManagement.vehicles.models import Vehicle
+
 
 class EmergencyType(models.TextChoices):
     ACCIDENT = 'ACCIDENT', _('Accident')
@@ -28,7 +30,7 @@ class EmergencyIncident(models.Model):
     description = models.TextField()
     reported_time = models.DateTimeField(auto_now_add=True)
     resolved_time = models.DateTimeField(null=True, blank=True)
-    
+
     def __str__(self):
         return f"{self.get_emergency_type_display()} - {self.vehicle} - {self.reported_time.strftime('%Y-%m-%d %H:%M')}"
 
@@ -38,7 +40,7 @@ class EmergencyResponse(models.Model):
     response_time = models.DateTimeField(auto_now_add=True)
     action_taken = models.TextField(null=True, blank=True)
     notes = models.TextField(blank=True)
-    
+
     def __str__(self):
         return f"Response to {self.incident} by {self.responder.username}"
 
@@ -47,6 +49,6 @@ class EmergencyContact(models.Model):
     name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15)
     relationship = models.CharField(max_length=50)
-    
+
     def __str__(self):
         return f"{self.name} ({self.relationship}) - {self.phone_number}"

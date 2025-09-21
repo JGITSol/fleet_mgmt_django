@@ -1,7 +1,6 @@
-from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
-
 from rest_framework_simplejwt.tokens import RefreshToken
+
 
 class JWTAuthTestMixin:
     """
@@ -30,5 +29,5 @@ class JWTAuthTestMixin:
             password = 'testpass123'
             user = self.create_user_with_role(username, password, role_name)
         refresh = RefreshToken.for_user(user)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {str(refresh.access_token)}')
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token!s}')
         return user

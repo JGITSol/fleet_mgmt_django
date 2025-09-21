@@ -10,6 +10,7 @@ The patch provides a comprehensive solution for authentication in tests by:
 """
 import os
 import sys
+
 import django
 import pytest
 
@@ -36,12 +37,12 @@ print("Running tests...")
 try:
     # Run pytest with verbose output
     exit_code = pytest.main(["-v"])
-    
+
     if exit_code == 0:
         print("\n✅ All tests passed successfully!")
     else:
         print(f"\n❌ Some tests failed. Exit code: {exit_code}")
-        
+
 finally:
     # Restore original permission classes
     print("Restoring original permission classes...")

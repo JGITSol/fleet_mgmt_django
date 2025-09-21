@@ -1,5 +1,8 @@
+from typing import ClassVar
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+
 
 class UserRole(models.Model):
     """
@@ -12,7 +15,7 @@ class UserRole(models.Model):
     TESTUSER = 'testuser'
     MAINTENANCE_STAFF = 'maintenance_staff'
 
-    ROLE_CHOICES = [
+    ROLE_CHOICES: ClassVar[list[tuple[str, str]]] = [
         (ADMIN, 'Admin'),
         (MANAGER, 'Manager'),
         (COORDINATOR, 'Coordinator'),
@@ -26,7 +29,8 @@ class UserRole(models.Model):
     permissions = models.JSONField(default=dict, blank=True)
 
     def __str__(self):
-        return self.get_name_display()
+        # Avoid relying on Django's auto-generated get_name_display to satisfy static analysis
+        return str(self.name)
 
 class CustomUser(AbstractUser):
     """

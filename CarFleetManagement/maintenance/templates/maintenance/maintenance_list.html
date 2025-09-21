@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container">
     <h1>Maintenance Records</h1>
-    <a href="{% url 'maintenance_create' %}" class="btn btn-primary mb-3">Add New Maintenance Record</a>
+    <a href="{% url 'maintenance:maintenance_create' %}" class="btn btn-primary mb-3">Add New Maintenance Record</a>
     
     <div class="table-responsive">
         <table class="table table-striped">
@@ -28,8 +28,8 @@
                     <td>{{ maintenance.description }}</td>
                     <td>{{ maintenance.scheduled_date }}</td>
                     <td>
-                        <a href="{% url 'maintenance_detail' maintenance.pk %}" class="btn btn-sm btn-info">View</a>
-                        <a href="{% url 'maintenance_update' maintenance.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{% url 'maintenance:maintenance_detail' maintenance.pk %}" class="btn btn-sm btn-info">View</a>
+                        <a href="{% url 'maintenance:maintenance_update' maintenance.pk %}" class="btn btn-sm btn-warning">Edit</a>
                     </td>
                 </tr>
                 {% empty %}

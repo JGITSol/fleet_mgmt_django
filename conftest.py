@@ -3,10 +3,8 @@ Pytest configuration file for Django settings.
 This ensures Django settings are properly configured before tests run.
 """
 import os
-import sys
+
 import pytest
-import django
-from django.conf import settings
 
 # Add the project directory to the Python path
 # project_dir = os.path.dirname(os.path.abspath(__file__))
@@ -34,6 +32,8 @@ def django_db_setup(django_db_blocker):
 
 # Override the default pytest-django client fixture to use DRF APIClient
 from rest_framework.test import APIClient
+
+
 @pytest.fixture
 def client():
     """Return a DRF APIClient instance instead of Django test Client."""

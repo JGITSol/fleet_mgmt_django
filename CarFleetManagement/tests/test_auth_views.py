@@ -2,8 +2,10 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-from CarFleetManagement.accounts.models import UserRole, CustomUser
+
+from CarFleetManagement.accounts.models import CustomUser, UserRole
 from tests.auth_utils import get_authenticated_client
+
 
 @pytest.mark.django_db
 def test_register_valid():
