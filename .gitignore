@@ -120,3 +120,6 @@ pnpm-debug.log*
 
 # Coverage HTML output
 htmlcov/
+
+# UI test screenshots (binary assets)
+ui_test_screenshots/
