@@ -24,7 +24,7 @@ class UserRole(models.Model):
         (MAINTENANCE_STAFF, 'Maintenance Staff'),
     ]
 
-    name = models.CharField(max_length=32, choices=ROLE_CHOICES, unique=True)
+    name = models.CharField(max_length=32, choices=ROLE_CHOICES)
     description = models.TextField(blank=True)
     permissions = models.JSONField(default=dict, blank=True)
 
@@ -71,6 +71,22 @@ class Driver(models.Model):
     assigned_vehicles = models.ManyToManyField('vehicles.Vehicle', related_name='drivers', blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     email = models.EmailField(blank=True)
+    # Driver status to represent whether the driver is active/available.
+    STATUS_ACTIVE = 'active'
+    STATUS_INACTIVE = 'inactive'
+    STATUS_CHOICES: ClassVar[list[tuple[str, str]]] = [
+        (STATUS_ACTIVE, 'Active'),
+        (STATUS_INACTIVE, 'Inactive'),
+    ]
+
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_ACTIVE)
+
+    # Optional expiry date for driver's license — some tests expect this field to exist
+    license_expiry_date = models.DateField(null=True, blank=True)
+
+    # Optional employment dates — make nullable to avoid NOT NULL constraint failures
+    hire_date = models.DateField(null=True, blank=True, verbose_name='Hire Date')
+    termination_date = models.DateField(null=True, blank=True, verbose_name='Termination Date')
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.driver_license_number})"

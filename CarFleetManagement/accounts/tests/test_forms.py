@@ -12,19 +12,20 @@ class CustomUserCreationFormTestCase(TestCase):
 
     def setUp(self):
         """Set up test data."""
-        self.admin_role = UserRole.objects.create(
-            name='ADMIN',
-            description='Administrator role'
+        # Use get_or_create to avoid UNIQUE collisions across test runs
+        self.admin_role, _ = UserRole.objects.get_or_create(
+            name=UserRole.ADMIN,
+            defaults={'description': 'Administrator role'}
         )
-        self.driver_role = UserRole.objects.create(
-            name='DRIVER',
-            description='Driver role'
+        self.driver_role, _ = UserRole.objects.get_or_create(
+            name=UserRole.DRIVER,
+            defaults={'description': 'Driver role'}
         )
 
     def test_form_valid_data(self):
         """Test form with valid data."""
         form_data = {
-            'username': 'testuser',
+            'username': 'testuser_forms',
             'email': 'test@example.com',
             'role': self.driver_role.id,
             'phone_number': '+1234567890',
@@ -38,7 +39,7 @@ class CustomUserCreationFormTestCase(TestCase):
     def test_form_invalid_password_mismatch(self):
         """Test form with mismatched passwords."""
         form_data = {
-            'username': 'testuser',
+            'username': 'testuser_forms',
             'email': 'test@example.com',
             'role': self.driver_role.id,
             'phone_number': '+1234567890',
@@ -53,7 +54,7 @@ class CustomUserCreationFormTestCase(TestCase):
     def test_form_missing_required_fields(self):
         """Test form with missing required fields."""
         form_data = {
-            'username': 'testuser',
+            'username': 'testuser_forms',
             # Missing email, role, passwords
         }
         form = CustomUserCreationForm(data=form_data)
@@ -64,7 +65,7 @@ class CustomUserCreationFormTestCase(TestCase):
     def test_form_invalid_email(self):
         """Test form with invalid email."""
         form_data = {
-            'username': 'testuser',
+            'username': 'testuser_forms',
             'email': 'invalid-email',
             'role': self.driver_role.id,
             'password1': 'testpass123',
@@ -77,7 +78,7 @@ class CustomUserCreationFormTestCase(TestCase):
     def test_form_save(self):
         """Test form save creates user correctly."""
         form_data = {
-            'username': 'testuser',
+            'username': 'testuser_forms',
             'email': 'test@example.com',
             'role': self.admin_role.id,
             'phone_number': '+1234567890',
@@ -87,9 +88,8 @@ class CustomUserCreationFormTestCase(TestCase):
         }
         form = CustomUserCreationForm(data=form_data)
         self.assertTrue(form.is_valid())
-        
         user = form.save()
-        self.assertEqual(user.username, 'testuser')
+        self.assertEqual(user.username, 'testuser_forms')
         self.assertEqual(user.email, 'test@example.com')
         self.assertEqual(user.role, self.admin_role)
         self.assertEqual(user.phone_number, '+1234567890')

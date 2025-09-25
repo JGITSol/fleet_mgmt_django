@@ -3,6 +3,7 @@ Tests for API serializers.
 """
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.utils import timezone
 
 from CarFleetManagement.api.serializers import (
     UserSerializer, UserRegistrationSerializer, LoginSerializer
@@ -17,14 +18,15 @@ class UserSerializerTestCase(TestCase):
 
     def setUp(self):
         """Set up test data."""
-        self.driver_role = UserRole.objects.create(
+        self.driver_role, _ = UserRole.objects.get_or_create(
             name='DRIVER',
-            description='Driver role'
+            defaults={'description': 'Driver role'}
         )
-        
+
+        unique_username = f"testuser_{timezone.now().timestamp():.0f}"
         self.test_user = User.objects.create_user(
-            username='testuser',
-            email='test@example.com',
+            username=unique_username,
+            email=f"{unique_username}@example.com",
             password='testpass123',
             first_name='Test',
             last_name='User',
@@ -40,8 +42,8 @@ class UserSerializerTestCase(TestCase):
         for field in expected_fields:
             self.assertIn(field, data)
         
-        self.assertEqual(data['username'], 'testuser')
-        self.assertEqual(data['email'], 'test@example.com')
+        self.assertEqual(data['username'], self.test_user.username)
+        self.assertEqual(data['email'], self.test_user.email)
         self.assertEqual(data['first_name'], 'Test')
         self.assertEqual(data['last_name'], 'User')
         self.assertEqual(data['role'], self.driver_role.id)
@@ -57,13 +59,13 @@ class UserRegistrationSerializerTestCase(TestCase):
 
     def setUp(self):
         """Set up test data."""
-        self.admin_role = UserRole.objects.create(
+        self.admin_role, _ = UserRole.objects.get_or_create(
             name='ADMIN',
-            description='Administrator role'
+            defaults={'description': 'Administrator role'}
         )
-        self.driver_role = UserRole.objects.create(
+        self.driver_role, _ = UserRole.objects.get_or_create(
             name='DRIVER',
-            description='Driver role'
+            defaults={'description': 'Driver role'}
         )
 
     def test_valid_registration_data(self):
@@ -186,21 +188,22 @@ class LoginSerializerTestCase(TestCase):
 
     def setUp(self):
         """Set up test data."""
-        self.driver_role = UserRole.objects.create(
+        self.driver_role, _ = UserRole.objects.get_or_create(
             name='DRIVER',
-            description='Driver role'
+            defaults={'description': 'Driver role'}
         )
-        
+
+        unique_username = f"testuser_{timezone.now().timestamp():.0f}"
         self.test_user = User.objects.create_user(
-            username='testuser',
-            email='test@example.com',
+            username=unique_username,
+            email=f"{unique_username}@example.com",
             password='testpass123',
             role=self.driver_role
         )
-        
+
         self.inactive_user = User.objects.create_user(
-            username='inactive',
-            email='inactive@example.com',
+            username=f'inactive_{timezone.now().timestamp():.0f}',
+            email=f"inactive_{timezone.now().timestamp():.0f}@example.com",
             password='testpass123',
             role=self.driver_role,
             is_active=False
@@ -209,7 +212,7 @@ class LoginSerializerTestCase(TestCase):
     def test_valid_login_data(self):
         """Test serializer with valid login credentials."""
         data = {
-            'username': 'testuser',
+            'username': self.test_user.username,
             'password': 'testpass123'
         }
         
@@ -217,7 +220,7 @@ class LoginSerializerTestCase(TestCase):
         self.assertTrue(serializer.is_valid())
         
         validated_data = serializer.validated_data
-        self.assertEqual(validated_data['username'], 'testuser')
+        self.assertEqual(validated_data['username'], self.test_user.username)
         self.assertEqual(validated_data['user'], self.test_user)
 
     def test_invalid_username(self):
@@ -235,7 +238,7 @@ class LoginSerializerTestCase(TestCase):
     def test_invalid_password(self):
         """Test serializer with invalid password."""
         data = {
-            'username': 'testuser',
+            'username': self.test_user.username,
             'password': 'wrongpassword'
         }
         
@@ -257,7 +260,7 @@ class LoginSerializerTestCase(TestCase):
     def test_missing_password(self):
         """Test serializer with missing password."""
         data = {
-            'username': 'testuser'
+            'username': self.test_user.username
         }
         
         serializer = LoginSerializer(data=data)
@@ -267,7 +270,7 @@ class LoginSerializerTestCase(TestCase):
     def test_inactive_user(self):
         """Test serializer with inactive user."""
         data = {
-            'username': 'inactive',
+            'username': self.inactive_user.username,
             'password': 'testpass123'
         }
         
@@ -289,7 +292,7 @@ class LoginSerializerTestCase(TestCase):
     def test_empty_password(self):
         """Test serializer with empty password."""
         data = {
-            'username': 'testuser',
+            'username': self.test_user.username,
             'password': ''
         }
         

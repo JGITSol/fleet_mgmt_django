@@ -36,9 +36,15 @@ class MaintenanceAPITestCase(APITestCase, AuthTestMixin): # Inherit from AuthTes
         self.UserRole = UserRole
         self.CustomUser = CustomUser
 
-        # Create roles
-        self.admin_role = self.UserRole.objects.create(name=self.UserRole.ADMIN, description='Administrator role')
-        self.maintenance_role = self.UserRole.objects.create(name=self.UserRole.MAINTENANCE_STAFF, description='Maintenance Staff role')
+        # Create or get roles (use get_or_create to avoid UNIQUE collisions when tests run in the same DB session)
+        self.admin_role, _ = self.UserRole.objects.get_or_create(
+            name=self.UserRole.ADMIN,
+            defaults={'description': 'Administrator role'}
+        )
+        self.maintenance_role, _ = self.UserRole.objects.get_or_create(
+            name=self.UserRole.MAINTENANCE_STAFF,
+            defaults={'description': 'Maintenance Staff role'}
+        )
 
         # Create users
         self.admin_user = self.CustomUser.objects.create_user(

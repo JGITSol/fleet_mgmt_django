@@ -6,6 +6,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.utils import timezone
 
 from CarFleetManagement.accounts.models import UserRole
 
@@ -17,21 +18,29 @@ class AuthViewsTestCase(APITestCase):
 
     def setUp(self):
         """Set up test data."""
-        self.admin_role = UserRole.objects.create(
-            name='ADMIN',
-            description='Administrator role'
+        # Use get_or_create to avoid UNIQUE collisions when tests run in different orders
+        self.admin_role, _ = UserRole.objects.get_or_create(
+            name=UserRole.ADMIN if hasattr(UserRole, 'ADMIN') else 'ADMIN',
+            defaults={'description': 'Administrator role'}
         )
-        self.driver_role = UserRole.objects.create(
-            name='DRIVER',
-            description='Driver role'
+        self.driver_role, _ = UserRole.objects.get_or_create(
+            name=UserRole.DRIVER if hasattr(UserRole, 'DRIVER') else 'DRIVER',
+            defaults={'description': 'Driver role'}
         )
         
-        self.test_user = User.objects.create_user(
-            username='testuser',
-            email='test@example.com',
-            password='testpass123',
-            role=self.driver_role
+        # Create or get test user to avoid UNIQUE collisions when tests run in
+        # different orders or share a test DB.
+        unique_name = f"testuser_{int(timezone.now().timestamp())}"
+        self.test_user, _ = User.objects.get_or_create(
+            username=unique_name,
+            defaults={
+                'email': f'{unique_name}@example.com',
+                'role': self.driver_role
+            }
         )
+        # Ensure password is set to a known value for tests (reset even if user existed)
+        self.test_user.set_password('testpass123')
+        self.test_user.save()
 
     def test_register_view_success(self):
         """Test successful user registration."""
@@ -70,7 +79,7 @@ class AuthViewsTestCase(APITestCase):
         """Test registration with duplicate username."""
         url = reverse('CarFleetManagement.api:api_register')
         data = {
-            'username': 'testuser',  # Already exists
+            'username': self.test_user.username,  # Already exists
             'email': 'different@example.com',
             'password': 'newpass123',
             'password2': 'newpass123',  # Changed from password_confirm to password2
@@ -84,7 +93,7 @@ class AuthViewsTestCase(APITestCase):
         """Test successful user login."""
         url = reverse('CarFleetManagement.api:api_login')
         data = {
-            'username': 'testuser',
+            'username': self.test_user.username,
             'password': 'testpass123'
         }
         response = self.client.post(url, data, format='json')
@@ -93,13 +102,13 @@ class AuthViewsTestCase(APITestCase):
         self.assertIn('user', response.data)
         self.assertIn('access', response.data)
         self.assertIn('refresh', response.data)
-        self.assertEqual(response.data['user']['username'], 'testuser')
+        self.assertEqual(response.data['user']['username'], self.test_user.username)
 
     def test_login_view_invalid_credentials(self):
         """Test login with invalid credentials."""
         url = reverse('CarFleetManagement.api:api_login')
         data = {
-            'username': 'testuser',
+            'username': self.test_user.username,
             'password': 'wrongpassword'
         }
         response = self.client.post(url, data, format='json')
@@ -110,7 +119,7 @@ class AuthViewsTestCase(APITestCase):
         """Test login with missing data."""
         url = reverse('CarFleetManagement.api:api_login')
         data = {
-            'username': 'testuser'
+            'username': self.test_user.username
             # Missing password
         }
         response = self.client.post(url, data, format='json')
@@ -129,8 +138,8 @@ class AuthViewsTestCase(APITestCase):
         response = self.client.get(url)
         
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['username'], 'testuser')
-        self.assertEqual(response.data['email'], 'test@example.com')
+        self.assertEqual(response.data['username'], self.test_user.username)
+        self.assertEqual(response.data['email'], self.test_user.email)
 
     def test_user_profile_view_unauthenticated(self):
         """Test user profile view without authentication."""
@@ -171,7 +180,7 @@ class AuthViewsTestCase(APITestCase):
         
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(response.data['is_valid'])
-        self.assertEqual(response.data['user']['username'], 'testuser')
+        self.assertEqual(response.data['user']['username'], self.test_user.username)
 
     def test_validate_token_view_invalid_token(self):
         """Test token validation with invalid token."""

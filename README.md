@@ -9,7 +9,28 @@ A comprehensive Django-based fleet management system with REST API, JWT authenti
 - pip
 - Git
 
-### Local Development Setup
+### 🎯 Automated Development Setup (Recommended)
+
+```bash
+# Clone and set up the project
+git clone <repository-url>
+cd fleet_mgmt_django
+
+# Create and activate virtual environment
+python -m venv venv
+# Windows PowerShell:
+.\venv\Scripts\Activate.ps1
+# Linux/Mac:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start development server with test credentials
+python start_dev_server.py
+```
+
+### 🔧 Manual Development Setup
 
 1. **Clone and setup environment**:
    ```bash
@@ -31,27 +52,42 @@ A comprehensive Django-based fleet management system with REST API, JWT authenti
    pip install -r requirements.txt
    ```
 
-3. **Configure environment**:
-   ```bash
-   # Windows PowerShell:
-   Copy-Item .env.example .env
-   # Linux/Mac:
-   cp .env.example .env
-   ```
-
-4. **Setup database**:
+3. **Setup database and test users**:
    ```bash
    cd CarFleetManagement
    python manage.py migrate
-   python manage.py createsuperuser
+   python manage.py setup_dev_users
    ```
 
-5. **Run development server**:
+4. **Run development server**:
    ```bash
    python manage.py runserver
    ```
 
-Visit `http://localhost:8000` for the web interface or `http://localhost:8000/api/` for the API.
+### 🔐 Development Test Credentials
+
+The system comes with pre-configured test accounts for development:
+
+| Role | Username | Password | Access Level |
+|------|----------|----------|--------------|
+| **Admin** | `admin` | `admin123!` | Full system access, Django admin |
+| **Driver** | `testuser` | `user123!` | Limited access, driver functions |
+
+### 🌐 Access Points
+
+- **Web Interface:** http://localhost:8000/
+- **Login Page:** http://localhost:8000/accounts/login/
+- **Registration:** http://localhost:8000/accounts/register/
+- **Admin Panel:** http://localhost:8000/admin/
+- **API Root:** http://localhost:8000/api/
+- **API Documentation:** http://localhost:8000/api/schema/swagger-ui/
+
+### 🧪 Test Your Setup
+
+```bash
+# Test API credentials
+python test_dev_credentials.py
+```
 
 ## 🧪 Testing
 

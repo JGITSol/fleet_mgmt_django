@@ -39,7 +39,8 @@ class EmergencyIncidentDetailView(LoginRequiredMixin, DetailView):
 class EmergencyIncidentCreateView(LoginRequiredMixin, CreateView):
     model = EmergencyIncident
     template_name = 'emergency/emergency_form.html'
-    fields: ClassVar[list[str]] = ['vehicle', 'emergency_type', 'location', 'description', 'status', 'reported_by']
+    # reported_by is set in form_valid; do not include it in the form fields
+    fields: ClassVar[list[str]] = ['vehicle', 'emergency_type', 'location', 'description', 'status']
     success_url = reverse_lazy('emergency_list')
 
     def get_form(self, form_class=None):
@@ -88,7 +89,8 @@ class EmergencyIncidentDeleteView(LoginRequiredMixin, UserPassesTestMixin, Delet
 class EmergencyResponseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = EmergencyResponse
     template_name = 'emergency/emergency_response_form.html'
-    fields: ClassVar[list[str]] = ['responder', 'action_taken', 'notes']  # Removed response_time as it's auto-populated
+    # responder is set in form_valid; do not include it in the form fields
+    fields: ClassVar[list[str]] = ['action_taken', 'notes']  # Removed response_time as it's auto-populated
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

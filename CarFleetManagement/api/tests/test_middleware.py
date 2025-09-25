@@ -2,6 +2,7 @@
 Tests for API middleware.
 """
 from unittest.mock import Mock, patch
+import uuid
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
@@ -20,14 +21,16 @@ class JWTAuthMiddlewareTestCase(TestCase):
 
     def setUp(self):
         """Set up test data."""
-        self.driver_role = UserRole.objects.create(
+        self.driver_role, _ = UserRole.objects.get_or_create(
             name='DRIVER',
-            description='Driver role'
+            defaults={'description': 'Driver role'}
         )
         
+        # Use a unique username to avoid collisions with other tests
+        unique_username = f"testuser_{uuid.uuid4().hex[:8]}"
         self.test_user = User.objects.create_user(
-            username='testuser',
-            email='test@example.com',
+            username=unique_username,
+            email=f"{unique_username}@example.com",
             password='testpass123',
             role=self.driver_role
         )

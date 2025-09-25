@@ -11,8 +11,9 @@ User = get_user_model()
 @pytest.mark.django_db
 def test_user_creation(user):
     """Test that the user fixture works correctly."""
-    assert user.username == 'testuser'
-    assert user.email == 'test@example.com'
+    # Fixture now creates a unique username to avoid collisions across tests
+    assert user.username.startswith('fixture_user_')
+    assert user.email.endswith('@example.com')
 
     # Create another user manually
     new_user = User.objects.create_user(

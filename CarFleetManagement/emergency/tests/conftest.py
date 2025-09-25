@@ -1,4 +1,5 @@
 import pytest
+import uuid
 from django.contrib.auth import get_user_model
 
 # Model imports moved into fixture functions
@@ -6,7 +7,8 @@ from django.contrib.auth import get_user_model
 @pytest.fixture
 def custom_user(db):
     User = get_user_model()
-    return User.objects.create_user(username='testuser', email='test@example.com', password='pass1234')
+    unique_username = f"fixture_user_{uuid.uuid4().hex[:8]}"
+    return User.objects.create_user(username=unique_username, email=f"{unique_username}@example.com", password='pass1234')
 
 @pytest.fixture
 def vehicle(db):
@@ -18,12 +20,15 @@ def vehicle(db):
 @pytest.fixture
 def driver(db):
     from CarFleetManagement.accounts.models import Driver
+    from django.utils import timezone
     return Driver.objects.create(
         first_name='John',
         last_name='Doe',
-        driver_license_number='D1234567',
+        driver_license_number=f'D{int(timezone.now().timestamp())}',
         phone_number='555-555-5555',
-        email='driver@example.com'
+        email='driver@example.com',
+        license_expiry_date=timezone.now().date(),
+        hire_date=timezone.now().date()
     )
 
 @pytest.fixture

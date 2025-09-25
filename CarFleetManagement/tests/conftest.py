@@ -4,6 +4,7 @@ All fixtures are documented for coverage compliance.
 """
 import os
 import sys
+import uuid
 from datetime import timedelta
 
 import django
@@ -16,13 +17,8 @@ sys.path.insert(0, project_dir)
 # Configure Django settings before importing any models
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarFleetManagement.settings")
 
-# This will make sure the app is always imported when Django starts
-# so that shared_task will use this app
-
 # Setup Django
 django.setup()
-
-# pytest-django will be automatically discovered by pytest
 
 # Now it's safe to import Django models
 from django.contrib.auth import get_user_model
@@ -49,14 +45,20 @@ def test_fixtures_coverage(user, custom_user, driver, vehicle, maintenance, sche
     assert emergency_contact.pk
     assert emergency_incident.pk
 
+
 @pytest.fixture
 def user():
     """Create and return a test user."""
-    return User.objects.create_user(
-        username='testuser',
-        email='test@example.com',
+    # Create a uniquely named fixture user to avoid colliding with tests that create
+    # their own 'testuser' usernames. We deliberately avoid get_or_create here so
+    # each fixture invocation provides an isolated user.
+    unique_username = f"fixture_user_{uuid.uuid4().hex[:8]}"
+    user = User.objects.create_user(
+        username=unique_username,
+        email=f"{unique_username}@example.com",
         password='testpassword'
     )
+    return user
 
 
 @pytest.fixture
@@ -73,12 +75,16 @@ def custom_user(user):
 @pytest.fixture
 def driver(custom_user):
     """Create and return a test driver."""
+    # Add license_expiry_date for compatibility with older migrations that
+    # still enforce NOT NULL on this column.
     return Driver.objects.create(
         first_name='Test',
         last_name='Driver',
         email='driver@example.com',
         phone_number='+1234567890',
-        driver_license_number='DL12345678',
+        driver_license_number=f'DL{timezone.now().timestamp():.0f}',
+        license_expiry_date=timezone.now().date(),
+        hire_date=timezone.now().date(),
     )
 
 

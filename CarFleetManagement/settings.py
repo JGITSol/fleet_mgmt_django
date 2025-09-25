@@ -4,15 +4,28 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
-BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(os.path.join(BASE_DIR, '.env'))
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent
 
+# Load environment variables from .env file
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
+# Detect test runner (pytest) early so other settings (like DATABASES) can reference it.
+TESTING = 'pytest' in sys.argv[0] or any('pytest' in arg for arg in sys.argv)
+
+# Environment detection
+ENVIRONMENT = os.environ.get('ENVIRONMENT', 'development')
+IS_PRODUCTION = ENVIRONMENT == 'production'
+IS_DEVELOPMENT = ENVIRONMENT == 'development'
+
+# Security settings
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'replace-this-with-a-secure-key')
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
+
+# Ensure DEBUG is False in production
+if IS_PRODUCTION:
+    DEBUG = False
+
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
 
 # Application definition
@@ -70,9 +83,17 @@ ASGI_APPLICATION = 'CarFleetManagement.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
+        # Use a file-backed DB for development. When running tests, pytest-django
+        # will create and use the test database defined under DATABASES['default']['TEST']
+        # which ensures migrations are applied and keeps the dev DB untouched.
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# Let pytest-django manage the test database lifecycle. Avoid configuring a
+# persistent test DB file here because keeping a file between runs can cause
+# UNIQUE constraint collisions when tests re-use the same DB. pytest-django
+# will create a fresh test database and apply migrations automatically.
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -137,5 +158,70 @@ LOGOUT_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Detect test runner (pytest) so code can adapt (e.g., enable test-only URL aliases)
-TESTING = 'pytest' in sys.argv[0] or any('pytest' in arg for arg in sys.argv)
+# TESTING is defined earlier to allow conditional settings (see above)
+
+# =============================================================================
+# ENVIRONMENT-SPECIFIC SETTINGS
+# =============================================================================
+
+if IS_PRODUCTION:
+    # Production Security Settings
+    SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'True') == 'True'
+    SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'True') == 'True'
+    CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', 'True') == 'True'
+    SECURE_BROWSER_XSS_FILTER = os.environ.get('SECURE_BROWSER_XSS_FILTER', 'True') == 'True'
+    SECURE_CONTENT_TYPE_NOSNIFF = os.environ.get('SECURE_CONTENT_TYPE_NOSNIFF', 'True') == 'True'
+    SECURE_HSTS_SECONDS = int(os.environ.get('SECURE_HSTS_SECONDS', '31536000'))
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = os.environ.get('SECURE_HSTS_INCLUDE_SUBDOMAINS', 'True') == 'True'
+    SECURE_HSTS_PRELOAD = os.environ.get('SECURE_HSTS_PRELOAD', 'True') == 'True'
+    
+    # Production Database (PostgreSQL recommended)
+    if os.environ.get('DATABASE_URL'):
+        import dj_database_url
+        DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
+    
+    # Production Email Settings
+    EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+    EMAIL_HOST = os.environ.get('EMAIL_HOST')
+    EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
+    EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+    
+    # Production Logging
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'verbose': {
+                'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+                'style': '{',
+            },
+        },
+        'handlers': {
+            'file': {
+                'level': os.environ.get('LOG_LEVEL', 'INFO'),
+                'class': 'logging.FileHandler',
+                'filename': BASE_DIR / 'logs' / 'django.log',
+                'formatter': 'verbose',
+            },
+            'console': {
+                'level': 'INFO',
+                'class': 'logging.StreamHandler',
+                'formatter': 'verbose',
+            },
+        },
+        'root': {
+            'handlers': ['file', 'console'],
+            'level': os.environ.get('LOG_LEVEL', 'INFO'),
+        },
+    }
+
+else:
+    # Development Settings
+    EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
+    
+    # Development-friendly security (relaxed)
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False

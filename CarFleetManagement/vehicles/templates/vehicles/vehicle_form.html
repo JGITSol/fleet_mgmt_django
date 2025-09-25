@@ -66,6 +66,103 @@
         </div>
         
         <!-- Add more form fields as needed -->
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.color.id_for_label }}">Color</label>
+                {{ form.color }}
+                {% if form.color.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.color.errors }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.fuel_type.id_for_label }}">Fuel Type</label>
+                {{ form.fuel_type }}
+                {% if form.fuel_type.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.fuel_type.errors }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.transmission.id_for_label }}">Transmission</label>
+                {{ form.transmission }}
+                {% if form.transmission.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.transmission.errors }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="{{ form.vehicle_type.id_for_label }}">Vehicle Type</label>
+                {{ form.vehicle_type }}
+                {% if form.vehicle_type.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.vehicle_type.errors }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="{{ form.mileage.id_for_label }}">Mileage</label>
+                {{ form.mileage }}
+                {% if form.mileage.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.mileage.errors }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.last_service_date.id_for_label }}">Last Service Date</label>
+                {{ form.last_service_date }}
+                {% if form.last_service_date.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.last_service_date.errors }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.next_service_date.id_for_label }}">Next Service Date</label>
+                {{ form.next_service_date }}
+                {% if form.next_service_date.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.next_service_date.errors }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.insurance_expiry.id_for_label }}">Insurance Expiry</label>
+                {{ form.insurance_expiry }}
+                {% if form.insurance_expiry.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.insurance_expiry.errors }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.status.id_for_label }}">Status</label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.status.errors }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
         
         <div class="mt-4">
             <button type="submit" class="btn btn-primary">Save</button>

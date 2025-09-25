@@ -8,7 +8,7 @@ def test_create_all_roles():
     roles = [UserRole.ADMIN, UserRole.MANAGER, UserRole.COORDINATOR, UserRole.DRIVER, UserRole.TESTUSER]
     role_objs = {}
     for role_name in roles:
-        role_objs[role_name] = UserRole.objects.create(name=role_name)
+        role_objs[role_name], _ = UserRole.objects.get_or_create(name=role_name, defaults={'description': f'{role_name} role'})
         assert role_objs[role_name].name == role_name
 
     users = {}

@@ -27,14 +27,26 @@ os.environ['OPENROUTER_API_KEY'] = 'test-api-key'
 def django_db_setup(django_db_blocker):
     """Configure Django database for testing."""
     with django_db_blocker.unblock():
-        # Here you could load fixtures or perform other database setup
-        pass
+        # Ensure any leftover test DB file is removed so the test run starts
+        # with a fresh database. The project keeps test DB in
+        # CarFleetManagement/test_db.sqlite3 when TESTING is enabled.
+        try:
+            from pathlib import Path
+            test_db = Path(__file__).resolve().parent / 'CarFleetManagement' / 'test_db.sqlite3'
+            if test_db.exists():
+                test_db.unlink()
+        except Exception:
+            # Non-fatal: if removal fails, let tests proceed and pytest-django
+            # will attempt to create/flush the DB. Any exception will surface
+            # during test execution if critical.
+            pass
 
 # Override the default pytest-django client fixture to use DRF APIClient
 from rest_framework.test import APIClient
 
 
 @pytest.fixture
-def client():
-    """Return a DRF APIClient instance instead of Django test Client."""
+def api_client():
+    """Return a DRF APIClient instance for API tests. Do not override the default
+    `client` fixture which provides Django's test Client for template-based tests."""
     return APIClient()

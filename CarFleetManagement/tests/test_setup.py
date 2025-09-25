@@ -26,8 +26,12 @@ class AppTestUserSerializer(serializers.ModelSerializer):
     """Serializer for the CustomUser model for tests."""
     class Meta:
         model = CustomUser
-    fields: ClassVar[list[str]] = ['id', 'username', 'email', 'first_name', 'last_name', 'role']
-    read_only_fields: ClassVar[list[str]] = ['id']
+        # Ensure DRF reads these from Meta (not as a class attribute on the
+        # serializer itself). Declaring them at the serializer class level
+        # used to set `fields` to a plain list which broke DRF's internals
+        # (it expects a mapping-like `self.fields`).
+        fields: ClassVar[list[str]] = ['id', 'username', 'email', 'first_name', 'last_name', 'role']
+        read_only_fields: ClassVar[list[str]] = ['id']
 
 def setup_test_environment():
     """
@@ -49,7 +53,10 @@ def setup_test_environment():
 
 def create_admin_user_with_staff():
     """Create an admin user with staff permissions for testing."""
-    admin_role, _ = UserRole.objects.get_or_create(name=UserRole.ADMIN, description='Administrator role')
+    admin_role, _ = UserRole.objects.get_or_create(
+        name=UserRole.ADMIN,
+        defaults={'description': 'Administrator role'}
+    )
     admin_user = CustomUser.objects.create_user(
         username='admin_test',
         email='admin_test@example.com',

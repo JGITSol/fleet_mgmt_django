@@ -27,9 +27,9 @@ class VehicleAPITestCase(APITestCase, AuthTestMixin):
         self.UserRole = UserRole
         self.CustomUser = CustomUser
 
-        # Create roles
-        self.admin_role = self.UserRole.objects.create(name=self.UserRole.ADMIN, description='Administrator role')
-        self.driver_role = self.UserRole.objects.create(name=self.UserRole.DRIVER, description='Driver role')
+    # Create roles (use get_or_create so tests are idempotent)
+    self.admin_role, _ = self.UserRole.objects.get_or_create(name=self.UserRole.ADMIN, defaults={'description': 'Administrator role'})
+    self.driver_role, _ = self.UserRole.objects.get_or_create(name=self.UserRole.DRIVER, defaults={'description': 'Driver role'})
 
         # Create users
         self.admin_user = self.CustomUser.objects.create_user(

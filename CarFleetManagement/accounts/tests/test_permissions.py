@@ -19,30 +19,58 @@ class PermissionsTestCase(TestCase):
     def setUp(self):
         """Set up test data."""
         self.factory = APIRequestFactory()
-        
-        # Create roles
-        self.admin_role = UserRole.objects.create(name='ADMIN', description='Admin')
-        self.manager_role = UserRole.objects.create(name='MANAGER', description='Manager')
-        self.coordinator_role = UserRole.objects.create(name='COORDINATOR', description='Coordinator')
-        self.driver_role = UserRole.objects.create(name='DRIVER', description='Driver')
-        self.testuser_role = UserRole.objects.create(name='TESTUSER', description='Test User')
-        
-        # Create users
-        self.admin_user = User.objects.create_user(
-            username='admin', email='admin@test.com', password='pass', role=self.admin_role
+        # Create roles (idempotent)
+        self.admin_role, _ = UserRole.objects.get_or_create(
+            name=UserRole.ADMIN, defaults={'description': 'Admin'}
         )
-        self.manager_user = User.objects.create_user(
-            username='manager', email='manager@test.com', password='pass', role=self.manager_role
+        self.manager_role, _ = UserRole.objects.get_or_create(
+            name=UserRole.MANAGER, defaults={'description': 'Manager'}
         )
-        self.coordinator_user = User.objects.create_user(
-            username='coordinator', email='coordinator@test.com', password='pass', role=self.coordinator_role
+        self.coordinator_role, _ = UserRole.objects.get_or_create(
+            name=UserRole.COORDINATOR, defaults={'description': 'Coordinator'}
         )
-        self.driver_user = User.objects.create_user(
-            username='driver', email='driver@test.com', password='pass', role=self.driver_role
+        self.driver_role, _ = UserRole.objects.get_or_create(
+            name=UserRole.DRIVER, defaults={'description': 'Driver'}
         )
-        self.testuser_user = User.objects.create_user(
-            username='testuser', email='testuser@test.com', password='pass', role=self.testuser_role
+        self.testuser_role, _ = UserRole.objects.get_or_create(
+            name=UserRole.TESTUSER, defaults={'description': 'Test User'}
         )
+
+        # Create users (idempotent)
+        self.admin_user, _ = User.objects.get_or_create(
+            username='admin', defaults={'email': 'admin@test.com', 'role': self.admin_role}
+        )
+        self.admin_user.set_password('pass')
+        self.admin_user.role = self.admin_role
+        self.admin_user.save()
+
+        self.manager_user, _ = User.objects.get_or_create(
+            username='manager', defaults={'email': 'manager@test.com', 'role': self.manager_role}
+        )
+        self.manager_user.set_password('pass')
+        self.manager_user.role = self.manager_role
+        self.manager_user.save()
+
+        self.coordinator_user, _ = User.objects.get_or_create(
+            username='coordinator', defaults={'email': 'coordinator@test.com', 'role': self.coordinator_role}
+        )
+        self.coordinator_user.set_password('pass')
+        self.coordinator_user.role = self.coordinator_role
+        self.coordinator_user.save()
+
+        self.driver_user, _ = User.objects.get_or_create(
+            username='driver', defaults={'email': 'driver@test.com', 'role': self.driver_role}
+        )
+        self.driver_user.set_password('pass')
+        self.driver_user.role = self.driver_role
+        self.driver_user.save()
+
+        self.testuser_user, _ = User.objects.get_or_create(
+            username='testuser', defaults={'email': 'testuser@test.com', 'role': self.testuser_role}
+        )
+        self.testuser_user.set_password('pass')
+        self.testuser_user.role = self.testuser_role
+        self.testuser_user.save()
         self.anonymous_user = User()  # Anonymous user
 
     def test_is_admin_permission(self):

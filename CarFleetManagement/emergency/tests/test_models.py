@@ -28,9 +28,15 @@ class EmergencyIncidentTestCase(APITestCase):
         self.EmergencyType = EmergencyType
         self.EmergencyStatus = EmergencyStatus
 
-        # Create roles
-        self.driver_role = self.UserRole.objects.create(name=self.UserRole.DRIVER)
-        self.admin_role = self.UserRole.objects.create(name=self.UserRole.ADMIN)
+        # Create roles in an idempotent way to avoid UNIQUE collisions
+        self.driver_role, _ = self.UserRole.objects.get_or_create(
+            name=self.UserRole.DRIVER if hasattr(self.UserRole, 'DRIVER') else 'DRIVER',
+            defaults={'description': ''}
+        )
+        self.admin_role, _ = self.UserRole.objects.get_or_create(
+            name=self.UserRole.ADMIN if hasattr(self.UserRole, 'ADMIN') else 'ADMIN',
+            defaults={'description': ''}
+        )
 
         # Create users
         self.admin_user = User.objects.create_user(
@@ -56,12 +62,15 @@ class EmergencyIncidentTestCase(APITestCase):
             vin='1HGCM82633A123456'
         )
 
+        # Provide license_expiry_date for backward compatibility with DB schema
         self.driver = self.Driver.objects.create(
             first_name='John',
             last_name='Doe',
             email='john.doe@example.com',
             phone_number='123-456-7890',
-            driver_license_number='DL12345678'
+            driver_license_number=f'DL{timezone.now().timestamp():.0f}',
+            license_expiry_date=timezone.now().date(),
+            hire_date=timezone.now().date(),
         )
         # Create emergency incident
         self.incident = self.EmergencyIncident.objects.create(
@@ -136,9 +145,16 @@ class EmergencyResponseTestCase(APITestCase):
         self.EmergencyStatus = EmergencyStatus
         self.EmergencyResponse = EmergencyResponse
 
-        # Create roles
-        self.driver_role = self.UserRole.objects.create(name=self.UserRole.DRIVER)
-        self.admin_role = self.UserRole.objects.create(name=self.UserRole.ADMIN)
+        # Create roles in an idempotent way to avoid UNIQUE collisions when
+        # tests run in different orders
+        self.driver_role, _ = self.UserRole.objects.get_or_create(
+            name=self.UserRole.DRIVER if hasattr(self.UserRole, 'DRIVER') else 'DRIVER',
+            defaults={'description': ''}
+        )
+        self.admin_role, _ = self.UserRole.objects.get_or_create(
+            name=self.UserRole.ADMIN if hasattr(self.UserRole, 'ADMIN') else 'ADMIN',
+            defaults={'description': ''}
+        )
 
         # Create users
         self.admin_user = User.objects.create_user(
@@ -154,10 +170,13 @@ class EmergencyResponseTestCase(APITestCase):
             role=self.admin_role
         )
         # Create driver
+        from django.utils import timezone
         self.driver = self.Driver.objects.create(
             first_name='Test',
             last_name='DriverUser',
-            driver_license_number='D1234567'
+            driver_license_number=f'D{int(timezone.now().timestamp())}',
+            license_expiry_date=timezone.now().date(),
+            hire_date=timezone.now().date()
         )
 
         # Create vehicle

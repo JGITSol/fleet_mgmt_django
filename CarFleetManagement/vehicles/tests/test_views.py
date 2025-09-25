@@ -62,8 +62,14 @@ class VehicleViewsTestCase(APITestCase):
     def setUp(self):
         """Set up test environment."""
         # Create roles
-        self.admin_role = UserRole.objects.create(name=UserRole.ADMIN, description='Administrator role')
-        self.fleet_manager_role = UserRole.objects.create(name=UserRole.MANAGER, description='Fleet Manager role')
+        self.admin_role, _ = UserRole.objects.get_or_create(
+            name=UserRole.ADMIN,
+            defaults={'description': 'Administrator role'}
+        )
+        self.fleet_manager_role, _ = UserRole.objects.get_or_create(
+            name=UserRole.MANAGER,
+            defaults={'description': 'Fleet Manager role'}
+        )
 
         # Create users
         self.admin_user = User.objects.create_user(

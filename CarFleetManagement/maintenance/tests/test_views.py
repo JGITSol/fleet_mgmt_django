@@ -73,8 +73,14 @@ class MaintenanceViewsTestCase(APITestCase):
         self.MaintenanceStatus = MaintenanceStatus
 
         # Create roles
-        self.admin_role = self.UserRole.objects.create(name=self.UserRole.ADMIN, description='Administrator role')
-        self.maintenance_role = self.UserRole.objects.create(name=self.UserRole.MAINTENANCE_STAFF, description='Maintenance Staff role')
+        self.admin_role, _ = self.UserRole.objects.get_or_create(
+            name=self.UserRole.ADMIN,
+            defaults={'description': 'Administrator role'}
+        )
+        self.maintenance_role, _ = self.UserRole.objects.get_or_create(
+            name=self.UserRole.MAINTENANCE_STAFF,
+            defaults={'description': 'Maintenance Staff role'}
+        )
 
         # Create users
         self.admin_user = User.objects.create_user(

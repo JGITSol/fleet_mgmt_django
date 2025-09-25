@@ -86,7 +86,7 @@ class AuthUtils:
     @staticmethod
     def create_user(username, email, password, role_name, is_staff=False):
         """Create a user with the specified role for testing."""
-        role, _ = UserRole.objects.get_or_create(name=role_name, description=f'{role_name} role')
+        role, _ = UserRole.objects.get_or_create(name=role_name, defaults={'description': f'{role_name} role'})
         # If creating an admin role, ensure is_staff=True to be compatible with IsAdminUser
         if role_name == UserRole.ADMIN:
             is_staff = True

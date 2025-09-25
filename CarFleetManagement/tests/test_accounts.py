@@ -26,7 +26,8 @@ def test_driver_creation(driver):
     """Test driver creation using fixture."""
     # Retrieve from DB and verify
     driver_obj = Driver.objects.get(id=driver.id)
-    assert driver_obj.driver_license_number == 'DL12345678'
+    # driver_license_number is generated uniquely by the fixture; verify pattern
+    assert driver_obj.driver_license_number.startswith('DL')
     assert driver_obj.phone_number == '+1234567890'
     # status field removed from model, test skipped
 

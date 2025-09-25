@@ -88,8 +88,14 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
         self.EmergencyResponse = EmergencyResponse
 
         # Create roles
-        self.admin_role = self.UserRole.objects.create(name=self.UserRole.ADMIN, description='Administrator role')
-        self.driver_role = self.UserRole.objects.create(name=self.UserRole.DRIVER, description='Driver role')
+        self.admin_role, _ = self.UserRole.objects.get_or_create(
+            name=self.UserRole.ADMIN,
+            defaults={'description': 'Administrator role'}
+        )
+        self.driver_role, _ = self.UserRole.objects.get_or_create(
+            name=self.UserRole.DRIVER,
+            defaults={'description': 'Driver role'}
+        )
         # Create users
         self.admin_user = User.objects.create_user(
             username='admin_user',
@@ -115,12 +121,15 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
             vin='1HGCM82633A123456'
         )
         # Create driver
+        from django.utils import timezone
         self.driver = self.Driver.objects.create(
             first_name='John',
             last_name='Doe',
             email='john.doe@example.com',
             phone_number='123-456-7890',
-            driver_license_number='DL12345678'
+            driver_license_number=f'D{int(timezone.now().timestamp())}',
+            license_expiry_date=timezone.now().date(),
+            hire_date=timezone.now().date(),
         )
 
         # Create emergency incident
