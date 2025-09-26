@@ -9,6 +9,9 @@ from django.urls import path
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+# drf-spectacular views for OpenAPI schema and UIs
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+
 from . import auth_views, views
 
 
@@ -81,3 +84,14 @@ emergency_urlpatterns = [
 urlpatterns = [
     path('', ApiRootView.as_view(), name='api-root'),
 ] + auth_urlpatterns + screenshot_urlpatterns + vehicle_urlpatterns + maintenance_urlpatterns + driver_urlpatterns + emergency_urlpatterns
+
+# OpenAPI schema and documentation UIs (drf-spectacular)
+# Exposed at /api/schema/ and /api/schema/swagger-ui/ and /api/schema/redoc/
+schema_urlpatterns = [
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Use explicit schema URL to avoid reverse lookup issues when included under a namespace
+    path('schema/swagger-ui/', SpectacularSwaggerView.as_view(url='/api/schema/'), name='swagger-ui'),
+    path('schema/redoc/', SpectacularRedocView.as_view(url='/api/schema/'), name='redoc'),
+]
+
+urlpatterns += schema_urlpatterns
