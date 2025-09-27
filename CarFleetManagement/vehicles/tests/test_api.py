@@ -5,13 +5,13 @@ from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
+from tests.auth_test_mixin import AuthTestMixin
+from tests.test_setup import setup_test_environment
 
 # Model imports moved to setUp
 from CarFleetManagement.vehicles.serializers import (
     VehicleSerializer,  # Assuming serializer is safe for now
 )
-from tests.auth_test_mixin import AuthTestMixin
-from tests.test_setup import setup_test_environment
 
 # Set up the test environment with all necessary patches
 setup_test_environment()

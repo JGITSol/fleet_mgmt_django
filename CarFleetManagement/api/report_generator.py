@@ -12,14 +12,15 @@ from datetime import datetime
 from django.conf import settings
 
 # Provide compatibility alias so tests that patch 'api.report_generator' affect this module
-sys.modules.setdefault('api.report_generator', sys.modules[__name__])
+sys.modules.setdefault("api.report_generator", sys.modules[__name__])
+
 
 class ScreenshotAnalysisReport:
     """Generator for screenshot analysis reports."""
 
     def __init__(self, analysis_file):
         """Initialize the report generator.
-        
+
         Args:
             analysis_file (str): Path to the JSON file containing analysis results
         """
@@ -28,7 +29,7 @@ class ScreenshotAnalysisReport:
 
     def _load_analysis_data(self):
         """Load analysis data from the JSON file.
-        
+
         Returns:
             dict: The analysis data
         """
@@ -40,23 +41,23 @@ class ScreenshotAnalysisReport:
 
     def generate_html_report(self, output_file=None):
         """Generate an HTML report from the analysis data.
-        
+
         Args:
             output_file (str, optional): Path to save the HTML report.
                 If not provided, a default path will be used.
-                
+
         Returns:
             str: Path to the generated HTML report
         """
         if not output_file:
             timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-            output_file = os.path.join(settings.BASE_DIR, f'screenshot_analysis_report_{timestamp}.html')
+            output_file = os.path.join(settings.BASE_DIR, f"screenshot_analysis_report_{timestamp}.html")
 
         # Organize data by page, language, and theme
         organized_data = {}
         for screenshot, analysis in self.analysis_data.items():
             # Extract metadata from filename (format: page_lang_theme_timestamp.png)
-            parts = screenshot.replace('.png', '').split('_')
+            parts = screenshot.replace(".png", "").split("_")
             if len(parts) >= 3:
                 page_name = parts[0]
                 lang = parts[1]
@@ -70,23 +71,20 @@ class ScreenshotAnalysisReport:
 
                 # Extract the analysis content
                 content = ""
-                if analysis.get('choices'):
-                    content = analysis['choices'][0]['message']['content']
-                elif 'error' in analysis:
+                if analysis.get("choices"):
+                    content = analysis["choices"][0]["message"]["content"]
+                elif "error" in analysis:
                     content = f"Error: {analysis['error']}"
 
                 # Store the analysis
-                organized_data[page_name][lang][theme] = {
-                    'screenshot': screenshot,
-                    'analysis': content
-                }
+                organized_data[page_name][lang][theme] = {"screenshot": screenshot, "analysis": content}
 
         # Prepare context for the template
         context = {
-            'title': 'Screenshot Analysis Report',
-            'generated_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            'data': organized_data,
-            'screenshot_dir': os.path.join(settings.BASE_DIR, 'debug_screenshots')
+            "title": "Screenshot Analysis Report",
+            "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "data": organized_data,
+            "screenshot_dir": os.path.join(settings.BASE_DIR, "debug_screenshots"),
         }
 
         # Generate HTML content
@@ -95,17 +93,17 @@ class ScreenshotAnalysisReport:
         html_content = self._generate_html_template(context)
 
         # Write to file
-        with open(output_file, 'w') as f:
+        with open(output_file, "w") as f:
             f.write(html_content)
 
         return output_file
 
     def _generate_html_template(self, context):
         """Generate HTML content for the report.
-        
+
         Args:
             context (dict): Context data for the template
-            
+
         Returns:
             str: HTML content
         """
@@ -115,7 +113,7 @@ class ScreenshotAnalysisReport:
         <!DOCTYPE html>
         <html>
         <head>
-            <title>{context['title']}</title>
+            <title>{context["title"]}</title>
             <style>
                 body {{ font-family: Arial, sans-serif; margin: 20px; }}
                 h1, h2, h3, h4 {{ color: #333; }}
@@ -129,12 +127,12 @@ class ScreenshotAnalysisReport:
             </style>
         </head>
         <body>
-            <h1>{context['title']}</h1>
-            <div class="meta">Generated at: {context['generated_at']}</div>
+            <h1>{context["title"]}</h1>
+            <div class="meta">Generated at: {context["generated_at"]}</div>
         """
 
         # Add content for each page
-        for page_name, languages in context['data'].items():
+        for page_name, languages in context["data"].items():
             html += f"""
             <div class="page-section">
                 <h2>Page: {page_name}</h2>
@@ -150,12 +148,12 @@ class ScreenshotAnalysisReport:
 
                 # Add content for each theme
                 for theme, data in themes.items():
-                    screenshot_path = os.path.join(context['screenshot_dir'], data['screenshot'])
+                    screenshot_path = os.path.join(context["screenshot_dir"], data["screenshot"])
                     html += f"""
                     <div class="theme-card">
                         <h4>Theme: {theme}</h4>
-                        <img class="screenshot" src="file:///{screenshot_path}" alt="{data['screenshot']}">
-                        <div class="analysis">{data['analysis']}</div>
+                        <img class="screenshot" src="file:///{screenshot_path}" alt="{data["screenshot"]}">
+                        <div class="analysis">{data["analysis"]}</div>
                     </div>
                     """
 
@@ -169,11 +167,11 @@ class ScreenshotAnalysisReport:
 
 def generate_report(analysis_file, output_file=None):
     """Generate a report from analysis results.
-    
+
     Args:
         analysis_file (str): Path to the JSON file containing analysis results
         output_file (str, optional): Path to save the HTML report
-        
+
     Returns:
         str: Path to the generated HTML report
     """

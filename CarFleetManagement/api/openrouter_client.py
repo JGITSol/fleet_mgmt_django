@@ -17,18 +17,18 @@ from dotenv import load_dotenv
 from PIL import Image
 
 # Load environment variables from .env file (safe even if missing)
-env_path = Path(settings.BASE_DIR) / '.env'
+env_path = Path(settings.BASE_DIR) / ".env"
 load_dotenv(dotenv_path=env_path)
 
 # Provide compatibility alias so tests that patch 'api.openrouter_client' affect this module
-sys.modules.setdefault('api.openrouter_client', sys.modules[__name__])
+sys.modules.setdefault("api.openrouter_client", sys.modules[__name__])
 
 # Get API key from environment variables
-OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY')
-OPENROUTER_BASE_URL = 'https://openrouter.ai/api/v1'
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 
 # Determine test mode heuristically
-ENV_TEST = (os.getenv('TESTING') or os.getenv('CI') or '').lower() in ('1', 'true')
+ENV_TEST = (os.getenv("TESTING") or os.getenv("CI") or "").lower() in ("1", "true")
 
 # Constants for rate limiting and image processing
 MAX_REQUESTS_PER_MINUTE = 10  # Adjust based on OpenRouter API limits
@@ -42,6 +42,7 @@ class OpenRouterClient:
     In test mode the client will avoid network calls and file I/O and return
     deterministic stub responses so unit tests remain hermetic.
     """
+
     def __init__(self, api_key=None, test_mode: bool | None = None):
         """Initialize the OpenRouter client.
 
@@ -63,18 +64,18 @@ class OpenRouterClient:
 
     def _resize_image(self, image_path):
         """Resize image to FullHD resolution if larger.
-        
+
         Args:
             image_path (str): Path to the image file
-            
+
         Returns:
             BytesIO: BytesIO object containing the resized image
         """
         # In test mode return a small BytesIO without opening the file to avoid
         # file I/O during unit tests. Tests that require image processing should
         # mock Image.open instead.
-        if getattr(self, '_test_mode', False):
-            return BytesIO(b'fakeimg')
+        if getattr(self, "_test_mode", False):
+            return BytesIO(b"fakeimg")
 
         with Image.open(image_path) as img:
             # Check if resizing is needed
@@ -83,7 +84,7 @@ class OpenRouterClient:
 
             # Save to BytesIO
             img_byte_arr = BytesIO()
-            img_format = img.format if img.format else 'PNG'
+            img_format = img.format if img.format else "PNG"
             img.save(img_byte_arr, format=img_format)
             img_byte_arr.seek(0)
 
@@ -102,27 +103,26 @@ class OpenRouterClient:
 
     def analyze_screenshot(self, screenshot_path, prompt=None):
         """Analyze a screenshot using OpenRouter's vision capabilities.
-        
+
         Args:
             screenshot_path (str): Path to the screenshot file
             prompt (str, optional): Custom prompt to guide the analysis
-            
+
         Returns:
             dict: The analysis results from OpenRouter
         """
-        if not os.path.exists(screenshot_path) and not getattr(self, '_test_mode', False):
+        if not os.path.exists(screenshot_path) and not getattr(self, "_test_mode", False):
             raise FileNotFoundError(f"Screenshot not found at {screenshot_path}")
 
         # Default prompt if none provided
         if not prompt:
-            prompt = "Analyze this UI screenshot. Focus on critical layout issues "\
-                    "and text rendering problems. Keep response concise and actionable."
+            prompt = (
+                "Analyze this UI screenshot. Focus on critical layout issues "
+                "and text rendering problems. Keep response concise and actionable."
+            )
 
         # Prepare the API request
-        headers = {
-            "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json"
-        }
+        headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
 
         # Apply rate limiting
         self._apply_rate_limit()
@@ -132,7 +132,8 @@ class OpenRouterClient:
 
         # Encode the image as base64
         import base64
-        image_data = base64.b64encode(img_data.getvalue()).decode('utf-8')
+
+        image_data = base64.b64encode(img_data.getvalue()).decode("utf-8")
 
         # Use a vision-capable model and format the request properly
         payload = {
@@ -142,13 +143,13 @@ class OpenRouterClient:
                     "role": "user",
                     "content": [
                         {"type": "text", "text": prompt},
-                        {"type": "image", "image": {"data": f"data:image/png;base64,{image_data}"}}
-                    ]
+                        {"type": "image", "image": {"data": f"data:image/png;base64,{image_data}"}},
+                    ],
                 }
-            ]
+            ],
         }
 
-        if getattr(self, '_test_mode', False):
+        if getattr(self, "_test_mode", False):
             # Return a deterministic stub for tests
             return {"choices": [{"message": {"content": "stubbed openrouter response"}}]}
 
@@ -166,12 +167,12 @@ class OpenRouterClient:
 
     def batch_analyze_screenshots(self, screenshot_dir, language=None, theme=None):
         """Analyze multiple screenshots in a directory.
-        
+
         Args:
             screenshot_dir (str): Directory containing screenshots
             language (str, optional): Filter screenshots by language
             theme (str, optional): Filter screenshots by theme (light/dark)
-            
+
         Returns:
             dict: Analysis results for each screenshot
         """
@@ -181,7 +182,7 @@ class OpenRouterClient:
             raise NotADirectoryError(f"{screenshot_dir} is not a valid directory")
 
         # Get all PNG files in the directory
-        screenshots = [f for f in os.listdir(screenshot_dir) if f.endswith('.png')]
+        screenshots = [f for f in os.listdir(screenshot_dir) if f.endswith(".png")]
 
         # Apply filters if specified
         if language:
@@ -198,7 +199,7 @@ class OpenRouterClient:
 
 def get_client():
     """Get an initialized OpenRouter client.
-    
+
     Returns:
         OpenRouterClient: An initialized client instance
     """

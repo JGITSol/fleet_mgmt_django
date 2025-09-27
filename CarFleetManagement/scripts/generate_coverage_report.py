@@ -21,7 +21,8 @@ project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
 
 # Import Django settings
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CarFleetManagement.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarFleetManagement.settings")
+
 
 def create_coveragerc_if_not_exists():
     """Create a .coveragerc file if it doesn't exist."""
@@ -33,7 +34,7 @@ def create_coveragerc_if_not_exists():
         coveragerc_content = """
 [run]
 source = .
-omit = 
+omit =
     */migrations/*
     */tests/*
     */test_*.py
@@ -66,6 +67,7 @@ exclude_lines =
 
     return True
 
+
 def create_pytest_ini_if_not_exists():
     """Create a pytest.ini file if it doesn't exist."""
     pytest_ini_path = project_root / "pytest.ini"
@@ -91,6 +93,7 @@ filterwarnings =
 
     return True
 
+
 def run_coverage():
     """Run tests with coverage and generate a coverage report."""
     print("\n🔍 Running tests with coverage...")
@@ -104,7 +107,7 @@ def run_coverage():
         "rest_framework": "djangorestframework",
         "rest_framework_simplejwt": "djangorestframework-simplejwt",
         "drf_spectacular": "drf-spectacular",
-        "django_filters": "django-filter"
+        "django_filters": "django-filter",
     }
 
     for module, package in dependencies.items():
@@ -118,6 +121,7 @@ def run_coverage():
     # Check if REST framework test utilities are available
     try:
         from rest_framework.test import APIClient
+
         print("REST framework test utilities are available.")
     except ImportError:
         print("\n❌ REST framework test utilities not found. Installing djangorestframework...")
@@ -135,7 +139,9 @@ def run_coverage():
     # Run pytest with coverage
     result = subprocess.run(
         [
-            sys.executable, "-m", "pytest",
+            sys.executable,
+            "-m",
+            "pytest",
             "--cov=.",
             "--cov-report=term",
             "--cov-report=html:coverage_reports/html",
@@ -168,32 +174,34 @@ def run_coverage():
 
     return True
 
+
 def ensure_test_files_exist():
     """Create test files needed for tests if they don't exist."""
     # Create test image in multiple possible locations to ensure tests can find it
     possible_dirs = [
-        os.path.join(project_root, 'test_screenshots'),
-        os.path.join(project_root, 'CarFleetManagement', 'test_screenshots'),
-        os.path.join(project_root, 'debug_screenshots'),
-        os.path.join(project_root, 'CarFleetManagement', 'debug_screenshots'),
+        os.path.join(project_root, "test_screenshots"),
+        os.path.join(project_root, "CarFleetManagement", "test_screenshots"),
+        os.path.join(project_root, "debug_screenshots"),
+        os.path.join(project_root, "CarFleetManagement", "debug_screenshots"),
     ]
 
     for test_dir in possible_dirs:
         os.makedirs(test_dir, exist_ok=True)
-        test_image_path = os.path.join(test_dir, 'home_en_dark_20250331-201208.png')
+        test_image_path = os.path.join(test_dir, "home_en_dark_20250331-201208.png")
         if not os.path.exists(test_image_path):
             print(f"Creating test image at {test_image_path}...")
             # Create a simple test image
-            img = Image.new('RGB', (100, 100), color=(73, 109, 137))
+            img = Image.new("RGB", (100, 100), color=(73, 109, 137))
             img.save(test_image_path)
             print(f"✅ Test image created at {test_image_path}")
+
 
 def patch_api_test_authentication():
     """Patch API test files to fix authentication issues."""
     print("\n🔧 Patching API test authentication...")
 
     # Create a mock patch file for APITestCase
-    mock_patch_file = os.path.join(project_root, 'CarFleetManagement', 'tests', 'mock_auth.py')
+    mock_patch_file = os.path.join(project_root, "CarFleetManagement", "tests", "mock_auth.py")
     os.makedirs(os.path.dirname(mock_patch_file), exist_ok=True)
 
     mock_patch_content = """
@@ -246,11 +254,11 @@ APIClient.patch = patched_patch
 APIClient.delete = patched_delete
 """
 
-    with open(mock_patch_file, 'w') as f:
+    with open(mock_patch_file, "w") as f:
         f.write(mock_patch_content)
 
     # Create or update conftest.py to import our mock
-    conftest_path = os.path.join(project_root, 'CarFleetManagement', 'conftest.py')
+    conftest_path = os.path.join(project_root, "CarFleetManagement", "conftest.py")
     conftest_content = """
 # Import mock authentication patch
 import pytest
@@ -262,18 +270,19 @@ def enable_db_access_for_all_tests(db):
 """
 
     if not os.path.exists(conftest_path):
-        with open(conftest_path, 'w') as f:
+        with open(conftest_path, "w") as f:
             f.write(conftest_content)
     else:
         # Check if the import is already there
         with open(conftest_path) as f:
             existing_content = f.read()
 
-        if 'mock_auth' not in existing_content:
-            with open(conftest_path, 'w') as f:
+        if "mock_auth" not in existing_content:
+            with open(conftest_path, "w") as f:
                 f.write(conftest_content)
 
     print("✅ API test authentication patched")
+
 
 def create_requirements_file():
     """Create a requirements.txt file for the project."""
@@ -303,7 +312,7 @@ def create_requirements_file():
     ]
 
     for line in result.stdout.splitlines():
-        package_name = line.split('==')[0].lower()
+        package_name = line.split("==")[0].lower()
         if any(essential in package_name for essential in essential_packages):
             requirements.append(line)
 
@@ -314,6 +323,7 @@ def create_requirements_file():
 
     print(f"✅ requirements.txt created at {requirements_path}")
     return True
+
 
 if __name__ == "__main__":
     ensure_test_files_exist()

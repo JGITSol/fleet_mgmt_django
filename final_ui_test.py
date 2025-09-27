@@ -3,14 +3,13 @@
 Final comprehensive UI test with screenshot capture
 """
 
-import os
-import sys
-import time
-import json
-import requests
 import subprocess
+import sys
 from datetime import datetime
 from pathlib import Path
+
+import requests
+
 
 def test_server_status():
     """Check if Django server is running"""
@@ -25,149 +24,160 @@ def test_server_status():
         print(f"✗ Server check error: {e}")
         return False
 
+
 def test_urls():
     """Test URL accessibility"""
     base_url = "http://localhost:8000"
-    
+
     # URLs that don't require authentication
     public_urls = [
-        ('/', 'Home Page'),
-        ('/admin/', 'Admin Panel'),
-        ('/api/', 'API Root'),
-        ('/accounts/login/', 'Login Page'),
-        ('/accounts/register/', 'Register Page'),
-        ('/vehicles/', 'Vehicle List'),
-        ('/maintenance/', 'Maintenance List'),
-        ('/emergency/', 'Emergency List'),
+        ("/", "Home Page"),
+        ("/admin/", "Admin Panel"),
+        ("/api/", "API Root"),
+        ("/accounts/login/", "Login Page"),
+        ("/accounts/register/", "Register Page"),
+        ("/vehicles/", "Vehicle List"),
+        ("/maintenance/", "Maintenance List"),
+        ("/emergency/", "Emergency List"),
     ]
-    
+
     # URLs that require authentication (will be tested separately)
     auth_urls = [
-        ('/api/vehicles/', 'API Vehicles'),
-        ('/api/drivers/', 'API Drivers'),
-        ('/api/maintenance/', 'API Maintenance'),
-        ('/api/emergencies/', 'API Emergencies'),
+        ("/api/vehicles/", "API Vehicles"),
+        ("/api/drivers/", "API Drivers"),
+        ("/api/maintenance/", "API Maintenance"),
+        ("/api/emergencies/", "API Emergencies"),
     ]
-    
+
     print("\nTesting URL Accessibility:")
     print("=" * 50)
-    
+
     results = []
-    
+
     # Test public URLs
     for url, name in public_urls:
         try:
             response = requests.get(f"{base_url}{url}", timeout=10)
-            status = "✓ PASS" if response.status_code < 400 else f"✗ FAIL ({response.status_code})"
+            status = (
+                "✓ PASS"
+                if response.status_code < 400
+                else f"✗ FAIL ({response.status_code})"
+            )
             print(f"{status:15} {name:20} {url}")
-            results.append({
-                'url': url,
-                'name': name,
-                'status_code': response.status_code,
-                'success': response.status_code < 400,
-                'content_length': len(response.content)
-            })
+            results.append(
+                {
+                    "url": url,
+                    "name": name,
+                    "status_code": response.status_code,
+                    "success": response.status_code < 400,
+                    "content_length": len(response.content),
+                }
+            )
         except Exception as e:
             print(f"✗ ERROR      {name:20} {url} - {str(e)}")
-            results.append({
-                'url': url,
-                'name': name,
-                'success': False,
-                'error': str(e)
-            })
-    
+            results.append(
+                {"url": url, "name": name, "success": False, "error": str(e)}
+            )
+
     # Test authenticated URLs
     try:
         # Get JWT token
-        auth_response = requests.post(f"{base_url}/api/auth/login/", json={
-            'username': 'testuser',
-            'password': 'testpass123'
-        })
-        
+        auth_response = requests.post(
+            f"{base_url}/api/auth/login/",
+            json={"username": "testuser", "password": "testpass123"},
+        )
+
         if auth_response.status_code == 200:
             token_data = auth_response.json()
-            access_token = token_data.get('access')
-            headers = {'Authorization': f'Bearer {access_token}'}
-            
+            access_token = token_data.get("access")
+            headers = {"Authorization": f"Bearer {access_token}"}
+
             for url, name in auth_urls:
                 try:
-                    response = requests.get(f"{base_url}{url}", headers=headers, timeout=10)
-                    status = "✓ PASS" if response.status_code < 400 else f"✗ FAIL ({response.status_code})"
+                    response = requests.get(
+                        f"{base_url}{url}", headers=headers, timeout=10
+                    )
+                    status = (
+                        "✓ PASS"
+                        if response.status_code < 400
+                        else f"✗ FAIL ({response.status_code})"
+                    )
                     print(f"{status:15} {name:20} {url}")
-                    results.append({
-                        'url': url,
-                        'name': name,
-                        'status_code': response.status_code,
-                        'success': response.status_code < 400,
-                        'content_length': len(response.content)
-                    })
+                    results.append(
+                        {
+                            "url": url,
+                            "name": name,
+                            "status_code": response.status_code,
+                            "success": response.status_code < 400,
+                            "content_length": len(response.content),
+                        }
+                    )
                 except Exception as e:
                     print(f"✗ ERROR      {name:20} {url} - {str(e)}")
-                    results.append({
-                        'url': url,
-                        'name': name,
-                        'success': False,
-                        'error': str(e)
-                    })
+                    results.append(
+                        {"url": url, "name": name, "success": False, "error": str(e)}
+                    )
         else:
             # If authentication fails, mark all auth URLs as failed
             for url, name in auth_urls:
                 print(f"✗ AUTH FAIL   {name:20} {url}")
-                results.append({
-                    'url': url,
-                    'name': name,
-                    'success': False,
-                    'error': 'Authentication failed'
-                })
+                results.append(
+                    {
+                        "url": url,
+                        "name": name,
+                        "success": False,
+                        "error": "Authentication failed",
+                    }
+                )
     except Exception as e:
         # If authentication fails, mark all auth URLs as failed
         for url, name in auth_urls:
             print(f"✗ AUTH ERROR  {name:20} {url} - {str(e)}")
-            results.append({
-                'url': url,
-                'name': name,
-                'success': False,
-                'error': str(e)
-            })
-    
+            results.append(
+                {"url": url, "name": name, "success": False, "error": str(e)}
+            )
+
     return results
+
 
 def test_api_authentication():
     """Test API authentication"""
     print("\nTesting API Authentication:")
     print("=" * 50)
-    
+
     # Try to get JWT token
     try:
-        response = requests.post("http://localhost:8000/api/auth/login/", json={
-            'username': 'testuser',
-            'password': 'testpass123'
-        })
-        
+        response = requests.post(
+            "http://localhost:8000/api/auth/login/",
+            json={"username": "testuser", "password": "testpass123"},
+        )
+
         if response.status_code == 200:
             token_data = response.json()
-            access_token = token_data.get('access')
+            access_token = token_data.get("access")
             print("✓ JWT authentication successful")
-            
+
             # Test authenticated API calls
-            headers = {'Authorization': f'Bearer {access_token}'}
-            
+            headers = {"Authorization": f"Bearer {access_token}"}
+
             api_endpoints = [
-                '/api/vehicles/',
-                '/api/drivers/',
-                '/api/maintenance/',
-                '/api/emergencies/'
+                "/api/vehicles/",
+                "/api/drivers/",
+                "/api/maintenance/",
+                "/api/emergencies/",
             ]
-            
+
             all_success = True
             for endpoint in api_endpoints:
-                api_response = requests.get(f"http://localhost:8000{endpoint}", headers=headers)
+                api_response = requests.get(
+                    f"http://localhost:8000{endpoint}", headers=headers
+                )
                 if api_response.status_code < 400:
                     print(f"✓ {endpoint} working")
                 else:
                     print(f"✗ {endpoint} failed ({api_response.status_code})")
                     all_success = False
-            
+
             if all_success:
                 print("✓ All authenticated API calls successful")
                 return True
@@ -177,20 +187,21 @@ def test_api_authentication():
         else:
             print(f"✗ JWT authentication failed ({response.status_code})")
             return False
-            
+
     except Exception as e:
         print(f"✗ Authentication test error: {e}")
         return False
+
 
 def capture_screenshots():
     """Attempt to capture screenshots using Puppeteer"""
     print("\nAttempting Screenshot Capture:")
     print("=" * 50)
-    
+
     # Create screenshots directory
     screenshot_dir = Path("ui_screenshots")
     screenshot_dir.mkdir(exist_ok=True)
-    
+
     # Simple Node.js Puppeteer script
     puppeteer_script = """
 const puppeteer = require('puppeteer');
@@ -228,22 +239,26 @@ const puppeteer = require('puppeteer');
   }
 })();
 """
-    
+
     # Write and execute script
     script_path = Path("temp_screenshot_script.js")
     try:
         with open(script_path, "w", encoding="utf-8") as f:
             f.write(puppeteer_script)
-        
+
         # Check if Node.js is available
-        result = subprocess.run(["node", "--version"], capture_output=True, text=True, timeout=5)
-        
+        result = subprocess.run(
+            ["node", "--version"], capture_output=True, text=True, timeout=5
+        )
+
         if result.returncode == 0:
             print(f"Node.js available: {result.stdout.strip()}")
-            
+
             # Run Puppeteer script
-            result = subprocess.run(["node", str(script_path)], capture_output=True, text=True, timeout=60)
-            
+            result = subprocess.run(
+                ["node", str(script_path)], capture_output=True, text=True, timeout=60
+            )
+
             if result.returncode == 0:
                 print("✓ Screenshots captured successfully")
                 print(result.stdout)
@@ -254,7 +269,7 @@ const puppeteer = require('puppeteer');
         else:
             print("⚠ Node.js not available, skipping screenshots")
             return False
-            
+
     except Exception as e:
         print(f"✗ Screenshot error: {e}")
         return False
@@ -262,16 +277,17 @@ const puppeteer = require('puppeteer');
         if script_path.exists():
             script_path.unlink()
 
+
 def generate_report(url_results, auth_success, screenshots_captured):
     """Generate HTML report"""
     print("\nGenerating Test Report:")
     print("=" * 50)
-    
+
     # Calculate statistics
     total_urls = len(url_results)
-    successful_urls = sum(1 for result in url_results if result.get('success', False))
+    successful_urls = sum(1 for result in url_results if result.get("success", False))
     success_rate = (successful_urls / total_urls * 100) if total_urls > 0 else 0
-    
+
     # Generate HTML report
     html_content = f"""
 <!DOCTYPE html>
@@ -303,7 +319,7 @@ def generate_report(url_results, auth_success, screenshots_captured):
     <div class="container">
         <div class="header">
             <h1>🚗 Car Fleet Management System - UI Test Report</h1>
-            <p>Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+            <p>Generated on: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>
         </div>
         
         <div class="section">
@@ -339,41 +355,41 @@ def generate_report(url_results, auth_success, screenshots_captured):
                     <th>Content Size</th>
                 </tr>
 """
-    
+
     for result in url_results:
-        status_class = 'status-pass' if result.get('success', False) else 'status-fail'
-        status_text = '✓ PASS' if result.get('success', False) else '✗ FAIL'
-        status_code = result.get('status_code', 'ERROR')
-        content_size = result.get('content_length', 0)
-        
+        status_class = "status-pass" if result.get("success", False) else "status-fail"
+        status_text = "✓ PASS" if result.get("success", False) else "✗ FAIL"
+        status_code = result.get("status_code", "ERROR")
+        content_size = result.get("content_length", 0)
+
         html_content += f"""
                 <tr class="{status_class}">
-                    <td><code>{result.get('url', 'N/A')}</code></td>
-                    <td>{result.get('name', 'N/A')}</td>
+                    <td><code>{result.get("url", "N/A")}</code></td>
+                    <td>{result.get("name", "N/A")}</td>
                     <td>{status_code}</td>
                     <td>{status_text}</td>
                     <td>{content_size} bytes</td>
                 </tr>
 """
-    
+
     html_content += f"""
             </table>
         </div>
         
         <div class="section">
             <h2>🔐 Authentication Test</h2>
-            <p class="{'success' if auth_success else 'error'}">
-                {'✓ JWT Authentication: PASSED' if auth_success else '✗ JWT Authentication: FAILED'}
+            <p class="{"success" if auth_success else "error"}">
+                {"✓ JWT Authentication: PASSED" if auth_success else "✗ JWT Authentication: FAILED"}
             </p>
         </div>
         
         <div class="section">
             <h2>📸 Screenshots</h2>
-            <p class="{'success' if screenshots_captured else 'warning'}">
-                {'✓ Screenshots captured successfully' if screenshots_captured else '⚠ Screenshots not captured (Node.js/Puppeteer not available)'}
+            <p class="{"success" if screenshots_captured else "warning"}">
+                {"✓ Screenshots captured successfully" if screenshots_captured else "⚠ Screenshots not captured (Node.js/Puppeteer not available)"}
             </p>
 """
-    
+
     # Add screenshots if they exist
     screenshot_dir = Path("ui_screenshots")
     if screenshot_dir.exists():
@@ -385,7 +401,7 @@ def generate_report(url_results, auth_success, screenshots_captured):
             html_content += "</div>"
         else:
             html_content += "<p>No screenshot files found</p>"
-    
+
     html_content += """
         </div>
         
@@ -393,19 +409,19 @@ def generate_report(url_results, auth_success, screenshots_captured):
             <h2>🎯 Recommendations</h2>
             <ul>
 """
-    
+
     if success_rate < 80:
         html_content += "<li class='error'>⚠ URL success rate is below 80%. Check server configuration and URL patterns.</li>"
-    
+
     if not auth_success:
         html_content += "<li class='error'>⚠ Authentication tests failed. Verify JWT configuration and test user setup.</li>"
-    
+
     if not screenshots_captured:
         html_content += "<li class='warning'>💡 Install Node.js and Puppeteer for visual testing: <code>npm install puppeteer</code></li>"
-    
+
     if success_rate >= 80 and auth_success:
         html_content += "<li class='success'>✅ System is functioning well! All major components are accessible.</li>"
-    
+
     html_content += """
             </ul>
         </div>
@@ -424,43 +440,44 @@ def generate_report(url_results, auth_success, screenshots_captured):
 </body>
 </html>
 """
-    
+
     # Write report
     report_path = Path("ui_test_report.html")
     with open(report_path, "w", encoding="utf-8") as f:
         f.write(html_content)
-    
+
     print(f"✓ Report generated: {report_path}")
     return report_path
+
 
 def main():
     """Main test function"""
     print("🚗 Car Fleet Management System - Comprehensive UI Test")
     print("=" * 60)
-    
+
     # Check server status
     if not test_server_status():
         print("\n❌ Cannot proceed without running Django server.")
         print("Please start the server with: python manage.py runserver")
         return 1
-    
+
     # Test URLs
     url_results = test_urls()
-    
+
     # Test authentication
     auth_success = test_api_authentication()
-    
+
     # Capture screenshots
     screenshots_captured = capture_screenshots()
-    
+
     # Generate report
     report_path = generate_report(url_results, auth_success, screenshots_captured)
-    
+
     # Summary
-    successful_urls = sum(1 for result in url_results if result.get('success', False))
+    successful_urls = sum(1 for result in url_results if result.get("success", False))
     total_urls = len(url_results)
     success_rate = (successful_urls / total_urls * 100) if total_urls > 0 else 0
-    
+
     print("\n" + "=" * 60)
     print("📋 FINAL TEST SUMMARY")
     print("=" * 60)
@@ -468,16 +485,19 @@ def main():
     print(f"🔐 Authentication: {'✅ PASS' if auth_success else '❌ FAIL'}")
     print(f"📸 Screenshots: {'✅ CAPTURED' if screenshots_captured else '⚠️  SKIPPED'}")
     print(f"📊 Report: {report_path}")
-    
+
     overall_success = success_rate >= 70 and auth_success
-    print(f"\n🎯 Overall Status: {'✅ SUCCESS' if overall_success else '⚠️  NEEDS ATTENTION'}")
-    
+    print(
+        f"\n🎯 Overall Status: {'✅ SUCCESS' if overall_success else '⚠️  NEEDS ATTENTION'}"
+    )
+
     if overall_success:
         print("\n🎉 The Car Fleet Management System UI is working well!")
     else:
         print("\n🔧 Some issues detected. Check the report for details.")
-    
+
     return 0 if overall_success else 1
+
 
 if __name__ == "__main__":
     sys.exit(main())

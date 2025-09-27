@@ -1,5 +1,5 @@
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.utils.deprecation import MiddlewareMixin
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class JWTAuthMiddleware(MiddlewareMixin):
@@ -17,11 +17,11 @@ class JWTAuthMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
         # If request already has an authenticated user (e.g., session auth), do nothing
-        if getattr(request, 'user', None) and getattr(request.user, 'is_authenticated', False):
+        if getattr(request, "user", None) and getattr(request.user, "is_authenticated", False):
             return None
 
-        auth_header = request.META.get('HTTP_AUTHORIZATION', '')
-        if not auth_header or not auth_header.startswith('Bearer '):
+        auth_header = request.META.get("HTTP_AUTHORIZATION", "")
+        if not auth_header or not auth_header.startswith("Bearer "):
             return None
 
         jwt_auth = JWTAuthentication()
