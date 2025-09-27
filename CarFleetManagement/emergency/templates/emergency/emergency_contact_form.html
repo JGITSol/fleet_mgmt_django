@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Emergency Contact Form" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{% if form.instance.pk %}{% trans "Edit Emergency Contact" %}{% else %}{% trans "Create Emergency Contact" %}{% endif %}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">{% trans "Name" %}</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                        <div class="text-danger">{{ form.name.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ form.phone.id_for_label }}">{% trans "Phone" %}</label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                                <div class="text-danger">{{ form.phone.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}">{% trans "Email" %}</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.contact_type.id_for_label }}">{% trans "Contact Type" %}</label>
+                    {{ form.contact_type }}
+                    {% if form.contact_type.errors %}
+                        <div class="text-danger">{{ form.contact_type.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.address.id_for_label }}">{% trans "Address" %}</label>
+                    {{ form.address }}
+                    {% if form.address.errors %}
+                        <div class="text-danger">{{ form.address.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.notes.id_for_label }}">{% trans "Notes" %}</label>
+                    {{ form.notes }}
+                    {% if form.notes.errors %}
+                        <div class="text-danger">{{ form.notes.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">{% if form.instance.pk %}{% trans "Update Contact" %}{% else %}{% trans "Create Contact" %}{% endif %}</button>
+            <a href="{% url 'emergency:emergency_contact_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

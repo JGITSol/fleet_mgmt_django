@@ -24,6 +24,7 @@ def root_view(request):
 urlpatterns = [
     path('', root_view, name='root'),
     path('admin/', admin.site.urls),
+    path('i18n/', include('django.conf.urls.i18n')),
 
     # Web app (HTML) views - include each app's urls once (non-namespaced)
     path('accounts/', include('CarFleetManagement.accounts.urls')),
@@ -36,31 +37,30 @@ urlpatterns = [
 ]
 
 # Backwards-compatible, non-namespaced aliases for legacy templates/tests.
-# Added only when DEBUG=True to avoid duplicate namespace warnings in production.
-if settings.DEBUG or getattr(settings, 'TESTING', False):
-    urlpatterns += [
-        # Vehicles (non-namespaced aliases)
-        path('vehicles/', vehicle_views.VehicleListView.as_view(), name='vehicle_list'),
-        path('vehicles/<int:pk>/', vehicle_views.VehicleDetailView.as_view(), name='vehicle_detail'),
-        path('vehicles/create/', vehicle_views.VehicleCreateView.as_view(), name='vehicle_create'),
-        path('vehicles/<int:pk>/update/', vehicle_views.VehicleUpdateView.as_view(), name='vehicle_update'),
-        path('vehicles/<int:pk>/delete/', vehicle_views.VehicleDeleteView.as_view(), name='vehicle_delete'),
+# Always include these for compatibility
+urlpatterns += [
+    # Vehicles (non-namespaced aliases)
+    path('vehicles/', vehicle_views.VehicleListView.as_view(), name='vehicle_list'),
+    path('vehicles/<int:pk>/', vehicle_views.VehicleDetailView.as_view(), name='vehicle_detail'),
+    path('vehicles/create/', vehicle_views.VehicleCreateView.as_view(), name='vehicle_create'),
+    path('vehicles/<int:pk>/update/', vehicle_views.VehicleUpdateView.as_view(), name='vehicle_update'),
+    path('vehicles/<int:pk>/delete/', vehicle_views.VehicleDeleteView.as_view(), name='vehicle_delete'),
 
-        # Maintenance (non-namespaced aliases)
-        path('maintenance/', maintenance_views.MaintenanceListView.as_view(), name='maintenance_list'),
-        path('maintenance/<int:pk>/', maintenance_views.MaintenanceDetailView.as_view(), name='maintenance_detail'),
-        path('maintenance/create/', maintenance_views.MaintenanceCreateView.as_view(), name='maintenance_create'),
-        path('maintenance/<int:pk>/update/', maintenance_views.MaintenanceUpdateView.as_view(), name='maintenance_update'),
-        path('maintenance/<int:pk>/delete/', maintenance_views.MaintenanceDeleteView.as_view(), name='maintenance_delete'),
+    # Maintenance (non-namespaced aliases)
+    path('maintenance/', maintenance_views.MaintenanceListView.as_view(), name='maintenance_list'),
+    path('maintenance/<int:pk>/', maintenance_views.MaintenanceDetailView.as_view(), name='maintenance_detail'),
+    path('maintenance/create/', maintenance_views.MaintenanceCreateView.as_view(), name='maintenance_create'),
+    path('maintenance/<int:pk>/update/', maintenance_views.MaintenanceUpdateView.as_view(), name='maintenance_update'),
+    path('maintenance/<int:pk>/delete/', maintenance_views.MaintenanceDeleteView.as_view(), name='maintenance_delete'),
 
-        # Emergency (non-namespaced aliases)
-        path('emergency/', emergency_views.EmergencyIncidentListView.as_view(), name='emergency_list'),
-        path('emergency/<int:pk>/', emergency_views.EmergencyIncidentDetailView.as_view(), name='emergency_detail'),
-        path('emergency/create/', emergency_views.EmergencyIncidentCreateView.as_view(), name='emergency_create'),
-        path('emergency/<int:pk>/update/', emergency_views.EmergencyIncidentUpdateView.as_view(), name='emergency_update'),
-        path('emergency/<int:pk>/delete/', emergency_views.EmergencyIncidentDeleteView.as_view(), name='emergency_delete'),
-        path('emergency/<int:incident_id>/response/create/', emergency_views.EmergencyResponseCreateView.as_view(), name='emergency_response_create'),
-    ]
+    # Emergency (non-namespaced aliases)
+    path('emergency/', emergency_views.EmergencyIncidentListView.as_view(), name='emergency_list'),
+    path('emergency/<int:pk>/', emergency_views.EmergencyIncidentDetailView.as_view(), name='emergency_detail'),
+    path('emergency/create/', emergency_views.EmergencyIncidentCreateView.as_view(), name='emergency_create'),
+    path('emergency/<int:pk>/update/', emergency_views.EmergencyIncidentUpdateView.as_view(), name='emergency_update'),
+    path('emergency/<int:pk>/delete/', emergency_views.EmergencyIncidentDeleteView.as_view(), name='emergency_delete'),
+    path('emergency/<int:incident_id>/response/create/', emergency_views.EmergencyResponseCreateView.as_view(), name='emergency_response_create'),
+]
 
 # Serve static files during development
 if settings.DEBUG:

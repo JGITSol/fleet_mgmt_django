@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Emergency Contact Details" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{% trans "Emergency Contact Details" %}</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ contact.name }}</h5>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>{% trans "Phone" %}:</strong> {{ contact.phone }}<br>
+                    <strong>{% trans "Email" %}:</strong> {{ contact.email }}<br>
+                    <strong>{% trans "Type" %}:</strong> {{ contact.get_contact_type_display }}<br>
+                </div>
+                <div class="col-md-6">
+                    {% if contact.address %}
+                    <strong>{% trans "Address" %}:</strong> {{ contact.address }}<br>
+                    {% endif %}
+                    {% if contact.notes %}
+                    <strong>{% trans "Notes" %}:</strong> {{ contact.notes }}<br>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'emergency:emergency_contact_update' contact.pk %}" class="btn btn-warning">{% trans "Edit Contact" %}</a>
+        <a href="{% url 'emergency:emergency_contact_delete' contact.pk %}" class="btn btn-danger">{% trans "Delete Contact" %}</a>
+        <a href="{% url 'emergency:emergency_contact_list' %}" class="btn btn-secondary">{% trans "Back to List" %}</a>
+    </div>
+</div>
+{% endblock %}

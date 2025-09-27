@@ -30,6 +30,8 @@ class JWTAuthMiddleware(MiddlewareMixin):
             if user_auth is not None:
                 user, token = user_auth
                 request.user = user
+                # Set auth/token as many downstream libs expect request.auth to be present
+                request.auth = token
                 # Some code expects _cached_user attribute to be present (tests)
                 # Best-effort: set cached user attribute so code/tests that check it succeed
                 request._cached_user = user

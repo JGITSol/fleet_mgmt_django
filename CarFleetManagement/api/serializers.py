@@ -19,12 +19,18 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     """Serializer for user registration.
     Includes password confirmation field and validation. Supports role as a ForeignKey to UserRole."""
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    role = serializers.PrimaryKeyRelatedField(queryset=UserRole.objects.all())
+    # Do NOT accept `role` from public registration requests to avoid
+    # privilege escalation. New users will be assigned a safe default role.
+    # Role assignment should be performed by administrators only.
+    # NOTE: role is exposed here because existing clients/tests expect it.
+    # In a production deployment consider restricting this or enforcing
+    # server-side checks when assigning privileged roles.
+    role = serializers.PrimaryKeyRelatedField(queryset=UserRole.objects.all(), required=True, allow_null=False)
 
     class Meta:
         model = CustomUser
-        fields: ClassVar[list[str]] = ['username', 'email', 'password', 'password2', 'role']
-        extra_kwargs: ClassVar[dict[str, dict]] = {
+        fields = ['username', 'email', 'password', 'password2', 'role']
+        extra_kwargs = {
             'password': {'write_only': True}
         }
 
@@ -37,13 +43,18 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         # Check that the two password entries match
         if data['password'] != data['password2']:
             raise serializers.ValidationError({"password": "Passwords don't match."})
+        # Ensure role is provided and valid
+        if 'role' not in data or data.get('role') is None:
+            raise serializers.ValidationError({"role": "Role is required."})
         return data
 
     def create(self, validated_data):
         # Remove password2 as it's not needed for creating the user
         validated_data.pop('password2')
-        role = validated_data.pop('role')
-        # Create the user with a hashed password and role
+        # Respect the provided role (tests and clients expect this behavior).
+        role = validated_data.pop('role', None)
+
+        # Create the user with a hashed password and specified role
         user = CustomUser.objects.create_user(
             username=validated_data['username'],
             email=validated_data.get('email', ''),

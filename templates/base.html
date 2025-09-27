@@ -1,13 +1,42 @@
 <!doctype html>
-<html lang="en">
+{% load i18n %}
+<html lang="{{ LANGUAGE_CODE }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fleet Management - Test Base</title>
+    <title>{% trans "Fleet Management" %}</title>
   </head>
   <body>
     <header>
-      <h1>Fleet Management (global template)</h1>
+      <h1>{% trans "Fleet Management" %}</h1>
+      <nav>
+        <ul>
+          <li><a href="{% url 'root' %}">{% trans "Home" %}</a></li>
+          <li><a href="{% url 'admin:index' %}">{% trans "Admin" %}</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'api_profile' %}">{% trans "Profile" %}</a></li>
+            <li><a href="{% url 'api_logout' %}">{% trans "Logout" %}</a></li>
+          {% else %}
+            <li><a href="{% url 'api_login' %}">{% trans "Login" %}</a></li>
+            <li><a href="{% url 'api_register' %}">{% trans "Register" %}</a></li>
+          {% endif %}
+        </ul>
+        <form action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+          <input name="next" type="hidden" value="{{ redirect_to }}">
+          <select name="language">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+              <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                {{ language.name_local }}
+              </option>
+            {% endfor %}
+          </select>
+          <input type="submit" value="{% trans 'Change Language' %}">
+        </form>
+      </nav>
     </header>
     <main>
       {% block content %}{% endblock %}
