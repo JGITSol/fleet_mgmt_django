@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Emergency Incident Form" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{% if form.instance.pk %}{% trans "Edit Emergency Incident" %}{% else %}{% trans "Create Emergency Incident" %}{% endif %}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ form.emergency_type.id_for_label }}">{% trans "Emergency Type" %}</label>
+                            {{ form.emergency_type }}
+                            {% if form.emergency_type.errors %}
+                                <div class="text-danger">{{ form.emergency_type.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ form.status.id_for_label }}">{% trans "Status" %}</label>
+                            {{ form.status }}
+                            {% if form.status.errors %}
+                                <div class="text-danger">{{ form.status.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.vehicle.id_for_label }}">{% trans "Vehicle" %}</label>
+                    {{ form.vehicle }}
+                    {% if form.vehicle.errors %}
+                        <div class="text-danger">{{ form.vehicle.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.driver.id_for_label }}">{% trans "Driver" %}</label>
+                    {{ form.driver }}
+                    {% if form.driver.errors %}
+                        <div class="text-danger">{{ form.driver.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.location.id_for_label }}">{% trans "Location" %}</label>
+                    {{ form.location }}
+                    {% if form.location.errors %}
+                        <div class="text-danger">{{ form.location.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ form.latitude.id_for_label }}">{% trans "Latitude" %}</label>
+                            {{ form.latitude }}
+                            {% if form.latitude.errors %}
+                                <div class="text-danger">{{ form.latitude.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ form.longitude.id_for_label }}">{% trans "Longitude" %}</label>
+                            {{ form.longitude }}
+                            {% if form.longitude.errors %}
+                                <div class="text-danger">{{ form.longitude.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">{% trans "Description" %}</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="text-danger">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.reported_by.id_for_label }}">{% trans "Reported By" %}</label>
+                    {{ form.reported_by }}
+                    {% if form.reported_by.errors %}
+                        <div class="text-danger">{{ form.reported_by.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">{% if form.instance.pk %}{% trans "Update Incident" %}{% else %}{% trans "Create Incident" %}{% endif %}</button>
+            <a href="{% url 'emergency:emergency_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

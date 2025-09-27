@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Test User Dashboard</h2>
+<p>This is a limited access account for development and testing purposes.</p>
+<ul>
+  <li><a href="{% url 'vehicle-list' %}">View All Vehicles</a></li>
+  <li><a href="{% url 'emergency-list' %}">View Emergency Incidents</a></li>
+</ul>
+{% endblock %}

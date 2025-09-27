@@ -1,0 +1,23 @@
+services:
+  backend:
+    build: .
+    container_name: django-backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+  frontend:
+    build:
+      context: ./car_fleet_manager_frontend
+    container_name: reflex-frontend
+    command: "python -m reflex run --backend-host 0.0.0.0 --backend-port 3000"
+    ports:
+      - "3000:3000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - backend
+networks:
+  default:
+    driver: bridge

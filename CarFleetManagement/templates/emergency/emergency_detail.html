@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}{{ incident.get_emergency_type_display }} - {{ incident.vehicle.brand }} {{ incident.vehicle.model }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Emergency Incident Details</h1>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">{{ incident.get_emergency_type_display }} - {{ incident.vehicle.brand }} {{ incident.vehicle.model }}</h5>
+            <p class="card-text"><strong>Vehicle:</strong> {{ incident.vehicle.brand }} {{ incident.vehicle.model }} ({{ incident.vehicle.license_plate }})</p>
+            <p class="card-text"><strong>Driver:</strong> {% if incident.driver %}{{ incident.driver.first_name }} {{ incident.driver.last_name }}{% else %}Not assigned{% endif %}</p>
+            <p class="card-text"><strong>Reported By:</strong> {{ incident.reported_by.username }}</p>
+            <p class="card-text"><strong>Type:</strong> {{ incident.get_emergency_type_display }}</p>
+            <p class="card-text"><strong>Status:</strong> {{ incident.get_status_display }}</p>
+            <p class="card-text"><strong>Location:</strong> {{ incident.location }}</p>
+            {% if incident.latitude and incident.longitude %}
+            <p class="card-text"><strong>Coordinates:</strong> {{ incident.latitude }}, {{ incident.longitude }}</p>
+            {% endif %}
+            <p class="card-text"><strong>Description:</strong> {{ incident.description }}</p>
+            <p class="card-text"><strong>Reported Time:</strong> {{ incident.reported_time|date:"Y-m-d H:i" }}</p>
+            {% if incident.resolved_time %}
+            <p class="card-text"><strong>Resolved Time:</strong> {{ incident.resolved_time|date:"Y-m-d H:i" }}</p>
+            {% endif %}
+            
+            <div class="mt-3">
+                <a href="{% url 'emergency_update' incident.pk %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'emergency_list' %}" class="btn btn-secondary">Back to List</a>
+                <a href="{% url 'emergency_response_create' incident.pk %}" class="btn btn-primary">Add Response</a>
+            </div>
+        </div>
+    </div>
+    
+    <h2>Responses</h2>
+    {% if responses %}
+    <div class="list-group mb-4">
+        {% for response in responses %}
+        <div class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Response by {{ response.responder.username }}</h5>
+                <small>{{ response.response_time|date:"Y-m-d H:i" }}</small>
+            </div>
+            <p class="mb-1"><strong>Action Taken:</strong> {{ response.action_taken }}</p>
+            {% if response.notes %}
+            <p class="mb-1"><strong>Notes:</strong> {{ response.notes }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No responses recorded yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+{% if form.instance.pk %}{% trans "Edit Vehicle" %}{% else %}{% trans "Add Vehicle" %}{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{% if form.instance.pk %}{% trans "Edit Vehicle" %}{% else %}{% trans "Add Vehicle" %}{% endif %}</h1>
+    
+    <form method="post" novalidate>
+        {% csrf_token %}
+        
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="{{ form.brand.id_for_label }}">{% trans "Brand" %}</label>
+                {{ form.brand }}
+                {% if form.brand.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.brand.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6 mb-3">
+                <label for="{{ form.model.id_for_label }}">{% trans "Model" %}</label>
+                {{ form.model }}
+                {% if form.model.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.model.errors }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.year.id_for_label }}">{% trans "Year" %}</label>
+                {{ form.year }}
+                {% if form.year.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.year.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.license_plate.id_for_label }}">{% trans "License Plate" %}</label>
+                {{ form.license_plate }}
+                {% if form.license_plate.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.license_plate.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.vin.id_for_label }}">{% trans "VIN" %}</label>
+                {{ form.vin }}
+                {% if form.vin.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.vin.errors }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Add more form fields as needed -->
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.color.id_for_label }}">{% trans "Color" %}</label>
+                {{ form.color }}
+                {% if form.color.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.color.errors }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.fuel_type.id_for_label }}">{% trans "Fuel Type" %}</label>
+                {{ form.fuel_type }}
+                {% if form.fuel_type.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.fuel_type.errors }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.transmission.id_for_label }}">{% trans "Transmission" %}</label>
+                {{ form.transmission }}
+                {% if form.transmission.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.transmission.errors }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="{{ form.vehicle_type.id_for_label }}">{% trans "Vehicle Type" %}</label>
+                {{ form.vehicle_type }}
+                {% if form.vehicle_type.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.vehicle_type.errors }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="{{ form.mileage.id_for_label }}">{% trans "Mileage" %}</label>
+                {{ form.mileage }}
+                {% if form.mileage.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.mileage.errors }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.last_service_date.id_for_label }}">{% trans "Last Service Date" %}</label>
+                {{ form.last_service_date }}
+                {% if form.last_service_date.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.last_service_date.errors }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.next_service_date.id_for_label }}">{% trans "Next Service Date" %}</label>
+                {{ form.next_service_date }}
+                {% if form.next_service_date.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.next_service_date.errors }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.insurance_expiry.id_for_label }}">{% trans "Insurance Expiry" %}</label>
+                {{ form.insurance_expiry }}
+                {% if form.insurance_expiry.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.insurance_expiry.errors }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="{{ form.status.id_for_label }}">{% trans "Status" %}</label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.status.errors }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+            <a href="{% url 'vehicles:vehicle_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

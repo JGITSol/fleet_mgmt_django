@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Emergency Incidents" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{% trans "Emergency Incidents" %}</h1>
+    <a href="{% url 'emergency:emergency_create' %}" class="btn btn-primary mb-3">{% trans "Report New Emergency" %}</a>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{% trans "Vehicle" %}</th>
+                    <th>{% trans "Type" %}</th>
+                    <th>{% trans "Status" %}</th>
+                    <th>{% trans "Location" %}</th>
+                    <th>{% trans "Reported Time" %}</th>
+                    <th>{% trans "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for incident in emergency_list %}
+                <tr>
+                    <td>{{ incident.vehicle.brand }} {{ incident.vehicle.model }}</td>
+                    <td>{{ incident.get_emergency_type_display }}</td>
+                    <td>{{ incident.get_status_display }}</td>
+                    <td>{{ incident.location }}</td>
+                    <td>{{ incident.reported_time|date:"Y-m-d H:i" }}</td>
+                    <td>
+                        <a href="{% url 'emergency:emergency_detail' incident.pk %}" class="btn btn-sm btn-info">{% trans "View" %}</a>
+                        <a href="{% url 'emergency:emergency_update' incident.pk %}" class="btn btn-sm btn-warning">{% trans "Edit" %}</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">{% trans "No emergency incidents found." %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

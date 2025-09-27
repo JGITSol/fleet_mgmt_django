@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Users</h2>
+{% if user.is_authenticated and (user.is_admin or user.is_manager) %}
+  <a class="btn btn-primary mb-2" href="{% url 'user-create' %}">Add User</a>
+{% endif %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for u in object_list %}
+      <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.username }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.role.get_name_display }}</td>
+        <td>
+          <a class="btn btn-info btn-sm" href="{% url 'user-detail' u.id %}">View</a>
+          {% if user.is_authenticated and (user.is_admin or user.is_manager) %}
+            <a class="btn btn-warning btn-sm" href="{% url 'user-update' u.id %}">Edit</a>
+            <a class="btn btn-danger btn-sm" href="{% url 'user-delete' u.id %}">Delete</a>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

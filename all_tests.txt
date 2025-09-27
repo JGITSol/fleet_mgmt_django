@@ -1,0 +1,142 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.3, pytest-8.3.5, pluggy-1.5.0 -- D:\REPOS\fleet_mgmt_django\venv\Scripts\python.exe
+cachedir: .pytest_cache
+django: version: 5.1.7, settings: CarFleetManagement.settings (from ini)
+rootdir: D:\REPOS\fleet_mgmt_django
+configfile: pytest.ini
+testpaths: CarFleetManagement/tests
+plugins: cov-6.1.1, django-4.11.1
+collecting ... collected 49 items
+
+<Dir fleet_mgmt_django>
+  <Package CarFleetManagement>
+    <Package tests>
+      <Module test_accounts.py>
+        <Function test_custom_user_creation>
+          Test custom user creation using fixture.
+        <Function test_driver_creation>
+          Test driver creation using fixture.
+        <Function test_custom_user_str_representation>
+          Test string representation of CustomUser.
+      <Module test_api.py>
+        <Function test_user_creation>
+          Test that the user fixture works correctly.
+      <Module test_api_views.py>
+        <Class TestAuthViews>
+          Test authentication API views.
+          <Function test_user_profile_view>
+            Test the user profile API endpoint.
+          <Function test_unauthenticated_access>
+            Test unauthenticated access to protected endpoints.
+        <Class TestVehicleViews>
+          Test vehicle API views.
+          <Function test_vehicle_list_view>
+            Test the vehicle list API endpoint.
+          <Function test_vehicle_detail_view>
+            Test the vehicle detail API endpoint.
+        <Class TestMaintenanceViews>
+          Test maintenance API views.
+          <Function test_maintenance_list_view>
+            Test the maintenance list API endpoint.
+          <Function test_maintenance_detail_view>
+            Test the maintenance detail API endpoint.
+      <Module test_auth_views.py>
+        <Function test_register_valid>
+        <Function test_register_missing_fields>
+        <Function test_register_duplicate_email>
+        <Function test_login_valid>
+        <Function test_login_invalid_password>
+        <Function test_login_nonexistent_user>
+        <Function test_logout>
+        <Function test_token_validation>
+        <Function test_profile_requires_auth>
+      <Module test_emergency.py>
+        <Function test_emergency_contact_creation>
+          Test emergency contact creation using fixture.
+        <Function test_emergency_incident_creation>
+          Test emergency incident creation using fixture.
+        <Function test_emergency_contact_str_representation>
+          Test string representation of EmergencyContact.
+        <Function test_emergency_incident_status_update>
+          Test emergency incident status update.
+      <Module test_maintenance.py>
+        <Function test_maintenance_creation>
+          Test maintenance record creation.
+      <Module test_maintenance_fixed.py>
+        <Function test_maintenance_simple>
+          A very simple test to verify maintenance functionality.
+      <Module test_maintenance_methods.py>
+        <Class TestMaintenanceMethods>
+          Test Maintenance model methods.
+          <Function test_days_until_scheduled_with_future_date>
+            Test days_until_scheduled method with a future date.
+          <Function test_days_until_scheduled_with_past_date>
+            Test days_until_scheduled method with a past date.
+          <Function test_days_until_scheduled_with_today>
+            Test days_until_scheduled method with today's date.
+          <Function test_days_until_scheduled_with_no_date>
+            Test days_until_scheduled method with no scheduled date.
+          <Function test_maintenance_status_update>
+            Test updating maintenance status.
+      <Module test_serializers.py>
+        <Class TestDriverSerializer>
+          Test the DriverSerializer.
+          <Function test_serializer_output>
+            Test serializer output format.
+        <Class TestVehicleSerializer>
+          Test the VehicleSerializer.
+          <Function test_serializer_output>
+            Test serializer output format.
+        <Class TestMaintenanceSerializer>
+          Test the MaintenanceSerializer.
+          <Function test_serializer_output>
+            Test serializer output format.
+          <Function test_serializer_missing_required_fields>
+            Test serializer validation for missing required fields.
+          <Function test_serializer_invalid_maintenance_type>
+            Test serializer validation for invalid maintenance_type.
+          <Function test_serializer_negative_cost>
+            Test serializer validation for negative cost.
+          <Function test_serializer_invalid_status>
+            Test serializer validation for invalid status.
+          <Function test_serializer_boundary_odometer>
+            Test serializer validation for boundary odometer values.
+      <Module test_setup.py>
+        Test setup for the Car Fleet Management project.
+        
+        This module contains setup functions and patches that should be applied
+        to all test files to ensure proper authentication and serialization.
+        <Function test_setup_environment>
+          Test that the setup_test_environment function works correctly.
+        <Function test_get_authenticated_client>
+          Test that the get_authenticated_client function works correctly.
+      <Module test_vehicle_methods.py>
+        <Class TestVehicleMethods>
+          Test Vehicle model methods.
+          <Function test_is_service_due_with_future_date>
+            Test is_service_due method with a future date.
+          <Function test_is_service_due_with_past_date>
+            Test is_service_due method with a past date.
+          <Function test_is_service_due_with_today>
+            Test is_service_due method with today's date.
+          <Function test_is_service_due_with_no_date>
+            Test is_service_due method with no service date.
+          <Function test_update_mileage>
+            Test updating vehicle mileage.
+          <Function test_vehicle_status_update>
+            Test updating vehicle status.
+      <Module test_vehicles.py>
+        <Function test_vehicle_status_update>
+          Test updating vehicle status.
+        <Function test_vehicle_mileage_update>
+          Test updating vehicle mileage.
+        <Function test_vehicle_service_due>
+          Test service due calculation.
+
+============================== warnings summary ===============================
+CarFleetManagement\tests\test_setup.py:28
+  D:\REPOS\fleet_mgmt_django\CarFleetManagement\tests\test_setup.py:28: PytestCollectionWarning: cannot collect test class 'TestUserSerializer' because it has a __init__ constructor (from: CarFleetManagement/tests/test_setup.py)
+    class TestUserSerializer(serializers.ModelSerializer):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+========================= 49 tests collected in 0.32s =========================

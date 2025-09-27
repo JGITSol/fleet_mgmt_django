@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Delete Emergency Contact" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{% trans "Delete Emergency Contact" %}</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{% trans "Are you sure you want to delete this emergency contact?" %}</h5>
+            <p class="card-text">
+                <strong>{% trans "Name" %}:</strong> {{ contact.name }}<br>
+                <strong>{% trans "Phone" %}:</strong> {{ contact.phone }}<br>
+                <strong>{% trans "Email" %}:</strong> {{ contact.email }}<br>
+                <strong>{% trans "Type" %}:</strong> {{ contact.get_contact_type_display }}
+            </p>
+            <p class="text-danger">{% trans "This action cannot be undone." %}</p>
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">{% trans "Delete Contact" %}</button>
+        <a href="{% url 'emergency:emergency_contact_detail' contact.pk %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+    </form>
+</div>
+{% endblock %}

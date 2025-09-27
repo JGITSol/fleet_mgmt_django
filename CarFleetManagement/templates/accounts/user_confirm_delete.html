@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Delete User</h2>
+<p>Are you sure you want to delete user <strong>{{ object.username }}</strong>?</p>
+<form method="post">
+  {% csrf_token %}
+  <button class="btn btn-danger" type="submit">Yes, delete</button>
+  <a class="btn btn-secondary" href="{% url 'user-list' %}">Cancel</a>
+</form>
+{% endblock %}

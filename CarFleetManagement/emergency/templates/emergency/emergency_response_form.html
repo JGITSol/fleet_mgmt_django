@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Emergency Response Form" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{% trans "Add Emergency Response" %}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="{{ form.responder.id_for_label }}">{% trans "Responder" %}</label>
+                    {{ form.responder }}
+                    {% if form.responder.errors %}
+                        <div class="text-danger">{{ form.responder.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.action_taken.id_for_label }}">{% trans "Action Taken" %}</label>
+                    {{ form.action_taken }}
+                    {% if form.action_taken.errors %}
+                        <div class="text-danger">{{ form.action_taken.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.notes.id_for_label }}">{% trans "Notes" %}</label>
+                    {{ form.notes }}
+                    {% if form.notes.errors %}
+                        <div class="text-danger">{{ form.notes.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">{% trans "Submit Response" %}</button>
+            <a href="{% url 'emergency:emergency_detail' incident.pk %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

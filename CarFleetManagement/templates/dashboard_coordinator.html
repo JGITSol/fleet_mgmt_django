@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Coordinator Dashboard</h2>
+<ul>
+  <li><a href="{% url 'vehicle-list' %}">View All Vehicles</a></li>
+  <li><a href="{% url 'maintenance-list' %}">View Maintenance</a></li>
+  <li><a href="{% url 'emergency-list' %}">View Emergency Incidents</a></li>
+  <li><a href="{% url 'user-list' %}">View All Users</a></li>
+</ul>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>User Details</h2>
+<ul class="list-group mb-3">
+  <li class="list-group-item"><strong>ID:</strong> {{ object.id }}</li>
+  <li class="list-group-item"><strong>Username:</strong> {{ object.username }}</li>
+  <li class="list-group-item"><strong>Email:</strong> {{ object.email }}</li>
+  <li class="list-group-item"><strong>Role:</strong> {{ object.role.get_name_display }}</li>
+  <li class="list-group-item"><strong>Phone Number:</strong> {{ object.phone_number }}</li>
+  <li class="list-group-item"><strong>Emergency Contact:</strong> {{ object.emergency_contact }}</li>
+</ul>
+<a class="btn btn-secondary" href="{% url 'user-list' %}">Back to List</a>
+{% if user.is_authenticated and (user.is_admin or user.is_manager) %}
+  <a class="btn btn-warning" href="{% url 'user-update' object.id %}">Edit</a>
+  <a class="btn btn-danger" href="{% url 'user-delete' object.id %}">Delete</a>
+{% endif %}
+{% endblock %}

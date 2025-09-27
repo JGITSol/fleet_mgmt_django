@@ -1,0 +1,31 @@
+[run]
+source = .
+omit = 
+    */migrations/*
+    */tests/*
+    */test_*
+    manage.py
+    */settings.py
+    */wsgi.py
+    */asgi.py
+    */apps.py
+    */admin.py
+    */urls.py
+    .tox/*
+    venv/*
+    env/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise NotImplementedError
+    if __name__ == .__main__.:    
+    pass
+    raise ImportError
+
+[html]
+directory = coverage_reports/html
+
+[xml]
+output = coverage_reports/coverage.xml

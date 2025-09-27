@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Emergency Incident Details" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{% trans "Emergency Incident Details" %}</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ incident.get_emergency_type_display }}</h5>
+            <p class="card-text">{{ incident.description }}</p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>{% trans "Vehicle" %}:</strong> {{ incident.vehicle.brand }} {{ incident.vehicle.model }} ({{ incident.vehicle.license_plate }})<br>
+                    <strong>{% trans "Driver" %}:</strong> {{ incident.driver.first_name }} {{ incident.driver.last_name }}<br>
+                    <strong>{% trans "Location" %}:</strong> {{ incident.location }}<br>
+                    {% if incident.latitude and incident.longitude %}
+                    <strong>{% trans "Coordinates" %}:</strong> {{ incident.latitude }}, {{ incident.longitude }}<br>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    <strong>{% trans "Status" %}:</strong> {{ incident.get_status_display }}<br>
+                    <strong>{% trans "Reported By" %}:</strong> {{ incident.reported_by.username }}<br>
+                    <strong>{% trans "Reported Time" %}:</strong> {{ incident.reported_time|date:"Y-m-d H:i:s" }}<br>
+                    {% if incident.resolved_time %}
+                    <strong>{% trans "Resolved Time" %}:</strong> {{ incident.resolved_time|date:"Y-m-d H:i:s" }}<br>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="mt-4">{% trans "Responses" %}</h3>
+    {% if incident.responses.all %}
+    <div class="list-group">
+        {% for response in incident.responses.all %}
+        <div class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ response.responder.username }}</h5>
+                <small>{{ response.response_time|date:"Y-m-d H:i:s" }}</small>
+            </div>
+            {% if response.action_taken %}
+            <p class="mb-1"><strong>{% trans "Action Taken" %}:</strong> {{ response.action_taken }}</p>
+            {% endif %}
+            {% if response.notes %}
+            <p class="mb-1"><strong>{% trans "Notes" %}:</strong> {{ response.notes }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>{% trans "No responses yet." %}</p>
+    {% endif %}
+
+    <div class="mt-4">
+        <a href="{% url 'emergency:emergency_response_create' incident.pk %}" class="btn btn-primary">{% trans "Add Response" %}</a>
+        <a href="{% url 'emergency:emergency_update' incident.pk %}" class="btn btn-warning">{% trans "Edit Incident" %}</a>
+        <a href="{% url 'emergency:emergency_list' %}" class="btn btn-secondary">{% trans "Back to List" %}</a>
+    </div>
+</div>
+{% endblock %}

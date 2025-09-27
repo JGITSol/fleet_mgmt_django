@@ -1,0 +1,22 @@
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+exclude = [
+	"**/migrations/**",
+	"**/__pycache__/**",
+	"car_fleet_manager_frontend/**",
+	"build/**",
+	"dist/**",
+]
+
+[tool.ruff.per-file-ignores]
+"**/__init__.py" = ["F401"]
+"**/migrations/**" = ["RUF012"]
+"car_fleet_manager_frontend/**" = ["F821", "F841"]
+"**/tests/**" = ["S101", "S106", "S105", "E402", "F401", "F403", "F821", "F841", "SIM105", "S603"]
+"**/*/tests/**" = ["S101", "S106", "S105", "E402", "F401", "F403", "F821", "F841", "SIM105", "S603"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+known_first_party = ["CarFleetManagement"]

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Emergency Contacts" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{% trans "Emergency Contacts" %}</h1>
+
+    <div class="mb-3">
+        <a href="{% url 'emergency:emergency_contact_create' %}" class="btn btn-primary">{% trans "Add Emergency Contact" %}</a>
+    </div>
+
+    {% if contacts %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{% trans "Name" %}</th>
+                    <th>{% trans "Phone" %}</th>
+                    <th>{% trans "Email" %}</th>
+                    <th>{% trans "Type" %}</th>
+                    <th>{% trans "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.phone }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.get_contact_type_display }}</td>
+                    <td>
+                        <a href="{% url 'emergency:emergency_contact_detail' contact.pk %}" class="btn btn-sm btn-info">{% trans "View" %}</a>
+                        <a href="{% url 'emergency:emergency_contact_update' contact.pk %}" class="btn btn-sm btn-warning">{% trans "Edit" %}</a>
+                        <a href="{% url 'emergency:emergency_contact_delete' contact.pk %}" class="btn btn-sm btn-danger">{% trans "Delete" %}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>{% trans "No emergency contacts found." %}</p>
+    {% endif %}
+</div>
+{% endblock %}

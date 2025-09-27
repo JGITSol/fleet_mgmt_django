@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Vehicles" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{% trans "Vehicle List" %}</h1>
+    <a href="{% url 'vehicles:vehicle_create' %}" class="btn btn-primary mb-3">{% trans "Add New Vehicle" %}</a>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{% trans "Brand" %}</th>
+                    <th>{% trans "Model" %}</th>
+                    <th>{% trans "Year" %}</th>
+                    <th>{% trans "License Plate" %}</th>
+                    <th>{% trans "Status" %}</th>
+                    <th>{% trans "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vehicle in vehicles %}
+                <tr>
+                    <td>{{ vehicle.brand }} {{ vehicle.model }}</td>
+                    <td>{{ vehicle.model }}</td>
+                    <td>{{ vehicle.year }}</td>
+                    <td>{{ vehicle.license_plate }}</td>
+                    <td>{{ vehicle.get_status_display }}</td>
+                    <td>
+                        <a href="{% url 'vehicles:vehicle_detail' vehicle.pk %}" class="btn btn-sm btn-info">{% trans "View" %}</a>
+                        <a href="{% url 'vehicles:vehicle_update' vehicle.pk %}" class="btn btn-sm btn-warning">{% trans "Edit" %}</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">{% trans "No vehicles found." %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
