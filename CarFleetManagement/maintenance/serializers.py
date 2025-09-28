@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from rest_framework import serializers
 
 from CarFleetManagement.vehicles.serializers import VehicleSerializer
@@ -16,7 +18,7 @@ class MaintenanceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Maintenance
-        fields = [
+        fields: ClassVar[list[str]] = [
             "id",
             "vehicle",
             "vehicle_details",
@@ -31,8 +33,8 @@ class MaintenanceSerializer(serializers.ModelSerializer):
             "notes",
             "days_until_scheduled",
         ]
-        read_only_fields = ["id"]
-        extra_kwargs = {
+        read_only_fields: ClassVar[list[str]] = ["id"]
+        extra_kwargs: ClassVar[dict[str, dict[str, str]]] = {
             "vehicle": {"help_text": "ID of the vehicle for this maintenance."},
             "maintenance_type": {"help_text": "Type of maintenance (routine, repair, inspection, etc)."},
             "status": {"help_text": "Current status of the maintenance."},

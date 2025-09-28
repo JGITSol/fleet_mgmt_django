@@ -5,13 +5,13 @@ from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
-from tests.auth_test_mixin import AuthTestMixin
-from tests.test_setup import setup_test_environment
 
 # Model imports moved to setUp
 from CarFleetManagement.vehicles.serializers import (
     VehicleSerializer,  # Assuming serializer is safe for now
 )
+from tests.auth_test_mixin import AuthTestMixin
+from tests.test_setup import setup_test_environment
 
 # Set up the test environment with all necessary patches
 setup_test_environment()
@@ -26,24 +26,30 @@ class VehicleAPITestCase(APITestCase, AuthTestMixin):
         self.Vehicle = Vehicle
         self.UserRole = UserRole
         self.CustomUser = CustomUser
-
-    # Create roles (use get_or_create so tests are idempotent)
-    self.admin_role, _ = self.UserRole.objects.get_or_create(name=self.UserRole.ADMIN, defaults={'description': 'Administrator role'})
-    self.driver_role, _ = self.UserRole.objects.get_or_create(name=self.UserRole.DRIVER, defaults={'description': 'Driver role'})
+        # Create roles (use get_or_create so tests are idempotent)
+        self.admin_role, _ = self.UserRole.objects.get_or_create(
+            name=self.UserRole.ADMIN,
+            defaults={'description': 'Administrator role'},
+        )
+        self.driver_role, _ = self.UserRole.objects.get_or_create(
+            name=self.UserRole.DRIVER,
+            defaults={'description': 'Driver role'},
+        )
 
         # Create users
+        from conftest import TEST_PASSWORD
         self.admin_user = self.CustomUser.objects.create_user(
             username='admin_user',
             email='admin@example.com',
-            password='password123',
-            role=self.admin_role
+            password=TEST_PASSWORD,
+            role=self.admin_role,
         )
 
         self.driver_user = self.CustomUser.objects.create_user(
             username='driver_user',
             email='driver@example.com',
-            password='password123',
-            role=self.driver_role
+            password=TEST_PASSWORD,
+            role=self.driver_role,
         )
 
         # Generate JWT tokens for potential use if specific tests need to switch users
@@ -51,7 +57,8 @@ class VehicleAPITestCase(APITestCase, AuthTestMixin):
         self.driver_token = str(RefreshToken.for_user(self.driver_user).access_token)
 
         # Initialize client and authenticate as admin_user by default
-        # self.client, _ = self.get_authenticated_client(self.admin_user) # Moved to individual tests
+        self.client = APIClient()
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.admin_token}')
 
         # Create vehicles
         self.today = timezone.now().date()
@@ -72,7 +79,7 @@ class VehicleAPITestCase(APITestCase, AuthTestMixin):
             last_service_date=self.today - timedelta(days=90),
             next_service_date=self.next_service,
             insurance_expiry=self.insurance_expiry,
-            status=self.Vehicle.Status.AVAILABLE
+            status=self.Vehicle.Status.AVAILABLE,
         )
 
         self.vehicle2 = self.Vehicle.objects.create(
@@ -89,19 +96,18 @@ class VehicleAPITestCase(APITestCase, AuthTestMixin):
             last_service_date=self.today - timedelta(days=30),
             next_service_date=self.today + timedelta(days=60),
             insurance_expiry=self.today + timedelta(days=300),
-            status=self.Vehicle.Status.MAINTENANCE
+            status=self.Vehicle.Status.MAINTENANCE,
         )
 
         # Assign vehicle to driver
         self.driver = self.driver_user
         if not hasattr(self.driver, 'assigned_vehicles'):
             from django.db import models
+
             self.driver.assigned_vehicles = models.Manager()
         # If Vehicle has a ManyToManyField to user, use that, else skip this assignment
         if hasattr(self.driver, 'assigned_vehicles') and hasattr(self.driver.assigned_vehicles, 'add'):
             self.driver.assigned_vehicles.add(self.vehicle1)
-
-        # Create API client
 
         # client is already authenticated as admin_user from setUp
 

@@ -16,7 +16,7 @@ def test_create_all_roles():
         user = CustomUser.objects.create_user(
             username=f'{role_name}_user',
             email=f'{role_name}@example.com',
-            password='testpassword',
+            password=__import__('conftest').conftest.TEST_PASSWORD if False else __import__('conftest').TEST_PASSWORD,
             role=role_objs[role_name],
             phone_number='1234567890',
             emergency_contact='Emergency Contact'

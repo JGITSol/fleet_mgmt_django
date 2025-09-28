@@ -16,8 +16,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarFleetManagement.settings")
 
 import django
 
-django.setup()
-
 from django.db import connection
 from django.db.migrations.recorder import MigrationRecorder
 
@@ -79,6 +77,7 @@ def fix_migration_history():
 
 
 if __name__ == "__main__":
+    django.setup()
     success = fix_migration_history()
     if success:
         print("\n🎉 Migration history fixed successfully!")

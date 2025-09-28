@@ -18,8 +18,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarFleetManagement.settings")
 
 import django
 
-django.setup()
-
 from django.test import Client
 from django.urls import get_resolver
 
@@ -72,4 +70,6 @@ def debug_url_patterns():
 
 
 if __name__ == "__main__":
+    # Ensure Django is configured before using ORM/test client
+    django.setup()
     debug_url_patterns()

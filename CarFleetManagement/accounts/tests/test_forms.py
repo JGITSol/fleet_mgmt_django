@@ -2,10 +2,9 @@
 Tests for accounts forms.
 """
 
-from django.test import TestCase
-
 from CarFleetManagement.accounts.forms import CustomUserCreationForm
 from CarFleetManagement.accounts.models import UserRole
+from django.test import TestCase
 
 
 class CustomUserCreationFormTestCase(TestCase):

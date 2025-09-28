@@ -1,0 +1,14 @@
+{
+  "exclude": [
+    "issues.md",
+    "test_logs",
+    "ui_test_screenshots",
+    "node_modules",
+    "venv",
+    ".venv",
+    "**/dist/**",
+    "**/.git/**",
+    "**/.github/**"
+  ],
+  "venvPath": "./venv"
+}

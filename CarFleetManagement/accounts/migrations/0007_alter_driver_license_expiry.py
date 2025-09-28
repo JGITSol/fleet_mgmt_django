@@ -1,5 +1,7 @@
+
 from django.db import migrations, models
 
+"""Migration file."""
 
 class Migration(migrations.Migration):
     dependencies = [

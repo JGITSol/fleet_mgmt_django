@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
@@ -35,8 +37,18 @@ class MaintenanceDetailView(LoginRequiredMixin, DetailView):
 class MaintenanceCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Maintenance
     template_name = 'maintenance/maintenance_form.html'
-    fields = ['vehicle', 'maintenance_type', 'status', 'description', 'scheduled_date',
-              'completed_date', 'odometer_reading', 'cost', 'service_provider', 'notes']
+    fields: ClassVar[list[str]] = [
+        'vehicle',
+        'maintenance_type',
+        'status',
+        'description',
+        'scheduled_date',
+        'completed_date',
+        'odometer_reading',
+        'cost',
+        'service_provider',
+        'notes',
+    ]
     success_url = reverse_lazy('maintenance:maintenance_list')
 
     def get_form(self, form_class=None):
@@ -61,8 +73,18 @@ class MaintenanceCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView)
 class MaintenanceUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Maintenance
     template_name = 'maintenance/maintenance_form.html'
-    fields = ['vehicle', 'maintenance_type', 'status', 'description', 'scheduled_date',
-              'completed_date', 'odometer_reading', 'cost', 'service_provider', 'notes']
+    fields: ClassVar[list[str]] = [
+        'vehicle',
+        'maintenance_type',
+        'status',
+        'description',
+        'scheduled_date',
+        'completed_date',
+        'odometer_reading',
+        'cost',
+        'service_provider',
+        'notes',
+    ]
 
     def get_success_url(self):
         return reverse_lazy('maintenance:maintenance_detail', kwargs={'pk': self.object.pk})

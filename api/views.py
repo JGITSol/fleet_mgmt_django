@@ -1,4 +1,5 @@
 import os
+from typing import ClassVar
 
 from accounts.models import CustomUser, Driver
 from accounts.permissions import IsAdmin, IsAdminOrManager, IsCoordinator, IsManager
@@ -7,6 +8,7 @@ from django.conf import settings
 from emergency.serializers import EmergencyIncidentSerializer
 from maintenance.models import Maintenance
 from maintenance.serializers import MaintenanceSerializer
+from CarFleetManagement.emergency.models import EmergencyIncident
 from rest_framework import status, viewsets
 from rest_framework.permissions import SAFE_METHODS, IsAuthenticated
 from rest_framework.response import Response
@@ -20,7 +22,7 @@ from .openrouter_client import get_client
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [IsAdminOrManager]
+    permission_classes: ClassVar[list] = [IsAdminOrManager]
 
 class VehicleViewSet(viewsets.ModelViewSet):
     queryset = Vehicle.objects.all()
@@ -40,9 +42,6 @@ class MaintenanceViewSet(viewsets.ModelViewSet):
             return [IsAuthenticated()]
         return [IsAdmin() or IsManager() or IsCoordinator()]
 
-from CarFleetManagement.emergency.models import EmergencyIncident
-
-
 class EmergencyIncidentViewSet(viewsets.ModelViewSet):
     queryset = EmergencyIncident.objects.all()
     serializer_class = EmergencyIncidentSerializer
@@ -55,7 +54,7 @@ class EmergencyIncidentViewSet(viewsets.ModelViewSet):
 class DriverViewSet(viewsets.ModelViewSet):
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer
-    permission_classes = [IsAdminOrManager]
+    permission_classes: ClassVar[list] = [IsAdminOrManager]
 
 class AnalyzeScreenshotView(APIView):
     def post(self, request, *args, **kwargs):

@@ -33,7 +33,7 @@ def run_tests_with_coverage():
         f.write(f"Command: {' '.join(cmd)}\n\n")
         f.write("=" * 80 + "\n\n")
 
-        process = subprocess.run(cmd, capture_output=True, text=True)
+        process = subprocess.run(cmd, capture_output=True, text=True)  # noqa: S603
 
         f.write("STDOUT:\n")
         f.write(process.stdout)
@@ -62,7 +62,7 @@ def run_tests_with_coverage():
     html_dir = Path("coverage_reports/html")
     html_dir.mkdir(parents=True, exist_ok=True)
 
-    subprocess.run([
+    subprocess.run([  # noqa: S603
         sys.executable, "-m", "pytest",
         "--cov=accounts", "--cov=vehicles", "--cov=maintenance",
         "--cov=emergency", "--cov=api", "--cov-report=html:coverage_reports/html"

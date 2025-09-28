@@ -1,4 +1,5 @@
-from typing import ClassVar
+from collections.abc import Sequence
+from typing import ClassVar, Union
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -42,7 +43,8 @@ class EmergencyIncidentCreateView(LoginRequiredMixin, CreateView):
     model = EmergencyIncident
     template_name = "emergency/emergency_form.html"
     # reported_by is set in form_valid; do not include it in the form fields
-    fields: ClassVar[list[str]] = ["vehicle", "emergency_type", "location", "description", "status"]
+    # Use a compatible annotation with ModelFormMixin
+    fields: ClassVar[Union[Sequence[str], str, None]] = ["vehicle", "emergency_type", "location", "description", "status"]
     success_url = reverse_lazy("emergency_list")
 
     def get_form(self, form_class=None):

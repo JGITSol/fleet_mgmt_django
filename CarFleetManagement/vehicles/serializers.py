@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from rest_framework import serializers
 
 from CarFleetManagement.accounts.models import Driver
@@ -10,7 +12,7 @@ class DriverNestedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Driver
-        fields = ["id", "first_name", "last_name", "full_name"]
+        fields: ClassVar[list[str]] = ["id", "first_name", "last_name", "full_name"]
 
     def get_full_name(self, obj):
         return f"{obj.first_name} {obj.last_name}" if obj.first_name and obj.last_name else str(obj)
@@ -28,7 +30,7 @@ class VehicleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vehicle
-        fields = [
+        fields: ClassVar[list[str]] = [
             "id",
             "vin",
             "brand",
@@ -50,4 +52,4 @@ class VehicleSerializer(serializers.ModelSerializer):
             "drivers",
             "maintenance_records",
         ]
-        read_only_fields = ["id", "created_at", "updated_at"]
+    read_only_fields: ClassVar[list[str]] = ["id", "created_at", "updated_at"]

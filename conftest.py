@@ -41,6 +41,17 @@ def django_db_setup(django_db_blocker):
             # during test execution if critical.
             pass
 
+# Central test password constant and fixture
+# Use a single source for test passwords to satisfy linter and make it easy
+# to change globally if needed.
+TEST_PASSWORD = "TestPassword123!"
+
+
+@pytest.fixture(scope="session")
+def test_password():
+    """Return a stable test password for creating users in tests."""
+    return TEST_PASSWORD
+
 # Override the default pytest-django client fixture to use DRF APIClient
 from rest_framework.test import APIClient
 

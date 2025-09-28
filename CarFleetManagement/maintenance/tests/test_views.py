@@ -83,17 +83,19 @@ class MaintenanceViewsTestCase(APITestCase):
         )
 
         # Create users
+        from conftest import TEST_PASSWORD
+        # Create users
         self.admin_user = User.objects.create_user(
             username='admin_user',
             email='admin@example.com',
-            password='password123',
+            password=TEST_PASSWORD,
             role=self.admin_role
         )
 
         self.maintenance_user = User.objects.create_user(
             username='maintenance_user',
             email='maintenance@example.com',
-            password='password123',
+            password=TEST_PASSWORD,
             role=self.maintenance_role
         )
 

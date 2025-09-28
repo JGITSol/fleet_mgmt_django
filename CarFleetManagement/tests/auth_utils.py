@@ -40,6 +40,7 @@ import contextlib
 import functools
 import inspect
 
+from conftest import TEST_PASSWORD
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -103,7 +104,7 @@ class AuthUtils:
         return AuthUtils.create_user(
             username="admin_test",
             email="admin_test@example.com",
-            password="password123",
+            password=TEST_PASSWORD,
             role_name=UserRole.ADMIN,
             is_staff=True,
         )
@@ -114,7 +115,7 @@ class AuthUtils:
         return AuthUtils.create_user(
             username="driver_test",
             email="driver_test@example.com",
-            password="password123",
+            password=TEST_PASSWORD,
             role_name=UserRole.DRIVER,
             is_staff=False,
         )
@@ -125,7 +126,7 @@ class AuthUtils:
         return AuthUtils.create_user(
             username="fleet_manager_test",
             email="fleet_manager_test@example.com",
-            password="password123",
+            password=TEST_PASSWORD,
             role_name=UserRole.FLEET_MANAGER,
             is_staff=False,
         )
@@ -136,7 +137,7 @@ class AuthUtils:
         return AuthUtils.create_user(
             username="maintenance_test",
             email="maintenance_test@example.com",
-            password="password123",
+            password=TEST_PASSWORD,
             role_name=UserRole.MAINTENANCE,
             is_staff=False,
         )

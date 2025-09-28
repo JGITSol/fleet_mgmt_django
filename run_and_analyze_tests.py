@@ -15,9 +15,22 @@ def run_pytest():
     import os
     print("Running all tests with pytest + coverage...\n")
     root_dir = os.path.dirname(os.path.abspath(__file__))
-    result = subprocess.run([
-        sys.executable, '-m', 'pytest', '--cov=.', '--cov-report=term-missing', '--maxfail=200', '--disable-warnings', '-v'
-    ], cwd=root_dir, capture_output=True, text=True)
+    result = subprocess.run(  # noqa: S603
+        [
+            sys.executable,
+            '-m',
+            'pytest',
+            '--cov=.',
+            '--cov-report=term-missing',
+            '--maxfail=200',
+            '--disable-warnings',
+            '-v',
+        ],
+        cwd=root_dir,
+        capture_output=True,
+        text=True,
+        timeout=600,
+    )
     with open(os.path.join(root_dir, 'last_pytest_output.txt'), 'w', encoding='utf-8') as f:
         f.write(result.stdout)
         f.write(result.stderr)
@@ -54,29 +67,28 @@ def parse_failures(output):
     return failures
 
 
-def analyze_root_cause(trace):
-    """Very basic root cause analysis based on traceback and error message."""
-    if 'ImportError' in trace:
-        return 'ImportError: Missing or incorrect import. Check module and class/function names.'
-    if 'AssertionError' in trace:
-        return 'AssertionError: Test assertion failed. Check expected vs actual values.'
-    if 'PermissionDenied' in trace or '403' in trace:
-        return 'PermissionDenied: Likely authentication or permissions misconfiguration.'
-    if 'TypeError' in trace:
-        return 'TypeError: Likely wrong argument types or method signatures.'
-    if 'KeyError' in trace:
-        return 'KeyError: Dictionary key missing. Check test data and serializers.'
-    if 'DoesNotExist' in trace:
-        return 'DoesNotExist: Missing object in DB. Check test setup/fixtures.'
-    if 'IntegrityError' in trace:
-        return 'IntegrityError: DB constraint failed. Check unique fields and test data.'
-    if 'ValueError' in trace:
-        return 'ValueError: Wrong value passed or returned.'
-    if 'NotAuthenticated' in trace:
-        return 'NotAuthenticated: Authentication missing in test setup.'
-    if 'TemplateDoesNotExist' in trace:
-        return 'TemplateDoesNotExist: Missing template file.'
-    return 'Unknown: Review full traceback for details.'
+def analyze_root_cause(trace: str) -> str:
+    """Lightweight root cause hints extracted from traceback text.
+
+    This function intentionally keeps a short list of common error
+    signatures to stay under complexity limits enforced by linters.
+    """
+    keywords = [
+        ('ImportError', 'ImportError: missing/incorrect import.'),
+        ('AssertionError', 'AssertionError: assertion failed.'),
+        ('PermissionDenied', 'PermissionDenied: likely permissions/auth issue.'),
+        ('403', 'HTTP 403 response: permission/authentication problem.'),
+        ('TypeError', 'TypeError: wrong argument type or signature.'),
+        ('KeyError', 'KeyError: missing dict key in test data.'),
+        ('DoesNotExist', 'DoesNotExist: DB object missing; check fixtures.'),
+        ('IntegrityError', 'IntegrityError: DB constraint violation.'),
+        ('ValueError', 'ValueError: invalid value passed.'),
+        ('TemplateDoesNotExist', 'TemplateDoesNotExist: missing template file.'),
+    ]
+    for key, msg in keywords:
+        if key in trace:
+            return msg
+    return 'Unknown: review full traceback for details.'
 
 
 def parse_test_results(output):

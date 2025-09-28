@@ -2,10 +2,6 @@
 Tests for accounts permissions.
 """
 
-from django.contrib.auth import get_user_model
-from django.test import TestCase
-from rest_framework.test import APIRequestFactory
-
 from CarFleetManagement.accounts.models import UserRole
 from CarFleetManagement.accounts.permissions import (
     IsAdmin,
@@ -15,6 +11,9 @@ from CarFleetManagement.accounts.permissions import (
     IsManager,
     IsTestUser,
 )
+from django.contrib.auth import get_user_model
+from django.test import TestCase
+from rest_framework.test import APIRequestFactory
 
 User = get_user_model()
 
@@ -188,7 +187,8 @@ class PermissionsTestCase(TestCase):
     def test_permissions_with_missing_attributes(self):
         """Test permissions when user doesn't have role attributes."""
         # Create a user without role attributes
-        user_without_role = User.objects.create_user(username="norole", email="norole@test.com", password="pass")
+        from conftest import TEST_PASSWORD
+        user_without_role = User.objects.create_user(username="norole", email="norole@test.com", password=TEST_PASSWORD)
 
         request = self.factory.get("/")
         request.user = user_without_role

@@ -16,17 +16,19 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarFleetManagement.settings")
 
 import django
 
-django.setup()
-
-from django.contrib.auth import get_user_model
-
-from CarFleetManagement.accounts.models import UserRole
-
-User = get_user_model()
-
 
 def setup_simple_test_user():
     """Setup test user with admin role (without permissions field)"""
+
+    # Ensure Django is configured when this script runs (avoids module-level side-effects)
+    django.setup()
+
+    from django.contrib.auth import get_user_model
+    from CarFleetManagement.accounts.models import UserRole
+
+    User = get_user_model()
+
+
     print("🔧 Setting up simple test user")
     print("=" * 50)
 
@@ -53,7 +55,7 @@ def setup_simple_test_user():
         test_user = User.objects.create_user(
             username="testuser",
             email="test@example.com",
-            password="testpass123",
+                password=__import__('conftest').TEST_PASSWORD,
             first_name="Test",
             last_name="User",
             role=admin_role,
@@ -71,4 +73,7 @@ def setup_simple_test_user():
 
 
 if __name__ == "__main__":
+    # When executed as a script, ensure Django is initialized before running
+    # the setup logic. The function itself calls django.setup() as well, so
+    # this is defensive but safe to keep.
     setup_simple_test_user()

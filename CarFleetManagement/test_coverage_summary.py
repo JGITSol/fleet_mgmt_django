@@ -9,14 +9,13 @@ import subprocess
 import sys
 
 
-def run_coverage():
+def run_coverage():  # noqa: C901
     """Run coverage analysis and display results."""
     print("🧪 Running comprehensive test coverage analysis...")
     print("=" * 60)
 
     # Change to the correct directory
     os.chdir("CarFleetManagement")
-
     try:
         # Run tests with coverage
         print("📊 Running tests with coverage...")
@@ -33,7 +32,10 @@ def run_coverage():
 
         # Generate coverage report
         print("\n📈 Generating coverage report...")
-        coverage_result = subprocess.run([sys.executable, "-m", "coverage", "report"], capture_output=True, text=True)
+        # safe: invoking coverage module via explicit sys.executable list
+        coverage_result = subprocess.run(
+            [sys.executable, "-m", "coverage", "report"], capture_output=True, text=True, timeout=60
+        )
 
         print("\n" + "=" * 60)
         print("📊 COVERAGE REPORT")
@@ -50,16 +52,19 @@ def run_coverage():
             # Determine coverage quality
             try:
                 percent_num = int(coverage_percent.replace("%", ""))
-                if percent_num >= 80:
-                    print("🟢 EXCELLENT coverage!")
-                elif percent_num >= 70:
-                    print("🟡 GOOD coverage!")
-                elif percent_num >= 60:
-                    print("🟠 FAIR coverage - room for improvement")
-                else:
-                    print("🔴 LOW coverage - needs significant improvement")
-            except:
-                pass
+            except ValueError:
+                percent_num = None
+
+            if percent_num is None:
+                print("⚠️ Could not parse coverage percent")
+            elif percent_num >= 80:
+                print("🟢 EXCELLENT coverage!")
+            elif percent_num >= 70:
+                print("🟡 GOOD coverage!")
+            elif percent_num >= 60:
+                print("🟠 FAIR coverage - room for improvement")
+            else:
+                print("🔴 LOW coverage - needs significant improvement")
 
         # Show areas that need improvement
         print("\n" + "=" * 60)
@@ -73,10 +78,10 @@ def run_coverage():
                 if len(parts) >= 4:
                     try:
                         coverage = int(parts[-1].replace("%", ""))
-                        if coverage < 70:
-                            low_coverage_files.append((parts[0], coverage))
-                    except:
-                        pass
+                    except ValueError:
+                        continue
+                    if coverage < 70:
+                        low_coverage_files.append((parts[0], coverage))
 
         if low_coverage_files:
             print("Files with coverage < 70%:")
@@ -87,6 +92,8 @@ def run_coverage():
 
     except subprocess.TimeoutExpired:
         print("⏰ Test execution timed out after 5 minutes")
+    except subprocess.SubprocessError as e:
+        print(f"❌ Subprocess error running coverage: {e}")
     except Exception as e:
         print(f"❌ Error running coverage: {e}")
 

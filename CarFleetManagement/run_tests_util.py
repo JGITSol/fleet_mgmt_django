@@ -11,16 +11,17 @@ sys.path.insert(0, project_dir)
 # Configure Django settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarFleetManagement.settings")
 
-# Setup Django
-django.setup()
-
-# Import the JWT patch
-from tests.jwt_auth_patch import jwt_auth_patch
-
 
 def run_test_file(test_file):
     """Run a single test file and return the exit code."""
+    # Ensure Django is ready before importing test helpers that rely on ORM
+    django.setup()
+
+    # Import the JWT patch after Django is configured
+    from tests.jwt_auth_patch import jwt_auth_patch
+
     print(f"\n\n=== Running {test_file} ===")
+
 
     # Apply the JWT authentication patch
     print("Applying JWT authentication patch...")
@@ -31,7 +32,7 @@ def run_test_file(test_file):
         result = subprocess.run(
             [sys.executable, "-m", "pytest", test_file, "-v"],
             capture_output=True,
-            text=True
+            text=True,
         )
         print(f"Exit code: {result.returncode}")
         if result.returncode != 0:

@@ -2,10 +2,18 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-from tests.auth_utils import get_authenticated_client
 
 from CarFleetManagement.accounts.models import CustomUser, UserRole
+from tests.auth_utils import get_authenticated_client
 
+# Make TEST_PASSWORD visible to static analyzers
+try:
+    from tests import TEST_PASSWORD  # type: ignore[attr-defined]
+except Exception:
+    try:
+        from conftest import TEST_PASSWORD  # type: ignore[attr-defined]
+    except Exception:
+        TEST_PASSWORD = "password123"
 
 @pytest.mark.django_db
 def test_register_valid():
@@ -46,8 +54,9 @@ def test_register_duplicate_email():
     client = APIClient()
     url = reverse("CarFleetManagement.api:api_register")
     admin_role, _ = UserRole.objects.get_or_create(name=UserRole.ADMIN, defaults={"description": "Administrator role"})
+    # Use TEST_PASSWORD fixture (or fallback) when creating the user
     CustomUser.objects.create_user(
-        username="existing", email="existing@example.com", password="password", role=admin_role
+        username="existing", email="existing@example.com", password=TEST_PASSWORD, role=admin_role
     )
     driver_role, _ = UserRole.objects.get_or_create(name=UserRole.DRIVER, defaults={"description": "Driver role"})
     data = {
@@ -67,10 +76,10 @@ def test_login_valid():
     client = APIClient()
     admin_role, _ = UserRole.objects.get_or_create(name=UserRole.ADMIN, defaults={"description": "Administrator role"})
     CustomUser.objects.create_user(
-        username="loginuser", email="loginuser@example.com", password="MySecret123!", role=admin_role
+        username="loginuser", email="loginuser@example.com", password=TEST_PASSWORD, role=admin_role
     )
     url = reverse("CarFleetManagement.api:api_login")
-    data = {"username": "loginuser", "password": "MySecret123!"}
+    data = {"username": "loginuser", "password": TEST_PASSWORD}
     response = client.post(url, data)
     assert response.status_code == status.HTTP_200_OK
     assert "access" in response.data
@@ -83,7 +92,7 @@ def test_login_invalid_password():
     client = APIClient()
     admin_role, _ = UserRole.objects.get_or_create(name=UserRole.ADMIN, defaults={"description": "Administrator role"})
     CustomUser.objects.create_user(
-        username="loginuser2", email="loginuser2@example.com", password="MySecret123!", role=admin_role
+        username="loginuser2", email="loginuser2@example.com", password=TEST_PASSWORD, role=admin_role
     )
     url = reverse("CarFleetManagement.api:api_login")
     data = {"username": "loginuser2", "password": "WrongPassword!"}

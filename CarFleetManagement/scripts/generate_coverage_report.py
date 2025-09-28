@@ -116,7 +116,7 @@ def run_coverage():
             print(f"{package} is installed.")
         except ImportError:
             print(f"\n❌ {package} not found. Installing...")
-            subprocess.run([sys.executable, "-m", "pip", "install", package], check=True)
+            subprocess.run([sys.executable, "-m", "pip", "install", package], check=True)  # noqa: S603
 
     # Check if REST framework test utilities are available
     try:
@@ -125,7 +125,7 @@ def run_coverage():
         print("REST framework test utilities are available.")
     except ImportError:
         print("\n❌ REST framework test utilities not found. Installing djangorestframework...")
-        subprocess.run([sys.executable, "-m", "pip", "install", "djangorestframework"], check=True)
+    subprocess.run([sys.executable, "-m", "pip", "install", "djangorestframework"], check=True)  # noqa: S603
 
     # Run tests with pytest and coverage
     print("\n🧪 Running tests with pytest and coverage...")

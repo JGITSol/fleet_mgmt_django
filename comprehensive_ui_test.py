@@ -25,21 +25,24 @@ sys.path.insert(0, str(project_root))
 # Set Django settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarFleetManagement.settings")
 
+
+
 import django
-
-django.setup()
-
-from django.contrib.auth import get_user_model
-from django.test import Client
-
-User = get_user_model()
+from conftest import TEST_PASSWORD
 
 
 class ComprehensiveUITester:
     def __init__(self):
+        # Configure Django at runtime; caller is responsible for calling
+        # django.setup() before constructing this class when used as a
+        # library. When executed as a script we call setup() in main().
+        from django.contrib.auth import get_user_model
+        from django.test import Client
+
         self.base_url = "http://localhost:8000"
         self.client = Client()
         self.session = requests.Session()
+        self.User = get_user_model()
         self.test_results = []
         self.screenshot_dir = Path("ui_test_screenshots")
         self.screenshot_dir.mkdir(exist_ok=True)
@@ -60,13 +63,13 @@ class ComprehensiveUITester:
 
         # Create test user if not exists
         try:
-            self.test_user = User.objects.get(username="testuser")
+            self.test_user = self.User.objects.get(username="testuser")
             self.log("Test user already exists")
         except User.DoesNotExist:
-            self.test_user = User.objects.create_user(
+            self.test_user = self.User.objects.create_user(
                 username="testuser",
                 email="test@example.com",
-                password="testpass123",
+                password=TEST_PASSWORD,
                 first_name="Test",
                 last_name="User",
             )
@@ -74,11 +77,11 @@ class ComprehensiveUITester:
 
         # Create admin user if not exists
         try:
-            self.admin_user = User.objects.get(username="admin", is_superuser=True)
+            self.admin_user = self.User.objects.get(username="admin", is_superuser=True)
             self.log("Admin user already exists")
         except User.DoesNotExist:
-            self.admin_user = User.objects.create_superuser(
-                username="admin", email="admin@example.com", password="admin123"
+            self.admin_user = self.User.objects.create_superuser(
+                username="admin", email="admin@example.com", password=TEST_PASSWORD
             )
             self.log("Created admin user")
 
@@ -265,7 +268,7 @@ const fs = require('fs');
 
         try:
             # Check if Node.js and Puppeteer are available
-            result = subprocess.run(
+            result = subprocess.run(  # noqa: S603
                 ["node", "--version"], capture_output=True, text=True, timeout=5
             )
 
@@ -273,7 +276,7 @@ const fs = require('fs');
                 self.log(f"Node.js version: {result.stdout.strip()}")
 
                 # Try to run the Puppeteer script
-                result = subprocess.run(
+                result = subprocess.run(  # noqa: S603
                     ["node", str(script_path)],
                     capture_output=True,
                     text=True,
@@ -315,7 +318,7 @@ const fs = require('fs');
             os.chdir("CarFleetManagement")
 
             # Run tests with coverage
-            result = subprocess.run(
+            result = subprocess.run(  # noqa: S603
                 [sys.executable, "manage.py", "test", "--verbosity=2"],
                 capture_output=True,
                 text=True,
@@ -542,6 +545,9 @@ const fs = require('fs');
 
 def main():
     """Main function"""
+    # Configure Django for script execution
+    django.setup()
+
     print("Car Fleet Management System - Comprehensive UI Testing")
     print("=" * 60)
 

@@ -3,33 +3,18 @@ conftest.py: Pytest fixtures for CarFleetManagement tests.
 All fixtures are documented for coverage compliance.
 """
 import os
-import sys
 import uuid
 from datetime import timedelta
 
-import django
 import pytest
 
-# Add the project directory to the Python path
-project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, project_dir)
+# Avoid importing or calling django.setup() at module import time so linters
+# don't flag E402. pytest-django will set up Django when tests run. Move
+# imports that require Django into fixtures/functions below.
 
-# Configure Django settings before importing any models
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarFleetManagement.settings")
-
-# Setup Django
-django.setup()
-
-# Now it's safe to import Django models
-from django.contrib.auth import get_user_model
-from django.utils import timezone
-
-from CarFleetManagement.accounts.models import Driver
-from CarFleetManagement.emergency.models import EmergencyContact, EmergencyIncident
-from CarFleetManagement.maintenance.models import Maintenance
-from CarFleetManagement.vehicles.models import Vehicle
-
-User = get_user_model()
+# A single test password used in fixtures to avoid repeated hard-coded literals.
+# Allow override via env to avoid hard-coded secrets in some environments.
+TEST_PASSWORD = os.environ.get("TEST_PASSWORD", "testpassword123")
 
 
 def test_fixtures_coverage(user, custom_user, driver, vehicle, maintenance, scheduled_maintenance, emergency_contact, emergency_incident):
@@ -49,14 +34,20 @@ def test_fixtures_coverage(user, custom_user, driver, vehicle, maintenance, sche
 @pytest.fixture
 def user():
     """Create and return a test user."""
-    # Create a uniquely named fixture user to avoid colliding with tests that create
-    # their own 'testuser' usernames. We deliberately avoid get_or_create here so
-    # each fixture invocation provides an isolated user.
+    # Create a uniquely named fixture user to avoid colliding with tests that
+    # create their own 'testuser' usernames. Import Django models locally so
+    # module-level imports/ django.setup() are not required.
+    import django
+    from django.contrib.auth import get_user_model
+
+    django.setup()
+    User = get_user_model()
+
     unique_username = f"fixture_user_{uuid.uuid4().hex[:8]}"
     user = User.objects.create_user(
         username=unique_username,
         email=f"{unique_username}@example.com",
-        password='testpassword'
+        password=TEST_PASSWORD,
     )
     return user
 
@@ -77,6 +68,12 @@ def driver(custom_user):
     """Create and return a test driver."""
     # Add license_expiry_date for compatibility with older migrations that
     # still enforce NOT NULL on this column.
+    import django
+    from django.utils import timezone
+
+    from CarFleetManagement.accounts.models import Driver
+
+    django.setup()
     return Driver.objects.create(
         first_name='Test',
         last_name='Driver',
@@ -91,10 +88,15 @@ def driver(custom_user):
 @pytest.fixture
 def vehicle():
     """Create and return a test vehicle."""
+    import django
+    from django.utils import timezone
+
+    from CarFleetManagement.vehicles.models import Vehicle
+
+    django.setup()
     today = timezone.now().date()
     next_service = today + timedelta(days=90)
     insurance_expiry = today + timedelta(days=365)
-
     return Vehicle.objects.create(
         brand='Toyota',
         model='Camry',
@@ -109,13 +111,19 @@ def vehicle():
         last_service_date=today - timedelta(days=90),
         next_service_date=next_service,
         insurance_expiry=insurance_expiry,
-        status=Vehicle.Status.AVAILABLE
+        status=Vehicle.Status.AVAILABLE,
     )
 
 
 @pytest.fixture
 def maintenance(vehicle):
     """Create and return a test maintenance record."""
+    import django
+    from django.utils import timezone
+
+    from CarFleetManagement.maintenance.models import Maintenance
+
+    django.setup()
     return Maintenance.objects.create(
         vehicle=vehicle,
         maintenance_type='ROUTINE',
@@ -126,13 +134,19 @@ def maintenance(vehicle):
         odometer_reading=14500,
         cost=50.00,
         service_provider='Test Mechanic',
-        notes='Everything looks good'
+        notes='Everything looks good',
     )
 
 
 @pytest.fixture
 def scheduled_maintenance(vehicle):
     """Create and return a test scheduled maintenance."""
+    import django
+    from django.utils import timezone
+
+    from CarFleetManagement.maintenance.models import Maintenance
+
+    django.setup()
     return Maintenance.objects.create(
         vehicle=vehicle,
         maintenance_type='ROUTINE',
@@ -142,24 +156,34 @@ def scheduled_maintenance(vehicle):
         odometer_reading=15000,
         cost=200.00,
         service_provider='Test Service Center',
-        notes='Includes oil change, filter replacement, and inspection'
+        notes='Includes oil change, filter replacement, and inspection',
     )
 
 
 @pytest.fixture
 def emergency_contact(custom_user):
     """Create and return a test emergency contact."""
+    import django
+
+    from CarFleetManagement.emergency.models import EmergencyContact
+
+    django.setup()
     return EmergencyContact.objects.create(
         user=custom_user,
         name='Emergency Person',
         relationship='Family',
-        phone_number='+1122334455'
+        phone_number='+1122334455',
     )
 
 
 @pytest.fixture
 def emergency_incident(vehicle, custom_user, driver):
     """Create and return a test emergency incident."""
+    import django
+
+    from CarFleetManagement.emergency.models import EmergencyIncident
+
+    django.setup()
     return EmergencyIncident.objects.create(
         vehicle=vehicle,
         driver=driver,
@@ -167,5 +191,5 @@ def emergency_incident(vehicle, custom_user, driver):
         emergency_type='ACCIDENT',
         status='REPORTED',
         location='Intersection of Test St and Example Ave',
-        description='Minor collision with another vehicle'
+        description='Minor collision with another vehicle',
     )

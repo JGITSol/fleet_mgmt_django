@@ -17,8 +17,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarFleetManagement.settings")
 
 import django
 
-django.setup()
-
 
 def fix_database_schema():
     """Fix database schema issues"""
@@ -121,4 +119,5 @@ def fix_database_schema():
 
 
 if __name__ == "__main__":
+    django.setup()
     fix_database_schema()

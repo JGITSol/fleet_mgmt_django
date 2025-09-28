@@ -72,17 +72,19 @@ class VehicleViewsTestCase(APITestCase):
         )
 
         # Create users
+        from conftest import TEST_PASSWORD
+        # Create users
         self.admin_user = User.objects.create_user(
             username='admin_user',
             email='admin@example.com',
-            password='password123',
+            password=TEST_PASSWORD,
             role=self.admin_role
         )
 
         self.fleet_manager_user = User.objects.create_user(
             username='fleet_manager',
             email='fleet@example.com',
-            password='password123',
+            password=TEST_PASSWORD,
             role=self.fleet_manager_role
         )
 

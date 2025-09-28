@@ -10,8 +10,9 @@ from django.contrib.auth import get_user_model
 def custom_user(db):
     User = get_user_model()
     unique_username = f"fixture_user_{uuid.uuid4().hex[:8]}"
+    from conftest import TEST_PASSWORD
     return User.objects.create_user(
-        username=unique_username, email=f"{unique_username}@example.com", password="pass1234"
+        username=unique_username, email=f"{unique_username}@example.com", password=TEST_PASSWORD
     )
 
 

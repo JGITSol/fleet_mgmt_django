@@ -1,4 +1,5 @@
-from typing import ClassVar
+from collections.abc import Sequence
+from typing import ClassVar, Union
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -33,9 +34,11 @@ class VehicleDetailView(LoginRequiredMixin, DetailView):
 class VehicleCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Vehicle
     template_name = 'vehicles/vehicle_form.html'
-    fields: ClassVar[list[str]] = ['brand', 'model', 'year', 'license_plate', 'vin', 'color', 'fuel_type',
-              'transmission', 'vehicle_type', 'mileage', 'last_service_date',
-              'next_service_date', 'insurance_expiry', 'status']
+    fields: ClassVar[Union[Sequence[str], str, None]] = [
+        'brand', 'model', 'year', 'license_plate', 'vin', 'color', 'fuel_type',
+        'transmission', 'vehicle_type', 'mileage', 'last_service_date',
+        'next_service_date', 'insurance_expiry', 'status'
+    ]
     success_url = reverse_lazy('vehicles:vehicle_list')
 
     def form_valid(self, form):
@@ -48,17 +51,24 @@ class VehicleCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
             return False
         if getattr(self.request.user, 'is_staff', False) or getattr(self.request.user, 'is_superuser', False):
             return True
-        return hasattr(self.request.user, 'role') and self.request.user.role.name in [UserRole.ADMIN, UserRole.MANAGER]
+        from CarFleetManagement.utils.typing import get_user_role_name
+
+        role_name = get_user_role_name(self.request.user)
+        return role_name in [UserRole.ADMIN, UserRole.MANAGER]
 
 class VehicleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Vehicle
     template_name = 'vehicles/vehicle_form.html'
-    fields: ClassVar[list[str]] = ['brand', 'model', 'year', 'license_plate', 'vin', 'color', 'fuel_type',
-              'transmission', 'vehicle_type', 'mileage', 'last_service_date',
-              'next_service_date', 'insurance_expiry', 'status']
+    fields: ClassVar[Union[Sequence[str], str, None]] = [
+        'brand', 'model', 'year', 'license_plate', 'vin', 'color', 'fuel_type',
+        'transmission', 'vehicle_type', 'mileage', 'last_service_date',
+        'next_service_date', 'insurance_expiry', 'status'
+    ]
 
     def get_success_url(self):
-        return reverse_lazy('vehicles:vehicle_detail', kwargs={'pk': self.object.pk})
+        # `self.object` exists at runtime; use getattr to fetch pk for type-checker safety
+        # `self.object` is populated by Django at runtime
+        return reverse_lazy('vehicles:vehicle_detail', kwargs={'pk': self.object.pk})  # type: ignore[attr-defined]
 
     def form_valid(self, form):
         messages.success(self.request, 'Vehicle updated successfully!')
@@ -70,7 +80,10 @@ class VehicleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return False
         if getattr(self.request.user, 'is_staff', False) or getattr(self.request.user, 'is_superuser', False):
             return True
-        return hasattr(self.request.user, 'role') and self.request.user.role.name in [UserRole.ADMIN, UserRole.MANAGER]
+        from CarFleetManagement.utils.typing import get_user_role_name
+
+        role_name = get_user_role_name(self.request.user)
+        return role_name in [UserRole.ADMIN, UserRole.MANAGER]
 
 class VehicleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Vehicle
@@ -87,4 +100,7 @@ class VehicleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return False
         if getattr(self.request.user, 'is_staff', False) or getattr(self.request.user, 'is_superuser', False):
             return True
-        return hasattr(self.request.user, 'role') and self.request.user.role.name in [UserRole.ADMIN, UserRole.MANAGER]
+        from CarFleetManagement.utils.typing import get_user_role_name
+
+        role_name = get_user_role_name(self.request.user)
+        return role_name in [UserRole.ADMIN, UserRole.MANAGER]

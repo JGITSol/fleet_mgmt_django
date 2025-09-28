@@ -16,17 +16,17 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarFleetManagement.settings")
 
 import django
 
-django.setup()
-
-from django.contrib.auth import get_user_model
-
-from CarFleetManagement.accounts.models import UserRole
-
-User = get_user_model()
-
 
 def setup_test_user():
     """Setup test user with admin role"""
+    # Ensure Django is configured at runtime
+    django.setup()
+
+    from django.contrib.auth import get_user_model
+    from CarFleetManagement.accounts.models import UserRole
+
+    User = get_user_model()
+
     print("🔧 Setting up test user with admin permissions")
     print("=" * 50)
 
@@ -54,9 +54,9 @@ def setup_test_user():
         print("✓ Updated existing test user with admin role")
     except User.DoesNotExist:
         test_user = User.objects.create_user(
-            username="testuser",
-            email="test@example.com",
-            password="testpass123",
+                username="testuser",
+                email="test@example.com",
+                password=__import__('conftest').TEST_PASSWORD,
             first_name="Test",
             last_name="User",
             role=admin_role,
@@ -87,7 +87,7 @@ def setup_test_user():
         manager_user = User.objects.create_user(
             username="manager",
             email="manager@example.com",
-            password="manager123",
+                password=__import__('conftest').TEST_PASSWORD,
             first_name="Test",
             last_name="Manager",
             role=manager_role,
@@ -106,4 +106,5 @@ def setup_test_user():
 
 
 if __name__ == "__main__":
+    # When run as script, call the setup function which will configure Django
     setup_test_user()

@@ -247,7 +247,7 @@ const puppeteer = require('puppeteer');
             f.write(puppeteer_script)
 
         # Check if Node.js is available
-        result = subprocess.run(
+        result = subprocess.run(  # noqa: S603
             ["node", "--version"], capture_output=True, text=True, timeout=5
         )
 
@@ -255,7 +255,7 @@ const puppeteer = require('puppeteer');
             print(f"Node.js available: {result.stdout.strip()}")
 
             # Run Puppeteer script
-            result = subprocess.run(
+            result = subprocess.run(  # noqa: S603
                 ["node", str(script_path)], capture_output=True, text=True, timeout=60
             )
 

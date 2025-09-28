@@ -4,7 +4,6 @@ This module defines the URL patterns for the API endpoints,
 including the screenshot analysis endpoints and authentication endpoints for Lynx JS.
 """
 
-app_name = "CarFleetManagement.api"
 from django.urls import path
 
 # drf-spectacular views for OpenAPI schema and UIs
@@ -17,6 +16,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from . import auth_views, views
+
+app_name = "CarFleetManagement.api"
 
 
 class ApiRootView(APIView):

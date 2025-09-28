@@ -2,10 +2,11 @@
 Authentication test mixin for the Car Fleet Management project.
 """
 
+from conftest import TEST_PASSWORD
 from rest_framework.test import APIClient
-from tests.auth_utils import authenticate_client
 
 from CarFleetManagement.accounts.models import CustomUser, UserRole
+from tests.auth_utils import authenticate_client
 
 
 class AuthTestMixin:
@@ -22,7 +23,7 @@ class AuthTestMixin:
         admin_user = CustomUser.objects.create_user(
             username="admin_test",
             email="admin_test@example.com",
-            password="password123",
+            password=TEST_PASSWORD,
             role=admin_role,
             is_staff=True,  # Set is_staff to True for admin users to pass IsAdminUser permission
         )
@@ -32,7 +33,7 @@ class AuthTestMixin:
         """Create a driver user for testing."""
         driver_role, _ = UserRole.objects.get_or_create(name=UserRole.DRIVER, description="Driver role")
         driver_user = CustomUser.objects.create_user(
-            username="driver_test", email="driver_test@example.com", password="password123", role=driver_role
+            username="driver_test", email="driver_test@example.com", password=TEST_PASSWORD, role=driver_role
         )
         return driver_user
 
@@ -42,7 +43,7 @@ class AuthTestMixin:
         maintenance_user = CustomUser.objects.create_user(
             username="maintenance_test",
             email="maintenance_test@example.com",
-            password="password123",
+            password=TEST_PASSWORD,
             role=maintenance_role,
         )
         return maintenance_user

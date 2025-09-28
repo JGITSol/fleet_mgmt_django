@@ -24,7 +24,7 @@ def main():
     try:
         # Run migrations
         print("📦 Running database migrations...")
-        result = subprocess.run(
+        result = subprocess.run(  # noqa: S603
             [sys.executable, "manage.py", "migrate"], capture_output=True, text=True
         )
         if result.returncode != 0:
@@ -34,7 +34,7 @@ def main():
 
         # Set up development users
         print("👥 Setting up development test users...")
-        result = subprocess.run(
+        result = subprocess.run(  # noqa: S603
             [sys.executable, "manage.py", "setup_dev_users"],
             capture_output=True,
             text=True,
@@ -53,7 +53,7 @@ def main():
         print("=" * 60)
 
         # Run the server (this will block until Ctrl+C)
-        subprocess.run([sys.executable, "manage.py", "runserver"])
+        subprocess.run([sys.executable, "manage.py", "runserver"])  # noqa: S603
 
     except KeyboardInterrupt:
         print("\n👋 Development server stopped.")
@@ -61,6 +61,7 @@ def main():
     except Exception as e:
         print(f"❌ Error: {e}")
         return False
+    return True
 
 
 if __name__ == "__main__":

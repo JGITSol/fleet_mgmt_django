@@ -1,5 +1,6 @@
 import json
 import os
+from typing import ClassVar
 
 from django.conf import settings
 from django.http import HttpResponse
@@ -9,6 +10,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from CarFleetManagement.accounts.models import Driver
+from CarFleetManagement.accounts.serializers import DriverSerializer
 from CarFleetManagement.maintenance.models import Maintenance
 from CarFleetManagement.maintenance.serializers import MaintenanceSerializer
 
@@ -28,7 +31,7 @@ class AnalyzeScreenshotView(APIView):
 
     parser_classes = (MultiPartParser, FormParser)
 
-    def post(self, request, format=None):
+    def post(self, request, fmt=None):
         # Check if screenshot file is provided
         if 'screenshot' not in request.FILES:
             return Response(
@@ -71,7 +74,7 @@ class AnalyzeScreenshotView(APIView):
 class BatchAnalyzeScreenshotsView(APIView):
     """API view for analyzing multiple screenshots in the debug_screenshots directory."""
 
-    def post(self, request, format=None):
+    def post(self, request, fmt=None):
         debug_dir = os.path.join(settings.BASE_DIR, 'debug_screenshots')
 
         if not os.path.exists(debug_dir):
@@ -117,7 +120,7 @@ class BatchAnalyzeScreenshotsView(APIView):
 class GenerateReportView(APIView):
     """API view for generating an HTML report from analysis results."""
 
-    def post(self, request, format=None):
+    def post(self, request, fmt=None):
         analysis_data = request.data.get('analysis_data', None)
 
         if not analysis_data:
@@ -163,7 +166,7 @@ class VehicleListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating vehicles."""
     queryset = Vehicle.objects.all()
     serializer_class = VehicleSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save()
@@ -173,7 +176,7 @@ class VehicleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
     """API view for retrieving, updating, and deleting a vehicle."""
     queryset = Vehicle.objects.all()
     serializer_class = VehicleSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
 
 # Maintenance API Views
@@ -181,7 +184,7 @@ class MaintenanceListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating maintenance records."""
     queryset = Maintenance.objects.all()
     serializer_class = MaintenanceSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save()
@@ -191,7 +194,7 @@ class MaintenanceRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIV
     """API view for retrieving, updating, and deleting a maintenance record."""
     queryset = Maintenance.objects.all()
     serializer_class = MaintenanceSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
 
 # Driver API Views
@@ -199,7 +202,7 @@ class DriverListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating drivers."""
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save()
@@ -209,4 +212,4 @@ class DriverRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     """API view for retrieving, updating, and deleting a driver."""
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated]

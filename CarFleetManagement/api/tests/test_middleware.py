@@ -26,10 +26,11 @@ class JWTAuthMiddlewareTestCase(TestCase):
 
         # Use a unique username to avoid collisions with other tests
         unique_username = f"testuser_{uuid.uuid4().hex[:8]}"
+        from conftest import TEST_PASSWORD
         self.test_user = User.objects.create_user(
             username=unique_username,
             email=f"{unique_username}@example.com",
-            password="testpass123",
+            password=TEST_PASSWORD,
             role=self.driver_role,
         )
 

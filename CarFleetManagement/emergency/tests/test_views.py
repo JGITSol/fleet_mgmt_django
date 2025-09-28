@@ -1,4 +1,5 @@
 
+from conftest import TEST_PASSWORD
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils import timezone
@@ -100,13 +101,13 @@ class EmergencyViewsTestCase(JWTAuthTestMixin, APITestCase):
         self.admin_user = User.objects.create_user(
             username='admin_user',
             email='admin@example.com',
-            password='password123',
+            password=TEST_PASSWORD,
             role=self.admin_role
         )
         self.driver_user = User.objects.create_user(
             username='driver_user',
             email='driver@example.com',
-            password='password123',
+            password=TEST_PASSWORD,
             role=self.driver_role
         )
         # Authenticate as admin by default for admin-required tests

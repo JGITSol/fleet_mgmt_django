@@ -1,4 +1,34 @@
 {
+    // Exclude large/generated folders and files from analysis to reduce Pylance noise
+    "python.analysis.exclude": [
+        "**/issues.md",
+        "**/test_logs/**",
+        "**/ui_test_screenshots/**",
+        "**/node_modules/**",
+        "**/.venv/**",
+        "**/venv/**",
+        "**/.github/**",
+        "**/.pytest_cache/**",
+        "**/.ruff_cache/**",
+        "**/.git/**"
+    ],
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/venv": true,
+        "**/.venv": true,
+        "**/.github": true,
+        "issues.md": true,
+        "test_logs": true,
+        "ui_test_screenshots": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/venv": true,
+        "**/.venv": true,
+        "**/.github": true,
+        "issues.md": true,
+        "test_logs": true
+    },
     "python.testing.pytestArgs": [
         "CarFleetManagement"
     ],

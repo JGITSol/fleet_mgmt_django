@@ -15,6 +15,15 @@ from CarFleetManagement.api.serializers import (
 
 User = get_user_model()
 
+# Make TEST_PASSWORD available to the module; prefer the project's test shim
+try:
+    from tests import TEST_PASSWORD  # type: ignore
+except Exception:
+    try:
+        from conftest import TEST_PASSWORD  # type: ignore
+    except Exception:
+        TEST_PASSWORD = "testpass123"
+
 
 class UserSerializerTestCase(TestCase):
     """Test cases for UserSerializer."""
@@ -24,10 +33,11 @@ class UserSerializerTestCase(TestCase):
         self.driver_role, _ = UserRole.objects.get_or_create(name="DRIVER", defaults={"description": "Driver role"})
 
         unique_username = f"testuser_{timezone.now().timestamp():.0f}"
+        from conftest import TEST_PASSWORD
         self.test_user = User.objects.create_user(
             username=unique_username,
             email=f"{unique_username}@example.com",
-            password="testpass123",
+            password=TEST_PASSWORD,
             first_name="Test",
             last_name="User",
             role=self.driver_role,
@@ -94,8 +104,9 @@ class UserRegistrationSerializerTestCase(TestCase):
     def test_duplicate_email_validation(self):
         """Test validation for duplicate email."""
         # Create existing user
+        from conftest import TEST_PASSWORD
         User.objects.create_user(
-            username="existing", email="existing@example.com", password="pass123", role=self.driver_role
+            username="existing", email="existing@example.com", password=TEST_PASSWORD, role=self.driver_role
         )
 
         data = {
@@ -184,24 +195,25 @@ class LoginSerializerTestCase(TestCase):
         self.driver_role, _ = UserRole.objects.get_or_create(name="DRIVER", defaults={"description": "Driver role"})
 
         unique_username = f"testuser_{timezone.now().timestamp():.0f}"
+        from conftest import TEST_PASSWORD
         self.test_user = User.objects.create_user(
             username=unique_username,
             email=f"{unique_username}@example.com",
-            password="testpass123",
+            password=TEST_PASSWORD,
             role=self.driver_role,
         )
 
         self.inactive_user = User.objects.create_user(
             username=f"inactive_{timezone.now().timestamp():.0f}",
             email=f"inactive_{timezone.now().timestamp():.0f}@example.com",
-            password="testpass123",
+            password=TEST_PASSWORD,
             role=self.driver_role,
             is_active=False,
         )
 
     def test_valid_login_data(self):
         """Test serializer with valid login credentials."""
-        data = {"username": self.test_user.username, "password": "testpass123"}
+        data = {"username": self.test_user.username, "password": TEST_PASSWORD}
 
         serializer = LoginSerializer(data=data)
         self.assertTrue(serializer.is_valid())
@@ -212,7 +224,7 @@ class LoginSerializerTestCase(TestCase):
 
     def test_invalid_username(self):
         """Test serializer with invalid username."""
-        data = {"username": "nonexistent", "password": "testpass123"}
+        data = {"username": "nonexistent", "password": TEST_PASSWORD}
 
         serializer = LoginSerializer(data=data)
         self.assertFalse(serializer.is_valid())
@@ -230,7 +242,7 @@ class LoginSerializerTestCase(TestCase):
 
     def test_missing_username(self):
         """Test serializer with missing username."""
-        data = {"password": "testpass123"}
+        data = {"password": TEST_PASSWORD}
 
         serializer = LoginSerializer(data=data)
         self.assertFalse(serializer.is_valid())
@@ -246,7 +258,7 @@ class LoginSerializerTestCase(TestCase):
 
     def test_inactive_user(self):
         """Test serializer with inactive user."""
-        data = {"username": self.inactive_user.username, "password": "testpass123"}
+        data = {"username": self.inactive_user.username, "password": TEST_PASSWORD}
 
         serializer = LoginSerializer(data=data)
         self.assertFalse(serializer.is_valid())
@@ -254,7 +266,7 @@ class LoginSerializerTestCase(TestCase):
 
     def test_empty_username(self):
         """Test serializer with empty username."""
-        data = {"username": "", "password": "testpass123"}
+        data = {"username": "", "password": TEST_PASSWORD}
 
         serializer = LoginSerializer(data=data)
         self.assertFalse(serializer.is_valid())

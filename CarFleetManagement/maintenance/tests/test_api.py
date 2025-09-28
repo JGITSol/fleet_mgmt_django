@@ -29,6 +29,7 @@ class MaintenanceAPITestCase(APITestCase, AuthTestMixin): # Inherit from AuthTes
             MaintenanceType,
         )
         from CarFleetManagement.vehicles.models import Vehicle
+        from tests.conftest import TEST_PASSWORD  # Import TEST_PASSWORD for use in user creation
         self.Maintenance = Maintenance
         self.MaintenanceType = MaintenanceType
         self.MaintenanceStatus = MaintenanceStatus
@@ -50,16 +51,16 @@ class MaintenanceAPITestCase(APITestCase, AuthTestMixin): # Inherit from AuthTes
         self.admin_user = self.CustomUser.objects.create_user(
             username='admin_user',
             email='admin@example.com',
-            password='password123',
-            role=self.admin_role
+            password=TEST_PASSWORD,
+            role=self.admin_role,
         )
 
-        # Create users
+        # Create maintenance user
         self.maintenance_user = self.CustomUser.objects.create_user(
             username='maintenance_user',
             email='maintenance@example.com',
-            password='password123',
-            role=self.maintenance_role
+            password=TEST_PASSWORD,
+            role=self.maintenance_role,
         )
 
         # Generate JWT tokens for potential use if specific tests need to switch users

@@ -436,16 +436,17 @@ class TestVehicleAPIPermissions(JWTAuthTestMixin, APITestCase):
         self.admin_role, _ = UserRole.objects.get_or_create(name=UserRole.ADMIN)
         self.driver_role, _ = UserRole.objects.get_or_create(name=UserRole.DRIVER)
 
+        from conftest import TEST_PASSWORD
         self.jwt_admin_user = CustomUser.objects.create_user(
             username="jwtadmin",
             email="jwtadmin@example.com",
-            password="adminpass",
+            password=TEST_PASSWORD,
             role=self.admin_role,
             is_staff=True,
             is_superuser=True,
         )
         self.jwt_driver_user = CustomUser.objects.create_user(
-            username="jwtdriver", email="jwtdriver@example.com", password="driverpass", role=self.driver_role
+            username="jwtdriver", email="jwtdriver@example.com", password=TEST_PASSWORD, role=self.driver_role
         )
 
         self.vehicle_data = {

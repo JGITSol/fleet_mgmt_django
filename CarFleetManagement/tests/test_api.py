@@ -19,7 +19,7 @@ def test_user_creation(user):
     new_user = User.objects.create_user(
         username='testuser2',
         email='test2@example.com',
-        password='testpassword2'
+        password=__import__('conftest').TEST_PASSWORD,
     )
     assert User.objects.count() >= 2
     assert new_user.username == 'testuser2'

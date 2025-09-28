@@ -39,17 +39,19 @@ class EmergencyIncidentTestCase(APITestCase):
         )
 
         # Create users
+        from conftest import TEST_PASSWORD
+        # Create users
         self.admin_user = User.objects.create_user(
             username='admin_user',
             email='admin@example.com',
-            password='password123',
+            password=TEST_PASSWORD,
             role=self.admin_role
         )
 
         self.driver_user = User.objects.create_user(
             username='driver_user',
             email='driver@example.com',
-            password='password123',
+            password=TEST_PASSWORD,
             role=self.driver_role
         )
 
@@ -157,16 +159,17 @@ class EmergencyResponseTestCase(APITestCase):
         )
 
         # Create users
+        from conftest import TEST_PASSWORD
         self.admin_user = User.objects.create_user(
             username='admin_user',
             email='admin@example.com',
-            password='password123',
+            password=TEST_PASSWORD,
             role=self.admin_role
         )
         self.responder_user = User.objects.create_user(
             username='responder_user',
             email='responder@example.com',
-            password='password123',
+            password=TEST_PASSWORD,
             role=self.admin_role
         )
         # Create driver
@@ -228,10 +231,11 @@ class EmergencyContactTestCase(APITestCase):
         from CarFleetManagement.emergency.models import EmergencyContact
         self.EmergencyContact = EmergencyContact
 
+        from conftest import TEST_PASSWORD
         self.user = User.objects.create_user(
             username='test_user',
             email='user@example.com',
-            password='password123'
+            password=TEST_PASSWORD
         )
 
         self.emergency_contact = self.EmergencyContact.objects.create(

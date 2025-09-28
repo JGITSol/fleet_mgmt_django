@@ -14,12 +14,14 @@ def test_vehicle_create_form_post_creates_vehicle():
     # Create a manager user (or admin) to pass the permission checks
     user, created = CustomUser.objects.get_or_create(username="test_manager", defaults={"email": "m@example.com"})
     if created:
-        user.set_password("pass")
+        from conftest import TEST_PASSWORD
+        user.set_password(TEST_PASSWORD)
         user.is_staff = True
         user.save()
 
     client = Client()
-    logged = client.login(username="test_manager", password="pass")
+    from conftest import TEST_PASSWORD
+    logged = client.login(username="test_manager", password=TEST_PASSWORD)
     if not logged:
         # try force login if login via credentials failed
         client.force_login(user)
