@@ -9,12 +9,10 @@ from CarFleetManagement.accounts.models import CustomUser, Driver
 with contextlib.suppress(ImportError):
     # Explicitly import commonly used symbols from the app-level tests instead
     # of using a star import which confuses static analyzers.
-    from CarFleetManagement.accounts.tests.test_models import CustomUser as _CU
-    from CarFleetManagement.accounts.tests.test_models import Driver as _Driver
-
-    CustomUser = _CU  # rebind for local use
-    Driver = _Driver
-
+    # App-level test models exist in CarFleetManagement.accounts.tests; we
+    # don't need to rebind them here. The contextlib.suppress block is kept
+    # to avoid ImportError when those modules are absent.
+    pass
 User = get_user_model()
 
 

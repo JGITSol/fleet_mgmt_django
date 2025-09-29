@@ -15,6 +15,11 @@ from django.conf import settings
 sys.modules.setdefault("api.report_generator", sys.modules[__name__])
 
 
+class AnalysisFileNotFound(FileNotFoundError):
+    def __init__(self, path: str):
+        super().__init__(path)
+
+
 class ScreenshotAnalysisReport:
     """Generator for screenshot analysis reports."""
 
@@ -34,7 +39,7 @@ class ScreenshotAnalysisReport:
             dict: The analysis data
         """
         if not os.path.exists(self.analysis_file):
-            raise FileNotFoundError(f"Analysis file not found: {self.analysis_file}")
+            raise AnalysisFileNotFound(self.analysis_file)
 
         with open(self.analysis_file) as f:
             return json.load(f)

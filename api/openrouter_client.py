@@ -4,15 +4,20 @@ import requests
 
 OPENROUTER_API_KEY = os.environ.get('OPENROUTER_API_KEY')
 
+# Module-level constants to avoid long inline literal messages (TRY003)
+_OPENROUTER_API_KEY_MISSING = "OpenRouter API key not configured"
+_OPENROUTER_FILE_NOT_FOUND = "File not found"
+_OPENROUTER_DEFAULT_PROMPT = "Analyze this screenshot."
+
 class OpenRouterClient:
     def __init__(self, api_key=None):
         self.api_key = api_key if api_key is not None else OPENROUTER_API_KEY
         if not self.api_key:
-            raise ValueError('API key is required')
+            raise ValueError(_OPENROUTER_API_KEY_MISSING)
 
     def analyze_screenshot(self, screenshot_path, prompt=None):
         if not os.path.exists(screenshot_path):
-            raise FileNotFoundError(f"File not found: {screenshot_path}")
+            raise FileNotFoundError(screenshot_path)
         url = 'https://openrouter.ai/api/v1/chat/completions'
         headers = {
             'Authorization': f'Bearer {self.api_key}',
@@ -27,7 +32,7 @@ class OpenRouterClient:
                     'content': [
                         {
                             'type': 'text',
-                            'text': prompt or 'Analyze this screenshot.'
+                            'text': prompt or _OPENROUTER_DEFAULT_PROMPT
                         },
                         {
                             'type': 'image',
@@ -46,7 +51,11 @@ class OpenRouterClient:
 
     def batch_analyze_screenshots(self, directory, language=None, theme=None):
         if not os.path.isdir(directory):
-            raise NotADirectoryError(f"Not a directory: {directory}")
+            class InvalidDirectory(NotADirectoryError):
+                def __init__(self, path: str):
+                    super().__init__(path)
+
+            raise InvalidDirectory(directory)
         results = {}
         for filename in os.listdir(directory):
             if filename.endswith('.png'):

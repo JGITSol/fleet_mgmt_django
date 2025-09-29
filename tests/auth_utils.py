@@ -32,14 +32,19 @@ except Exception:  # pragma: no cover - tooling fallback
 
     AuthUtils = Any
 
+    # Fallback shims used only by tooling; keep messages short and extracted
+    _JWT_SHIM_MSG = "jwt_auth_patch shim used outside test runtime"
+    _GET_CLIENT_SHIM_MSG = "get_authenticated_client shim used outside test runtime"
+    _AUTH_CLIENT_SHIM_MSG = "authenticate_client shim used outside test runtime"
+
     def jwt_auth_patch(*args, **kwargs):  # pragma: no cover - tooling fallback
-        raise RuntimeError("jwt_auth_patch shim used outside test runtime")
+        raise RuntimeError(_JWT_SHIM_MSG)
 
     def get_authenticated_client(*args, **kwargs):  # pragma: no cover
-        raise RuntimeError("get_authenticated_client shim used outside test runtime")
+        raise RuntimeError(_GET_CLIENT_SHIM_MSG)
 
     def authenticate_client(*args, **kwargs):  # pragma: no cover
-        raise RuntimeError("authenticate_client shim used outside test runtime")
+        raise RuntimeError(_AUTH_CLIENT_SHIM_MSG)
 
 __all__ = [
     "AuthUtils",

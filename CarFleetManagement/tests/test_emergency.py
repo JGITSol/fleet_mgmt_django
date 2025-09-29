@@ -7,12 +7,11 @@ from CarFleetManagement.emergency.models import EmergencyContact, EmergencyIncid
 
 # Import tests from the app-specific test directory if they exist
 with contextlib.suppress(ImportError):
-    # Import specific symbols instead of using a star import which confuses static analyzers
-    from CarFleetManagement.emergency.tests.test_models import EmergencyContact as _EC
-    from CarFleetManagement.emergency.tests.test_models import EmergencyIncident as _EI
-
-    EmergencyContact = _EC
-    EmergencyIncident = _EI
+    # If app-level test models exist, they can be imported for introspection.
+    # We avoid rebinding global names which causes static analyzers to report
+    # redefinition errors across modules. Keep the block to avoid ImportError
+    # when the module isn't present.
+    pass
 
 
 # Add additional tests that might require fixtures from conftest.py

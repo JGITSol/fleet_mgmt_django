@@ -33,7 +33,9 @@ def run_tests_with_coverage():
         f.write(f"Command: {' '.join(cmd)}\n\n")
         f.write("=" * 80 + "\n\n")
 
-        process = subprocess.run(cmd, capture_output=True, text=True)  # noqa: S603
+        # subprocess.run is called with a list of args (safe) and without
+        # shell=True. This mitigates S603 concerns about untrusted input.
+        process = subprocess.run(cmd, capture_output=True, text=True)
 
         f.write("STDOUT:\n")
         f.write(process.stdout)
@@ -62,7 +64,8 @@ def run_tests_with_coverage():
     html_dir = Path("coverage_reports/html")
     html_dir.mkdir(parents=True, exist_ok=True)
 
-    subprocess.run([  # noqa: S603
+    # Run pytest again to generate the HTML report; safe invocation (list of args)
+    subprocess.run([
         sys.executable, "-m", "pytest",
         "--cov=accounts", "--cov=vehicles", "--cov=maintenance",
         "--cov=emergency", "--cov=api", "--cov-report=html:coverage_reports/html"

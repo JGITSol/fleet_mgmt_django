@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from rest_framework import serializers
 
 from CarFleetManagement.vehicles.models import Vehicle
@@ -8,7 +10,7 @@ from .models import CustomUser, Driver, UserRole
 class UserRoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserRole
-        fields = ["id", "name", "description", "permissions"]
+        fields: ClassVar[list[str]] = ["id", "name", "description", "permissions"]
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -21,7 +23,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = [
+        fields: ClassVar[list[str]] = [
             "id",
             "username",
             "email",
@@ -39,7 +41,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 class VehicleNestedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vehicle
-        fields = ["id", "brand", "model", "year", "license_plate", "vin"]
+        fields: ClassVar[list[str]] = ["id", "brand", "model", "year", "license_plate", "vin"]
 
 
 class DriverSerializer(serializers.ModelSerializer):
@@ -48,7 +50,7 @@ class DriverSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Driver
-        fields = [
+        fields: ClassVar[list[str]] = [
             "id",
             "first_name",
             "last_name",

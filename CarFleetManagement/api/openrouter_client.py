@@ -35,6 +35,32 @@ MAX_REQUESTS_PER_MINUTE = 10  # Adjust based on OpenRouter API limits
 REQUEST_INTERVAL = 60 / MAX_REQUESTS_PER_MINUTE  # Time between requests in seconds
 MAX_IMAGE_RESOLUTION = (1920, 1080)  # FullHD resolution
 
+# Default prompt moved to module-level constant to avoid long inline literal
+OPENROUTER_DEFAULT_PROMPT = (
+    "Analyze this UI screenshot. Focus on critical layout issues "
+    "and text rendering problems. Keep response concise and actionable."
+)
+
+
+# Small, focused exception types to avoid embedding long messages in raises
+class OpenRouterScreenshotNotFound(FileNotFoundError):
+    def __init__(self, path: str):
+        super().__init__(path)
+
+
+class OpenRouterAPINotConfigured(ValueError):
+    def __init__(self) -> None:
+        super().__init__("OpenRouter API key is not set. Please add it to your .env file.")
+
+
+class InvalidScreenshotDirectory(NotADirectoryError):
+    def __init__(self, path: str):
+        super().__init__(path)
+
+
+# Fallback for Pillow resampling attribute differences across versions
+RESAMPLE_FILTER = getattr(Image, "LANCZOS", getattr(Image, "Resampling", getattr(Image, "BICUBIC", None)))
+
 
 class OpenRouterClient:
     """Client for interacting with the OpenRouter API.
@@ -57,7 +83,7 @@ class OpenRouterClient:
         # API key resolution
         self.api_key = api_key or OPENROUTER_API_KEY
         if not self.api_key and not self._test_mode:
-            raise ValueError("OpenRouter API key is not set. Please add it to your .env file.")
+            raise OpenRouterAPINotConfigured()
 
         # Rate limiting attributes
         self.last_request_time = 0
@@ -80,7 +106,11 @@ class OpenRouterClient:
         with Image.open(image_path) as img:
             # Check if resizing is needed
             if img.width > MAX_IMAGE_RESOLUTION[0] or img.height > MAX_IMAGE_RESOLUTION[1]:
-                img.thumbnail(MAX_IMAGE_RESOLUTION, Image.LANCZOS)
+                if RESAMPLE_FILTER is not None:
+                    img.thumbnail(MAX_IMAGE_RESOLUTION, RESAMPLE_FILTER)
+                else:
+                    # Fallback to default thumbnail behaviour
+                    img.thumbnail(MAX_IMAGE_RESOLUTION)
 
             # Save to BytesIO
             img_byte_arr = BytesIO()
@@ -112,14 +142,12 @@ class OpenRouterClient:
             dict: The analysis results from OpenRouter
         """
         if not os.path.exists(screenshot_path) and not getattr(self, "_test_mode", False):
-            raise FileNotFoundError(f"Screenshot not found at {screenshot_path}")
+            # raise a compact exception with the path as its argument
+            raise OpenRouterScreenshotNotFound(screenshot_path)
 
         # Default prompt if none provided
         if not prompt:
-            prompt = (
-                "Analyze this UI screenshot. Focus on critical layout issues "
-                "and text rendering problems. Keep response concise and actionable."
-            )
+            prompt = OPENROUTER_DEFAULT_PROMPT
 
         # Prepare the API request
         headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
@@ -179,7 +207,7 @@ class OpenRouterClient:
         results = {}
 
         if not os.path.isdir(screenshot_dir):
-            raise NotADirectoryError(f"{screenshot_dir} is not a valid directory")
+            raise InvalidScreenshotDirectory(screenshot_dir)
 
         # Get all PNG files in the directory
         screenshots = [f for f in os.listdir(screenshot_dir) if f.endswith(".png")]

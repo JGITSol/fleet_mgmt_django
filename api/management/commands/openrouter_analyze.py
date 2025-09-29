@@ -8,6 +8,18 @@ from api.openrouter_client import OpenRouterClient
 from api.report_generator import generate_report
 
 
+# Module-level message constants to avoid long inline messages (TRY003)
+_NO_COMMAND_MSG = "No command specified. Use: analyze, batch, or report."
+_UNKNOWN_SUBCOMMAND_MSG = "Unknown subcommand"
+_SCREENSHOT_NOT_FOUND_MSG = "Screenshot not found"
+_ANALYSIS_SAVED_MSG = "Analysis saved to"
+_DIRECTORY_NOT_FOUND_MSG = "Directory not found"
+_FAILED_ANALYZE_MSG = "Failed to analyze"
+_BATCH_SAVED_MSG = "Batch analysis saved to"
+_ANALYSIS_FILE_NOT_FOUND_MSG = "Analysis file not found"
+_REPORT_GENERATED_MSG = "Report generated at"
+
+
 class Command(BaseCommand):
     help = "Analyze screenshots using OpenRouter API and generate reports."
 
@@ -47,11 +59,7 @@ class Command(BaseCommand):
         theme = options.get("theme")
 
         if not subcommand:
-            self.stdout.write(
-                self.style.ERROR(
-                    "No command specified. Use: analyze, batch, or report."
-                )
-            )
+            self.stdout.write(self.style.ERROR(_NO_COMMAND_MSG))
             return
 
         if subcommand == "analyze":
@@ -63,13 +71,11 @@ class Command(BaseCommand):
             self.stdout.write(f"Generating report from {analysis_file}")
             self.generate_report(analysis_file, output)
         else:
-            self.stdout.write(self.style.ERROR(f"Unknown subcommand: {subcommand}"))
+            self.stdout.write(self.style.ERROR(f"{_UNKNOWN_SUBCOMMAND_MSG}: {subcommand}"))
 
     def analyze_screenshot(self, screenshot_path, output_file=None, prompt=None):
         if not screenshot_path or not os.path.exists(screenshot_path):
-            self.stdout.write(
-                self.style.ERROR(f"Screenshot not found: {screenshot_path}")
-            )
+            self.stdout.write(self.style.ERROR(f"{_SCREENSHOT_NOT_FOUND_MSG}: {screenshot_path}"))
             return
         self.stdout.write(f"Analyzing screenshot: {screenshot_path}")
         client = get_client()
@@ -83,14 +89,14 @@ class Command(BaseCommand):
         if output_file:
             with open(output_file, "w") as f:
                 json.dump(result, f)
-            self.stdout.write(self.style.SUCCESS(f"Analysis saved to {output_file}"))
+            self.stdout.write(self.style.SUCCESS(f"{_ANALYSIS_SAVED_MSG} {output_file}"))
 
     def batch_analyze(
         self, batch_dir, output_file=None, language=None, theme=None, prompt=None
     ):
         if not batch_dir or not os.path.isdir(batch_dir):
-            self.stdout.write(self.style.ERROR(f"Directory not found: {batch_dir}"))
-            raise CommandError(f"Directory not found: {batch_dir}")
+            self.stdout.write(self.style.ERROR(f"{_DIRECTORY_NOT_FOUND_MSG}: {batch_dir}"))
+            raise CommandError(batch_dir)
         client = get_client()
         results = {}
         for filename in os.listdir(batch_dir):
@@ -107,28 +113,20 @@ class Command(BaseCommand):
                 try:
                     result = client.analyze_screenshot(screenshot_path, prompt=prompt)
                     results[filename] = result
-                    self.stdout.write(
-                        self.style.SUCCESS(f"Analyzed: {screenshot_path}")
-                    )
+                    self.stdout.write(self.style.SUCCESS(f"Analyzed: {screenshot_path}"))
                 except Exception as e:
-                    self.stdout.write(
-                        self.style.WARNING(f"Failed to analyze {screenshot_path}: {e}")
-                    )
+                    self.stdout.write(self.style.WARNING(f"{_FAILED_ANALYZE_MSG} {screenshot_path}: {e}"))
         if output_file:
             with open(output_file, "w") as f:
                 json.dump(results, f)
-            self.stdout.write(
-                self.style.SUCCESS(f"Batch analysis saved to {output_file}")
-            )
+            self.stdout.write(self.style.SUCCESS(f"{_BATCH_SAVED_MSG} {output_file}"))
 
     def generate_report(self, analysis_file, output_file=None):
         if not analysis_file or not os.path.exists(analysis_file):
-            self.stdout.write(
-                self.style.ERROR(f"Analysis file not found: {analysis_file}")
-            )
+            self.stdout.write(self.style.ERROR(f"{_ANALYSIS_FILE_NOT_FOUND_MSG}: {analysis_file}"))
             return
         report_path = generate_report(analysis_file, output_file)
-        self.stdout.write(self.style.SUCCESS(f"Report generated at: {report_path}"))
+        self.stdout.write(self.style.SUCCESS(f"{_REPORT_GENERATED_MSG}: {report_path}"))
 
 
 def get_client():
