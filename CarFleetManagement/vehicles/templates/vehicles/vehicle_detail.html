@@ -5,36 +5,66 @@
 
 {% block content %}
 <div class="container">
-    <h1>{{ vehicle.brand }} {{ vehicle.model }}</h1>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">{{ vehicle.year }} {{ vehicle.brand }} {{ vehicle.model }}</h5>
-            <p class="card-text"><strong>{% trans "License Plate" %}:</strong> {{ vehicle.license_plate }}</p>
-            <p class="card-text"><strong>{% trans "VIN" %}:</strong> {{ vehicle.vin }}</p>
-            <p class="card-text"><strong>{% trans "Color" %}:</strong> {{ vehicle.color }}</p>
-            <p class="card-text"><strong>{% trans "Fuel Type" %}:</strong> {{ vehicle.get_fuel_type_display }}</p>
-            <p class="card-text"><strong>{% trans "Transmission" %}:</strong> {{ vehicle.get_transmission_display }}</p>
-            <p class="card-text"><strong>{% trans "Vehicle Type" %}:</strong> {{ vehicle.get_vehicle_type_display }}</p>
-            <p class="card-text"><strong>{% trans "Mileage" %}:</strong> {{ vehicle.mileage }} km</p>
-            <p class="card-text"><strong>{% trans "Status" %}:</strong> {{ vehicle.get_status_display }}</p>
+    <article>
+        <header class="mb-4">
+            <h1>{{ vehicle.brand }} {{ vehicle.model }}</h1>
+        </header>
+        
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title h5">{{ vehicle.year }} {{ vehicle.brand }} {{ vehicle.model }}</h2>
+                
+                <dl class="row">
+                    <dt class="col-sm-4">{% trans "License Plate" %}:</dt>
+                    <dd class="col-sm-8">{{ vehicle.license_plate }}</dd>
+                    
+                    <dt class="col-sm-4">{% trans "VIN" %}:</dt>
+                    <dd class="col-sm-8">{{ vehicle.vin }}</dd>
+                    
+                    <dt class="col-sm-4">{% trans "Color" %}:</dt>
+                    <dd class="col-sm-8">{{ vehicle.color }}</dd>
+                    
+                    <dt class="col-sm-4">{% trans "Fuel Type" %}:</dt>
+                    <dd class="col-sm-8">{{ vehicle.get_fuel_type_display }}</dd>
+                    
+                    <dt class="col-sm-4">{% trans "Transmission" %}:</dt>
+                    <dd class="col-sm-8">{{ vehicle.get_transmission_display }}</dd>
+                    
+                    <dt class="col-sm-4">{% trans "Vehicle Type" %}:</dt>
+                    <dd class="col-sm-8">{{ vehicle.get_vehicle_type_display }}</dd>
+                    
+                    <dt class="col-sm-4">{% trans "Mileage" %}:</dt>
+                    <dd class="col-sm-8">{{ vehicle.mileage }} km</dd>
+                    
+                    <dt class="col-sm-4">{% trans "Status" %}:</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge {% if vehicle.status == 'ACTIVE' %}bg-success{% elif vehicle.status == 'MAINTENANCE' %}bg-warning{% else %}bg-secondary{% endif %}">
+                            {{ vehicle.get_status_display }}
+                        </span>
+                    </dd>
 
-            {% if vehicle.last_service_date %}
-            <p class="card-text"><strong>{% trans "Last Service" %}:</strong> {{ vehicle.last_service_date }}</p>
-            {% endif %}
+                    {% if vehicle.last_service_date %}
+                    <dt class="col-sm-4">{% trans "Last Service" %}:</dt>
+                    <dd class="col-sm-8">{{ vehicle.last_service_date }}</dd>
+                    {% endif %}
 
-            {% if vehicle.next_service_date %}
-            <p class="card-text"><strong>{% trans "Next Service" %}:</strong> {{ vehicle.next_service_date }}</p>
-            {% endif %}
+                    {% if vehicle.next_service_date %}
+                    <dt class="col-sm-4">{% trans "Next Service" %}:</dt>
+                    <dd class="col-sm-8">{{ vehicle.next_service_date }}</dd>
+                    {% endif %}
 
-            {% if vehicle.insurance_expiry %}
-            <p class="card-text"><strong>{% trans "Insurance Expiry" %}:</strong> {{ vehicle.insurance_expiry }}</p>
-            {% endif %}
+                    {% if vehicle.insurance_expiry %}
+                    <dt class="col-sm-4">{% trans "Insurance Expiry" %}:</dt>
+                    <dd class="col-sm-8">{{ vehicle.insurance_expiry }}</dd>
+                    {% endif %}
+                </dl>
 
-            <div class="mt-3">
-                <a href="{% url 'vehicles:vehicle_update' vehicle.pk %}" class="btn btn-warning">{% trans "Edit" %}</a>
-                <a href="{% url 'vehicles:vehicle_list' %}" class="btn btn-secondary">{% trans "Back to List" %}</a>
+                <nav class="mt-3" aria-label="Vehicle actions">
+                    <a href="{% url 'vehicles:vehicle_update' vehicle.pk %}" class="btn btn-warning" aria-label="{% trans 'Edit vehicle details' %}">{% trans "Edit" %}</a>
+                    <a href="{% url 'vehicles:vehicle_list' %}" class="btn btn-secondary" aria-label="{% trans 'Return to vehicle list' %}">{% trans "Back to List" %}</a>
+                </nav>
             </div>
         </div>
-    </div>
+    </article>
 </div>
 {% endblock %}
