@@ -3,104 +3,115 @@
 {% block title %}Home - Car Fleet Management{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <div class="jumbotron bg-primary text-white p-5 rounded mb-4">
-            <h1 class="display-4">Welcome to Car Fleet Management</h1>
-            <p class="lead">Manage your vehicle fleet, maintenance schedules, and emergency responses all in one place.</p>
-            {% if not user.is_authenticated %}
-                <hr class="my-4">
-                <p>Get started by creating an account or logging in.</p>
-                <a class="btn btn-light btn-lg me-2" href="{% url 'accounts:register' %}" role="button">Sign Up</a>
-                <a class="btn btn-outline-light btn-lg" href="{% url 'accounts:login' %}" role="button">Login</a>
-            {% endif %}
+<section aria-labelledby="hero-heading">
+    <div class="row">
+        <div class="col-12">
+            <div class="jumbotron bg-primary text-white p-5 rounded mb-4">
+                <h1 id="hero-heading" class="display-4">Welcome to Car Fleet Management</h1>
+                <p class="lead">Manage your vehicle fleet, maintenance schedules, and emergency responses all in one place.</p>
+                {% if not user.is_authenticated %}
+                    <hr class="my-4">
+                    <p>Get started by creating an account or logging in.</p>
+                    <a class="btn btn-light btn-lg me-2" href="{% url 'accounts:register' %}" aria-label="Sign up for a new account">Sign Up</a>
+                    <a class="btn btn-outline-light btn-lg" href="{% url 'accounts:login' %}" aria-label="Log in to your account">Login</a>
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">
-                    🚗 Vehicle Management
-                </h5>
-                <p class="card-text">Track and manage your entire vehicle fleet with detailed information and status updates.</p>
-                <a href="{% url 'vehicle_list' %}" class="btn btn-primary">View Vehicles</a>
-            </div>
+<section aria-labelledby="features-heading">
+    <h2 id="features-heading" class="visually-hidden">Main Features</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <article class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title h5">
+                        <span aria-hidden="true">🚗</span> Vehicle Management
+                    </h3>
+                    <p class="card-text">Track and manage your entire vehicle fleet with detailed information and status updates.</p>
+                    <a href="{% url 'vehicle_list' %}" class="btn btn-primary" aria-label="View all vehicles">View Vehicles</a>
+                </div>
+            </article>
+        </div>
+        <div class="col-md-4">
+            <article class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title h5">
+                        <span aria-hidden="true">🔧</span> Maintenance
+                    </h3>
+                    <p class="card-text">Schedule and track maintenance activities to keep your fleet running smoothly.</p>
+                    <a href="{% url 'maintenance_list' %}" class="btn btn-primary" aria-label="View maintenance records">View Maintenance</a>
+                </div>
+            </article>
+        </div>
+        <div class="col-md-4">
+            <article class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title h5">
+                        <span aria-hidden="true">⚠️</span> Emergency Response
+                    </h3>
+                    <p class="card-text">Manage emergency incidents and coordinate response efforts effectively.</p>
+                    <a href="{% url 'emergency_list' %}" class="btn btn-primary" aria-label="View emergency incidents">View Emergencies</a>
+                </div>
+            </article>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">
-                    🔧 Maintenance
-                </h5>
-                <p class="card-text">Schedule and track maintenance activities to keep your fleet running smoothly.</p>
-                <a href="{% url 'maintenance_list' %}" class="btn btn-primary">View Maintenance</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">
-                    ⚠️ Emergency Response
-                </h5>
-                <p class="card-text">Manage emergency incidents and coordinate response efforts effectively.</p>
-                <a href="{% url 'emergency_list' %}" class="btn btn-primary">View Emergencies</a>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
 
 {% if user.is_authenticated %}
-<div class="row mt-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Quick Actions</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3">
-                        <a href="{% url 'vehicle_create' %}" class="btn btn-success btn-block mb-2">Add Vehicle</a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="{% url 'maintenance_create' %}" class="btn btn-warning btn-block mb-2">Schedule Maintenance</a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="{% url 'emergency_create' %}" class="btn btn-danger btn-block mb-2">Report Emergency</a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="/api/" class="btn btn-info btn-block mb-2">API Documentation</a>
-                    </div>
+<section aria-labelledby="quick-actions-heading" class="mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2 id="quick-actions-heading" class="h5 mb-0">Quick Actions</h2>
+                </div>
+                <div class="card-body">
+                    <nav aria-label="Quick action buttons">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a href="{% url 'vehicle_create' %}" class="btn btn-success w-100 mb-2" aria-label="Add a new vehicle">Add Vehicle</a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="{% url 'maintenance_create' %}" class="btn btn-warning w-100 mb-2" aria-label="Schedule new maintenance">Schedule Maintenance</a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="{% url 'emergency_create' %}" class="btn btn-danger w-100 mb-2" aria-label="Report a new emergency">Report Emergency</a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/api/" class="btn btn-info w-100 mb-2" aria-label="View API documentation">API Documentation</a>
+                            </div>
+                        </div>
+                    </nav>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 {% endif %}
 
-<div class="row mt-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">System Features</h5>
-            </div>
-            <div class="card-body">
-                <ul class="list-unstyled">
-                    <li>✅ Comprehensive vehicle tracking and management</li>
-                    <li>✅ Automated maintenance scheduling and reminders</li>
-                    <li>✅ Emergency incident reporting and response coordination</li>
-                    <li>✅ RESTful API for integration with other systems</li>
-                    <li>✅ Role-based access control and user management</li>
-                    <li>✅ Real-time status updates and notifications</li>
-                </ul>
+<section aria-labelledby="system-features-heading" class="mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2 id="system-features-heading" class="h5 mb-0">System Features</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li><span aria-hidden="true">✅</span> Comprehensive vehicle tracking and management</li>
+                        <li><span aria-hidden="true">✅</span> Automated maintenance scheduling and reminders</li>
+                        <li><span aria-hidden="true">✅</span> Emergency incident reporting and response coordination</li>
+                        <li><span aria-hidden="true">✅</span> RESTful API for integration with other systems</li>
+                        <li><span aria-hidden="true">✅</span> Role-based access control and user management</li>
+                        <li><span aria-hidden="true">✅</span> Real-time status updates and notifications</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}
 
 {% block extra_js %}

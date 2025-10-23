@@ -7,37 +7,52 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card">
+            <article class="card">
                 <div class="card-header">
-                    <h3 class="card-title mb-0">Login</h3>
+                    <h1 class="h3 card-title mb-0">Login</h1>
                 </div>
                 <div class="card-body">
                     {% if form.errors %}
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger" role="alert" aria-live="assertive">
+                            <strong>Error:</strong> Please correct the errors below.
                             {{ form.errors }}
                         </div>
                     {% endif %}
                     
-                    <form method="post">
+                    <form method="post" novalidate aria-labelledby="login-heading">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                            <label for="{{ form.username.id_for_label }}" class="form-label">
+                                Username<span class="text-danger" aria-label="required"> *</span>
+                            </label>
                             {{ form.username }}
+                            {% if form.username.errors %}
+                                <div class="invalid-feedback d-block" role="alert">
+                                    {{ form.username.errors }}
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="mb-3">
-                            <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+                            <label for="{{ form.password.id_for_label }}" class="form-label">
+                                Password<span class="text-danger" aria-label="required"> *</span>
+                            </label>
                             {{ form.password }}
+                            {% if form.password.errors %}
+                                <div class="invalid-feedback d-block" role="alert">
+                                    {{ form.password.errors }}
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Login</button>
                         </div>
                     </form>
                     
-                    <div class="text-center mt-3">
-                        <p>Don't have an account? <a href="{% url 'accounts:register' %}">Register here</a></p>
-                    </div>
+                    <nav class="text-center mt-3" aria-label="Account actions">
+                        <p>Don't have an account? <a href="{% url 'accounts:register' %}" aria-label="Create a new account">Register here</a></p>
+                    </nav>
                 </div>
-            </div>
+            </article>
         </div>
     </div>
 </div>

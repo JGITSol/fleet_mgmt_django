@@ -7,163 +7,198 @@
 
 {% block content %}
 <div class="container">
-    <h1>{% if form.instance.pk %}{% trans "Edit Vehicle" %}{% else %}{% trans "Add Vehicle" %}{% endif %}</h1>
+    <header class="mb-4">
+        <h1>{% if form.instance.pk %}{% trans "Edit Vehicle" %}{% else %}{% trans "Add Vehicle" %}{% endif %}</h1>
+    </header>
     
-    <form method="post" novalidate>
+    <form method="post" novalidate aria-label="{% if form.instance.pk %}{% trans 'Edit vehicle form' %}{% else %}{% trans 'Add new vehicle form' %}{% endif %}">
         {% csrf_token %}
         
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="{{ form.brand.id_for_label }}">{% trans "Brand" %}</label>
-                {{ form.brand }}
-                {% if form.brand.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.brand.errors }}
-                </div>
-                {% endif %}
-            </div>
-            
-            <div class="col-md-6 mb-3">
-                <label for="{{ form.model.id_for_label }}">{% trans "Model" %}</label>
-                {{ form.model }}
-                {% if form.model.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.model.errors }}
-                </div>
-                {% endif %}
-            </div>
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert" aria-live="assertive">
+            <strong>{% trans "Error:" %}</strong> {% trans "Please correct the errors below." %}
         </div>
+        {% endif %}
         
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <label for="{{ form.year.id_for_label }}">{% trans "Year" %}</label>
-                {{ form.year }}
-                {% if form.year.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.year.errors }}
-                </div>
-                {% endif %}
-            </div>
+        <fieldset>
+            <legend class="h5">{% trans "Basic Information" %}</legend>
             
-            <div class="col-md-4 mb-3">
-                <label for="{{ form.license_plate.id_for_label }}">{% trans "License Plate" %}</label>
-                {{ form.license_plate }}
-                {% if form.license_plate.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.license_plate.errors }}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.brand.id_for_label }}" class="form-label">
+                        {% trans "Brand" %}<span class="text-danger" aria-label="required"> *</span>
+                    </label>
+                    {{ form.brand }}
+                    {% if form.brand.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.brand.errors }}
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
-            </div>
-            
-            <div class="col-md-4 mb-3">
-                <label for="{{ form.vin.id_for_label }}">{% trans "VIN" %}</label>
-                {{ form.vin }}
-                {% if form.vin.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.vin.errors }}
+                
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.model.id_for_label }}" class="form-label">
+                        {% trans "Model" %}<span class="text-danger" aria-label="required"> *</span>
+                    </label>
+                    {{ form.model }}
+                    {% if form.model.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.model.errors }}
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
-        </div>
+        </fieldset>
         
-        <!-- Add more form fields as needed -->
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <label for="{{ form.color.id_for_label }}">{% trans "Color" %}</label>
-                {{ form.color }}
-                {% if form.color.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.color.errors }}
+        <fieldset>
+            <legend class="h5">{% trans "Identification" %}</legend>
+            
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.year.id_for_label }}" class="form-label">
+                        {% trans "Year" %}<span class="text-danger" aria-label="required"> *</span>
+                    </label>
+                    {{ form.year }}
+                    {% if form.year.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.year.errors }}
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
+                
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.license_plate.id_for_label }}" class="form-label">
+                        {% trans "License Plate" %}<span class="text-danger" aria-label="required"> *</span>
+                    </label>
+                    {{ form.license_plate }}
+                    {% if form.license_plate.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.license_plate.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.vin.id_for_label }}" class="form-label">{% trans "VIN" %}</label>
+                    {{ form.vin }}
+                    {% if form.vin.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.vin.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </fieldset>
+        
+        <fieldset>
+            <legend class="h5">{% trans "Specifications" %}</legend>
+            
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.color.id_for_label }}" class="form-label">{% trans "Color" %}</label>
+                    {{ form.color }}
+                    {% if form.color.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.color.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.fuel_type.id_for_label }}" class="form-label">{% trans "Fuel Type" %}</label>
+                    {{ form.fuel_type }}
+                    {% if form.fuel_type.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.fuel_type.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.transmission.id_for_label }}" class="form-label">{% trans "Transmission" %}</label>
+                    {{ form.transmission }}
+                    {% if form.transmission.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.transmission.errors }}
+                    </div>
+                    {% endif %}
+                </div>
             </div>
 
-            <div class="col-md-4 mb-3">
-                <label for="{{ form.fuel_type.id_for_label }}">{% trans "Fuel Type" %}</label>
-                {{ form.fuel_type }}
-                {% if form.fuel_type.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.fuel_type.errors }}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.vehicle_type.id_for_label }}" class="form-label">{% trans "Vehicle Type" %}</label>
+                    {{ form.vehicle_type }}
+                    {% if form.vehicle_type.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.vehicle_type.errors }}
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
-            </div>
 
-            <div class="col-md-4 mb-3">
-                <label for="{{ form.transmission.id_for_label }}">{% trans "Transmission" %}</label>
-                {{ form.transmission }}
-                {% if form.transmission.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.transmission.errors }}
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.mileage.id_for_label }}" class="form-label">{% trans "Mileage" %}</label>
+                    {{ form.mileage }}
+                    {% if form.mileage.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.mileage.errors }}
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
-        </div>
+        </fieldset>
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="{{ form.vehicle_type.id_for_label }}">{% trans "Vehicle Type" %}</label>
-                {{ form.vehicle_type }}
-                {% if form.vehicle_type.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.vehicle_type.errors }}
+        <fieldset>
+            <legend class="h5">{% trans "Maintenance & Insurance" %}</legend>
+            
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.last_service_date.id_for_label }}" class="form-label">{% trans "Last Service Date" %}</label>
+                    {{ form.last_service_date }}
+                    {% if form.last_service_date.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.last_service_date.errors }}
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
-            </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="{{ form.mileage.id_for_label }}">{% trans "Mileage" %}</label>
-                {{ form.mileage }}
-                {% if form.mileage.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.mileage.errors }}
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.next_service_date.id_for_label }}" class="form-label">{% trans "Next Service Date" %}</label>
+                    {{ form.next_service_date }}
+                    {% if form.next_service_date.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.next_service_date.errors }}
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <label for="{{ form.last_service_date.id_for_label }}">{% trans "Last Service Date" %}</label>
-                {{ form.last_service_date }}
-                {% if form.last_service_date.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.last_service_date.errors }}
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.insurance_expiry.id_for_label }}" class="form-label">{% trans "Insurance Expiry" %}</label>
+                    {{ form.insurance_expiry }}
+                    {% if form.insurance_expiry.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.insurance_expiry.errors }}
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
+        </fieldset>
 
-            <div class="col-md-4 mb-3">
-                <label for="{{ form.next_service_date.id_for_label }}">{% trans "Next Service Date" %}</label>
-                {{ form.next_service_date }}
-                {% if form.next_service_date.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.next_service_date.errors }}
+        <fieldset>
+            <legend class="h5">{% trans "Status" %}</legend>
+            
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.status.id_for_label }}" class="form-label">{% trans "Status" %}</label>
+                    {{ form.status }}
+                    {% if form.status.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.status.errors }}
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
-
-            <div class="col-md-4 mb-3">
-                <label for="{{ form.insurance_expiry.id_for_label }}">{% trans "Insurance Expiry" %}</label>
-                {{ form.insurance_expiry }}
-                {% if form.insurance_expiry.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.insurance_expiry.errors }}
-                </div>
-                {% endif %}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <label for="{{ form.status.id_for_label }}">{% trans "Status" %}</label>
-                {{ form.status }}
-                {% if form.status.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.status.errors }}
-                </div>
-                {% endif %}
-            </div>
-        </div>
+        </fieldset>
         
         <div class="mt-4">
             <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>

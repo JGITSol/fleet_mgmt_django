@@ -7,56 +7,74 @@
 
 {% block content %}
 <div class="container">
-    <h1>{% if form.instance.pk %}{% trans "Edit Maintenance Record" %}{% else %}{% trans "Add Maintenance Record" %}{% endif %}</h1>
+    <header class="mb-4">
+        <h1>{% if form.instance.pk %}{% trans "Edit Maintenance Record" %}{% else %}{% trans "Add Maintenance Record" %}{% endif %}</h1>
+    </header>
 
-    <form method="post" novalidate>
+    <form method="post" novalidate aria-label="{% if form.instance.pk %}{% trans 'Edit maintenance record form' %}{% else %}{% trans 'Add new maintenance record form' %}{% endif %}">
         {% csrf_token %}
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="{{ form.vehicle.id_for_label }}">{% trans "Vehicle" %}</label>
-                {{ form.vehicle }}
-                {% if form.vehicle.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.vehicle.errors }}
-                </div>
-                {% endif %}
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="{{ form.maintenance_type.id_for_label }}">{% trans "Maintenance Type" %}</label>
-                {{ form.maintenance_type }}
-                {% if form.maintenance_type.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.maintenance_type.errors }}
-                </div>
-                {% endif %}
-            </div>
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert" aria-live="assertive">
+            <strong>{% trans "Error:" %}</strong> {% trans "Please correct the errors below." %}
         </div>
+        {% endif %}
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="{{ form.status.id_for_label }}">{% trans "Status" %}</label>
-                {{ form.status }}
-                {% if form.status.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.status.errors }}
+        <fieldset>
+            <legend class="h5">{% trans "Maintenance Details" %}</legend>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.vehicle.id_for_label }}" class="form-label">
+                        {% trans "Vehicle" %}<span class="text-danger" aria-label="required"> *</span>
+                    </label>
+                    {{ form.vehicle }}
+                    {% if form.vehicle.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.vehicle.errors }}
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
+
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.maintenance_type.id_for_label }}" class="form-label">
+                        {% trans "Maintenance Type" %}<span class="text-danger" aria-label="required"> *</span>
+                    </label>
+                    {{ form.maintenance_type }}
+                    {% if form.maintenance_type.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.maintenance_type.errors }}
+                    </div>
+                    {% endif %}
+                </div>
             </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="{{ form.description.id_for_label }}">{% trans "Description" %}</label>
-                {{ form.description }}
-                {% if form.description.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.description.errors }}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.status.id_for_label }}" class="form-label">
+                        {% trans "Status" %}<span class="text-danger" aria-label="required"> *</span>
+                    </label>
+                    {{ form.status }}
+                    {% if form.status.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.status.errors }}
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
-            </div>
-        </div>
 
-        <!-- Add more form fields as needed -->
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">
+                        {% trans "Description" %}
+                    </label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                    <div class="invalid-feedback d-block" role="alert">
+                        {{ form.description.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </fieldset>
 
         <div class="mt-4">
             <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
