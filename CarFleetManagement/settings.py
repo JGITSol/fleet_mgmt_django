@@ -27,6 +27,8 @@ if IS_PRODUCTION:
     DEBUG = False
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(",")
+if "testserver" not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append("testserver")
 
 # Application definition
 INSTALLED_APPS = [
@@ -67,9 +69,11 @@ TEMPLATES = [
         "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
+            "builtins": ["django.templatetags.i18n"],
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
+                "django.template.context_processors.i18n",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
@@ -116,10 +120,13 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en-us"
 LANGUAGES = [
     ("en", "English"),
+    ("de", "Deutsch"),
+    ("fr", "Français"),
+    ("es", "Español"),
     ("pl", "Polski"),
 ]
 LOCALE_PATHS = [
-    BASE_DIR / "locale",
+    BASE_DIR.parent / "locale",  # Project root locale directory
 ]
 TIME_ZONE = "UTC"
 USE_I18N = True

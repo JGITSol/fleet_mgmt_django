@@ -1,107 +1,67 @@
-{% extends 'base.html' %}
+{% extends 'base_v2.html' %}
+{% load i18n %}
 
-{% block title %}Home - Car Fleet Management{% endblock %}
+{% block title %}{% trans "Home - Car Fleet Management" %}{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <div class="jumbotron bg-primary text-white p-5 rounded mb-4">
-            <h1 class="display-4">Welcome to Car Fleet Management</h1>
-            <p class="lead">Manage your vehicle fleet, maintenance schedules, and emergency responses all in one place.</p>
-            {% if not user.is_authenticated %}
-                <hr class="my-4">
-                <p>Get started by creating an account or logging in.</p>
-                <a class="btn btn-light btn-lg me-2" href="{% url 'accounts:register' %}" role="button">Sign Up</a>
-                <a class="btn btn-outline-light btn-lg" href="{% url 'accounts:login' %}" role="button">Login</a>
-            {% endif %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>{% trans "Welcome to Fleet Management" %}</h1>
+            <p class="hero-subtitle">{% trans "Manage your vehicle fleet with ease and efficiency" %}</p>
         </div>
     </div>
-</div>
+</section>
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">
-                    🚗 Vehicle Management
-                </h5>
-                <p class="card-text">Track and manage your entire vehicle fleet with detailed information and status updates.</p>
-                <a href="{% url 'vehicle_list' %}" class="btn btn-primary">View Vehicles</a>
-            </div>
+<!-- System Info / Quick Stats -->
+<section class="container" style="margin-bottom: 6rem;">
+    <div class="card">
+        <div class="flex justify-between items-center" style="margin-bottom: 2rem;">
+            <h2>{% trans "System Overview" %}</h2>
+            <span class="badge badge-success">{% trans "System Online" %}</span>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">
-                    🔧 Maintenance
-                </h5>
-                <p class="card-text">Schedule and track maintenance activities to keep your fleet running smoothly.</p>
-                <a href="{% url 'maintenance_list' %}" class="btn btn-primary">View Maintenance</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">
-                    ⚠️ Emergency Response
-                </h5>
-                <p class="card-text">Manage emergency incidents and coordinate response efforts effectively.</p>
-                <a href="{% url 'emergency_list' %}" class="btn btn-primary">View Emergencies</a>
-            </div>
-        </div>
-    </div>
-</div>
 
-{% if user.is_authenticated %}
-<div class="row mt-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Quick Actions</h5>
+        <div class="grid grid-cols-2 gap-8">
+            <div>
+                <h4>{% trans "Quick Actions" %}</h4>
+                <ul style="margin-top: 1rem;">
+                    <li style="margin-bottom: 0.5rem;">
+                        <a href="#" class="flex items-center gap-2" style="color: var(--accent-primary);">
+                            <i class="fas fa-arrow-right"></i> {% trans "Register new vehicle" %}
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 0.5rem;">
+                        <a href="#" class="flex items-center gap-2" style="color: var(--accent-primary);">
+                            <i class="fas fa-arrow-right"></i> {% trans "Report incident" %}
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 0.5rem;">
+                        <a href="#" class="flex items-center gap-2" style="color: var(--accent-primary);">
+                            <i class="fas fa-arrow-right"></i> {% trans "Schedule service" %}
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3">
-                        <a href="{% url 'vehicle_create' %}" class="btn btn-success btn-block mb-2">Add Vehicle</a>
+
+            <div>
+                <h4>{% trans "Recent Activity" %}</h4>
+                <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
+                    <div class="flex items-center gap-2" style="margin-bottom: 0.75rem;">
+                        <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                        <span>{% trans "System maintenance completed successfully" %}</span>
                     </div>
-                    <div class="col-md-3">
-                        <a href="{% url 'maintenance_create' %}" class="btn btn-warning btn-block mb-2">Schedule Maintenance</a>
+                    <div class="flex items-center gap-2" style="margin-bottom: 0.75rem;">
+                        <i class="fas fa-info-circle" style="color: var(--accent-primary);"></i>
+                        <span>{% trans "New fleet regulations update available" %}</span>
                     </div>
-                    <div class="col-md-3">
-                        <a href="{% url 'emergency_create' %}" class="btn btn-danger btn-block mb-2">Report Emergency</a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="/api/" class="btn btn-info btn-block mb-2">API Documentation</a>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i>
+                        <span>{% trans "3 vehicles due for inspection this week" %}</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-{% endif %}
-
-<div class="row mt-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">System Features</h5>
-            </div>
-            <div class="card-body">
-                <ul class="list-unstyled">
-                    <li>✅ Comprehensive vehicle tracking and management</li>
-                    <li>✅ Automated maintenance scheduling and reminders</li>
-                    <li>✅ Emergency incident reporting and response coordination</li>
-                    <li>✅ RESTful API for integration with other systems</li>
-                    <li>✅ Role-based access control and user management</li>
-                    <li>✅ Real-time status updates and notifications</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block extra_js %}
+</section>
 {% endblock %}

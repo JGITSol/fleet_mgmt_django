@@ -14,7 +14,7 @@ import pytest
 
 # A single test password used in fixtures to avoid repeated hard-coded literals.
 # Allow override via env to avoid hard-coded secrets in some environments.
-TEST_PASSWORD = os.environ.get("TEST_PASSWORD", "testpassword123")
+TEST_PASSWORD = os.environ.get("TEST_PASSWORD", "TestPassword123!")
 
 
 def test_fixtures_coverage(user, custom_user, driver, vehicle, maintenance, scheduled_maintenance, emergency_contact, emergency_incident):

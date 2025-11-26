@@ -1,53 +1,47 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base_v2.html' %}
+{% load i18n %}
 
-{% block title %}Register - Car Fleet Management{% endblock %}
+{% block title %}{% trans "Register - Car Fleet Management" %}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title mb-0">Create Account</h3>
-                </div>
-                <div class="card-body">
-                    {% if form.errors %}
-                        <div class="alert alert-danger">
-                            {{ form.errors }}
-                        </div>
-                    {% endif %}
-                    
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
-                            {{ form.username }}
-                            {% if form.username.help_text %}
-                                <div class="form-text">{{ form.username.help_text }}</div>
-                            {% endif %}
-                        </div>
-                        <div class="mb-3">
-                            <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
-                            {{ form.password1 }}
-                            {% if form.password1.help_text %}
-                                <div class="form-text">{{ form.password1.help_text }}</div>
-                            {% endif %}
-                        </div>
-                        <div class="mb-3">
-                            <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
-                            {{ form.password2 }}
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Create Account</button>
-                        </div>
-                    </form>
-                    
-                    <div class="text-center mt-3">
-                        <p>Already have an account? <a href="{% url 'accounts:login' %}">Login here</a></p>
-                    </div>
-                </div>
+<div class="container flex justify-center items-center" style="min-height: 80vh;">
+    <div class="card card-glass" style="width: 100%; max-width: 500px;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h2 style="margin-bottom: 0.5rem;">{% trans "Create Account" %}</h2>
+            <p>{% trans "Join the fleet management platform" %}</p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <div class="alert alert-error">
+                {% trans "Please correct the errors below." %}
             </div>
+            {% endif %}
+
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: var(--text-secondary); display: block; margin-top: 0.25rem;">{{ field.help_text
+                    }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                <small style="color: #fca5a5; display: block; margin-top: 0.25rem;">{{ error }}</small>
+                {% endfor %}
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                {% trans "Register" %}
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem;">
+            <p>{% trans "Already have an account?" %} <a href="{% url 'login' %}"
+                    style="color: var(--accent-primary);">{% trans "Login here" %}</a></p>
         </div>
     </div>
 </div>

@@ -1,0 +1,1350 @@
+# French translations for Car Fleet Management.
+# Copyright (C) 2023 Car Fleet Management Team
+# This file is distributed under the same license as the Car Fleet Management package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Car Fleet Management 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-23 17:14+0100\n"
+"PO-Revision-Date: 2023-07-01 12:00+0000\n"
+"Last-Translator: Car Fleet Management Team\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\CarFleetManagement\accounts\models.py:20
+#: .\CarFleetManagement\templates\base.html:47
+#: .\CarFleetManagement\templates\base_broken.html:47
+#: .\CarFleetManagement\templates\base_v2.html:45
+msgid "Admin"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:21
+msgid "Manager"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:22
+msgid "Coordinator"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:23
+#: .\CarFleetManagement\emergency\models.py:23
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:18
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:45
+msgid "Driver"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:24
+msgid "Test User"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:25
+#, fuzzy
+#| msgid "Maintenance"
+msgid "Maintenance Staff"
+msgstr "Entretien"
+
+#: .\CarFleetManagement\accounts\models.py:28
+msgid "Role Name"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:29
+#: .\CarFleetManagement\emergency\models.py:30
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:82
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:49
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:18
+msgid "Description"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:30
+#, fuzzy
+#| msgid "Version"
+msgid "Permissions"
+msgstr "Version"
+
+#: .\CarFleetManagement\accounts\models.py:40
+msgid "Role"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:41
+#: .\CarFleetManagement\accounts\models.py:73
+#: .\CarFleetManagement\emergency\models.py:50
+msgid "Phone Number"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:42
+#, fuzzy
+#| msgid "Emergency"
+msgid "Emergency Contact"
+msgstr "Urgence"
+
+#: .\CarFleetManagement\accounts\models.py:69
+msgid "First Name"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:70
+msgid "Last Name"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:71
+msgid "Driver License Number"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:72
+#, fuzzy
+#| msgid "Vehicles"
+msgid "Assigned Vehicles"
+msgstr "Véhicules"
+
+#: .\CarFleetManagement\accounts\models.py:74
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:16
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:17
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:35
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:21
+msgid "Email"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:79
+msgid "Active"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:80
+msgid "Inactive"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:83
+#: .\CarFleetManagement\emergency\models.py:26
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:25
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:27
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:17
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:14
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:39
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:17
+#: .\CarFleetManagement\vehicles\models.py:41
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:19
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:158
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:19
+msgid "Status"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:86
+msgid "License Expiry Date"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:89
+msgid "Hire Date"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:90
+msgid "Termination Date"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:9
+msgid "Accident"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:10
+msgid "Breakdown"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:11
+#, fuzzy
+#| msgid "Emergency"
+msgid "Medical Emergency"
+msgstr "Urgence"
+
+#: .\CarFleetManagement\emergency\models.py:12
+msgid "Theft"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:13
+#: .\CarFleetManagement\maintenance\models.py:13
+msgid "Other"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:16
+msgid "Reported"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:17
+msgid "Responding"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:18
+msgid "Resolved"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:19
+msgid "Closed"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:22
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:17
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:37
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:15
+#: .\CarFleetManagement\maintenance\models.py:40
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:12
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:17
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:15
+#, fuzzy
+#| msgid "Vehicles"
+msgid "Vehicle"
+msgstr "Véhicules"
+
+#: .\CarFleetManagement\emergency\models.py:24
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:26
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:90
+msgid "Reported By"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:25
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:18
+#, fuzzy
+#| msgid "Emergency"
+msgid "Emergency Type"
+msgstr "Urgence"
+
+#: .\CarFleetManagement\emergency\models.py:27
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:19
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:53
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:18
+msgid "Location"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:28
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:63
+msgid "Latitude"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:29
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:72
+msgid "Longitude"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:31
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:27
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:19
+msgid "Reported Time"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:32
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:29
+msgid "Resolved Time"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:38
+msgid "Incident"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:39
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:16
+msgid "Responder"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:40
+msgid "Response Time"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:41
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:46
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:24
+msgid "Action Taken"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:42
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:25
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:61
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:49
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:32
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:26
+msgid "Notes"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:48
+#, fuzzy
+#| msgid "Username"
+msgid "User"
+msgstr "Nom d'utilisateur"
+
+#: .\CarFleetManagement\emergency\models.py:49
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:14
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:16
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:19
+msgid "Name"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:51
+msgid "Relationship"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:4
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:8
+msgid "Delete Emergency Contact"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:12
+msgid "Are you sure you want to delete this emergency contact?"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:15
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:16
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:26
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:20
+msgid "Phone"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:17
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:18
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:22
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:16
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:13
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:16
+msgid "Type"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:19
+msgid "This action cannot be undone."
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:25
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:34
+#, fuzzy
+#| msgid "Contact"
+msgid "Delete Contact"
+msgstr "Contact"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:26
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:72
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:101
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:43
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:63
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:170
+msgid "Cancel"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:4
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:8
+msgid "Emergency Contact Details"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:22
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:53
+msgid "Address"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:33
+#, fuzzy
+#| msgid "Contact"
+msgid "Edit Contact"
+msgstr "Contact"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:35
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:61
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:31
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:35
+msgid "Back to List"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:4
+msgid "Emergency Contact Form"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:8
+msgid "Edit Emergency Contact"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:8
+msgid "Create Emergency Contact"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:45
+#, fuzzy
+#| msgid "Contact"
+msgid "Contact Type"
+msgstr "Contact"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:71
+#, fuzzy
+#| msgid "Contact"
+msgid "Update Contact"
+msgstr "Contact"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:71
+#, fuzzy
+#| msgid "Contact"
+msgid "Create Contact"
+msgstr "Contact"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:4
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:8
+#, fuzzy
+#| msgid "Emergency"
+msgid "Emergency Contacts"
+msgstr "Urgence"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:11
+#, fuzzy
+#| msgid "Emergency"
+msgid "Add Emergency Contact"
+msgstr "Urgence"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:23
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:20
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:20
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:20
+msgid "Actions"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:34
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:32
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:32
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:32
+msgid "View"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:35
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:33
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:30
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:33
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:34
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:33
+msgid "Edit"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:36
+msgid "Delete"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:44
+msgid "No emergency contacts found."
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:4
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:8
+msgid "Emergency Incident Details"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:21
+msgid "Coordinates"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:36
+msgid "Responses"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:55
+msgid "No responses yet."
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:59
+msgid "Add Response"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:60
+msgid "Edit Incident"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:4
+msgid "Emergency Incident Form"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:8
+msgid "Edit Emergency Incident"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:8
+msgid "Create Emergency Incident"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:100
+msgid "Update Incident"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:100
+msgid "Create Incident"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:4
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:8
+#, fuzzy
+#| msgid "Emergency"
+msgid "Emergency Incidents"
+msgstr "Urgence"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:9
+#, fuzzy
+#| msgid "Emergency"
+msgid "Report New Emergency"
+msgstr "Urgence"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:38
+msgid "No emergency incidents found."
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:4
+msgid "Emergency Response Form"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:8
+msgid "Add Emergency Response"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:42
+msgid "Submit Response"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\models.py:10
+#, fuzzy
+#| msgid "Maintenance"
+msgid "Routine Maintenance"
+msgstr "Entretien"
+
+#: .\CarFleetManagement\maintenance\models.py:11
+msgid "Repair"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\models.py:12
+msgid "Inspection"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\models.py:17
+msgid "Scheduled"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\models.py:18
+msgid "In Progress"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\models.py:19
+msgid "Completed"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\models.py:20
+msgid "Cancelled"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\models.py:44
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:27
+#, fuzzy
+#| msgid "Maintenance"
+msgid "Maintenance Type"
+msgstr "Entretien"
+
+#: .\CarFleetManagement\maintenance\models.py:48
+#, fuzzy
+#| msgid "Maintenance"
+msgid "Maintenance Status"
+msgstr "Entretien"
+
+#: .\CarFleetManagement\maintenance\models.py:51
+#, fuzzy
+#| msgid "Maintenance"
+msgid "Maintenance Description"
+msgstr "Entretien"
+
+#: .\CarFleetManagement\maintenance\models.py:54
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:15
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:19
+msgid "Scheduled Date"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\models.py:57
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:18
+msgid "Completed Date"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\models.py:60
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:21
+msgid "Odometer Reading"
+msgstr "Lecture d'Odomètre"
+
+#: .\CarFleetManagement\maintenance\models.py:64
+#, fuzzy
+#| msgid "Maintenance"
+msgid "Maintenance Cost"
+msgstr "Entretien"
+
+#: .\CarFleetManagement\maintenance\models.py:67
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:23
+msgid "Service Provider"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\models.py:70
+msgid "Additional Notes"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:4
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:8
+#, fuzzy
+#| msgid "Maintenance"
+msgid "Maintenance Details"
+msgstr "Entretien"
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:22
+msgid "Cost"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:5
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:10
+#, fuzzy
+#| msgid "Predictive Maintenance"
+msgid "Edit Maintenance Record"
+msgstr "Entretien Prédictif"
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:5
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:10
+#, fuzzy
+#| msgid "Maintenance"
+msgid "Add Maintenance Record"
+msgstr "Entretien"
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:62
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:169
+msgid "Save"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:4
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:8
+#, fuzzy
+#| msgid "Maintenance"
+msgid "Maintenance Records"
+msgstr "Entretien"
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:9
+msgid "Add New Maintenance Record"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:38
+msgid "No maintenance records found."
+msgstr ""
+
+#: .\CarFleetManagement\templates\about.html:4
+#: .\CarFleetManagement\templates\partials\_footer.html:11
+#: .\CarFleetManagement\templates\partials\_navbar.html:11
+msgid "About"
+msgstr "À propos"
+
+#: .\CarFleetManagement\templates\about.html:4
+#: .\CarFleetManagement\templates\features.html:5
+#: .\CarFleetManagement\templates\partials\_navbar.html:4
+msgid "Car Fleet Manager"
+msgstr "Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\about.html:10
+msgid "About Car Fleet Manager"
+msgstr "À propos du Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\about.html:11
+msgid ""
+"A comprehensive fleet management system designed to leverage AI, automation, "
+"and real-time data processing to streamline vehicle operations."
+msgstr ""
+"Un système complet de gestion de flotte conçu pour tirer parti de l'IA, de "
+"l'automatisation et du traitement des données en temps réel pour "
+"rationaliser les opérations des véhicules."
+
+#: .\CarFleetManagement\templates\about.html:15
+msgid "Our Mission"
+msgstr "Notre Mission"
+
+#: .\CarFleetManagement\templates\about.html:16
+msgid ""
+"To revolutionize fleet management through cutting-edge technology that "
+"reduces costs, improves efficiency, and enhances safety for all fleet "
+"operators."
+msgstr ""
+"Révolutionner la gestion de flotte grâce à une technologie de pointe qui "
+"réduit les coûts, améliore l'efficacité et renforce la sécurité pour tous "
+"les opérateurs de flotte."
+
+#: .\CarFleetManagement\templates\about.html:22
+msgid "Technology Stack"
+msgstr "Stack Technologique"
+
+#: .\CarFleetManagement\templates\about.html:24
+msgid "Django 5.0 for robust backend services"
+msgstr "Django 5.0 pour des services backend robustes"
+
+#: .\CarFleetManagement\templates\about.html:25
+msgid "PyTorch and YOLOv8 for advanced computer vision"
+msgstr "PyTorch et YOLOv8 pour la vision par ordinateur avancée"
+
+#: .\CarFleetManagement\templates\about.html:26
+msgid "PostgreSQL with PostGIS for geospatial capabilities"
+msgstr "PostgreSQL avec PostGIS pour les capacités géospatiales"
+
+#: .\CarFleetManagement\templates\about.html:27
+msgid "Modern web technologies for responsive interfaces"
+msgstr "Technologies web modernes pour des interfaces réactives"
+
+#: .\CarFleetManagement\templates\about.html:34
+msgid "The Team"
+msgstr "L'Équipe"
+
+#: .\CarFleetManagement\templates\about.html:35
+msgid ""
+"Our team consists of experienced software engineers, data scientists, and "
+"fleet management experts dedicated to building the best fleet management "
+"solution on the market."
+msgstr ""
+"Notre équipe est composée d'ingénieurs logiciels expérimentés, de "
+"scientifiques des données et d'experts en gestion de flotte dédiés à la "
+"construction de la meilleure solution de gestion de flotte sur le marché."
+
+#: .\CarFleetManagement\templates\base.html:9
+#: .\CarFleetManagement\templates\base_broken.html:9
+#: .\CarFleetManagement\templates\base_v2.html:9
+#, fuzzy
+#| msgid "Car Fleet Manager"
+msgid "Car Fleet Management"
+msgstr "Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\base.html:28
+#: .\CarFleetManagement\templates\base_broken.html:28
+#: .\CarFleetManagement\templates\base_v2.html:28
+#: .\CarFleetManagement\templates\base_v2.html:34
+#: .\CarFleetManagement\templates\partials\_footer.html:10
+msgid "Home"
+msgstr ""
+
+#: .\CarFleetManagement\templates\base.html:29
+#: .\CarFleetManagement\templates\base.html:108
+#: .\CarFleetManagement\templates\base_broken.html:29
+#: .\CarFleetManagement\templates\base_broken.html:108
+#: .\CarFleetManagement\templates\base_v2.html:29
+#: .\CarFleetManagement\templates\base_v2.html:105
+#, fuzzy
+#| msgid "Car Fleet Manager"
+msgid "FleetManager"
+msgstr "Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\base.html:39
+#: .\CarFleetManagement\templates\base_broken.html:39
+#: .\CarFleetManagement\templates\base_v2.html:38
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:4
+msgid "Vehicles"
+msgstr "Véhicules"
+
+#: .\CarFleetManagement\templates\base.html:44
+#: .\CarFleetManagement\templates\base_broken.html:44
+#: .\CarFleetManagement\templates\base_v2.html:42
+#, fuzzy
+#| msgid "Emergency"
+msgid "Emergency"
+msgstr "Urgence"
+
+#: .\CarFleetManagement\templates\base.html:52
+#: .\CarFleetManagement\templates\base_broken.html:52
+#: .\CarFleetManagement\templates\base_v2.html:50
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: .\CarFleetManagement\templates\base.html:57
+#: .\CarFleetManagement\templates\base_broken.html:57
+#: .\CarFleetManagement\templates\base_v2.html:54
+#: .\CarFleetManagement\templates\registration\register.html:38
+msgid "Register"
+msgstr ""
+
+#: .\CarFleetManagement\templates\base.html:80
+#: .\CarFleetManagement\templates\base_broken.html:80
+#: .\CarFleetManagement\templates\base_v2.html:77
+msgid "Toggle Theme"
+msgstr ""
+
+#: .\CarFleetManagement\templates\base.html:109
+#: .\CarFleetManagement\templates\base_broken.html:109
+#: .\CarFleetManagement\templates\base_v2.html:106
+#, fuzzy
+#| msgid "Car Fleet Manager"
+msgid "Premium Fleet Management Solution"
+msgstr "Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\base.html:112
+#: .\CarFleetManagement\templates\base_broken.html:112
+#: .\CarFleetManagement\templates\base_v2.html:109
+#, fuzzy
+#| msgid "Car Fleet Manager"
+msgid "Car Fleet Management System"
+msgstr "Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\base_v2.html:40
+#, fuzzy
+#| msgid "Maintenance"
+msgid "Maintenance"
+msgstr "Entretien"
+
+#: .\CarFleetManagement\templates\base_v2.html:53
+#: .\CarFleetManagement\templates\partials\_footer.html:13
+#: .\CarFleetManagement\templates\partials\_navbar.html:40
+#: .\CarFleetManagement\templates\registration\signup.html:44
+msgid "Login"
+msgstr "Connexion"
+
+#: .\CarFleetManagement\templates\features.html:5
+#: .\CarFleetManagement\templates\partials\_footer.html:12
+#: .\CarFleetManagement\templates\partials\_navbar.html:14
+msgid "Features"
+msgstr "Fonctionnalités"
+
+#: .\CarFleetManagement\templates\features.html:87
+msgid "System Features"
+msgstr "Fonctionnalités du Système"
+
+# New features page content
+#: .\CarFleetManagement\templates\features.html:88
+msgid ""
+"Discover how our advanced fleet management system can transform your "
+"operations"
+msgstr ""
+"Découvrez comment notre système avancé de gestion de flotte peut transformer "
+"vos opérations"
+
+#: .\CarFleetManagement\templates\features.html:97
+msgid "AI-Powered Odometer Reading"
+msgstr "Lecture d'Odomètre Alimentée par l'IA"
+
+#: .\CarFleetManagement\templates\features.html:99
+#, python-format
+msgid ""
+"Our system can automatically extract odometer readings from both analog and "
+"digital displays with 98%% accuracy, eliminating manual data entry errors."
+msgstr ""
+"Notre système peut extraire automatiquement les relevés d'odomètre des "
+"affichages analogiques et numériques avec une précision de 98%%, éliminant "
+"les erreurs de saisie manuelle."
+
+#: .\CarFleetManagement\templates\features.html:103
+msgid "Supports all major vehicle makes and models"
+msgstr "Prend en charge toutes les grandes marques et modèles de véhicules"
+
+#: .\CarFleetManagement\templates\features.html:104
+msgid "Validates readings against historical data"
+msgstr "Valide les lectures par rapport aux données historiques"
+
+#: .\CarFleetManagement\templates\features.html:105
+msgid "Flags suspicious readings for review"
+msgstr "Signale les lectures suspectes pour révision"
+
+#: .\CarFleetManagement\templates\features.html:117
+msgid "Damage Detection"
+msgstr "Détection de Dommages"
+
+#: .\CarFleetManagement\templates\features.html:119
+msgid ""
+"Automatically identify and assess vehicle damage to streamline insurance "
+"claims and repairs."
+msgstr ""
+"Identifie et évalue automatiquement les dommages des véhicules pour "
+"rationaliser les réclamations d'assurance et les réparations."
+
+#: .\CarFleetManagement\templates\features.html:123
+msgid "Detects damage to 15+ vehicle parts"
+msgstr "Détecte les dommages sur plus de 15 pièces de véhicule"
+
+#: .\CarFleetManagement\templates\features.html:124
+msgid "Estimates repair costs automatically"
+msgstr "Estime automatiquement les coûts de réparation"
+
+#: .\CarFleetManagement\templates\features.html:125
+msgid "Generates detailed damage reports"
+msgstr "Génère des rapports détaillés sur les dommages"
+
+#: .\CarFleetManagement\templates\features.html:137
+msgid "Predictive Maintenance"
+msgstr "Entretien Prédictif"
+
+#: .\CarFleetManagement\templates\features.html:139
+msgid ""
+"Reduce downtime with AI-driven maintenance predictions based on vehicle "
+"telemetry and usage patterns."
+msgstr ""
+"Réduisez les temps d'arrêt grâce aux prédictions de maintenance basées sur "
+"l'IA à partir de la télémétrie des véhicules et des modèles d'utilisation."
+
+#: .\CarFleetManagement\templates\features.html:143
+msgid "Schedule maintenance based on actual usage"
+msgstr "Planifiez l'entretien en fonction de l'utilisation réelle"
+
+#: .\CarFleetManagement\templates\features.html:144
+msgid "Predict component failures before they occur"
+msgstr ""
+"Prédisez les défaillances des composants avant qu'elles ne se produisent"
+
+#: .\CarFleetManagement\templates\features.html:145
+msgid "Optimize maintenance schedules across fleet"
+msgstr "Optimisez les calendriers d'entretien dans toute la flotte"
+
+#: .\CarFleetManagement\templates\features.html:159
+msgid "Fuel Management"
+msgstr "Gestion du Carburant"
+
+#: .\CarFleetManagement\templates\features.html:161
+msgid ""
+"Track and optimize fuel consumption across your entire fleet with advanced "
+"analytics and reporting."
+msgstr ""
+"Suivez et optimisez la consommation de carburant dans toute votre flotte "
+"grâce à des analyses avancées et des rapports."
+
+#: .\CarFleetManagement\templates\features.html:165
+msgid "Monitor fuel efficiency in real-time"
+msgstr "Surveillez l'efficacité du carburant en temps réel"
+
+#: .\CarFleetManagement\templates\features.html:166
+msgid "Detect fuel theft or unauthorized usage"
+msgstr "Détectez les vols de carburant ou les utilisations non autorisées"
+
+#: .\CarFleetManagement\templates\features.html:167
+msgid "Generate comprehensive fuel reports"
+msgstr "Générez des rapports complets sur le carburant"
+
+#: .\CarFleetManagement\templates\features.html:179
+msgid "Scheduling & Dispatching"
+msgstr "Planification et Répartition"
+
+#: .\CarFleetManagement\templates\features.html:181
+msgid ""
+"Efficiently manage vehicle assignments and optimize routes with our "
+"intelligent scheduling system."
+msgstr ""
+"Gérez efficacement les affectations de véhicules et optimisez les "
+"itinéraires grâce à notre système intelligent de planification."
+
+#: .\CarFleetManagement\templates\features.html:185
+msgid "AI-powered route optimization"
+msgstr "Optimisation des itinéraires basée sur l'IA"
+
+#: .\CarFleetManagement\templates\features.html:186
+msgid "Real-time vehicle tracking"
+msgstr "Suivi des véhicules en temps réel"
+
+#: .\CarFleetManagement\templates\features.html:187
+msgid "Automated driver assignment"
+msgstr "Affectation automatisée des conducteurs"
+
+#: .\CarFleetManagement\templates\home.html:4
+#, fuzzy
+#| msgid "Login | Car Fleet Manager"
+msgid "Home - Car Fleet Management"
+msgstr "Connexion | Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\home.html:11
+#, fuzzy
+#| msgid "Login | Car Fleet Manager"
+msgid "Welcome to Fleet Management"
+msgstr "Connexion | Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\home.html:12
+msgid "Manage your vehicle fleet with ease and efficiency"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home.html:21
+#, fuzzy
+#| msgid "System Features"
+msgid "System Overview"
+msgstr "Fonctionnalités du Système"
+
+#: .\CarFleetManagement\templates\home.html:22
+msgid "System Online"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home.html:27
+msgid "Quick Actions"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home.html:31
+msgid "Register new vehicle"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home.html:36
+msgid "Report incident"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home.html:41
+msgid "Schedule service"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home.html:48
+msgid "Recent Activity"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home.html:52
+msgid "System maintenance completed successfully"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home.html:56
+msgid "New fleet regulations update available"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home.html:60
+msgid "3 vehicles due for inspection this week"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:8
+msgid "Company"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:14
+#: .\CarFleetManagement\templates\partials\_navbar.html:43
+#: .\CarFleetManagement\templates\registration\signup.html:28
+msgid "Sign Up"
+msgstr "S'inscrire"
+
+#: .\CarFleetManagement\templates\partials\_footer.html:20
+msgid "Legal"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:22
+msgid "Terms of Service"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:23
+msgid "Privacy Policy"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:24
+msgid "Cookie Policy"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:25
+msgid "GDPR"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:26
+#, fuzzy
+#| msgid "Damage Detection"
+msgid "Data Protection"
+msgstr "Détection de Dommages"
+
+#: .\CarFleetManagement\templates\partials\_footer.html:32
+msgid "Contact"
+msgstr "Contact"
+
+#: .\CarFleetManagement\templates\partials\_footer.html:36
+msgid "123 Fleet Street, Vehicle City"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:37
+msgid "Mon-Fri: 9AM-5PM"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:55
+msgid "2025 Car Fleet Manager. All rights reserved."
+msgstr "2025 Gestionnaire de Flotte Automobile. Tous droits réservés."
+
+#: .\CarFleetManagement\templates\registration\login.html:5
+#, fuzzy
+#| msgid "Login | Car Fleet Manager"
+msgid "Login - Car Fleet Management"
+msgstr "Connexion | Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\registration\login.html:11
+msgid "Welcome Back"
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\login.html:12
+msgid "Sign in to access your fleet dashboard"
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\login.html:20
+msgid "Invalid username or password. Please try again."
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\login.html:25
+#, fuzzy
+#| msgid "Username"
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: .\CarFleetManagement\templates\registration\login.html:30
+msgid "Password"
+msgstr "Mot de passe"
+
+#: .\CarFleetManagement\templates\registration\login.html:35
+#, fuzzy
+#| msgid "Sign Up"
+msgid "Sign In"
+msgstr "S'inscrire"
+
+#: .\CarFleetManagement\templates\registration\login.html:40
+msgid "Don't have an account?"
+msgstr "Vous n'avez pas de compte?"
+
+#: .\CarFleetManagement\templates\registration\login.html:41
+msgid "Register here"
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\password_reset.html:4
+msgid "Password Reset | Car Fleet Manager"
+msgstr "Réinitialisation de Mot de Passe | Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\registration\password_reset.html:11
+msgid "Password Reset"
+msgstr "Réinitialisation de Mot de Passe"
+
+#: .\CarFleetManagement\templates\registration\password_reset.html:36
+msgid "Reset Password"
+msgstr "Réinitialiser le Mot de Passe"
+
+#: .\CarFleetManagement\templates\registration\password_reset_complete.html:4
+msgid "Password Reset Complete | Car Fleet Manager"
+msgstr ""
+"Réinitialisation de Mot de Passe Terminée | Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\registration\password_reset_complete.html:11
+msgid "Password Reset Complete"
+msgstr "Réinitialisation de Mot de Passe Terminée"
+
+#: .\CarFleetManagement\templates\registration\password_reset_complete.html:14
+msgid "Your password has been set. You may go ahead and log in now."
+msgstr ""
+"Votre mot de passe a été défini. Vous pouvez maintenant vous connecter."
+
+#: .\CarFleetManagement\templates\registration\password_reset_complete.html:18
+msgid "Log in"
+msgstr "Se connecter"
+
+#: .\CarFleetManagement\templates\registration\password_reset_confirm.html:4
+#, fuzzy
+#| msgid "Welcome to Car Fleet Manager"
+msgid "Reset Password | Car Fleet Manager"
+msgstr "Bienvenue sur le Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\registration\password_reset_confirm.html:11
+msgid "Enter new password"
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\password_reset_confirm.html:36
+msgid "Change password"
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\register.html:4
+#, fuzzy
+#| msgid "Login | Car Fleet Manager"
+msgid "Register - Car Fleet Management"
+msgstr "Connexion | Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\registration\register.html:10
+#: .\CarFleetManagement\templates\registration\signup.html:11
+msgid "Create Account"
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\register.html:11
+#, fuzzy
+#| msgid "Advanced fleet management system for 2025"
+msgid "Join the fleet management platform"
+msgstr "Système avancé de gestion de flotte pour 2025"
+
+#: .\CarFleetManagement\templates\registration\register.html:19
+msgid "Please correct the errors below."
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\register.html:43
+#: .\CarFleetManagement\templates\registration\signup.html:44
+msgid "Already have an account?"
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\register.html:44
+#, fuzzy
+#| msgid "Login"
+msgid "Login here"
+msgstr "Connexion"
+
+#: .\CarFleetManagement\templates\registration\signup.html:4
+#, fuzzy
+#| msgid "Welcome to Car Fleet Manager"
+msgid "Sign Up | Car Fleet Manager"
+msgstr "Bienvenue sur le Gestionnaire de Flotte Automobile"
+
+#: .\CarFleetManagement\templates\registration\signup.html:32
+msgid "or"
+msgstr "ou"
+
+#: .\CarFleetManagement\templates\registration\signup.html:37
+msgid "Sign Up with GitHub"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:7
+msgid "Truck"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:8
+msgid "Van"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:9
+msgid "SUV"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:10
+msgid "Pickup"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:13
+msgid "Diesel"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:14
+msgid "Petrol"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:15
+msgid "Hybrid"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:16
+msgid "Electric"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:19
+msgid "Manual"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:20
+msgid "Automatic"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:23
+msgid "Available"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:24
+msgid "In Use"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:25
+#, fuzzy
+#| msgid "Maintenance"
+msgid "In Maintenance"
+msgstr "Entretien"
+
+#: .\CarFleetManagement\vehicles\models.py:26
+msgid "Out of Service"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:28
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:17
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:15
+msgid "Brand"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:29
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:27
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:16
+msgid "Model"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:30
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:39
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:17
+msgid "Year"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:31
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:12
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:49
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:18
+msgid "License Plate"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:32
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:13
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:59
+msgid "VIN"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:33
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:14
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:72
+msgid "Color"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:34
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:15
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:82
+msgid "Fuel Type"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:35
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:16
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:92
+#, fuzzy
+#| msgid "Our Mission"
+msgid "Transmission"
+msgstr "Notre Mission"
+
+#: .\CarFleetManagement\vehicles\models.py:36
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:17
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:104
+#, fuzzy
+#| msgid "Vehicles"
+msgid "Vehicle Type"
+msgstr "Véhicules"
+
+#: .\CarFleetManagement\vehicles\models.py:37
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:18
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:114
+msgid "Mileage"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:38
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:126
+msgid "Last Service Date"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:39
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:136
+msgid "Next Service Date"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:40
+msgid "Insurance Expiry Date"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:22
+msgid "Last Service"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:26
+msgid "Next Service"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:30
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:146
+msgid "Insurance Expiry"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:5
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:10
+#, fuzzy
+#| msgid "Vehicles"
+msgid "Edit Vehicle"
+msgstr "Véhicules"
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:5
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:10
+#, fuzzy
+#| msgid "Vehicles"
+msgid "Add Vehicle"
+msgstr "Véhicules"
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:8
+#, fuzzy
+#| msgid "Vehicles"
+msgid "Vehicle List"
+msgstr "Véhicules"
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:9
+#, fuzzy
+#| msgid "Vehicles"
+msgid "Add New Vehicle"
+msgstr "Véhicules"
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:38
+msgid "No vehicles found."
+msgstr ""

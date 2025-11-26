@@ -11,6 +11,8 @@ from CarFleetManagement.maintenance import views as maintenance_views
 
 # Import view callables for optional non-namespaced aliases (DEV only)
 # Import the app-specific url modules to access their urlpatterns and app_name
+from django.contrib.auth import views as auth_views
+from CarFleetManagement.accounts import views as accounts_views
 from CarFleetManagement.vehicles import urls as vehicle_urls
 from CarFleetManagement.vehicles import views as vehicle_views
 
@@ -21,10 +23,15 @@ def root_view(request):
 # NOTE: keep all DRF API endpoints under the /api/ prefix. The web views
 # (HTML pages) should be mounted at top-level paths to avoid colliding with
 # API routes which previously caused redirects (302) to the login page during tests.
+from django.conf.urls.i18n import i18n_patterns
+
 urlpatterns = [
-    path('', root_view, name='root'),
-    path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
+]
+
+urlpatterns += i18n_patterns(
+    path('', root_view, name='home'),
+    path('admin/', admin.site.urls),
 
     # Web app (HTML) views - include each app's urls once (non-namespaced)
     path('accounts/', include('CarFleetManagement.accounts.urls')),
@@ -34,11 +41,16 @@ urlpatterns = [
 
     # API (DRF) endpoints
     path('api/', include(('CarFleetManagement.api.urls', 'CarFleetManagement.api'), namespace='CarFleetManagement.api')),
-]
+)
 
 # Backwards-compatible, non-namespaced aliases for legacy templates/tests.
 # Always include these for compatibility
 urlpatterns += [
+    # Auth aliases
+    path('accounts/login/', auth_views.LoginView.as_view(template_name="registration/login.html"), name='login'),
+    path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('accounts/register/', accounts_views.RegisterView.as_view(), name='register'),
+
     # Vehicles (non-namespaced aliases)
     path('vehicles/', vehicle_views.VehicleListView.as_view(), name='vehicle_list'),
     path('vehicles/<int:pk>/', vehicle_views.VehicleDetailView.as_view(), name='vehicle_detail'),

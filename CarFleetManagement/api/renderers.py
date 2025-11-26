@@ -208,12 +208,11 @@ class CustomBrowsableAPIRenderer(BrowsableAPIRenderer):
 
         insertion = additional_styles
 
-        if "</body>" in content:
-            # Only insert once; replace the first closing body occurrence
-            content = content.replace("</body>", insertion + "</body>", 1)
-        else:
-            # Append the scripts/styles once at the end
-            content = content + insertion
+        content = (
+            content.replace("</body>", insertion + "</body>", 1)
+            if "</body>" in content
+            else content + insertion
+        )
 
         # Normalize trailing whitespace and ensure the final returned content
         # ends exactly with a closing </script> tag (tests assert this).

@@ -160,7 +160,7 @@ class AuthUtils:
                 frame = frame.f_back
                 while frame:
                     if "self" in frame.f_locals and hasattr(frame.f_locals["self"], "__class__"):
-                        frame.f_locals["self"].__class__.__name__
+
                         test_method = frame.f_code.co_name
                         if test_method == "test_unauthenticated_access":
                             # For unauthenticated access tests, respect the user's authentication status

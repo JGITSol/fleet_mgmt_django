@@ -1,8 +1,8 @@
 # DEPRECATED: Use tests.auth_utils for all authentication utilities
 from .auth_utils import (
-	AuthUtils,
-	authenticate_client,
-	get_tokens_for_user,
+    AuthUtils,
+    authenticate_client,
+    get_tokens_for_user,
 )
 
 # Backwards-compatible re-exports; keep a minimal public surface so

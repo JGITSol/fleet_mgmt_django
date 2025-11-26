@@ -41,12 +41,12 @@ class Command(BaseCommand):
         # Admin user credentials from environment
         admin_username = os.environ.get("DEV_ADMIN_USERNAME", "admin")
         admin_email = os.environ.get("DEV_ADMIN_EMAIL", "admin@fleetmanagement.dev")
-        admin_password = os.environ.get("DEV_ADMIN_PASSWORD", "admin123!")
+        admin_password = os.environ.get("DEV_ADMIN_PASSWORD", "TestPassword123!")
 
         # Regular user credentials from environment
         user_username = os.environ.get("DEV_USER_USERNAME", "testuser")
         user_email = os.environ.get("DEV_USER_EMAIL", "user@fleetmanagement.dev")
-        user_password = os.environ.get("DEV_USER_PASSWORD", "user123!")
+        user_password = os.environ.get("DEV_USER_PASSWORD", "TestPassword123!")
 
         # Create or update admin user
         admin_user, created = User.objects.get_or_create(

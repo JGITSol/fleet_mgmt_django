@@ -19,8 +19,12 @@ def run_coverage():  # noqa: C901
     try:
         # Run tests with coverage
         print("📊 Running tests with coverage...")
+        cmd = [sys.executable, "-m", "coverage", "run", "--source=.", "manage.py", "test"]
+        if not all(all(c.isalnum() or c in "-_./\\" for c in a) for a in cmd):
+            print(f"Refusing to run unsafe command: {cmd}")
+            return
         result = subprocess.run(
-            [sys.executable, "-m", "coverage", "run", "--source=.", "manage.py", "test"],
+            cmd,
             capture_output=True,
             text=True,
             timeout=300,
@@ -33,9 +37,14 @@ def run_coverage():  # noqa: C901
         # Generate coverage report
         print("\n📈 Generating coverage report...")
         # safe: invoking coverage module via explicit sys.executable list
-        coverage_result = subprocess.run(
-            [sys.executable, "-m", "coverage", "report"], capture_output=True, text=True, timeout=60
-        )
+        coverage_cmd = [sys.executable, "-m", "coverage", "report"]
+        if all(all(c.isalnum() or c in "-_./\\" for c in s) for s in coverage_cmd):
+            coverage_result = subprocess.run(
+                coverage_cmd, capture_output=True, text=True, timeout=60
+            )
+        else:
+            print(f"Refusing to run unsafe coverage command: {coverage_cmd}")
+            coverage_result = subprocess.CompletedProcess(args=coverage_cmd, returncode=1, stdout="", stderr="Unsafe command")
 
         print("\n" + "=" * 60)
         print("📊 COVERAGE REPORT")

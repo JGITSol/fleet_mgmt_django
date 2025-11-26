@@ -29,11 +29,17 @@ def run_test_file(test_file):
     print("Patch applied successfully!")
 
     try:
-        result = subprocess.run(
-            [sys.executable, "-m", "pytest", test_file, "-v"],
-            capture_output=True,
-            text=True,
-        )
+        cmd = [sys.executable, "-m", "pytest", test_file, "-v"]
+
+        def _args_safe(args: list[str]) -> bool:
+            return all(all(c.isalnum() or c in "-_./\\" for c in a) for a in args)
+
+        if not _args_safe(cmd):
+            print(f"Refusing to run unsafe command: {cmd}")
+            return 1
+
+        # Arguments are validated by _args_safe above; suppress S603 warning
+        result = subprocess.run(cmd, capture_output=True, text=True)  # noqa: S603
         print(f"Exit code: {result.returncode}")
         if result.returncode != 0:
             print("STDOUT:")

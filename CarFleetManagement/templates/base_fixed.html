@@ -1,0 +1,10 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<!-- TEST FILE -->
+<option value="{{ language.code }}" {% if language.code==LANGUAGE_CODE %} selected{% endif %}>
+    {{ language.code|upper }}
+</option>
+
+</html>

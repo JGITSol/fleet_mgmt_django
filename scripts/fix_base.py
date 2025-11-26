@@ -1,0 +1,159 @@
+
+import os
+
+content = r"""{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% trans "Car Fleet Management" %}{% endblock %}</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="{% url 'home' %}" class="nav-logo" aria-label="{% trans 'Home' %}">
+                <i class="fas fa-car-side"></i> FleetManager
+            </a>
+
+            <div class="nav-links">
+                <a href="{% url 'home' %}"
+                    class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">{% trans "Home"
+                    %}</a>
+
+                {% if user.is_authenticated %}
+                <a href="{% url 'vehicle_list' %}"
+                    class="nav-link {% if 'vehicle' in request.path %}active{% endif %}">{% trans "Vehicles" %}</a>
+                <a href="{% url 'maintenance_list' %}"
+                    class="nav-link {% if 'maintenance' in request.path %}active{% endif %}">{% trans "Maintenance"
+                    %}</a>
+                <a href="{% url 'emergency_list' %}"
+                    class="nav-link {% if 'emergency' in request.path %}active{% endif %}">{% trans "Emergency" %}</a>
+
+                {% if user.is_staff %}
+                <a href="{% url 'admin:index' %}" class="nav-link" target="_blank">{% trans "Admin" %}</a>
+                {% endif %}
+
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline">{% trans "Logout" %}</button>
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}" class="nav-link {% if 'login' in request.path %}active{% endif %}">{% trans
+                    "Login" %}</a>
+                <a href="{% url 'register' %}" class="btn btn-sm btn-primary">{% trans "Register" %}</a>
+                {% endif %}
+
+                <!-- Language Switcher -->
+                <form action="{% url 'set_language' %}" method="post" class="language-switcher"
+                    style="display: inline-flex; margin-left: 1rem;">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                    <select name="language" onchange="this.form.submit()" class="form-control"
+                        style="padding: 0.25rem 0.5rem; font-size: 0.875rem; width: auto;">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                        <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                            {{ language.code|upper }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </form>
+
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="btn btn-sm btn-outline" style="margin-left: 1rem;"
+                    aria-label="{% trans 'Toggle Theme' %}">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% if messages %}
+        <div class="container" style="margin-top: 2rem;">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h4 style="margin-bottom: 0.5rem;">FleetManager</h4>
+                    <p style="font-size: 0.9rem;">{% trans "Premium Fleet Management Solution" %}</p>
+                </div>
+                <div style="text-align: right;">
+                    <p style="font-size: 0.85rem;">&copy; {% now "Y" %} {% trans "Car Fleet Management System" %}</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const icon = themeToggle.querySelector('i');
+        const html = document.documentElement;
+
+        // Check local storage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            html.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme);
+        }
+
+        function updateIcon(theme) {
+            if (theme === 'light') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+    </script>
+</body>
+
+</html>
+"""
+
+path = r'd:\REPOS\fleet_mgmt_django\CarFleetManagement\templates\base.html'
+with open(path, 'w', encoding='utf-8') as f:
+    f.write(content)
+print(f"Successfully wrote to {path}")
