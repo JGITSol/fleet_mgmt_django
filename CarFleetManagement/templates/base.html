@@ -19,6 +19,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themes.css' %}">
 </head>
 
 <body>
@@ -68,18 +69,30 @@
                         {% get_available_languages as LANGUAGES %}
                         {% get_language_info_list for LANGUAGES as languages %}
                         {% for language in languages %}
-                        <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                        <option value="{{ language.code }}" {% if language.code==LANGUAGE_CODE %} selected{% endif %}>
                             {{ language.code|upper }}
                         </option>
                         {% endfor %}
                     </select>
                 </form>
 
-                <!-- Theme Toggle -->
-                <button id="theme-toggle" class="btn btn-sm btn-outline" style="margin-left: 1rem;"
-                    aria-label="{% trans 'Toggle Theme' %}">
-                    <i class="fas fa-moon"></i>
-                </button>
+                <!-- Theme Selector -->
+                <div class="theme-selector" style="display: inline-flex; margin-left: 1rem; align-items: center;">
+                    <select id="theme-select" class="form-control"
+                        style="padding: 0.25rem 0.5rem; font-size: 0.875rem; width: auto;"
+                        aria-label="{% trans 'Select Theme' %}">
+                        <option value="classic-blue">Classic Blue (Light)</option>
+                        <option value="classic-blue-dark">Classic Blue (Dark)</option>
+                        <option value="solarized-modern">Solarized (Light)</option>
+                        <option value="solarized-modern-dark">Solarized (Dark)</option>
+                        <option value="rose-quartz">Rose Quartz (Light)</option>
+                        <option value="rose-quartz-dark">Rose Quartz (Dark)</option>
+                        <option value="emerald-forest">Emerald Forest (Light)</option>
+                        <option value="emerald-forest-dark">Emerald Forest (Dark)</option>
+                        <option value="papyrus-sepia">Papyrus Sepia (Light)</option>
+                        <option value="papyrus-sepia-dark">Papyrus Sepia (Dark)</option>
+                    </select>
+                </div>
             </div>
         </div>
     </nav>
@@ -115,34 +128,20 @@
         </div>
     </footer>
     <script>
-        const themeToggle = document.getElementById('theme-toggle');
-        const icon = themeToggle.querySelector('i');
+        const themeSelect = document.getElementById('theme-select');
         const html = document.documentElement;
 
         // Check local storage
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            html.setAttribute('data-theme', savedTheme);
-            updateIcon(savedTheme);
-        }
+        const savedTheme = localStorage.getItem('theme') || 'classic-blue';
 
-        function updateIcon(theme) {
-            if (theme === 'light') {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            }
-        }
+        // Apply saved theme
+        html.setAttribute('data-theme', savedTheme);
+        themeSelect.value = savedTheme;
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-
+        themeSelect.addEventListener('change', (e) => {
+            const newTheme = e.target.value;
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            updateIcon(newTheme);
         });
     </script>
 </body>

@@ -56,12 +56,13 @@ class EmergencyIncidentTestCase(APITestCase):
         )
 
         # Create vehicle
+        import uuid
         self.vehicle = self.Vehicle.objects.create(
             brand='Toyota',
             model='Camry',
             year=2022,
-            license_plate='ABC-123',
-            vin='1HGCM82633A123456'
+            license_plate=f'ABC-{uuid.uuid4().hex[:6].upper()}',
+            vin=f'1HGCM82633A{uuid.uuid4().hex[:6].upper()}'
         )
 
         # Provide license_expiry_date for backward compatibility with DB schema
@@ -103,7 +104,7 @@ class EmergencyIncidentTestCase(APITestCase):
 
     def test_incident_string_representation(self):
         """Test EmergencyIncident string representation."""
-        expected_str = f"Accident - Toyota Camry (ABC-123) - {self.incident.reported_time.strftime('%Y-%m-%d %H:%M')}"
+        expected_str = f"Accident - Toyota Camry ({self.vehicle.license_plate}) - {self.incident.reported_time.strftime('%Y-%m-%d %H:%M')}"
         self.assertEqual(str(self.incident), expected_str)
 
     def test_incident_status_update(self):
@@ -183,12 +184,13 @@ class EmergencyResponseTestCase(APITestCase):
         )
 
         # Create vehicle
+        import uuid
         self.vehicle = self.Vehicle.objects.create(
             brand='Toyota',
             model='Camry',
             year=2022,
-            license_plate='ABC-123',
-            vin='1HGCM82633A123456'
+            license_plate=f'ABC-{uuid.uuid4().hex[:6].upper()}',
+            vin=f'1HGCM82633A{uuid.uuid4().hex[:6].upper()}'
         )
 
         # Create emergency incident

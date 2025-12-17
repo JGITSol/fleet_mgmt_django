@@ -100,13 +100,14 @@ class MaintenanceViewsTestCase(APITestCase):
         )
 
         # Create vehicle
+        import uuid
         self.today = timezone.now().date()
         self.vehicle = self.Vehicle.objects.create(
             brand='Toyota',
             model='Camry',
             year=2022,
-            license_plate='ABC-123',
-            vin='1HGCM82633A123456'
+            license_plate=f'ABC-{uuid.uuid4().hex[:6].upper()}',
+            vin=f'1HGCM82633A{uuid.uuid4().hex[:6].upper()}'
         )
 
         # Create maintenance records

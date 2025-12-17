@@ -25,12 +25,13 @@ class MaintenanceTestCase(APITestCase):
         self.today = timezone.now().date()
 
         # Create a test vehicle
+        import uuid
         self.vehicle = self.Vehicle.objects.create(
             brand='Toyota',
             model='Camry',
             year=2022,
-            license_plate='ABC-123',
-            vin='1HGCM82633A123456'
+            license_plate=f'ABC-{uuid.uuid4().hex[:6].upper()}',
+            vin=f'1HGCM82633A{uuid.uuid4().hex[:6].upper()}'
         )
 
         # Create maintenance records
@@ -86,7 +87,7 @@ class MaintenanceTestCase(APITestCase):
 
     def test_maintenance_string_representation(self):
         """Test Maintenance string representation."""
-        expected_str = f"Routine Maintenance for Toyota Camry (ABC-123) on {(self.today + timedelta(days=7)).strftime('%Y-%m-%d')}"
+        expected_str = f"Routine Maintenance for Toyota Camry ({self.vehicle.license_plate}) on {(self.today + timedelta(days=7)).strftime('%Y-%m-%d')}"
         self.assertEqual(str(self.routine_maintenance), expected_str)
 
     def test_maintenance_type_choices(self):

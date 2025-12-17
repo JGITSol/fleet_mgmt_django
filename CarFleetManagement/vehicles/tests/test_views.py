@@ -89,6 +89,7 @@ class VehicleViewsTestCase(APITestCase):
         )
 
         # Create vehicles
+        import uuid
         self.today = timezone.now().date()
         self.next_service = self.today + timedelta(days=90)
         self.insurance_expiry = self.today + timedelta(days=365)
@@ -97,8 +98,8 @@ class VehicleViewsTestCase(APITestCase):
             brand='Toyota',
             model='Camry',
             year=2022,
-            license_plate='ABC-123',
-            vin='1HGCM82633A123456',
+            license_plate=f'ABC-{uuid.uuid4().hex[:6].upper()}',
+            vin=f'1HGCM82633A{uuid.uuid4().hex[:6].upper()}',
             color='Blue',
             fuel_type=Vehicle.FuelType.HYBRID,
             transmission=Vehicle.TransmissionType.AUTOMATIC,
@@ -114,8 +115,8 @@ class VehicleViewsTestCase(APITestCase):
             brand='Honda',
             model='Civic',
             year=2021,
-            license_plate='XYZ-789',
-            vin='2HGFG12633A654321',
+            license_plate=f'XYZ-{uuid.uuid4().hex[:6].upper()}',
+            vin=f'2HGFG12633A{uuid.uuid4().hex[:6].upper()}',
             color='Red',
             fuel_type=Vehicle.FuelType.PETROL,
             transmission=Vehicle.TransmissionType.MANUAL,
@@ -149,7 +150,7 @@ class VehicleViewsTestCase(APITestCase):
         response = self.client.get(reverse('vehicles:vehicle_detail', kwargs={'pk': self.vehicle1.pk}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Toyota Camry')
-        self.assertContains(response, 'ABC-123')
+        self.assertContains(response, self.vehicle1.license_plate)
 
     def test_vehicle_create_view(self):
         """Test vehicle create view."""
@@ -189,8 +190,8 @@ class VehicleViewsTestCase(APITestCase):
             'brand': 'Toyota',
             'model': 'Camry',
             'year': 2022,
-            'license_plate': 'ABC-123',
-            'vin': '1HGCM82633A123456',
+            'license_plate': self.vehicle1.license_plate,
+            'vin': self.vehicle1.vin,
             'color': 'Green',  # Changed from Blue to Green
             'fuel_type': Vehicle.FuelType.HYBRID,
             'transmission': Vehicle.TransmissionType.AUTOMATIC,

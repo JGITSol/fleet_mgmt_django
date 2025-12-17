@@ -2,7 +2,7 @@
 echo Running individual test files...
 
 cd %~dp0
-set DJANGO_SETTINGS_MODULE=car_fleet_manager.test_settings
+set DJANGO_SETTINGS_MODULE=CarFleetManagement.settings
 
 echo Testing accounts...
 python -m pytest tests\test_accounts.py -v

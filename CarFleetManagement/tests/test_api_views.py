@@ -1,4 +1,5 @@
 import pytest
+import uuid
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
@@ -120,8 +121,8 @@ class TestVehicleViews(AuthTestMixin):
             brand="Toyota",
             model="Camry",
             year=2022,
-            license_plate="ABC-123",
-            vin="1HGCM82633A123456",
+            license_plate=f"ABC-{uuid.uuid4().hex[:6].upper()}",
+            vin=f"1HGCM82633A{uuid.uuid4().hex[:6].upper()}",
             status="AVAILABLE",
         )
 
@@ -167,8 +168,8 @@ class TestMaintenanceViews(AuthTestMixin):
             brand="Toyota",
             model="Camry",
             year=2022,
-            license_plate="ABC-123",
-            vin="1HGCM82633A123456",
+            license_plate=f"ABC-{uuid.uuid4().hex[:6].upper()}",
+            vin=f"1HGCM82633A{uuid.uuid4().hex[:6].upper()}",
             status="AVAILABLE",
         )
 
@@ -226,8 +227,8 @@ class TestMaintenanceViews(AuthTestMixin):
             brand="Toyota",
             model="Camry",
             year=2022,
-            license_plate="ABC-123",
-            vin="1HGCM82633A123456",
+            license_plate=f"ABC-{uuid.uuid4().hex[:6].upper()}",
+            vin=f"1HGCM82633A{uuid.uuid4().hex[:6].upper()}",
             status="AVAILABLE",
         )
 

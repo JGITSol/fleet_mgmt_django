@@ -33,8 +33,8 @@ class TestDriverSerializer:
             brand="Toyota",
             model="Camry",
             year=2022,
-            license_plate="ABC-123",
-            vin="1HGCM82633A123456",
+            license_plate=f"ABC-{uuid.uuid4().hex[:6].upper()}",
+            vin=f"1HGCM82633A{uuid.uuid4().hex[:6].upper()}",
             status="AVAILABLE",
         )
 
@@ -92,8 +92,8 @@ class TestVehicleSerializer:
             brand="Toyota",
             model="Camry",
             year=2022,
-            license_plate="ABC-123",
-            vin="1HGCM82633A123456",
+            license_plate=f"ABC-{uuid.uuid4().hex[:6].upper()}",
+            vin=f"1HGCM82633A{uuid.uuid4().hex[:6].upper()}",
             fuel_type=Vehicle.FuelType.HYBRID,
             transmission=Vehicle.TransmissionType.AUTOMATIC,
             vehicle_type=Vehicle.VehicleType.SUV,
@@ -115,25 +115,8 @@ class TestVehicleSerializer:
         assert data["brand"] == "Toyota"
         assert data["model"] == "Camry"
         assert data["year"] == 2022
-        assert data["license_plate"] == "ABC-123"
-        assert data["vin"] == "1HGCM82633A123456"
-        assert data["fuel_type"] == "HYBRID"
-        assert data["status"] == "AVAILABLE"
-        assert len(data["drivers"]) == 1
-        assert data["drivers"][0]["first_name"] == "Test"
-        assert data["drivers"][0]["last_name"] == "Driver"
-        assert data["drivers"][0]["full_name"] == "Test Driver"
-
-        # Serialize the vehicle
-        serializer = VehicleSerializer(vehicle)
-        data = serializer.data
-
-        # Check serialized data
-        assert data["brand"] == "Toyota"
-        assert data["model"] == "Camry"
-        assert data["year"] == 2022
-        assert data["license_plate"] == "ABC-123"
-        assert data["vin"] == "1HGCM82633A123456"
+        assert data["license_plate"] == vehicle.license_plate
+        assert data["vin"] == vehicle.vin
         assert data["fuel_type"] == "HYBRID"
         assert data["status"] == "AVAILABLE"
         assert len(data["drivers"]) == 1
@@ -153,8 +136,8 @@ class TestMaintenanceSerializer:
             brand="Toyota",
             model="Camry",
             year=2022,
-            license_plate="ABC-123",
-            vin="1HGCM82633A123456",
+            license_plate=f"ABC-{uuid.uuid4().hex[:6].upper()}",
+            vin=f"1HGCM82633A{uuid.uuid4().hex[:6].upper()}",
             status="AVAILABLE",
         )
 
@@ -247,8 +230,8 @@ class TestMaintenanceSerializer:
             brand="Toyota",
             model="Camry",
             year=2022,
-            license_plate="ABC-123",
-            vin="1HGCM82633A123456",
+            license_plate=f"ABC-{uuid.uuid4().hex[:6].upper()}",
+            vin=f"1HGCM82633A{uuid.uuid4().hex[:6].upper()}",
             fuel_type=Vehicle.FuelType.HYBRID,
             transmission=Vehicle.TransmissionType.AUTOMATIC,
             vehicle_type=Vehicle.VehicleType.SUV,

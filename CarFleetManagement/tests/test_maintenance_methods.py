@@ -12,17 +12,21 @@ from CarFleetManagement.vehicles.models import Vehicle
 class TestMaintenanceMethods:
     """Test Maintenance model methods."""
 
-    def test_days_until_scheduled_with_future_date(self):
-        """Test days_until_scheduled method with a future date."""
-        # Create a vehicle
-        vehicle = Vehicle.objects.create(
+    def create_vehicle(self):
+        import uuid
+        return Vehicle.objects.create(
             brand='Toyota',
             model='Camry',
             year=2022,
-            license_plate='ABC-123',
-            vin='1HGCM82633A123456',
+            license_plate=f'ABC-{uuid.uuid4().hex[:6].upper()}',
+            vin=f'1HGCM82633A{uuid.uuid4().hex[:6].upper()}',
             status='AVAILABLE'
         )
+
+    def test_days_until_scheduled_with_future_date(self):
+        """Test days_until_scheduled method with a future date."""
+        # Create a vehicle
+        vehicle = self.create_vehicle()
 
         # Create maintenance with scheduled date in the future
         today = timezone.now().date()
@@ -49,14 +53,7 @@ class TestMaintenanceMethods:
     def test_days_until_scheduled_with_past_date(self):
         """Test days_until_scheduled method with a past date."""
         # Create a vehicle
-        vehicle = Vehicle.objects.create(
-            brand='Toyota',
-            model='Camry',
-            year=2022,
-            license_plate='ABC-123',
-            vin='1HGCM82633A123456',
-            status='AVAILABLE'
-        )
+        vehicle = self.create_vehicle()
 
         # Create maintenance with scheduled date in the past
         today = timezone.now().date()
@@ -83,14 +80,7 @@ class TestMaintenanceMethods:
     def test_days_until_scheduled_with_today(self):
         """Test days_until_scheduled method with today's date."""
         # Create a vehicle
-        vehicle = Vehicle.objects.create(
-            brand='Toyota',
-            model='Camry',
-            year=2022,
-            license_plate='ABC-123',
-            vin='1HGCM82633A123456',
-            status='AVAILABLE'
-        )
+        vehicle = self.create_vehicle()
 
         # Create maintenance with scheduled date as today
         today = timezone.now().date()
@@ -116,14 +106,7 @@ class TestMaintenanceMethods:
     def test_days_until_scheduled_with_no_date(self):
         """Test days_until_scheduled method with no scheduled date."""
         # Create a vehicle
-        vehicle = Vehicle.objects.create(
-            brand='Toyota',
-            model='Camry',
-            year=2022,
-            license_plate='ABC-123',
-            vin='1HGCM82633A123456',
-            status='AVAILABLE'
-        )
+        vehicle = self.create_vehicle()
 
         # Since scheduled_date is NOT NULL in the database, we'll use a mock approach
         # to test the method's behavior when scheduled_date is None
@@ -156,14 +139,7 @@ class TestMaintenanceMethods:
     def test_maintenance_status_update(self):
         """Test updating maintenance status."""
         # Create a vehicle
-        vehicle = Vehicle.objects.create(
-            brand='Toyota',
-            model='Camry',
-            year=2022,
-            license_plate='ABC-123',
-            vin='1HGCM82633A123456',
-            status='AVAILABLE'
-        )
+        vehicle = self.create_vehicle()
 
         # Create maintenance
         maintenance = Maintenance.objects.create(

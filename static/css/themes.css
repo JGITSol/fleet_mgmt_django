@@ -1,0 +1,158 @@
+/* Themes based on COLOR_MODES.md */
+
+/* 1. Classic Blue Harmony */
+[data-theme="classic-blue"] {
+    --font-family: 'Inter', Arial, sans-serif;
+    --color-bg: #F9FBFD;
+    /* Sea salt */
+    --color-surface: #FFFFFF;
+    /* White */
+    --color-text: #273046;
+    /* Dark blue-gray */
+    --color-text-secondary: #5A6784;
+    --color-primary: #2563EB;
+    /* Royal blue */
+    --color-primary-hover: #1E40AF;
+    --color-accent: #FFD600;
+    /* Gold accent */
+    --color-border: #D8E3F2;
+}
+
+[data-theme="classic-blue-dark"] {
+    --font-family: 'Inter', Arial, sans-serif;
+    --color-bg: #1B2330;
+    --color-surface: #242f42;
+    --color-text: #E8ECF3;
+    --color-text-secondary: #C3D0EA;
+    --color-primary: #60A5FA;
+    /* Sky blue */
+    --color-primary-hover: #2563EB;
+    --color-accent: #FFEC70;
+    --color-border: #3B4660;
+}
+
+/* 2. Solarized Modern */
+[data-theme="solarized-modern"] {
+    --font-family: 'IBM Plex Mono', monospace;
+    --color-bg: #FDF6E3;
+    --color-surface: #FFFFFB;
+    --color-text: #586E75;
+    --color-text-secondary: #93A1A1;
+    --color-primary: #268BD2;
+    /* Solarized Blue */
+    --color-primary-hover: #196CA4;
+    --color-accent: #B58900;
+    /* Solarized Yellow */
+    --color-border: #EEE8D5;
+}
+
+[data-theme="solarized-modern-dark"] {
+    --font-family: 'IBM Plex Mono', monospace;
+    --color-bg: #002B36;
+    --color-surface: #073642;
+    --color-text: #EEE8D5;
+    --color-text-secondary: #93A1A1;
+    --color-primary: #268BD2;
+    --color-primary-hover: #5FB3D;
+    /* Cyan-ish - Fixed typo from source */
+    --color-accent: #B58900;
+    --color-border: #1A3238;
+}
+
+/* 3. Rose Quartz & Charcoal */
+[data-theme="rose-quartz"] {
+    --font-family: 'Source Serif Pro', Georgia, serif;
+    --color-bg: #F6EDF3;
+    --color-surface: #FFFFFF;
+    --color-text: #222126;
+    --color-text-secondary: #6E6673;
+    --color-primary: #D16BA5;
+    /* Rose Quartz */
+    --color-primary-hover: #B14D88;
+    --color-accent: #7BC5AE;
+    /* Mint accent */
+    --color-border: #E0D0DE;
+}
+
+[data-theme="rose-quartz-dark"] {
+    --font-family: 'Source Serif Pro', Georgia, serif;
+    --color-bg: #231526;
+    --color-surface: #312033;
+    --color-text: #EDE0EA;
+    --color-text-secondary: #C3B3C6;
+    --color-primary: #E08CC8;
+    --color-primary-hover: #D16BA5;
+    --color-accent: #7BC5AE;
+    --color-border: #432F46;
+}
+
+/* 4. Emerald Forest */
+[data-theme="emerald-forest"] {
+    --font-family: 'Fira Sans', Arial, sans-serif;
+    --color-bg: #F3F8F6;
+    /* Light mint */
+    --color-surface: #FFFFFF;
+    --color-text: #184B44;
+    /* Emerald green */
+    --color-text-secondary: #38877A;
+    --color-primary: #17B978;
+    /* Vibrant green */
+    --color-primary-hover: #118C5D;
+    --color-accent: #A3E8E4;
+    /* Teal accent */
+    --color-border: #C8E6DF;
+}
+
+[data-theme="emerald-forest-dark"] {
+    --font-family: 'Fira Sans', Arial, sans-serif;
+    --color-bg: #19241E;
+    --color-surface: #233327;
+    --color-text: #E0FFFF;
+    --color-text-secondary: #90CFCB;
+    --color-primary: #17B978;
+    --color-primary-hover: #5CE6B2;
+    --color-accent: #52C1C8;
+    --color-border: #2E4A3E;
+}
+
+/* 5. Papyrus Sepia */
+[data-theme="papyrus-sepia"] {
+    --font-family: 'Merriweather', serif;
+    --color-bg: #FDF6E3;
+    /* Soft ivory */
+    --color-surface: #FFF8E7;
+    --color-text: #3D2C12;
+    /* Deep brown */
+    --color-text-secondary: #876E3F;
+    --color-primary: #B58900;
+    /* Gold */
+    --color-primary-hover: #936A13;
+    --color-accent: #C94B2B;
+    /* Paprika accent */
+    --color-border: #E7D7AF;
+}
+
+[data-theme="papyrus-sepia-dark"] {
+    --font-family: 'Merriweather', serif;
+    --color-bg: #2B2114;
+    --color-surface: #443522;
+    --color-text: #FFF8E7;
+    --color-text-secondary: #CEB480;
+    --color-primary: #FFD700;
+    --color-primary-hover: #B58900;
+    --color-accent: #FF7F50;
+    --color-border: #6E573B;
+}
+
+/* Default Theme (Classic Blue Light) */
+:root {
+    --font-family: 'Inter', Arial, sans-serif;
+    --color-bg: #F9FBFD;
+    --color-surface: #FFFFFF;
+    --color-text: #273046;
+    --color-text-secondary: #5A6784;
+    --color-primary: #2563EB;
+    --color-primary-hover: #1E40AF;
+    --color-accent: #FFD600;
+    --color-border: #D8E3F2;
+}

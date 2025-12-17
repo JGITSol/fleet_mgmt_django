@@ -1,0 +1,199 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Car Fleet Management</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/en/" class="nav-logo" aria-label="Home">
+                <i class="fas fa-car-side"></i> FleetManager
+            </a>
+
+            <div class="nav-links">
+                <a href="/en/"
+                    class="nav-link active">Home</a>
+
+                
+                <a href="/accounts/login/" class="nav-link ">Login</a>
+                <a href="/accounts/register/" class="btn btn-sm btn-primary">Register</a>
+                
+
+                <!-- Language Switcher -->
+                <form action="/i18n/setlang/" method="post" class="language-switcher"
+                    style="display: inline-flex; margin-left: 1rem;">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="7U3JVjE676FJF9sqTMAqhMv8JFEwi8QCxYugOp6BZg7JjbUqMo2qIMQ4Gn9dpz77">
+                    <input name="next" type="hidden" value="">
+                    <select name="language" onchange="this.form.submit()" class="form-control"
+                        style="padding: 0.25rem 0.5rem; font-size: 0.875rem; width: auto;">
+                        
+                        
+                        
+                        
+                        <option value="en"  selected>
+                            EN
+                        </option>
+                        
+                        <option value="de" >
+                            DE
+                        </option>
+                        
+                        <option value="fr" >
+                            FR
+                        </option>
+                        
+                        <option value="es" >
+                            ES
+                        </option>
+                        
+                        <option value="pl" >
+                            PL
+                        </option>
+                        
+                    </select>
+                </form>
+
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="btn btn-sm btn-outline" style="margin-left: 1rem;"
+                    aria-label="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        
+
+        
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Welcome to Fleet Management</h1>
+            <p class="hero-subtitle">Manage your vehicle fleet with ease and efficiency</p>
+        </div>
+    </div>
+</section>
+
+<!-- System Info / Quick Stats -->
+<section class="container" style="margin-bottom: 6rem;">
+    <div class="card">
+        <div class="flex justify-between items-center" style="margin-bottom: 2rem;">
+            <h2>System Overview</h2>
+            <span class="badge badge-success">System Online</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8">
+            <div>
+                <h4>Quick Actions</h4>
+                <ul style="margin-top: 1rem;">
+                    <li style="margin-bottom: 0.5rem;">
+                        <a href="#" class="flex items-center gap-2" style="color: var(--accent-primary);">
+                            <i class="fas fa-arrow-right"></i> Register new vehicle
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 0.5rem;">
+                        <a href="#" class="flex items-center gap-2" style="color: var(--accent-primary);">
+                            <i class="fas fa-arrow-right"></i> Report incident
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 0.5rem;">
+                        <a href="#" class="flex items-center gap-2" style="color: var(--accent-primary);">
+                            <i class="fas fa-arrow-right"></i> Schedule service
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4>Recent Activity</h4>
+                <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
+                    <div class="flex items-center gap-2" style="margin-bottom: 0.75rem;">
+                        <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                        <span>System maintenance completed successfully</span>
+                    </div>
+                    <div class="flex items-center gap-2" style="margin-bottom: 0.75rem;">
+                        <i class="fas fa-info-circle" style="color: var(--accent-primary);"></i>
+                        <span>New fleet regulations update available</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i>
+                        <span>3 vehicles due for inspection this week</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h4 style="margin-bottom: 0.5rem;">FleetManager</h4>
+                    <p style="font-size: 0.9rem;">Premium Fleet Management Solution</p>
+                </div>
+                <div style="text-align: right;">
+                    <p style="font-size: 0.85rem;">&copy; 2025 Car Fleet Management System</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const icon = themeToggle.querySelector('i');
+        const html = document.documentElement;
+
+        // Check local storage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            html.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme);
+        }
+
+        function updateIcon(theme) {
+            if (theme === 'light') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+    </script>
+</body>
+
+</html>

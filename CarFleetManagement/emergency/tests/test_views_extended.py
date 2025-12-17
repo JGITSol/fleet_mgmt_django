@@ -50,12 +50,13 @@ class EmergencyViewsExtendedTestCase(TestCase):
             self.driver_user.save()
 
         # Create vehicle
+        import uuid
         self.vehicle = Vehicle.objects.create(
             brand="Toyota",
             model="Camry",
             year=2020,
-            license_plate="ABC-123",
-            vin="1234567890",
+            license_plate=f"ABC-{uuid.uuid4().hex[:6].upper()}",
+            vin=f"1HGCM82633A{uuid.uuid4().hex[:6].upper()}",
             status="AVAILABLE",
         )
 
@@ -112,12 +113,13 @@ class EmergencyViewsExtendedTestCase(TestCase):
     def test_emergency_incident_create_view_form_queryset(self):
         """Test that create view shows all vehicles in form."""
         # Create another vehicle
+        import uuid
         vehicle2 = Vehicle.objects.create(
             brand="Honda",
             model="Civic",
             year=2021,
-            license_plate="XYZ-789",
-            vin="0987654321",
+            license_plate=f"XYZ-{uuid.uuid4().hex[:6].upper()}",
+            vin=f"0987654321{uuid.uuid4().hex[:6].upper()}",
             status="IN_USE",
         )
 

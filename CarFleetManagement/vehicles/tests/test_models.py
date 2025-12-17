@@ -9,18 +9,22 @@ class VehicleTestCase(APITestCase):
 
     def setUp(self):
         """Set up test environment."""
+        import uuid
         from CarFleetManagement.vehicles.models import Vehicle
         self.Vehicle = Vehicle
         self.today = timezone.now().date()
         self.next_service = self.today + timedelta(days=90)
         self.insurance_expiry = self.today + timedelta(days=365)
+        
+        self.license_plate = f'ABC-{uuid.uuid4().hex[:6].upper()}'
+        self.vin = f'1HGCM82633A{uuid.uuid4().hex[:6].upper()}'
 
         self.vehicle = self.Vehicle.objects.create(
             brand='Toyota',
             model='Camry',
             year=2022,
-            license_plate='ABC-123',
-            vin='1HGCM82633A123456',
+            license_plate=self.license_plate,
+            vin=self.vin,
             color='Blue',
             fuel_type=self.Vehicle.FuelType.HYBRID,
             transmission=self.Vehicle.TransmissionType.AUTOMATIC,
@@ -37,8 +41,8 @@ class VehicleTestCase(APITestCase):
         self.assertEqual(self.vehicle.brand, 'Toyota')
         self.assertEqual(self.vehicle.model, 'Camry')
         self.assertEqual(self.vehicle.year, 2022)
-        self.assertEqual(self.vehicle.license_plate, 'ABC-123')
-        self.assertEqual(self.vehicle.vin, '1HGCM82633A123456')
+        self.assertEqual(self.vehicle.license_plate, self.license_plate)
+        self.assertEqual(self.vehicle.vin, self.vin)
         self.assertEqual(self.vehicle.color, 'Blue')
         self.assertEqual(self.vehicle.fuel_type, self.Vehicle.FuelType.HYBRID)
         self.assertEqual(self.vehicle.transmission, self.Vehicle.TransmissionType.AUTOMATIC)
@@ -50,7 +54,7 @@ class VehicleTestCase(APITestCase):
 
     def test_vehicle_string_representation(self):
         """Test Vehicle string representation."""
-        expected_str = 'Toyota Camry (ABC-123)'
+        expected_str = f'Toyota Camry ({self.vehicle.license_plate})'
         self.assertEqual(str(self.vehicle), expected_str)
 
     def test_vehicle_status_choices(self):

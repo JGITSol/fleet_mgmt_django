@@ -88,6 +88,7 @@ def driver(custom_user):
 @pytest.fixture
 def vehicle():
     """Create and return a test vehicle."""
+    import uuid
     import django
     from django.utils import timezone
 
@@ -101,8 +102,8 @@ def vehicle():
         brand='Toyota',
         model='Camry',
         year=2022,
-        license_plate='ABC-123',
-        vin='1HGCM82633A123456',
+        license_plate=f'ABC-{uuid.uuid4().hex[:6].upper()}',
+        vin=f'1HGCM82633A{uuid.uuid4().hex[:6].upper()}',
         color='Blue',
         fuel_type=Vehicle.FuelType.HYBRID,
         transmission=Vehicle.TransmissionType.AUTOMATIC,

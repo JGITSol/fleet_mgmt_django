@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Fleet Management UI Test Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { background: #2c3e50; color: white; padding: 20px; border-radius: 5px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { color: #27ae60; }
+        .error { color: #e74c3c; }
+        .warning { color: #f39c12; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .screenshot { max-width: 300px; margin: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Car Fleet Management System - UI Test Report</h1>
+        <p>Generated on: 2025-11-26 11:27:39</p>
+    </div>
+    
+    <div class="section">
+        <h2>Test Summary</h2>
+        <p><strong>Total URLs Tested:</strong> 12</p>
+        <p><strong>Successful URLs:</strong> 8</p>
+        <p><strong>Failed URLs:</strong> 4</p>
+        <p><strong>API Endpoints Tested:</strong> 5</p>
+        <p><strong>Screenshots Captured:</strong> Yes</p>
+    </div>
+    
+    <div class="section">
+        <h2>URL Accessibility Tests</h2>
+        <table>
+            <tr><th>URL</th><th>Description</th><th>Status Code</th><th>Result</th></tr>
+
+            <tr>
+                <td>/</td>
+                <td>Home Page</td>
+                <td>200</td>
+                <td class="success">✓ PASS</td>
+            </tr>
+
+            <tr>
+                <td>/admin/</td>
+                <td>Admin Login</td>
+                <td>200</td>
+                <td class="success">✓ PASS</td>
+            </tr>
+
+            <tr>
+                <td>/api/</td>
+                <td>API Root</td>
+                <td>200</td>
+                <td class="success">✓ PASS</td>
+            </tr>
+
+            <tr>
+                <td>/accounts/login/</td>
+                <td>Login Page</td>
+                <td>200</td>
+                <td class="success">✓ PASS</td>
+            </tr>
+
+            <tr>
+                <td>/accounts/register/</td>
+                <td>Register Page</td>
+                <td>200</td>
+                <td class="success">✓ PASS</td>
+            </tr>
+
+            <tr>
+                <td>/vehicles/</td>
+                <td>Vehicle List</td>
+                <td>200</td>
+                <td class="success">✓ PASS</td>
+            </tr>
+
+            <tr>
+                <td>/maintenance/</td>
+                <td>Maintenance List</td>
+                <td>200</td>
+                <td class="success">✓ PASS</td>
+            </tr>
+
+            <tr>
+                <td>/emergency/</td>
+                <td>Emergency List</td>
+                <td>200</td>
+                <td class="success">✓ PASS</td>
+            </tr>
+
+            <tr>
+                <td>/api/vehicles/</td>
+                <td>API Vehicles</td>
+                <td>401</td>
+                <td class="error">✗ FAIL</td>
+            </tr>
+
+            <tr>
+                <td>/api/drivers/</td>
+                <td>API Drivers</td>
+                <td>401</td>
+                <td class="error">✗ FAIL</td>
+            </tr>
+
+            <tr>
+                <td>/api/maintenance/</td>
+                <td>API Maintenance</td>
+                <td>401</td>
+                <td class="error">✗ FAIL</td>
+            </tr>
+
+            <tr>
+                <td>/api/emergencies/</td>
+                <td>API Emergencies</td>
+                <td>401</td>
+                <td class="error">✗ FAIL</td>
+            </tr>
+
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2>API Endpoint Tests</h2>
+        <table>
+            <tr><th>Endpoint</th><th>Status Code</th><th>Result</th></tr>
+
+            <tr>
+                <td>/api/</td>
+                <td>200</td>
+                <td class="success">✓ PASS</td>
+            </tr>
+
+            <tr>
+                <td>/api/vehicles/</td>
+                <td>401</td>
+                <td class="error">✗ FAIL</td>
+            </tr>
+
+            <tr>
+                <td>/api/drivers/</td>
+                <td>401</td>
+                <td class="error">✗ FAIL</td>
+            </tr>
+
+            <tr>
+                <td>/api/maintenance/</td>
+                <td>401</td>
+                <td class="error">✗ FAIL</td>
+            </tr>
+
+            <tr>
+                <td>/api/emergencies/</td>
+                <td>401</td>
+                <td class="error">✗ FAIL</td>
+            </tr>
+
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2>Screenshots</h2>
+<img src="ui_test_screenshots\admin_login.png" alt="admin_login" class="screenshot"><img src="ui_test_screenshots\api_root.png" alt="api_root" class="screenshot"><img src="ui_test_screenshots\emergency_list.png" alt="emergency_list" class="screenshot"><img src="ui_test_screenshots\home.png" alt="home" class="screenshot"><img src="ui_test_screenshots\login_page.png" alt="login_page" class="screenshot"><img src="ui_test_screenshots\maintenance_list.png" alt="maintenance_list" class="screenshot"><img src="ui_test_screenshots\vehicles_list.png" alt="vehicles_list" class="screenshot"><img src="ui_test_screenshots\Zrzut ekranu 2025-09-22 220320.png" alt="Zrzut ekranu 2025-09-22 220320" class="screenshot"><img src="ui_test_screenshots\Zrzut ekranu 2025-09-22 220350.png" alt="Zrzut ekranu 2025-09-22 220350" class="screenshot"><img src="ui_test_screenshots\Zrzut ekranu 2025-09-23 200107.png" alt="Zrzut ekranu 2025-09-23 200107" class="screenshot"><img src="ui_test_screenshots\Zrzut ekranu 2025-09-23 200135.png" alt="Zrzut ekranu 2025-09-23 200135" class="screenshot"><img src="ui_test_screenshots\Zrzut ekranu 2025-09-23 200238.png" alt="Zrzut ekranu 2025-09-23 200238" class="screenshot"><img src="ui_test_screenshots\Zrzut ekranu 2025-09-23 200253.png" alt="Zrzut ekranu 2025-09-23 200253" class="screenshot"><img src="ui_test_screenshots\Zrzut ekranu 2025-09-23 200305.png" alt="Zrzut ekranu 2025-09-23 200305" class="screenshot">
+    </div>
+</body>
+</html>

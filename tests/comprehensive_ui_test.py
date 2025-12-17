@@ -239,6 +239,84 @@ class ComprehensiveUITester:
 
         return results
 
+    def test_theme_switching_with_puppeteer(self):
+        """Test theme switching functionality using Puppeteer"""
+        self.log("Testing theme switching with Puppeteer...")
+
+        puppeteer_script = """
+const puppeteer = require('puppeteer');
+
+(async () => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  
+  try {
+    // 1. Go to home page
+    await page.goto('http://localhost:8000/', { waitUntil: 'networkidle2', timeout: 10000 });
+    
+    // 2. Check initial theme (should be default or from local storage)
+    const initialTheme = await page.evaluate(() => document.documentElement.getAttribute('data-theme'));
+    console.log(`Initial theme: ${initialTheme}`);
+    
+    // 3. Select a new theme
+    await page.select('#theme-select', 'solarized-modern');
+    
+    // 4. Verify attribute update
+    const newTheme = await page.evaluate(() => document.documentElement.getAttribute('data-theme'));
+    if (newTheme !== 'solarized-modern') {
+      throw new Error(`Theme did not update. Expected 'solarized-modern', got '${newTheme}'`);
+    }
+    console.log('✓ Theme attribute updated successfully');
+    
+    // 5. Verify local storage
+    const storedTheme = await page.evaluate(() => localStorage.getItem('theme'));
+    if (storedTheme !== 'solarized-modern') {
+      throw new Error(`Local storage not updated. Expected 'solarized-modern', got '${storedTheme}'`);
+    }
+    console.log('✓ Theme saved to local storage');
+    
+    // 6. Reload and verify persistence
+    await page.reload({ waitUntil: 'networkidle2' });
+    const persistedTheme = await page.evaluate(() => document.documentElement.getAttribute('data-theme'));
+    if (persistedTheme !== 'solarized-modern') {
+      throw new Error(`Theme not persisted after reload. Expected 'solarized-modern', got '${persistedTheme}'`);
+    }
+    console.log('✓ Theme persisted after reload');
+    
+  } catch (error) {
+    console.error(`✗ Theme test failed: ${error.message}`);
+    process.exit(1);
+  } finally {
+    await browser.close();
+  }
+})();
+"""
+        script_path = Path("temp_theme_test.js")
+        with open(script_path, "w", encoding="utf-8") as f:
+            f.write(puppeteer_script)
+
+        try:
+            result = subprocess.run(
+                ["node", str(script_path)],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            
+            if result.returncode == 0:
+                self.log("✓ Theme switching test passed")
+                self.log(result.stdout)
+                return True
+            else:
+                self.log(f"✗ Theme switching test failed: {result.stderr}")
+                return False
+        except Exception as e:
+            self.log(f"⚠ Theme test error: {str(e)}")
+            return False
+        finally:
+            if script_path.exists():
+                script_path.unlink()
+
     def capture_screenshots_with_puppeteer(self):
         """Capture screenshots using Puppeteer if available"""
         self.log("Attempting to capture screenshots with Puppeteer...")
@@ -510,6 +588,9 @@ const fs = require('fs');
 
         # Test API endpoints
         results["api_tests"] = self.test_api_endpoints()
+
+        # Test Theme Switching
+        results["theme_test"] = self.test_theme_switching_with_puppeteer()
 
         # Capture screenshots
         results["screenshots_captured"] = self.capture_screenshots_with_puppeteer()

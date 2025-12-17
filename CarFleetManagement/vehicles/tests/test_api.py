@@ -61,6 +61,7 @@ class VehicleAPITestCase(APITestCase, AuthTestMixin):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.admin_token}')
 
         # Create vehicles
+        import uuid
         self.today = timezone.now().date()
         self.next_service = self.today + timedelta(days=90)
         self.insurance_expiry = self.today + timedelta(days=365)
@@ -69,8 +70,8 @@ class VehicleAPITestCase(APITestCase, AuthTestMixin):
             brand='Toyota',
             model='Camry',
             year=2022,
-            license_plate='ABC-123',
-            vin='1HGCM82633A123456',
+            license_plate=f'ABC-{uuid.uuid4().hex[:6].upper()}',
+            vin=f'1HGCM82633A{uuid.uuid4().hex[:6].upper()}',
             color='Blue',
             fuel_type=self.Vehicle.FuelType.HYBRID,
             transmission=self.Vehicle.TransmissionType.AUTOMATIC,
@@ -86,8 +87,8 @@ class VehicleAPITestCase(APITestCase, AuthTestMixin):
             brand='Honda',
             model='Civic',
             year=2021,
-            license_plate='XYZ-789',
-            vin='2HGFG12633A654321',
+            license_plate=f'XYZ-{uuid.uuid4().hex[:6].upper()}',
+            vin=f'2HGFG12633A{uuid.uuid4().hex[:6].upper()}',
             color='Red',
             fuel_type=self.Vehicle.FuelType.PETROL,
             transmission=self.Vehicle.TransmissionType.MANUAL,
@@ -146,12 +147,14 @@ class VehicleAPITestCase(APITestCase, AuthTestMixin):
         self.client, _ = self.get_authenticated_client(self.admin_user)
 
         # Prepare data
+        import uuid
+        unique_suffix = uuid.uuid4().hex[:6].upper()
         vehicle_data = {
             'brand': 'Ford',
             'model': 'F-150',
             'year': 2023,
-            'license_plate': 'DEF-456',
-            'vin': '3FTEW1EP5MFA12345',
+            'license_plate': f'DEF-{unique_suffix}',
+            'vin': f'3FTEW1EP5M{unique_suffix}',  # Shortened prefix to ensure total length <= 17
             'color': 'Black',
             'fuel_type': self.Vehicle.FuelType.DIESEL,
             'transmission': self.Vehicle.TransmissionType.AUTOMATIC,
@@ -162,24 +165,26 @@ class VehicleAPITestCase(APITestCase, AuthTestMixin):
 
         # client is already authenticated as admin_user from setUp
         # Make API request
+        initial_count = self.Vehicle.objects.count()
         response = self.client.post(reverse('CarFleetManagement.api:api-vehicle-list'), vehicle_data, format='json')
 
         # Assert response
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(self.Vehicle.objects.count(), 3)
-        self.assertTrue(self.Vehicle.objects.filter(license_plate='DEF-456').exists())
+        self.assertEqual(self.Vehicle.objects.count(), initial_count + 1)
+        self.assertTrue(self.Vehicle.objects.filter(license_plate=vehicle_data['license_plate']).exists())
 
     def test_update_vehicle(self):
         """Test updating a vehicle."""
         self.client, _ = self.get_authenticated_client(self.admin_user)
 
         # Prepare data
+        import uuid
         updated_data = {
             'brand': 'Toyota',
             'model': 'Camry',
             'year': 2022,
-            'license_plate': 'ABC-123',
-            'vin': '1HGCM82633A123456',
+            'license_plate': f'ABC-{uuid.uuid4().hex[:6].upper()}',
+            'vin': f'1HGCM82633A{uuid.uuid4().hex[:6].upper()}',
             'color': 'Green',  # Changed from Blue to Green
             'fuel_type': self.Vehicle.FuelType.HYBRID,
             'transmission': self.Vehicle.TransmissionType.AUTOMATIC,
@@ -210,12 +215,13 @@ class VehicleAPITestCase(APITestCase, AuthTestMixin):
 
         # client is already authenticated as admin_user from setUp
         # Make API request
+        initial_count = self.Vehicle.objects.count()
         response = self.client.delete(reverse('CarFleetManagement.api:api-vehicle-detail', kwargs={'pk': self.vehicle2.pk}))
 
         # Assert response
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        # After deletion, there should be only one vehicle left
-        self.assertEqual(self.Vehicle.objects.count(), 1)
+        # After deletion, there should be one less vehicle
+        self.assertEqual(self.Vehicle.objects.count(), initial_count - 1)
         self.assertFalse(self.Vehicle.objects.filter(pk=self.vehicle2.pk).exists())
 
     def test_unauthorized_access(self):

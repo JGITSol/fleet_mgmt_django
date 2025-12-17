@@ -21,7 +21,12 @@ def vehicle(db):
     from CarFleetManagement.vehicles.models import Vehicle
 
     return Vehicle.objects.create(
-        brand="Toyota", model="Camry", year=2020, license_plate="ABC-123", vin="VIN123", status="AVAILABLE"
+        brand="Toyota",
+        model="Camry",
+        year=2020,
+        license_plate=f"ABC-{uuid.uuid4().hex[:6].upper()}",
+        vin=f"VIN{uuid.uuid4().hex[:6].upper()}",
+        status="AVAILABLE",
     )
 
 

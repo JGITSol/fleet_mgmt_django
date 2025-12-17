@@ -71,13 +71,14 @@ class MaintenanceAPITestCase(APITestCase, AuthTestMixin): # Inherit from AuthTes
         # self.client, _ = self.get_authenticated_client(self.admin_user) # Moved to individual tests
 
         # Create vehicle
+        import uuid
         self.today = timezone.now().date()
         self.vehicle = self.Vehicle.objects.create(
             brand='Toyota',
             model='Camry',
             year=2022,
-            license_plate='ABC-123',
-            vin='1HGCM82633A123456'
+            license_plate=f'ABC-{uuid.uuid4().hex[:6].upper()}',
+            vin=f'1HGCM82633A{uuid.uuid4().hex[:6].upper()}'
         )
 
         # Create maintenance records
@@ -164,11 +165,12 @@ class MaintenanceAPITestCase(APITestCase, AuthTestMixin): # Inherit from AuthTes
         }
 
         # Make API request
+        initial_count = self.Maintenance.objects.count()
         response = self.client.post(reverse('CarFleetManagement.api:api-maintenance-list'), maintenance_data, format='json')
 
         # Assert response
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(self.Maintenance.objects.count(), 3)
+        self.assertEqual(self.Maintenance.objects.count(), initial_count + 1)
         self.assertTrue(self.Maintenance.objects.filter(description='Annual vehicle inspection').exists())
 
     def test_update_maintenance(self):
@@ -211,11 +213,12 @@ class MaintenanceAPITestCase(APITestCase, AuthTestMixin): # Inherit from AuthTes
         # client is already authenticated as admin_user from setUp
 
         # Make API request
+        initial_count = self.Maintenance.objects.count()
         response = self.client.delete(reverse('CarFleetManagement.api:api-maintenance-detail', kwargs={'pk': self.routine_maintenance.pk}))
 
         # Assert response
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(self.Maintenance.objects.count(), 1)
+        self.assertEqual(self.Maintenance.objects.count(), initial_count - 1)
         self.assertFalse(self.Maintenance.objects.filter(pk=self.routine_maintenance.pk).exists())
 
     def test_unauthorized_access_maintenance(self):

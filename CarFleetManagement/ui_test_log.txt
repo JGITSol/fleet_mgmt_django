@@ -3698,3 +3698,468 @@ FAILED (errors=2)
 Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
 
 
+[2025-11-26 11:27:39] [INFO] Django tests exit code: 1
+[2025-11-26 11:27:39] [INFO] Test output:
+[2025-11-26 11:27:39] [INFO] Found 197 test(s).
+Operations to perform:
+  Synchronize unmigrated apps: django_filters, drf_spectacular, messages, rest_framework, rest_framework_simplejwt, staticfiles
+  Apply all migrations: accounts, admin, auth, contenttypes, emergency, maintenance, sessions, vehicles
+Synchronizing apps without migrations:
+  Creating tables...
+    Running deferred SQL...
+Running migrations:
+  Applying vehicles.0001_initial... OK
+  Applying contenttypes.0001_initial... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0001_initial... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying accounts.0001_initial... OK
+  Applying accounts.0002_userrole_driver_emergencycontact_customuser_role... OK
+  Applying accounts.0003_remove_emergencycontact_driver_and_more... OK
+  Applying accounts.0004_alter_customuser_role_alter_userrole_description_and_more... OK
+  Applying accounts.0005_driver... OK
+  Applying accounts.0006_alter_userrole_name... OK
+  Applying accounts.0007_alter_driver_license_expiry... OK
+  Applying accounts.0008_remove_userrole_name_unique... OK
+  Applying accounts.0009_add_driver_status... OK
+  Applying accounts.0010_add_driver_dates... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying emergency.0001_initial... OK
+  Applying maintenance.0001_initial... OK
+  Applying maintenance.0002_alter_maintenance_completed_date_and_more... OK
+  Applying sessions.0001_initial... OK
+  Applying vehicles.0002_auto_20250602_1503... OK
+System check identified no issues (0 silenced).
+
+[2025-11-26 11:27:39] [INFO] Test errors:
+[2025-11-26 11:27:39] [INFO] Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+
+CarFleetManagement.tests.test_api_views (unittest.loader._FailedTest.CarFleetManagement.tests.test_api_views) ... ERROR
+CarFleetManagement.vehicles.tests.test_api (unittest.loader._FailedTest.CarFleetManagement.vehicles.tests.test_api) ... ERROR
+test_login_view_invalid_credentials (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_login_view_invalid_credentials)
+Test login with invalid credentials. ... FAIL
+test_login_view_missing_data (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_login_view_missing_data)
+Test login with missing data. ... ok
+test_login_view_success (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_login_view_success)
+Test successful user login. ... ok
+test_logout_view_authenticated (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_logout_view_authenticated)
+Test logout view with authentication. ... ok
+test_logout_view_unauthenticated (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_logout_view_unauthenticated)
+Test logout view without authentication. ... ok
+test_register_view_duplicate_username (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_register_view_duplicate_username)
+Test registration with duplicate username. ... ok
+test_register_view_invalid_data (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_register_view_invalid_data)
+Test registration with invalid data. ... ok
+test_register_view_success (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_register_view_success)
+Test successful user registration. ... ok
+test_user_profile_view_authenticated (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_user_profile_view_authenticated)
+Test user profile view with authentication. ... ok
+test_user_profile_view_unauthenticated (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_user_profile_view_unauthenticated)
+Test user profile view without authentication. ... ok
+test_validate_token_view_invalid_token (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_validate_token_view_invalid_token)
+Test token validation with invalid token. ... ok
+test_validate_token_view_no_token (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_validate_token_view_no_token)
+Test token validation without token. ... ok
+test_validate_token_view_valid_token (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_validate_token_view_valid_token)
+Test token validation with valid token. ... ok
+test_analyze_screenshot_api_error (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_analyze_screenshot_api_error)
+Test analyze_screenshot when API raises an error. ... ok
+test_analyze_screenshot_file_not_found (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_analyze_screenshot_file_not_found)
+Test analyze_screenshot with non-existent file. ... ok
+test_analyze_screenshot_real_mode (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_analyze_screenshot_real_mode)
+Test analyze_screenshot in real mode. ... ok
+test_analyze_screenshot_test_mode (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_analyze_screenshot_test_mode)
+Test analyze_screenshot in test mode. ... ok
+test_analyze_screenshot_with_custom_prompt_test_mode (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_analyze_screenshot_with_custom_prompt_test_mode)
+Test analyze_screenshot with custom prompt in test mode. ... ok
+test_batch_analyze_screenshots_directory_not_found (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_batch_analyze_screenshots_directory_not_found)
+Test batch_analyze_screenshots with non-existent directory. ... ok
+test_batch_analyze_screenshots_real_mode (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_batch_analyze_screenshots_real_mode)
+Test batch_analyze_screenshots in real mode. ... ok
+test_batch_analyze_screenshots_test_mode (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_batch_analyze_screenshots_test_mode)
+Test batch_analyze_screenshots in test mode. ... ok
+test_batch_analyze_screenshots_with_filters_test_mode (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_batch_analyze_screenshots_with_filters_test_mode)
+Test batch_analyze_screenshots with filters in test mode. ... ok
+test_encode_image_to_base64 (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_encode_image_to_base64)
+Test _encode_image_to_base64 method. ... ok
+test_filter_by_criteria (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_filter_by_criteria)
+Test _filter_by_criteria method. ... ok
+test_get_default_prompt (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_get_default_prompt)
+Test _get_default_prompt method. ... ok
+test_init_auto_test_mode_ci_env (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_init_auto_test_mode_ci_env)
+Test that test_mode is automatically enabled when CI env var is set. ... ok
+test_init_auto_test_mode_testing_env (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_init_auto_test_mode_testing_env)
+Test that test_mode is automatically enabled when TESTING env var is set. ... ok
+test_init_with_api_key (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_init_with_api_key)
+Test initialization with API key. ... ok
+test_init_with_env_api_key (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_init_with_env_api_key)
+Test initialization with API key from environment. ... ok
+test_init_without_api_key_test_mode (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_init_without_api_key_test_mode)
+Test initialization without API key in test mode. ... ok
+test_is_image_file (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_is_image_file)
+Test _is_image_file method. ... ok
+test_parse_response_invalid_json (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_parse_response_invalid_json)
+Test _parse_response with invalid JSON. ... ok
+test_parse_response_valid_json (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_parse_response_valid_json)
+Test _parse_response with valid JSON. ... ok
+test_rate_limiting (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_rate_limiting)
+Test that rate limiting is applied. ... ok
+test_resize_image_if_needed_no_resize (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_resize_image_if_needed_no_resize)
+Test _resize_image_if_needed when no resize is needed. ... ok
+test_resize_image_if_needed_with_resize (CarFleetManagement.api.tests.test_gemini_client.GeminiClientTestCase.test_resize_image_if_needed_with_resize)
+Test _resize_image_if_needed when resize is needed. ... ok
+test_analyze_command (CarFleetManagement.api.tests.test_management_commands.OpenRouterAnalyzeCommandTestCase.test_analyze_command) ... ok
+test_analyze_error (CarFleetManagement.api.tests.test_management_commands.OpenRouterAnalyzeCommandTestCase.test_analyze_error) ... ok
+test_analyze_with_output (CarFleetManagement.api.tests.test_management_commands.OpenRouterAnalyzeCommandTestCase.test_analyze_with_output) ... ok
+test_analyze_with_prompt (CarFleetManagement.api.tests.test_management_commands.OpenRouterAnalyzeCommandTestCase.test_analyze_with_prompt) ... ok
+test_batch (CarFleetManagement.api.tests.test_management_commands.OpenRouterAnalyzeCommandTestCase.test_batch) ... ok
+test_batch_filters (CarFleetManagement.api.tests.test_management_commands.OpenRouterAnalyzeCommandTestCase.test_batch_filters) ... ok
+test_command_without_subcommand (CarFleetManagement.api.tests.test_management_commands.OpenRouterAnalyzeCommandTestCase.test_command_without_subcommand) ... ok
+test_report (CarFleetManagement.api.tests.test_management_commands.OpenRouterAnalyzeCommandTestCase.test_report) ... ok
+test_middleware_sets_cached_user (CarFleetManagement.api.tests.test_middleware.JWTAuthMiddlewareTestCase.test_middleware_sets_cached_user)
+Test that middleware sets both user and _cached_user. ... ok
+test_middleware_with_already_authenticated_user (CarFleetManagement.api.tests.test_middleware.JWTAuthMiddlewareTestCase.test_middleware_with_already_authenticated_user)
+Test middleware when user is already authenticated. ... ok
+test_middleware_with_invalid_jwt_token (CarFleetManagement.api.tests.test_middleware.JWTAuthMiddlewareTestCase.test_middleware_with_invalid_jwt_token)
+Test middleware with invalid JWT token. ... ok
+test_middleware_with_jwt_authentication_exception (CarFleetManagement.api.tests.test_middleware.JWTAuthMiddlewareTestCase.test_middleware_with_jwt_authentication_exception)
+Test middleware when JWT authentication raises an exception. ... ok
+test_middleware_with_malformed_bearer_token (CarFleetManagement.api.tests.test_middleware.JWTAuthMiddlewareTestCase.test_middleware_with_malformed_bearer_token)
+Test middleware with malformed Bearer token. ... ok
+test_middleware_with_non_bearer_authorization (CarFleetManagement.api.tests.test_middleware.JWTAuthMiddlewareTestCase.test_middleware_with_non_bearer_authorization)
+Test middleware with non-Bearer authorization. ... ok
+test_middleware_with_valid_jwt_token (CarFleetManagement.api.tests.test_middleware.JWTAuthMiddlewareTestCase.test_middleware_with_valid_jwt_token)
+Test middleware with valid JWT token. ... ok
+test_middleware_without_authorization_header (CarFleetManagement.api.tests.test_middleware.JWTAuthMiddlewareTestCase.test_middleware_without_authorization_header)
+Test middleware without Authorization header. ... ok
+test_analyze_screenshot_api_error (CarFleetManagement.api.tests.test_openrouter_client.OpenRouterClientTestCase.test_analyze_screenshot_api_error)
+Test analyze_screenshot with API error. ... ok
+test_analyze_screenshot_file_not_found (CarFleetManagement.api.tests.test_openrouter_client.OpenRouterClientTestCase.test_analyze_screenshot_file_not_found)
+Test analyze_screenshot with non-existent file. ... ok
+test_analyze_screenshot_success (CarFleetManagement.api.tests.test_openrouter_client.OpenRouterClientTestCase.test_analyze_screenshot_success)
+Test analyze_screenshot with successful API response. ... ok
+test_analyze_screenshot_with_custom_prompt (CarFleetManagement.api.tests.test_openrouter_client.OpenRouterClientTestCase.test_analyze_screenshot_with_custom_prompt)
+Test analyze_screenshot with custom prompt. ... ok
+test_batch_analyze_screenshots (CarFleetManagement.api.tests.test_openrouter_client.OpenRouterClientTestCase.test_batch_analyze_screenshots)
+Test batch_analyze_screenshots. ... ok
+test_batch_analyze_screenshots_directory_not_found (CarFleetManagement.api.tests.test_openrouter_client.OpenRouterClientTestCase.test_batch_analyze_screenshots_directory_not_found)
+Test batch_analyze_screenshots with non-existent directory. ... ok
+test_batch_analyze_screenshots_with_filters (CarFleetManagement.api.tests.test_openrouter_client.OpenRouterClientTestCase.test_batch_analyze_screenshots_with_filters)
+Test batch_analyze_screenshots with language and theme filters. ... ok
+test_get_client (CarFleetManagement.api.tests.test_openrouter_client.OpenRouterClientTestCase.test_get_client)
+Test get_client function. ... ok
+test_init_with_api_key (CarFleetManagement.api.tests.test_openrouter_client.OpenRouterClientTestCase.test_init_with_api_key)
+Test initialization with API key. ... ok
+test_init_without_api_key (CarFleetManagement.api.tests.test_openrouter_client.OpenRouterClientTestCase.test_init_without_api_key)
+Test initialization without API key (using environment variable). ... ok
+test_init_without_api_key_and_env (CarFleetManagement.api.tests.test_openrouter_client.OpenRouterClientTestCase.test_init_without_api_key_and_env)
+Test initialization without API key and environment variable. ... ok
+test_custom_css_classes_included (CarFleetManagement.api.tests.test_renderers.CustomBrowsableAPIRendererTestCase.test_custom_css_classes_included)
+Test that specific CSS classes are included in the injected styles. ... ok
+test_get_context_removes_theme_data (CarFleetManagement.api.tests.test_renderers.CustomBrowsableAPIRendererTestCase.test_get_context_removes_theme_data)
+Test that get_context removes theme-related data. ... ok
+test_get_template_names (CarFleetManagement.api.tests.test_renderers.CustomBrowsableAPIRendererTestCase.test_get_template_names)
+Test that get_template_names returns correct template. ... ok
+test_javascript_functions_included (CarFleetManagement.api.tests.test_renderers.CustomBrowsableAPIRendererTestCase.test_javascript_functions_included)
+Test that specific JavaScript functions are included. ... ok
+test_render_handles_content_without_body_tag (CarFleetManagement.api.tests.test_renderers.CustomBrowsableAPIRendererTestCase.test_render_handles_content_without_body_tag)
+Test that render method handles content without body tag. ... ok
+test_render_handles_string_content (CarFleetManagement.api.tests.test_renderers.CustomBrowsableAPIRendererTestCase.test_render_handles_string_content)
+Test that render method handles string content correctly. ... ok
+test_render_injects_custom_styles (CarFleetManagement.api.tests.test_renderers.CustomBrowsableAPIRendererTestCase.test_render_injects_custom_styles)
+Test that render method injects custom styles and scripts. ... ok
+test_render_preserves_original_content (CarFleetManagement.api.tests.test_renderers.CustomBrowsableAPIRendererTestCase.test_render_preserves_original_content)
+Test that render method preserves original content. ... ok
+test_template_attribute (CarFleetManagement.api.tests.test_renderers.CustomBrowsableAPIRendererTestCase.test_template_attribute)
+Test that template attribute is set correctly. ... ok
+test_generate_html_report_content (CarFleetManagement.api.tests.test_report_generator.ScreenshotAnalysisReportTestCase.test_generate_html_report_content)
+Test the content of the generated HTML report. ... ok
+test_generate_html_report_custom_output (CarFleetManagement.api.tests.test_report_generator.ScreenshotAnalysisReportTestCase.test_generate_html_report_custom_output)
+Test generate_html_report with custom output path. ... ok
+test_generate_html_report_default_output (CarFleetManagement.api.tests.test_report_generator.ScreenshotAnalysisReportTestCase.test_generate_html_report_default_output)
+Test generate_html_report with default output path. ... ok
+test_generate_report_function (CarFleetManagement.api.tests.test_report_generator.ScreenshotAnalysisReportTestCase.test_generate_report_function)
+Test the generate_report function. ... ok
+test_init_file_not_found (CarFleetManagement.api.tests.test_report_generator.ScreenshotAnalysisReportTestCase.test_init_file_not_found)
+Test initialization with non-existent file. ... ok
+test_init_with_valid_file (CarFleetManagement.api.tests.test_report_generator.ScreenshotAnalysisReportTestCase.test_init_with_valid_file)
+Test initialization with valid analysis file. ... ok
+test_empty_password (CarFleetManagement.api.tests.test_serializers.LoginSerializerTestCase.test_empty_password)
+Test serializer with empty password. ... ok
+test_empty_username (CarFleetManagement.api.tests.test_serializers.LoginSerializerTestCase.test_empty_username)
+Test serializer with empty username. ... ok
+test_inactive_user (CarFleetManagement.api.tests.test_serializers.LoginSerializerTestCase.test_inactive_user)
+Test serializer with inactive user. ... ok
+test_invalid_password (CarFleetManagement.api.tests.test_serializers.LoginSerializerTestCase.test_invalid_password)
+Test serializer with invalid password. ... ok
+test_invalid_username (CarFleetManagement.api.tests.test_serializers.LoginSerializerTestCase.test_invalid_username)
+Test serializer with invalid username. ... ok
+test_missing_password (CarFleetManagement.api.tests.test_serializers.LoginSerializerTestCase.test_missing_password)
+Test serializer with missing password. ... ok
+test_missing_username (CarFleetManagement.api.tests.test_serializers.LoginSerializerTestCase.test_missing_username)
+Test serializer with missing username. ... ok
+test_password_field_write_only (CarFleetManagement.api.tests.test_serializers.LoginSerializerTestCase.test_password_field_write_only)
+Test that password field is write-only. ... ok
+test_token_field_read_only (CarFleetManagement.api.tests.test_serializers.LoginSerializerTestCase.test_token_field_read_only)
+Test that token field is read-only. ... ok
+test_valid_login_data (CarFleetManagement.api.tests.test_serializers.LoginSerializerTestCase.test_valid_login_data)
+Test serializer with valid login credentials. ... ok
+test_create_user (CarFleetManagement.api.tests.test_serializers.UserRegistrationSerializerTestCase.test_create_user)
+Test creating user through serializer. ... ok
+test_duplicate_email_validation (CarFleetManagement.api.tests.test_serializers.UserRegistrationSerializerTestCase.test_duplicate_email_validation)
+Test validation for duplicate email. ... ok
+test_invalid_role (CarFleetManagement.api.tests.test_serializers.UserRegistrationSerializerTestCase.test_invalid_role)
+Test serializer with invalid role. ... ok
+test_missing_required_fields (CarFleetManagement.api.tests.test_serializers.UserRegistrationSerializerTestCase.test_missing_required_fields)
+Test serializer with missing required fields. ... ok
+test_password_mismatch (CarFleetManagement.api.tests.test_serializers.UserRegistrationSerializerTestCase.test_password_mismatch)
+Test serializer with mismatched passwords. ... ok
+test_password_write_only (CarFleetManagement.api.tests.test_serializers.UserRegistrationSerializerTestCase.test_password_write_only)
+Test that password fields are write-only. ... ok
+test_role_queryset (CarFleetManagement.api.tests.test_serializers.UserRegistrationSerializerTestCase.test_role_queryset)
+Test that role field uses correct queryset. ... ok
+test_valid_registration_data (CarFleetManagement.api.tests.test_serializers.UserRegistrationSerializerTestCase.test_valid_registration_data)
+Test serializer with valid registration data. ... ok
+test_user_serializer_fields (CarFleetManagement.api.tests.test_serializers.UserSerializerTestCase.test_user_serializer_fields)
+Test that UserSerializer includes correct fields. ... ok
+test_user_serializer_read_only_fields (CarFleetManagement.api.tests.test_serializers.UserSerializerTestCase.test_user_serializer_read_only_fields)
+Test that id field is read-only. ... ok
+test_post_with_client_error (CarFleetManagement.api.tests.test_views.AnalyzeScreenshotViewTestCase.test_post_with_client_error)
+Test POST request with client error. ... ok
+test_post_with_screenshot (CarFleetManagement.api.tests.test_views.AnalyzeScreenshotViewTestCase.test_post_with_screenshot)
+Test POST request with screenshot file. ... ok
+test_post_with_screenshot_and_prompt (CarFleetManagement.api.tests.test_views.AnalyzeScreenshotViewTestCase.test_post_with_screenshot_and_prompt)
+Test POST request with screenshot file and custom prompt. ... ok
+test_post_without_screenshot (CarFleetManagement.api.tests.test_views.AnalyzeScreenshotViewTestCase.test_post_without_screenshot)
+Test POST request without screenshot file. ... ok
+test_post_with_client_error (CarFleetManagement.api.tests.test_views.BatchAnalyzeScreenshotsViewTestCase.test_post_with_client_error)
+Test POST request with client error. ... ok
+test_post_with_language_filter (CarFleetManagement.api.tests.test_views.BatchAnalyzeScreenshotsViewTestCase.test_post_with_language_filter)
+Test POST request with language filter. ... ok
+test_post_with_multiple_filters (CarFleetManagement.api.tests.test_views.BatchAnalyzeScreenshotsViewTestCase.test_post_with_multiple_filters)
+Test POST request with multiple filters. ... ok
+test_post_with_no_matching_screenshots (CarFleetManagement.api.tests.test_views.BatchAnalyzeScreenshotsViewTestCase.test_post_with_no_matching_screenshots)
+Test POST request with filters that match no screenshots. ... ok
+test_post_with_page_filter (CarFleetManagement.api.tests.test_views.BatchAnalyzeScreenshotsViewTestCase.test_post_with_page_filter)
+Test POST request with page filter. ... ok
+test_post_with_theme_filter (CarFleetManagement.api.tests.test_views.BatchAnalyzeScreenshotsViewTestCase.test_post_with_theme_filter)
+Test POST request with theme filter. ... ok
+test_post_without_filters (CarFleetManagement.api.tests.test_views.BatchAnalyzeScreenshotsViewTestCase.test_post_without_filters)
+Test POST request without filters. ... ok
+test_post_with_analysis_data (CarFleetManagement.api.tests.test_views.GenerateReportViewTestCase.test_post_with_analysis_data)
+Test POST request with analysis data. ... ok
+test_post_with_generate_report_error (CarFleetManagement.api.tests.test_views.GenerateReportViewTestCase.test_post_with_generate_report_error)
+Test POST request with generate_report error. ... ok
+test_post_without_analysis_data (CarFleetManagement.api.tests.test_views.GenerateReportViewTestCase.test_post_without_analysis_data)
+Test POST request without analysis data. ... ok
+test_vehicle_create (CarFleetManagement.api.tests.test_views.TestVehicleAPI.test_vehicle_create) ... ok
+test_vehicle_delete (CarFleetManagement.api.tests.test_views.TestVehicleAPI.test_vehicle_delete) ... ok
+test_vehicle_detail (CarFleetManagement.api.tests.test_views.TestVehicleAPI.test_vehicle_detail) ... ok
+test_vehicle_list (CarFleetManagement.api.tests.test_views.TestVehicleAPI.test_vehicle_list) ... ok
+test_vehicle_update (CarFleetManagement.api.tests.test_views.TestVehicleAPI.test_vehicle_update) ... ok
+test_vehicle_create_admin_jwt (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_create_admin_jwt) ... ok
+test_vehicle_create_invalid_payload (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_create_invalid_payload) ... ok
+test_vehicle_create_non_admin_jwt (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_create_non_admin_jwt) ... ok
+test_vehicle_create_unauthenticated (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_create_unauthenticated) ... ok
+test_vehicle_delete_admin_jwt (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_delete_admin_jwt) ... ok
+test_vehicle_delete_non_admin_jwt (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_delete_non_admin_jwt) ... ok
+test_vehicle_delete_not_found (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_delete_not_found) ... ok
+test_vehicle_delete_unauthenticated (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_delete_unauthenticated) ... ok
+test_vehicle_detail_admin_jwt (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_detail_admin_jwt) ... ok
+test_vehicle_detail_non_admin_jwt (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_detail_non_admin_jwt) ... ok
+test_vehicle_detail_not_found (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_detail_not_found) ... ok
+test_vehicle_detail_unauthenticated (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_detail_unauthenticated) ... ok
+test_vehicle_list_admin_jwt (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_list_admin_jwt) ... ok
+test_vehicle_list_non_admin_jwt (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_list_non_admin_jwt) ... ok
+test_vehicle_list_unauthenticated (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_list_unauthenticated) ... ok
+test_vehicle_update_admin_jwt (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_update_admin_jwt) ... ok
+test_vehicle_update_non_admin_jwt (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_update_non_admin_jwt) ... ok
+test_vehicle_update_not_found (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_update_not_found) ... ok
+test_vehicle_update_unauthenticated (CarFleetManagement.api.tests.test_views.TestVehicleAPIPermissions.test_vehicle_update_unauthenticated) ... ok
+test_emergency_contact_creation (CarFleetManagement.emergency.tests.test_models.EmergencyContactTestCase.test_emergency_contact_creation)
+Test EmergencyContact creation. ... ok
+test_emergency_contact_string_representation (CarFleetManagement.emergency.tests.test_models.EmergencyContactTestCase.test_emergency_contact_string_representation)
+Test EmergencyContact string representation. ... ok
+test_incident_creation (CarFleetManagement.emergency.tests.test_models.EmergencyIncidentTestCase.test_incident_creation)
+Test EmergencyIncident creation. ... ok
+test_incident_status_update (CarFleetManagement.emergency.tests.test_models.EmergencyIncidentTestCase.test_incident_status_update)
+Test updating EmergencyIncident status. ... ok
+test_incident_string_representation (CarFleetManagement.emergency.tests.test_models.EmergencyIncidentTestCase.test_incident_string_representation)
+Test EmergencyIncident string representation. ... ok
+test_response_creation (CarFleetManagement.emergency.tests.test_models.EmergencyResponseTestCase.test_response_creation)
+Test EmergencyResponse creation. ... ok
+test_response_string_representation (CarFleetManagement.emergency.tests.test_models.EmergencyResponseTestCase.test_response_string_representation)
+Test EmergencyResponse string representation. ... ok
+test_emergency_create_view (CarFleetManagement.emergency.tests.test_views.EmergencyViewsTestCase.test_emergency_create_view)
+Test emergency incident create view. ... C:\Users\jedrz\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\pagination.py:208: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'CarFleetManagement.emergency.models.EmergencyIncident'> QuerySet.
+  paginator = self.django_paginator_class(queryset, page_size)
+ok
+test_emergency_detail_view (CarFleetManagement.emergency.tests.test_views.EmergencyViewsTestCase.test_emergency_detail_view)
+Test emergency incident detail view. ... ok
+test_emergency_list_view (CarFleetManagement.emergency.tests.test_views.EmergencyViewsTestCase.test_emergency_list_view)
+Test emergency incident list view. ... ok
+test_emergency_response_create_view (CarFleetManagement.emergency.tests.test_views.EmergencyViewsTestCase.test_emergency_response_create_view)
+Test emergency response create view. ... C:\Users\jedrz\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\pagination.py:208: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'CarFleetManagement.emergency.models.EmergencyResponse'> QuerySet.
+  paginator = self.django_paginator_class(queryset, page_size)
+ok
+test_emergency_update_view (CarFleetManagement.emergency.tests.test_views.EmergencyViewsTestCase.test_emergency_update_view)
+Test emergency incident update view. ... ok
+test_emergency_incident_context_object_names (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_context_object_names)
+Test that views use correct context object names. ... ok
+test_emergency_incident_create_view_form_queryset (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_create_view_form_queryset)
+Test that create view shows all vehicles in form. ... ok
+test_emergency_incident_create_view_sets_reported_by (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_create_view_sets_reported_by)
+Test that create view sets reported_by to current user. ... ok
+test_emergency_incident_create_view_success_message (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_create_view_success_message)
+Test that create view shows success message. ... ok
+test_emergency_incident_delete_view_permission_admin (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_delete_view_permission_admin)
+Test that admin can delete incidents. ... ok
+test_emergency_incident_delete_view_permission_denied (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_delete_view_permission_denied)
+Test that regular users cannot delete incidents. ... ok
+test_emergency_incident_delete_view_success_message (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_delete_view_success_message)
+Test that delete view shows success message. ... ok
+test_emergency_incident_detail_view_context (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_detail_view_context)
+Test that detail view includes responses in context. ... ok
+test_emergency_incident_list_view_ordering (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_list_view_ordering)
+Test that incidents are ordered by reported_time descending. ... ok
+test_emergency_incident_templates (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_templates)
+Test that views use correct templates. ... ok
+test_emergency_incident_update_view_permission_admin (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_update_view_permission_admin)
+Test that admin can update incidents. ... ok
+test_emergency_incident_update_view_permission_denied (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_update_view_permission_denied)
+Test that regular users cannot update incidents. ... ok
+test_emergency_incident_update_view_permission_emergency_staff (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_update_view_permission_emergency_staff)
+Test that emergency staff can update incidents. ... ok
+test_emergency_incident_update_view_success_message (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_incident_update_view_success_message)
+Test that update view shows success message. ... ok
+test_emergency_response_create_view_sets_responder (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_response_create_view_sets_responder)
+Test that response create view sets responder to current user. ... ok
+test_emergency_views_require_login (CarFleetManagement.emergency.tests.test_views_extended.EmergencyViewsExtendedTestCase.test_emergency_views_require_login)
+Test that all emergency views require login. ... ok
+test_create_maintenance (CarFleetManagement.maintenance.tests.test_api.MaintenanceAPITestCase.test_create_maintenance)
+Test creating a new maintenance record. ... min_value in DecimalField should be Decimal type.
+ok
+test_delete_maintenance (CarFleetManagement.maintenance.tests.test_api.MaintenanceAPITestCase.test_delete_maintenance)
+Test deleting a maintenance record. ... ok
+test_get_all_maintenance (CarFleetManagement.maintenance.tests.test_api.MaintenanceAPITestCase.test_get_all_maintenance)
+Test retrieving all maintenance records. ... min_value in DecimalField should be Decimal type.
+min_value in DecimalField should be Decimal type.
+ok
+test_get_single_maintenance (CarFleetManagement.maintenance.tests.test_api.MaintenanceAPITestCase.test_get_single_maintenance)
+Test retrieving a single maintenance record. ... min_value in DecimalField should be Decimal type.
+min_value in DecimalField should be Decimal type.
+ok
+test_unauthorized_access_maintenance (CarFleetManagement.maintenance.tests.test_api.MaintenanceAPITestCase.test_unauthorized_access_maintenance)
+Test unauthorized access to maintenance API. ... ok
+test_update_maintenance (CarFleetManagement.maintenance.tests.test_api.MaintenanceAPITestCase.test_update_maintenance)
+Test updating an existing maintenance record. ... min_value in DecimalField should be Decimal type.
+ok
+test_cost_validation (CarFleetManagement.maintenance.tests.test_models.MaintenanceTestCase.test_cost_validation)
+Test negative cost is not allowed. ... ok
+test_days_until_scheduled (CarFleetManagement.maintenance.tests.test_models.MaintenanceTestCase.test_days_until_scheduled)
+Test days_until_scheduled method. ... ok
+test_invalid_status (CarFleetManagement.maintenance.tests.test_models.MaintenanceTestCase.test_invalid_status)
+Test invalid status raises error. ... ok
+test_maintenance_creation (CarFleetManagement.maintenance.tests.test_models.MaintenanceTestCase.test_maintenance_creation)
+Test Maintenance creation. ... ok
+test_maintenance_status_choices (CarFleetManagement.maintenance.tests.test_models.MaintenanceTestCase.test_maintenance_status_choices)
+Test Maintenance status choices. ... ok
+test_maintenance_string_representation (CarFleetManagement.maintenance.tests.test_models.MaintenanceTestCase.test_maintenance_string_representation)
+Test Maintenance string representation. ... ok
+test_maintenance_type_choices (CarFleetManagement.maintenance.tests.test_models.MaintenanceTestCase.test_maintenance_type_choices)
+Test Maintenance type choices. ... ok
+test_missing_scheduled_date (CarFleetManagement.maintenance.tests.test_models.MaintenanceTestCase.test_missing_scheduled_date)
+Test days_until_scheduled returns 0 if scheduled_date is None. ... ok
+test_negative_odometer_not_allowed (CarFleetManagement.maintenance.tests.test_models.MaintenanceTestCase.test_negative_odometer_not_allowed)
+Test negative odometer reading is not allowed. ... ok
+test_str_for_all_types (CarFleetManagement.maintenance.tests.test_models.MaintenanceTestCase.test_str_for_all_types)
+Test __str__ for all maintenance types. ... ok
+test_maintenance_create_view (CarFleetManagement.maintenance.tests.test_views.MaintenanceViewsTestCase.test_maintenance_create_view)
+Test maintenance create view. ... ok
+test_maintenance_detail_view (CarFleetManagement.maintenance.tests.test_views.MaintenanceViewsTestCase.test_maintenance_detail_view)
+Test maintenance detail view. ... ok
+test_maintenance_list_view (CarFleetManagement.maintenance.tests.test_views.MaintenanceViewsTestCase.test_maintenance_list_view)
+Test maintenance list view. ... ok
+test_maintenance_update_view (CarFleetManagement.maintenance.tests.test_views.MaintenanceViewsTestCase.test_maintenance_update_view)
+Test maintenance update view. ... ok
+test_vehicle_creation (CarFleetManagement.vehicles.tests.test_models.VehicleTestCase.test_vehicle_creation)
+Test Vehicle creation. ... ok
+test_vehicle_fuel_type_choices (CarFleetManagement.vehicles.tests.test_models.VehicleTestCase.test_vehicle_fuel_type_choices)
+Test Vehicle fuel type choices. ... ok
+test_vehicle_status_choices (CarFleetManagement.vehicles.tests.test_models.VehicleTestCase.test_vehicle_status_choices)
+Test Vehicle status choices. ... ok
+test_vehicle_string_representation (CarFleetManagement.vehicles.tests.test_models.VehicleTestCase.test_vehicle_string_representation)
+Test Vehicle string representation. ... ok
+test_vehicle_transmission_choices (CarFleetManagement.vehicles.tests.test_models.VehicleTestCase.test_vehicle_transmission_choices)
+Test Vehicle transmission choices. ... ok
+test_vehicle_type_choices (CarFleetManagement.vehicles.tests.test_models.VehicleTestCase.test_vehicle_type_choices)
+Test Vehicle type choices. ... ok
+test_vehicle_create_view (CarFleetManagement.vehicles.tests.test_views.VehicleViewsTestCase.test_vehicle_create_view)
+Test vehicle create view. ... ok
+test_vehicle_delete_view (CarFleetManagement.vehicles.tests.test_views.VehicleViewsTestCase.test_vehicle_delete_view)
+Test vehicle delete view. ... ok
+test_vehicle_detail_view (CarFleetManagement.vehicles.tests.test_views.VehicleViewsTestCase.test_vehicle_detail_view)
+Test vehicle detail view. ... ok
+test_vehicle_list_view (CarFleetManagement.vehicles.tests.test_views.VehicleViewsTestCase.test_vehicle_list_view)
+Test vehicle list view. ... ok
+test_vehicle_update_view (CarFleetManagement.vehicles.tests.test_views.VehicleViewsTestCase.test_vehicle_update_view)
+Test vehicle update view. ... ok
+
+======================================================================
+ERROR: CarFleetManagement.tests.test_api_views (unittest.loader._FailedTest.CarFleetManagement.tests.test_api_views)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: CarFleetManagement.tests.test_api_views
+Traceback (most recent call last):
+  File "C:\Users\jedrz\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 407, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jedrz\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 350, in _get_module_from_name
+    __import__(name)
+  File "D:\REPOS\fleet_mgmt_django\CarFleetManagement\tests\test_api_views.py", line 12, in <module>
+    from tests.test_setup import get_authenticated_client, setup_test_environment
+ModuleNotFoundError: No module named 'tests.test_setup'
+
+
+======================================================================
+ERROR: CarFleetManagement.vehicles.tests.test_api (unittest.loader._FailedTest.CarFleetManagement.vehicles.tests.test_api)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: CarFleetManagement.vehicles.tests.test_api
+Traceback (most recent call last):
+  File "C:\Users\jedrz\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 407, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jedrz\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 350, in _get_module_from_name
+    __import__(name)
+  File "D:\REPOS\fleet_mgmt_django\CarFleetManagement\vehicles\tests\test_api.py", line 14, in <module>
+    from tests.test_setup import setup_test_environment
+ModuleNotFoundError: No module named 'tests.test_setup'
+
+
+======================================================================
+FAIL: test_login_view_invalid_credentials (CarFleetManagement.api.tests.test_auth_views.AuthViewsTestCase.test_login_view_invalid_credentials)
+Test login with invalid credentials.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\REPOS\fleet_mgmt_django\CarFleetManagement\api\tests\test_auth_views.py", line 106, in test_login_view_invalid_credentials
+    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+AssertionError: 404 != 400
+
+----------------------------------------------------------------------
+Ran 197 tests in 85.768s
+
+FAILED (failures=1, errors=2)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+
+
