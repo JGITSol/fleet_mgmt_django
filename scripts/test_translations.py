@@ -83,7 +83,7 @@ def test_language_switching():
     print("TEST 3: Language Switching")
     print("="*60)
     
-    client = Client()
+    Client()
     results = []
     
     for lang_code, lang_name in [('en', 'English'), ('fr', 'French'), ('pl', 'Polish')]:

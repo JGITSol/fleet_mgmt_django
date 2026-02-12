@@ -136,7 +136,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    BASE_DIR.parent / "static",
+]
 
 # DRF and JWT settings
 REST_FRAMEWORK = {
@@ -160,6 +163,20 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "Fleet Management API",
     "DESCRIPTION": "API documentation for the Fleet Management system",
     "VERSION": "1.0.0",
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": True,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
 }
 
 AUTH_USER_MODEL = "accounts.CustomUser"
@@ -239,3 +256,4 @@ else:
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
+ 

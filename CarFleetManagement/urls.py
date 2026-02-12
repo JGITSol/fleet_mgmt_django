@@ -18,7 +18,7 @@ from CarFleetManagement.vehicles import views as vehicle_views
 
 
 def root_view(request):
-    return render(request, 'home.html')
+    return render(request, 'home_v3.html')
 
 # NOTE: keep all DRF API endpoints under the /api/ prefix. The web views
 # (HTML pages) should be mounted at top-level paths to avoid colliding with
@@ -28,7 +28,7 @@ from django.conf.urls.i18n import i18n_patterns
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     # API (DRF) endpoints - moved out of i18n_patterns to avoid localization issues
-    path('api/', include(('CarFleetManagement.api.urls', 'CarFleetManagement.api'), namespace='CarFleetManagement.api')),
+    path('api/', include(('CarFleetManagement.api.urls', 'api'), namespace='api')),
 ]
 
 urlpatterns += i18n_patterns(

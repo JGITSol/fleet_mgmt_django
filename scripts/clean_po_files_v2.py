@@ -5,13 +5,9 @@ def clean_po_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
         
-    output_lines = []
-    seen_msgids = set()
     
-    current_block = []
     current_msgid = None
     current_is_obsolete = False
-    is_header = True
     
     for line in lines:
         # Check if line starts a new block (msgid that is NOT a comment)
@@ -60,7 +56,7 @@ def clean_po_file(file_path):
     current_msgid = None
     
     for line in lines:
-        stripped = line.strip()
+        line.strip()
         
         # If we hit a line that looks like the start of a new entry (comment or msgid)
         # AND we have finished a previous entry (seen msgstr).

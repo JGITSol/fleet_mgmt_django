@@ -1,0 +1,44 @@
+{% extends 'base_v3.html' %}{% load i18n %}
+{% block title %}{% trans "FleetManager | Modern Fleet Management" %}{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <h1 class="hero-title">{% trans "Manage Your Fleet with" %}<br><span style="color: var(--accent-primary)">{% trans "Intelligence & Precision" %}</span></h1>
+        <p class="hero-subtitle">{% trans "The ultimate dashboard for modern fleet managers. Track vehicles, schedule maintenance, and manage emergencies in real-time with our premium cloud solution." %}</p>
+        <div class="flex justify-center gap-4">
+            {% if not user.is_authenticated %}
+            <a href="{% url 'login' %}" class="btn btn-primary">{% trans "Get Started Today" %}</a>
+            <a href="{% url 'login' %}" class="btn btn-outline">{% trans "Sign In" %}</a>
+            {% else %}
+            <a href="{% url 'vehicle_list' %}" class="btn btn-primary">{% trans "Go to Dashboard" %}</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<section class="container" style="padding: 4rem 1.5rem;">
+    <div class="grid grid-cols-3 gap-8">
+        <div class="card card-glass">
+            <div class="feature-icon"><i class="fas fa-truck-moving"></i></div>
+            <h3>{% trans "Vehicle Tracking" %}</h3>
+            <p>{% trans "Real-time visibility into your entire fleet. Track status, mileage, and assignments with ease." %}</p>
+        </div>
+        <div class="card card-glass">
+            <div class="feature-icon"><i class="fas fa-tools"></i></div>
+            <h3>{% trans "Maintenance Flow" %}</h3>
+            <p>{% trans "Automated service scheduling and cost tracking. Keep your fleet in peak condition effortlessly." %}</p>
+        </div>
+        <div class="card card-glass">
+            <div class="feature-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3>{% trans "Emergency Response" %}</h3>
+            <p>{% trans "Instant incident reporting and streamlined response management for mission-critical reliability." %}</p>
+        </div>
+    </div>
+</section>
+<section class="container" style="padding: 6rem 1.5rem; text-align: center;">
+    <div class="card" style="background: var(--gradient-dark); border-color: var(--accent-primary);">
+        <h2 style="margin-bottom: 1rem;">{% trans "Ready to optimize your fleet performance?" %}</h2>
+        <p style="max-width: 600px; margin: 0 auto 2rem;">{% trans "Join professional fleet managers around the world using FleetManager to reduce costs and increase efficiency." %}</p>
+        <a href="{% url 'register' %}" class="btn btn-primary">{% trans "Create Free Account" %}</a>
+    </div>
+</section>
+{% endblock %}
