@@ -129,32 +129,12 @@ docker-compose -f docker-compose.prod.yml up -d
 
 ### Technical Features
 - **JWT Authentication**: Secure API access with token-based auth
-- **REST API**: Complete API for mobile app integration (Lynx JS)
-- **AI Integration**: Screenshot analysis using OpenRouter/Google AI
-- **Internationalization**: Multi-language support
+- **REST API**: Complete API for mobile app integration
+- **Dynamic Theming**: Premium design system with 10+ selectable color modes using `color-mix`.
+- **AI Integration**: Screenshot analysis using Google AI
+- **Internationalization**: Multi-language support (EN, PL, ES, DE, FR)
 - **Comprehensive Testing**: pytest with coverage reporting
 - **API Documentation**: Auto-generated with drf-spectacular
-
-## 🔧 API Endpoints
-
-### Authentication
-- `POST /api/auth/login/` - User login (JWT tokens)
-- `POST /api/auth/register/` - User registration
-- `GET /api/auth/profile/` - User profile
-- `POST /api/auth/validate-token/` - Token validation
-
-### Core Resources
-- `GET|POST /api/vehicles/` - Vehicle list/create
-- `GET|PUT|DELETE /api/vehicles/{id}/` - Vehicle detail operations
-- `GET|POST /api/drivers/` - Driver list/create
-- `GET|PUT|DELETE /api/drivers/{id}/` - Driver detail operations
-- `GET|POST /api/maintenance/` - Maintenance records
-- `GET|POST /api/emergencies/` - Emergency incidents
-
-### AI Features
-- `POST /api/screenshots/analyze/` - Single screenshot analysis
-- `POST /api/screenshots/batch-analyze/` - Batch analysis
-- `POST /api/screenshots/generate-report/` - Generate reports
 
 ## 🏗️ Architecture
 
@@ -167,7 +147,7 @@ CarFleetManagement/
 ├── maintenance/       # Maintenance scheduling
 ├── emergency/         # Emergency incident management
 ├── static/           # Static files (CSS, JS, images)
-├── templates/        # HTML templates
+├── templates/        # HTML templates (base_v3 standard)
 └── tests/            # Shared test utilities
 ```
 
@@ -175,6 +155,7 @@ CarFleetManagement/
 - **Backend**: Django 5.1.7 + Django REST Framework 3.16.0
 - **Authentication**: JWT (djangorestframework-simplejwt 5.5.0)
 - **Database**: SQLite (dev), PostgreSQL (production ready)
+- **Frontend**: Modern Django Templates + Vanilla CSS (Custom Design System)
 - **Testing**: pytest-django 4.11.1
 - **AI**: Google Generative AI
 - **Documentation**: drf-spectacular 0.28.0
@@ -201,7 +182,8 @@ Authorization: Bearer <access_token>
 - Core models (Vehicle, Driver, Maintenance, Emergency)
 - JWT authentication system
 - REST API endpoints
-- Basic web interface
+- **Premium UI/UX overhaul** with `base_v3.html`
+- **Dynamic Theme System** (10+ modes)
 - Test infrastructure (56% coverage)
 - Docker configuration
 - AI screenshot analysis integration

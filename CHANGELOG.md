@@ -22,6 +22,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Authentication test stability issues
 - API endpoint consistency
 
+## [1.3.0] - 2026-02-12
+
+### Added
+- **UI/UX Redesign**: Complete overhaul of the homepage and core layouts with a premium, modern aesthetic.
+- **Dynamic Theming**: Implemented a robust, theme-aware system featuring 10+ color modes (Solarized, Emerald, Rose Quartz, Papyrus, etc.) using CSS variables and `color-mix`.
+- **New Base Template**: Introduced `base_v3.html` as the new project standard for enhanced reliability and design consistency.
+
+### Changed
+- **Internationalization**: Re-compiled all translation binaries (PO/MO files) for English, Polish, Spanish, German, and French to ensure up-to-date content.
+- **Template Inheritance**: Modernized all project templates (15+ files) to inherit from `base_v3.html`.
+
+### Fixed
+- **Template Parsing**: Resolved persistent `TemplateSyntaxError` caused by missing spaces in Django logic tags.
+- **Literal Translation Tags**: Fixed an issue where `{% trans %}` tags rendered literally in the browser due to line-break formatting.
+- **Theme Switching**: Optimized selector specificity using `html[data-theme]` to guarantee reliable theme application across all components.
+
 ## [1.2.0] - 2024-02-05
 
 ### Added
