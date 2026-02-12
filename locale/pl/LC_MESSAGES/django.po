@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-24 14:26+0100\n"
+"POT-Creation-Date: 2026-02-12 22:05+0100\n"
 "PO-Revision-Date: 2025-11-24 06:00+0000\n"
 "Last-Translator: Auto <auto@example.com>\n"
 "Language-Team: Polish\n"
@@ -15,149 +15,3001 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
 
-msgid "Home"
-msgstr "Strona główna"
-
-#, fuzzy
-#~| msgid "Car Fleet Management"
-#~ msgid "Fleet Management"
-#~ msgstr "Zarządzanie flotą samochodową"
-
+#: .\CarFleetManagement\accounts\models.py:20
+#: .\CarFleetManagement\templates\base_v3.html:25
 msgid "Admin"
 msgstr "Administrator"
 
-#~ msgid "Profile"
-#~ msgstr "Profil"
-
-msgid "Logout"
-msgstr "Wyloguj"
-msgid "Login"
-msgstr "Logowanie"
-msgid "Register"
-msgstr "Rejestracja"
-msgid "Change Language"
-msgstr "Zmień język"
-#~ msgid "Options"
-#~ msgstr "Akcje"
-
+#: .\CarFleetManagement\accounts\models.py:21
 #, fuzzy
-#~| msgid "Location"
-#~ msgid "Syndication"
-#~ msgstr "Lokalizacja"
+#| msgid "FleetManager"
+msgid "Manager"
+msgstr "MenedżerFloty"
 
+#: .\CarFleetManagement\accounts\models.py:22
+msgid "Coordinator"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:23
+#: .\CarFleetManagement\emergency\models.py:23
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:18
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:45
+msgid "Driver"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:24
+msgid "Test User"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:25
 #, fuzzy
-#~| msgid "Description"
-#~ msgid "Duration"
-#~ msgstr "Opis"
+#| msgid "Maintenance List"
+msgid "Maintenance Staff"
+msgstr "Lista konserwacji"
 
-#~ msgid "Delete"
-#~ msgstr "Usuń"
+#: .\CarFleetManagement\accounts\models.py:28
+msgid "Role Name"
+msgstr ""
 
+#: .\CarFleetManagement\accounts\models.py:29
+#: .\CarFleetManagement\emergency\models.py:30
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:82
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:49
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:18
+msgid "Description"
+msgstr "Opis"
+
+#: .\CarFleetManagement\accounts\models.py:30
+msgid "Permissions"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:40
+msgid "Role"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:41
+#: .\CarFleetManagement\accounts\models.py:73
+#: .\CarFleetManagement\emergency\models.py:50
+msgid "Phone Number"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:42
 #, fuzzy
-#~| msgid "Status"
-#~ msgid "Sat"
-#~ msgstr "Status"
+#| msgid "Emergency Incidents"
+msgid "Emergency Contact"
+msgstr "Incydenty awaryjne"
 
+#: .\CarFleetManagement\accounts\models.py:69
+msgid "First Name"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:70
+msgid "Last Name"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:71
+msgid "Driver License Number"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:72
 #, fuzzy
-#~| msgid "Search"
-#~ msgid "March"
-#~ msgstr "Szukaj"
+#| msgid "Add Vehicle"
+msgid "Assigned Vehicles"
+msgstr "Dodaj pojazd"
 
+#: .\CarFleetManagement\accounts\models.py:74
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:16
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:17
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:35
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:21
+msgid "Email"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:79
+#, fuzzy
+#| msgid "Actions"
+msgid "Active"
+msgstr "Akcje"
+
+#: .\CarFleetManagement\accounts\models.py:80
+msgid "Inactive"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:83
+#: .\CarFleetManagement\emergency\models.py:26
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:25
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:27
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:17
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:14
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:39
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:17
+#: .\CarFleetManagement\templates\emergency\emergency_list.html:19
+#: .\CarFleetManagement\vehicles\models.py:41
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:19
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:158
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:19
+msgid "Status"
+msgstr ""
+
+#: .\CarFleetManagement\accounts\models.py:86
+#, fuzzy
+#| msgid "License Plate"
+msgid "License Expiry Date"
+msgstr "Tablica rejestracyjna"
+
+#: .\CarFleetManagement\accounts\models.py:89
+#, fuzzy
+#| msgid "Date"
+msgid "Hire Date"
+msgstr "Data"
+
+#: .\CarFleetManagement\accounts\models.py:90
+msgid "Termination Date"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:9
+msgid "Accident"
+msgstr "Wypadek"
+
+#: .\CarFleetManagement\emergency\models.py:10
+msgid "Breakdown"
+msgstr "Awaria"
+
+#: .\CarFleetManagement\emergency\models.py:11
+msgid "Medical Emergency"
+msgstr "Nagły wypadek medyczny"
+
+#: .\CarFleetManagement\emergency\models.py:12
+msgid "Theft"
+msgstr "Kradzież"
+
+#: .\CarFleetManagement\emergency\models.py:13
+#: .\CarFleetManagement\maintenance\models.py:13
+msgid "Other"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:16
+msgid "Reported"
+msgstr "Zgłoszony"
+
+#: .\CarFleetManagement\emergency\models.py:17
+msgid "Responding"
+msgstr "Reagujący"
+
+#: .\CarFleetManagement\emergency\models.py:18
+msgid "Resolved"
+msgstr "Rozwiązany"
+
+#: .\CarFleetManagement\emergency\models.py:19
+msgid "Closed"
+msgstr "Zamknięty"
+
+#: .\CarFleetManagement\emergency\models.py:22
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:17
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:37
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:15
+#: .\CarFleetManagement\maintenance\models.py:40
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:12
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:17
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:15
+#: .\CarFleetManagement\templates\emergency\emergency_list.html:15
+msgid "Vehicle"
+msgstr "Pojazd"
+
+#: .\CarFleetManagement\emergency\models.py:24
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:26
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:90
+#, fuzzy
+#| msgid "Reported"
+msgid "Reported By"
+msgstr "Zgłoszony"
+
+#: .\CarFleetManagement\emergency\models.py:25
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:18
+#, fuzzy
+#| msgid "Emergency"
+msgid "Emergency Type"
+msgstr "Nagły wypadek"
+
+#: .\CarFleetManagement\emergency\models.py:27
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:19
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:53
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:18
+#: .\CarFleetManagement\templates\emergency\emergency_list.html:17
+msgid "Location"
+msgstr "Lokalizacja"
+
+#: .\CarFleetManagement\emergency\models.py:28
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:63
+msgid "Latitude"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:29
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:72
+msgid "Longitude"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:31
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:27
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:19
+#, fuzzy
+#| msgid "Reported"
+msgid "Reported Time"
+msgstr "Zgłoszony"
+
+#: .\CarFleetManagement\emergency\models.py:32
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:29
+#, fuzzy
+#| msgid "Resolved"
+msgid "Resolved Time"
+msgstr "Rozwiązany"
+
+#: .\CarFleetManagement\emergency\models.py:38
+#, fuzzy
+#| msgid "Incident Type"
+msgid "Incident"
+msgstr "Typ incydentu"
+
+#: .\CarFleetManagement\emergency\models.py:39
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:16
+#, fuzzy
+#| msgid "Responding"
+msgid "Responder"
+msgstr "Reagujący"
+
+#: .\CarFleetManagement\emergency\models.py:40
+#, fuzzy
+#| msgid "Responding"
+msgid "Response Time"
+msgstr "Reagujący"
+
+#: .\CarFleetManagement\emergency\models.py:41
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:46
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:24
+#, fuzzy
+#| msgid "Actions"
+msgid "Action Taken"
+msgstr "Akcje"
+
+#: .\CarFleetManagement\emergency\models.py:42
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:25
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:61
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:49
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:32
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:26
+msgid "Notes"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:48
+#, fuzzy
+#| msgid "Username"
+msgid "User"
+msgstr "Nazwa użytkownika"
+
+#: .\CarFleetManagement\emergency\models.py:49
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:14
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:16
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:19
+msgid "Name"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\models.py:51
+msgid "Relationship"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:4
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:8
+#, fuzzy
+#| msgid "Emergency Incidents"
+msgid "Delete Emergency Contact"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:12
+#, fuzzy
+#| msgid "Are you sure you want to delete this?"
+msgid "Are you sure you want to delete this emergency contact?"
+msgstr "Czy na pewno chcesz to usunąć?"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:15
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:16
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:26
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:20
+msgid "Phone"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:17
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:18
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:22
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:16
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:13
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:16
+#: .\CarFleetManagement\templates\emergency\emergency_list.html:16
+msgid "Type"
+msgstr "Typ"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:19
+msgid "This action cannot be undone."
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:25
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:34
+#, fuzzy
+#| msgid "Delete Maintenance"
+msgid "Delete Contact"
+msgstr "Usuń konserwację"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_confirm_delete.html:26
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:72
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:101
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:43
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:63
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:170
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:4
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:8
+#, fuzzy
+#| msgid "Emergency Details"
+msgid "Emergency Contact Details"
+msgstr "Szczegóły nagłego wypadku"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:22
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:53
+msgid "Address"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:33
+#, fuzzy
+#| msgid "Edit Maintenance"
+msgid "Edit Contact"
+msgstr "Edytuj konserwację"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_detail.html:35
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:61
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:31
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:35
+msgid "Back to List"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:4
+#, fuzzy
+#| msgid "Emergency Incidents"
+msgid "Emergency Contact Form"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:8
+#, fuzzy
+#| msgid "Emergency Incidents"
+msgid "Edit Emergency Contact"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:8
+#, fuzzy
+#| msgid "Emergency Incidents"
+msgid "Create Emergency Contact"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:45
+#, fuzzy
+#| msgid "Incident Type"
+msgid "Contact Type"
+msgstr "Typ incydentu"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:71
+msgid "Update Contact"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_form.html:71
+#, fuzzy
+#| msgid "Create Account"
+msgid "Create Contact"
+msgstr "Utwórz konto"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:4
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:8
+#, fuzzy
+#| msgid "Emergency Incidents"
+msgid "Emergency Contacts"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:11
+#, fuzzy
+#| msgid "Emergency Incidents"
+msgid "Add Emergency Contact"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:23
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:20
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:20
+#: .\CarFleetManagement\templates\emergency\emergency_list.html:20
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:20
+msgid "Actions"
+msgstr "Akcje"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:34
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:32
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:32
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:32
+msgid "View"
+msgstr "Zobacz"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:35
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:33
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:30
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:33
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:34
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:33
+msgid "Edit"
+msgstr "Edytuj"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:36
+#: .\venv\Lib\site-packages\django\forms\formsets.py:499
+msgid "Delete"
+msgstr "Usuń"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_contact_list.html:44
+#, fuzzy
+#| msgid "No emergency incidents found."
+msgid "No emergency contacts found."
+msgstr "Nie znaleziono incydentów awaryjnych."
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:4
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:8
+#, fuzzy
+#| msgid "Emergency Incidents"
+msgid "Emergency Incident Details"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:21
+msgid "Coordinates"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:36
+#, fuzzy
+#| msgid "Responding"
+msgid "Responses"
+msgstr "Reagujący"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:55
+msgid "No responses yet."
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:59
+msgid "Add Response"
+msgstr ""
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_detail.html:60
+#, fuzzy
+#| msgid "Report incident"
+msgid "Edit Incident"
+msgstr "Zgłoś incydent"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:4
+#, fuzzy
+#| msgid "Emergency Incidents"
+msgid "Emergency Incident Form"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:8
+#, fuzzy
+#| msgid "Emergency Incidents"
+msgid "Edit Emergency Incident"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:8
+#, fuzzy
+#| msgid "Emergency Incidents"
+msgid "Create Emergency Incident"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:100
+#, fuzzy
+#| msgid "Report New Incident"
+msgid "Update Incident"
+msgstr "Zgłoś nowy incydent"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_form.html:100
+#, fuzzy
+#| msgid "Report New Incident"
+msgid "Create Incident"
+msgstr "Zgłoś nowy incydent"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:4
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:8
+#: .\CarFleetManagement\templates\emergency\emergency_list.html:4
+#: .\CarFleetManagement\templates\emergency\emergency_list.html:8
+msgid "Emergency Incidents"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:9
+#, fuzzy
+#| msgid "Report Emergency"
+msgid "Report New Emergency"
+msgstr "Zgłoś nagły wypadek"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_list.html:38
+#: .\CarFleetManagement\templates\emergency\emergency_list.html:40
+msgid "No emergency incidents found."
+msgstr "Nie znaleziono incydentów awaryjnych."
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:4
+#, fuzzy
+#| msgid "Emergency Incidents"
+msgid "Emergency Response Form"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:8
+#, fuzzy
+#| msgid "Emergency Incidents"
+msgid "Add Emergency Response"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\emergency\templates\emergency\emergency_response_form.html:42
+msgid "Submit Response"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\models.py:10
+msgid "Routine Maintenance"
+msgstr "Rutynowa konserwacja"
+
+#: .\CarFleetManagement\maintenance\models.py:11
+msgid "Repair"
+msgstr "Naprawa"
+
+#: .\CarFleetManagement\maintenance\models.py:12
+msgid "Inspection"
+msgstr "Przegląd"
+
+#: .\CarFleetManagement\maintenance\models.py:17
+msgid "Scheduled"
+msgstr "Zaplanowany"
+
+#: .\CarFleetManagement\maintenance\models.py:18
+msgid "In Progress"
+msgstr "W toku"
+
+#: .\CarFleetManagement\maintenance\models.py:19
+msgid "Completed"
+msgstr "Zakończony"
+
+#: .\CarFleetManagement\maintenance\models.py:20
+msgid "Cancelled"
+msgstr "Anulowany"
+
+#: .\CarFleetManagement\maintenance\models.py:44
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:27
+#, fuzzy
+#| msgid "Maintenance"
+msgid "Maintenance Type"
+msgstr "Konserwacja"
+
+#: .\CarFleetManagement\maintenance\models.py:48
+#, fuzzy
+#| msgid "Maintenance Details"
+msgid "Maintenance Status"
+msgstr "Szczegóły konserwacji"
+
+#: .\CarFleetManagement\maintenance\models.py:51
+#, fuzzy
+#| msgid "Maintenance Details"
+msgid "Maintenance Description"
+msgstr "Szczegóły konserwacji"
+
+#: .\CarFleetManagement\maintenance\models.py:54
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:15
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:19
+msgid "Scheduled Date"
+msgstr "Zaplanowana data"
+
+#: .\CarFleetManagement\maintenance\models.py:57
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:18
+#, fuzzy
+#| msgid "Completed"
+msgid "Completed Date"
+msgstr "Zakończony"
+
+#: .\CarFleetManagement\maintenance\models.py:60
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:21
+msgid "Odometer Reading"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\models.py:64
+#, fuzzy
+#| msgid "Maintenance List"
+msgid "Maintenance Cost"
+msgstr "Lista konserwacji"
+
+#: .\CarFleetManagement\maintenance\models.py:67
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:23
+#, fuzzy
+#| msgid "Service Type"
+msgid "Service Provider"
+msgstr "Typ serwisu"
+
+#: .\CarFleetManagement\maintenance\models.py:70
+msgid "Additional Notes"
+msgstr ""
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:4
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:8
+msgid "Maintenance Details"
+msgstr "Szczegóły konserwacji"
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_detail.html:22
+msgid "Cost"
+msgstr "Koszt"
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:5
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:10
+#, fuzzy
+#| msgid "Maintenance Records"
+msgid "Edit Maintenance Record"
+msgstr "Rejestry konserwacji"
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:5
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:10
+#, fuzzy
+#| msgid "Add New Maintenance Record"
+msgid "Add Maintenance Record"
+msgstr "Dodaj nowy wpis konserwacji"
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_form.html:62
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:169
+msgid "Save"
+msgstr "Zapisz"
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:4
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:8
+msgid "Maintenance Records"
+msgstr "Rejestry konserwacji"
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:9
+msgid "Add New Maintenance Record"
+msgstr "Dodaj nowy wpis konserwacji"
+
+#: .\CarFleetManagement\maintenance\templates\maintenance\maintenance_list.html:38
+#, fuzzy
+#| msgid "Maintenance Records"
+msgid "No maintenance records found."
+msgstr "Rejestry konserwacji"
+
+#: .\CarFleetManagement\templates\about.html:4
+#: .\CarFleetManagement\templates\partials\_footer.html:11
+#: .\CarFleetManagement\templates\partials\_navbar.html:11
+msgid "About"
+msgstr ""
+
+#: .\CarFleetManagement\templates\about.html:4
+#: .\CarFleetManagement\templates\features.html:5
+#: .\CarFleetManagement\templates\partials\_navbar.html:4
+#, fuzzy
+#| msgid "Car Fleet Management"
+msgid "Car Fleet Manager"
+msgstr "Zarządzanie flotą samochodową"
+
+#: .\CarFleetManagement\templates\about.html:10
+#, fuzzy
+#| msgid "Car Fleet Management"
+msgid "About Car Fleet Manager"
+msgstr "Zarządzanie flotą samochodową"
+
+#: .\CarFleetManagement\templates\about.html:11
+msgid ""
+"A comprehensive fleet management system designed to leverage AI, automation, "
+"and real-time data processing to streamline vehicle operations."
+msgstr ""
+
+#: .\CarFleetManagement\templates\about.html:15
+msgid "Our Mission"
+msgstr ""
+
+#: .\CarFleetManagement\templates\about.html:16
+msgid ""
+"To revolutionize fleet management through cutting-edge technology that "
+"reduces costs, improves efficiency, and enhances safety for all fleet "
+"operators."
+msgstr ""
+
+#: .\CarFleetManagement\templates\about.html:22
+msgid "Technology Stack"
+msgstr ""
+
+#: .\CarFleetManagement\templates\about.html:24
+msgid "Django 5.0 for robust backend services"
+msgstr ""
+
+#: .\CarFleetManagement\templates\about.html:25
+msgid "PyTorch and YOLOv8 for advanced computer vision"
+msgstr ""
+
+#: .\CarFleetManagement\templates\about.html:26
+msgid "PostgreSQL with PostGIS for geospatial capabilities"
+msgstr ""
+
+#: .\CarFleetManagement\templates\about.html:27
+msgid "Modern web technologies for responsive interfaces"
+msgstr ""
+
+#: .\CarFleetManagement\templates\about.html:34
+msgid "The Team"
+msgstr ""
+
+#: .\CarFleetManagement\templates\about.html:35
+msgid ""
+"Our team consists of experienced software engineers, data scientists, and "
+"fleet management experts dedicated to building the best fleet management "
+"solution on the market."
+msgstr ""
+
+#: .\CarFleetManagement\templates\base_v3.html:7
+msgid "Car Fleet Management"
+msgstr "Zarządzanie flotą samochodową"
+
+#: .\CarFleetManagement\templates\base_v3.html:18
+#: .\CarFleetManagement\templates\base_v3.html:71
+msgid "FleetManager"
+msgstr "MenedżerFloty"
+
+#: .\CarFleetManagement\templates\base_v3.html:20
+#: .\CarFleetManagement\templates\partials\_footer.html:10
+#: .\scripts\test_translations.py:101
+msgid "Home"
+msgstr "Strona główna"
+
+#: .\CarFleetManagement\templates\base_v3.html:22
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:4
 msgid "Vehicles"
 msgstr "Pojazdy"
+
+#: .\CarFleetManagement\templates\base_v3.html:23
+msgid "Maintenance"
+msgstr "Konserwacja"
+
+#: .\CarFleetManagement\templates\base_v3.html:24
+msgid "Emergency"
+msgstr "Nagły wypadek"
+
+#: .\CarFleetManagement\templates\base_v3.html:26
+msgid "Logout"
+msgstr "Wyloguj"
+
+#: .\CarFleetManagement\templates\base_v3.html:28
+#: .\CarFleetManagement\templates\partials\_footer.html:13
+#: .\CarFleetManagement\templates\partials\_navbar.html:40
+#: .\CarFleetManagement\templates\registration\signup.html:44
+msgid "Login"
+msgstr "Logowanie"
+
+#: .\CarFleetManagement\templates\base_v3.html:29
+#: .\CarFleetManagement\templates\registration\register.html:38
+msgid "Register"
+msgstr "Rejestracja"
+
+#: .\CarFleetManagement\templates\base_v3.html:72
+msgid "Premium Fleet Management Solution"
+msgstr "Rozwiązanie premium do zarządzania flotą"
+
+#: .\CarFleetManagement\templates\base_v3.html:75
+msgid "Car Fleet Management System"
+msgstr "System zarządzania flotą samochodową"
+
+#: .\CarFleetManagement\templates\emergency\emergency_list.html:9
+msgid "Report New Incident"
+msgstr "Zgłoś nowy incydent"
+
+#: .\CarFleetManagement\templates\emergency\emergency_list.html:18
+msgid "Date"
+msgstr "Data"
+
+#: .\CarFleetManagement\templates\features.html:5
+#: .\CarFleetManagement\templates\partials\_footer.html:12
+#: .\CarFleetManagement\templates\partials\_navbar.html:14
+msgid "Features"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:87
+#, fuzzy
+#| msgid "System Overview"
+msgid "System Features"
+msgstr "Przegląd systemu"
+
+#: .\CarFleetManagement\templates\features.html:88
+msgid ""
+"Discover how our advanced fleet management system can transform your "
+"operations"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:97
+msgid "AI-Powered Odometer Reading"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:99
+#, python-format
+msgid ""
+"Our system can automatically extract odometer readings from both analog and "
+"digital displays with 98%% accuracy, eliminating manual data entry errors."
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:103
+msgid "Supports all major vehicle makes and models"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:104
+msgid "Validates readings against historical data"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:105
+msgid "Flags suspicious readings for review"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:117
+msgid "Damage Detection"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:119
+msgid ""
+"Automatically identify and assess vehicle damage to streamline insurance "
+"claims and repairs."
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:123
+msgid "Detects damage to 15+ vehicle parts"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:124
+msgid "Estimates repair costs automatically"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:125
+msgid "Generates detailed damage reports"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:137
+#, fuzzy
+#| msgid "Edit Maintenance"
+msgid "Predictive Maintenance"
+msgstr "Edytuj konserwację"
+
+#: .\CarFleetManagement\templates\features.html:139
+msgid ""
+"Reduce downtime with AI-driven maintenance predictions based on vehicle "
+"telemetry and usage patterns."
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:143
+msgid "Schedule maintenance based on actual usage"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:144
+msgid "Predict component failures before they occur"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:145
+msgid "Optimize maintenance schedules across fleet"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:159
+#, fuzzy
+#| msgid "Car Fleet Management"
+msgid "Fuel Management"
+msgstr "Zarządzanie flotą samochodową"
+
+#: .\CarFleetManagement\templates\features.html:161
+msgid ""
+"Track and optimize fuel consumption across your entire fleet with advanced "
+"analytics and reporting."
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:165
+msgid "Monitor fuel efficiency in real-time"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:166
+msgid "Detect fuel theft or unauthorized usage"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:167
+msgid "Generate comprehensive fuel reports"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:179
+msgid "Scheduling & Dispatching"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:181
+msgid ""
+"Efficiently manage vehicle assignments and optimize routes with our "
+"intelligent scheduling system."
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:185
+msgid "AI-powered route optimization"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:186
+msgid "Real-time vehicle tracking"
+msgstr ""
+
+#: .\CarFleetManagement\templates\features.html:187
+msgid "Automated driver assignment"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home_v3.html:2
+#, fuzzy
+#| msgid "Register - Car Fleet Management"
+msgid "FleetManager | Modern Fleet Management"
+msgstr "Rejestracja - Zarządzanie flotą"
+
+#: .\CarFleetManagement\templates\home_v3.html:6
+msgid "Manage Your Fleet with"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home_v3.html:6
+msgid "Intelligence & Precision"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home_v3.html:7
+msgid ""
+"The ultimate dashboard for modern fleet managers. Track vehicles, schedule "
+"maintenance, and manage emergencies in real-time with our premium cloud "
+"solution."
+msgstr ""
+
+#: .\CarFleetManagement\templates\home_v3.html:10
+msgid "Get Started Today"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home_v3.html:11
+#: .\CarFleetManagement\templates\registration\login.html:35
+msgid "Sign In"
+msgstr "Zaloguj się"
+
+#: .\CarFleetManagement\templates\home_v3.html:13
+msgid "Go to Dashboard"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home_v3.html:22
+#, fuzzy
+#| msgid "Vehicle Details"
+msgid "Vehicle Tracking"
+msgstr "Szczegóły pojazdu"
+
+#: .\CarFleetManagement\templates\home_v3.html:23
+msgid ""
+"Real-time visibility into your entire fleet. Track status, mileage, and "
+"assignments with ease."
+msgstr ""
+
+#: .\CarFleetManagement\templates\home_v3.html:27
+#, fuzzy
+#| msgid "Maintenance"
+msgid "Maintenance Flow"
+msgstr "Konserwacja"
+
+#: .\CarFleetManagement\templates\home_v3.html:28
+msgid ""
+"Automated service scheduling and cost tracking. Keep your fleet in peak "
+"condition effortlessly."
+msgstr ""
+
+#: .\CarFleetManagement\templates\home_v3.html:32
+#, fuzzy
+#| msgid "Emergency Incidents"
+msgid "Emergency Response"
+msgstr "Incydenty awaryjne"
+
+#: .\CarFleetManagement\templates\home_v3.html:33
+msgid ""
+"Instant incident reporting and streamlined response management for mission-"
+"critical reliability."
+msgstr ""
+
+#: .\CarFleetManagement\templates\home_v3.html:39
+msgid "Ready to optimize your fleet performance?"
+msgstr ""
+
+#: .\CarFleetManagement\templates\home_v3.html:40
+msgid ""
+"Join professional fleet managers around the world using FleetManager to "
+"reduce costs and increase efficiency."
+msgstr ""
+
+#: .\CarFleetManagement\templates\home_v3.html:41
+#, fuzzy
+#| msgid "Create Account"
+msgid "Create Free Account"
+msgstr "Utwórz konto"
+
+#: .\CarFleetManagement\templates\partials\_footer.html:8
+msgid "Company"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:14
+#: .\CarFleetManagement\templates\partials\_navbar.html:43
+#: .\CarFleetManagement\templates\registration\signup.html:28
+#, fuzzy
+#| msgid "Sign In"
+msgid "Sign Up"
+msgstr "Zaloguj się"
+
+#: .\CarFleetManagement\templates\partials\_footer.html:20
+msgid "Legal"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:22
+#, fuzzy
+#| msgid "Out of Service"
+msgid "Terms of Service"
+msgstr "Wyłączony z eksploatacji"
+
+#: .\CarFleetManagement\templates\partials\_footer.html:23
+msgid "Privacy Policy"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:24
+msgid "Cookie Policy"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:25
+msgid "GDPR"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:26
+msgid "Data Protection"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:32
+msgid "Contact"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:36
+msgid "123 Fleet Street, Vehicle City"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:37
+msgid "Mon-Fri: 9AM-5PM"
+msgstr ""
+
+#: .\CarFleetManagement\templates\partials\_footer.html:55
+msgid "2025 Car Fleet Manager. All rights reserved."
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\login.html:5
+msgid "Login - Car Fleet Management"
+msgstr "Logowanie - Zarządzanie flotą"
+
+#: .\CarFleetManagement\templates\registration\login.html:11
+msgid "Welcome Back"
+msgstr "Witamy ponownie"
+
+#: .\CarFleetManagement\templates\registration\login.html:12
+msgid "Sign in to access your fleet dashboard"
+msgstr "Zaloguj się, aby uzyskać dostęp do pulpitu floty"
+
+#: .\CarFleetManagement\templates\registration\login.html:20
+msgid "Invalid username or password. Please try again."
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\login.html:25
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: .\CarFleetManagement\templates\registration\login.html:30
+msgid "Password"
+msgstr "Hasło"
+
+#: .\CarFleetManagement\templates\registration\login.html:40
+msgid "Don't have an account?"
+msgstr "Nie masz konta?"
+
+#: .\CarFleetManagement\templates\registration\login.html:41
+msgid "Register here"
+msgstr "Zarejestruj się tutaj"
+
+#: .\CarFleetManagement\templates\registration\password_reset.html:4
+#, fuzzy
+#| msgid "Register - Car Fleet Management"
+msgid "Password Reset | Car Fleet Manager"
+msgstr "Rejestracja - Zarządzanie flotą"
+
+#: .\CarFleetManagement\templates\registration\password_reset.html:11
+#, fuzzy
+#| msgid "Password"
+msgid "Password Reset"
+msgstr "Hasło"
+
+#: .\CarFleetManagement\templates\registration\password_reset.html:36
+#, fuzzy
+#| msgid "Password"
+msgid "Reset Password"
+msgstr "Hasło"
+
+#: .\CarFleetManagement\templates\registration\password_reset_complete.html:4
+#, fuzzy
+#| msgid "Register - Car Fleet Management"
+msgid "Password Reset Complete | Car Fleet Manager"
+msgstr "Rejestracja - Zarządzanie flotą"
+
+#: .\CarFleetManagement\templates\registration\password_reset_complete.html:11
+msgid "Password Reset Complete"
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\password_reset_complete.html:14
+msgid "Your password has been set. You may go ahead and log in now."
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\password_reset_complete.html:18
+msgid "Log in"
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\password_reset_confirm.html:4
+#, fuzzy
+#| msgid "Register - Car Fleet Management"
+msgid "Reset Password | Car Fleet Manager"
+msgstr "Rejestracja - Zarządzanie flotą"
+
+#: .\CarFleetManagement\templates\registration\password_reset_confirm.html:11
+msgid "Enter new password"
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\password_reset_confirm.html:36
+#, fuzzy
+#| msgid "Password"
+msgid "Change password"
+msgstr "Hasło"
+
+#: .\CarFleetManagement\templates\registration\register.html:4
+msgid "Register - Car Fleet Management"
+msgstr "Rejestracja - Zarządzanie flotą"
+
+#: .\CarFleetManagement\templates\registration\register.html:10
+#: .\CarFleetManagement\templates\registration\signup.html:11
+msgid "Create Account"
+msgstr "Utwórz konto"
+
+#: .\CarFleetManagement\templates\registration\register.html:11
+msgid "Join the fleet management platform"
+msgstr "Dołącz do platformy zarządzania flotą"
+
+#: .\CarFleetManagement\templates\registration\register.html:19
+msgid "Please correct the errors below."
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\register.html:43
+#: .\CarFleetManagement\templates\registration\signup.html:44
+msgid "Already have an account?"
+msgstr "Masz już konto?"
+
+#: .\CarFleetManagement\templates\registration\register.html:44
+msgid "Login here"
+msgstr "Zaloguj się tutaj"
+
+#: .\CarFleetManagement\templates\registration\signup.html:4
+#, fuzzy
+#| msgid "Login - Car Fleet Management"
+msgid "Sign Up | Car Fleet Manager"
+msgstr "Logowanie - Zarządzanie flotą"
+
+#: .\CarFleetManagement\templates\registration\signup.html:32
+#: .\venv\Lib\site-packages\django\utils\text.py:278
+msgid "or"
+msgstr ""
+
+#: .\CarFleetManagement\templates\registration\signup.html:37
+msgid "Sign Up with GitHub"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:7
+msgid "Truck"
+msgstr "Ciężarówka"
+
+#: .\CarFleetManagement\vehicles\models.py:8
+msgid "Van"
+msgstr "Furgonetka"
+
+#: .\CarFleetManagement\vehicles\models.py:9
+msgid "SUV"
+msgstr "SUV"
+
+#: .\CarFleetManagement\vehicles\models.py:10
+msgid "Pickup"
+msgstr "Pickup"
+
+#: .\CarFleetManagement\vehicles\models.py:13
+msgid "Diesel"
+msgstr "Diesel"
+
+#: .\CarFleetManagement\vehicles\models.py:14
+msgid "Petrol"
+msgstr "Benzyna"
+
+#: .\CarFleetManagement\vehicles\models.py:15
+msgid "Hybrid"
+msgstr "Hybryda"
+
+#: .\CarFleetManagement\vehicles\models.py:16
+msgid "Electric"
+msgstr "Elektryczny"
+
+#: .\CarFleetManagement\vehicles\models.py:19
+msgid "Manual"
+msgstr "Manualna"
+
+#: .\CarFleetManagement\vehicles\models.py:20
+msgid "Automatic"
+msgstr "Automatyczna"
+
+#: .\CarFleetManagement\vehicles\models.py:23
+msgid "Available"
+msgstr "Dostępny"
+
+#: .\CarFleetManagement\vehicles\models.py:24
+msgid "In Use"
+msgstr "W użyciu"
+
+#: .\CarFleetManagement\vehicles\models.py:25
+msgid "In Maintenance"
+msgstr "W konserwacji"
+
+#: .\CarFleetManagement\vehicles\models.py:26
+msgid "Out of Service"
+msgstr "Wyłączony z eksploatacji"
+
+#: .\CarFleetManagement\vehicles\models.py:28
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:17
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:15
+msgid "Brand"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:29
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:27
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:16
+msgid "Model"
+msgstr "Model"
+
+#: .\CarFleetManagement\vehicles\models.py:30
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:39
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:17
+msgid "Year"
+msgstr "Rok"
+
+#: .\CarFleetManagement\vehicles\models.py:31
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:12
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:49
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:18
+msgid "License Plate"
+msgstr "Tablica rejestracyjna"
+
+#: .\CarFleetManagement\vehicles\models.py:32
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:13
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:59
+msgid "VIN"
+msgstr "VIN"
+
+#: .\CarFleetManagement\vehicles\models.py:33
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:14
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:72
+msgid "Color"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:34
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:15
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:82
+#, fuzzy
+#| msgid "Type"
+msgid "Fuel Type"
+msgstr "Typ"
+
+#: .\CarFleetManagement\vehicles\models.py:35
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:16
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:92
+msgid "Transmission"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\models.py:36
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:17
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:104
+#, fuzzy
+#| msgid "Service Type"
+msgid "Vehicle Type"
+msgstr "Typ serwisu"
+
+#: .\CarFleetManagement\vehicles\models.py:37
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:18
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:114
+msgid "Mileage"
+msgstr "Przebieg"
+
+#: .\CarFleetManagement\vehicles\models.py:38
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:126
+#, fuzzy
+#| msgid "Service Type"
+msgid "Last Service Date"
+msgstr "Typ serwisu"
+
+#: .\CarFleetManagement\vehicles\models.py:39
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:136
+#, fuzzy
+#| msgid "Service Type"
+msgid "Next Service Date"
+msgstr "Typ serwisu"
+
+#: .\CarFleetManagement\vehicles\models.py:40
+msgid "Insurance Expiry Date"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:22
+#, fuzzy
+#| msgid "Out of Service"
+msgid "Last Service"
+msgstr "Wyłączony z eksploatacji"
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:26
+#, fuzzy
+#| msgid "Out of Service"
+msgid "Next Service"
+msgstr "Wyłączony z eksploatacji"
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_detail.html:30
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:146
+msgid "Insurance Expiry"
+msgstr ""
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:5
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:10
+msgid "Edit Vehicle"
+msgstr "Edytuj pojazd"
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:5
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_form.html:10
+msgid "Add Vehicle"
+msgstr "Dodaj pojazd"
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:8
 msgid "Vehicle List"
 msgstr "Lista pojazdów"
-#~ msgid "Add Vehicle"
-#~ msgstr "Dodaj pojazd"
 
-#~ msgid "Edit Vehicle"
-#~ msgstr "Edytuj pojazd"
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:9
+msgid "Add New Vehicle"
+msgstr "Dodaj nowy pojazd"
+
+#: .\CarFleetManagement\vehicles\templates\vehicles\vehicle_list.html:38
+#, fuzzy
+#| msgid "No items found"
+msgid "No vehicles found."
+msgstr "Nie znaleziono elementów"
+
+#: .\venv\Lib\site-packages\_pytest\config\argparsing.py:474
+#, python-format
+msgid "ambiguous option: %(option)s could match %(matches)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\_termui_impl.py:600
+#, python-brace-format
+msgid "{editor}: Editing failed"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\_termui_impl.py:604
+#, python-brace-format
+msgid "{editor}: Editing failed: {e}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:1084
+#: .\venv\Lib\site-packages\click\core.py:1121
+#, python-brace-format
+msgid "{text} {deprecated_message}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:1140
+msgid "Options"
+msgstr "Akcje"
+
+#: .\venv\Lib\site-packages\click\core.py:1202
+#, python-brace-format
+msgid "Got unexpected extra argument ({args})"
+msgid_plural "Got unexpected extra arguments ({args})"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\click\core.py:1221
+msgid "DeprecationWarning: The command {name!r} is deprecated.{extra_message}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:1405
+#, fuzzy
+#| msgid "Reported"
+msgid "Aborted!"
+msgstr "Zgłoszony"
+
+#: .\venv\Lib\site-packages\click\core.py:1779
+msgid "Commands"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:1810
+msgid "Missing command."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:1888
+msgid "No such command {name!r}."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:2303
+msgid "Value must be an iterable."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:2324
+#, python-brace-format
+msgid "Takes {nargs} values but 1 was given."
+msgid_plural "Takes {nargs} values but {len} were given."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\click\core.py:2404
+msgid ""
+"DeprecationWarning: The {param_type} {name!r} is deprecated.{extra_message}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:2807
+#, python-brace-format
+msgid "env var: {var}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:2810
+#, python-brace-format
+msgid "default: {default}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:2870
+msgid "(dynamic)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\decorators.py:465
+#, python-format
+msgid "%(prog)s, version %(version)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\decorators.py:522
+msgid "Show the version and exit."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\decorators.py:548
+msgid "Show this message and exit."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:50
+#: .\venv\Lib\site-packages\click\exceptions.py:89
+#, python-brace-format
+msgid "Error: {message}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:81
+#, python-brace-format
+msgid "Try '{command} {option}' for help."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:130
+#, python-brace-format
+msgid "Invalid value: {message}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:132
+#, python-brace-format
+msgid "Invalid value for {param_hint}: {message}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:190
+msgid "Missing argument"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:192
+msgid "Missing option"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:194
+msgid "Missing parameter"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:196
+#, python-brace-format
+msgid "Missing {param_type}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:203
+#, python-brace-format
+msgid "Missing parameter: {param_name}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:223
+#, python-brace-format
+msgid "No such option: {name}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:235
+#, python-brace-format
+msgid "Did you mean {possibility}?"
+msgid_plural "(Possible options: {possibilities})"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:282
+msgid "unknown error"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:289
+msgid "Could not open file {filename!r}: {message}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\parser.py:200
+msgid "Argument {name!r} takes {nargs} values."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\parser.py:383
+msgid "Option {name!r} does not take a value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\parser.py:444
+msgid "Option {name!r} requires an argument."
+msgid_plural "Option {name!r} requires {nargs} arguments."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\click\shell_completion.py:326
+msgid "Shell completion is not supported for Bash versions older than 4.4."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\shell_completion.py:333
+msgid "Couldn't detect Bash version, shell completion is not supported."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\termui.py:162
+msgid "Repeat for confirmation"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\termui.py:178
+msgid "Error: The value you entered was invalid."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\termui.py:180
+#, python-brace-format
+msgid "Error: {e.message}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\termui.py:191
+msgid "Error: The two entered values do not match."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\termui.py:247
+msgid "Error: invalid input"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\termui.py:866
+msgid "Press any key to continue..."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:332
+#, python-brace-format
+msgid ""
+"Choose from:\n"
+"\t{choices}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:369
+msgid "{value!r} is not {choice}."
+msgid_plural "{value!r} is not one of {choices}."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\click\types.py:460
+msgid "{value!r} does not match the format {format}."
+msgid_plural "{value!r} does not match the formats {formats}."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\click\types.py:482
+msgid "{value!r} is not a valid {number_type}."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:538
+#, python-brace-format
+msgid "{value} is not in the range {range}."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:679
+msgid "{value!r} is not a valid boolean."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:703
+msgid "{value!r} is not a valid UUID."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:893
+#, fuzzy
+#| msgid "Profile"
+msgid "file"
+msgstr "Profil"
+
+#: .\venv\Lib\site-packages\click\types.py:895
+msgid "directory"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:897
+msgid "path"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:944
+msgid "{name} {filename!r} does not exist."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:953
+msgid "{name} {filename!r} is a file."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:961
+msgid "{name} {filename!r} is a directory."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:970
+msgid "{name} {filename!r} is not readable."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:979
+msgid "{name} {filename!r} is not writable."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:988
+msgid "{name} {filename!r} is not executable."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:1055
+#, python-brace-format
+msgid "{len_type} values are required, but {len_value} was given."
+msgid_plural "{len_type} values are required, but {len_value} were given."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\contrib\messages\apps.py:16
+msgid "Messages"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\contrib\sitemaps\apps.py:8
+msgid "Site Maps"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\contrib\staticfiles\apps.py:9
+msgid "Static Files"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\contrib\syndication\apps.py:7
+#, fuzzy
+#| msgid "Location"
+msgid "Syndication"
+msgstr "Lokalizacja"
+
+#. Translators: String used to replace omitted page numbers in elided page
+#. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
+#: .\venv\Lib\site-packages\django\core\paginator.py:30
+msgid "…"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:32
+msgid "That page number is not an integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:33
+msgid "That page number is less than 1"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:34
+msgid "That page contains no results"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:22
+msgid "Enter a valid value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:70
+msgid "Enter a valid domain name."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:155
+#: .\venv\Lib\site-packages\django\forms\fields.py:768
+msgid "Enter a valid URL."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:216
+msgid "Enter a valid integer."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:227
+msgid "Enter a valid email address."
+msgstr ""
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: .\venv\Lib\site-packages\django\core\validators.py:310
+msgid ""
+"Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:318
+msgid ""
+"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
+"hyphens."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:330
+#: .\venv\Lib\site-packages\django\core\validators.py:339
+#: .\venv\Lib\site-packages\django\core\validators.py:353
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2215
+#, python-format
+msgid "Enter a valid %(protocol)s address."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:332
+msgid "IPv4"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:341
+#: .\venv\Lib\site-packages\django\utils\ipv6.py:43
+msgid "IPv6"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:355
+msgid "IPv4 or IPv6"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:396
+msgid "Enter only digits separated by commas."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:402
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:437
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:446
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:455
+#, python-format
+msgid "Ensure this value is a multiple of step size %(limit_value)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:462
+#, python-format
+msgid ""
+"Ensure this value is a multiple of step size %(limit_value)s, starting from "
+"%(offset)s, e.g. %(offset)s, %(valid_value1)s, %(valid_value2)s, and so on."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:494
+#, python-format
+msgid ""
+"Ensure this value has at least %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at least %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:512
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:535
+#: .\venv\Lib\site-packages\django\forms\fields.py:359
+#: .\venv\Lib\site-packages\django\forms\fields.py:398
+msgid "Enter a number."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:537
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:542
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:547
+#, python-format
+msgid ""
+"Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural ""
+"Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:618
+#, python-format
+msgid ""
+"File extension “%(extension)s” is not allowed. Allowed extensions are: "
+"%(allowed_extensions)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:680
+msgid "Null characters are not allowed."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1572
+#: .\venv\Lib\site-packages\django\forms\models.py:908
+#, fuzzy
+#| msgid "Van"
+msgid "and"
+msgstr "Furgonetka"
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1574
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\constraints.py:22
+#, python-format
+msgid "Constraint “%(name)s” is violated."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:134
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:135
+msgid "This field cannot be null."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:136
+msgid "This field cannot be blank."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:137
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr ""
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or
+#. 'month'. Eg: "Title must be unique for pub_date year"
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:141
+#, python-format
+msgid ""
+"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:180
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1156
+#, python-format
+msgid "“%(value)s” value must be either True or False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1157
+#, python-format
+msgid "“%(value)s” value must be either True, False, or None."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1159
+msgid "Boolean (Either True or False)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1209
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1211
+msgid "String (unlimited)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1320
+msgid "Comma-separated integers"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1421
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
+"format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1425
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1560
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
+"date."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1429
+msgid "Date (without time)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1556
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
+"uuuuuu]][TZ] format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1564
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
+"[TZ]) but it is an invalid date/time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1569
+msgid "Date (with time)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1696
+#, python-format
+msgid "“%(value)s” value must be a decimal number."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1698
+msgid "Decimal number"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1859
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
+"uuuuuu] format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1863
+#, fuzzy
+#| msgid "Description"
+msgid "Duration"
+msgstr "Opis"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1915
+msgid "Email address"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1940
+msgid "File path"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2018
+#, python-format
+msgid "“%(value)s” value must be a float."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2020
+msgid "Floating point number"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2060
+#, python-format
+msgid "“%(value)s” value must be an integer."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2062
+msgid "Integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2158
+msgid "Big (8 byte) integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2175
+msgid "Small integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2183
+msgid "IPv4 address"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2214
+msgid "IP address"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2305
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2306
+#, python-format
+msgid "“%(value)s” value must be either None, True or False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2308
+msgid "Boolean (Either True, False or None)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2359
+msgid "Positive big integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2374
+msgid "Positive integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2389
+msgid "Positive small integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2405
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2441
+msgid "Text"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2521
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
+"format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2525
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
+"invalid time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2529
+msgid "Time"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2637
+msgid "URL"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2661
+msgid "Raw binary data"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2726
+#, python-format
+msgid "“%(value)s” is not a valid UUID."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2728
+msgid "Universally unique identifier"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:244
+msgid "File"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:420
+msgid "Image"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:24
+msgid "A JSON object"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:26
+msgid "Value must be valid JSON."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:932
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r does not exist."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:934
+msgid "Foreign Key (type determined by related field)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1228
+msgid "One-to-one relationship"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1285
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1287
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1335
+msgid "Many-to-many relationship"
+msgstr ""
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the label
+#: .\venv\Lib\site-packages\django\forms\boundfield.py:185
+msgid ":?.!"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:95
+msgid "This field is required."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:308
+msgid "Enter a whole number."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:479
+#: .\venv\Lib\site-packages\django\forms\fields.py:1260
+msgid "Enter a valid date."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:502
+#: .\venv\Lib\site-packages\django\forms\fields.py:1261
+msgid "Enter a valid time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:529
+msgid "Enter a valid date/time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:563
+msgid "Enter a valid duration."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:564
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:633
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:634
+msgid "No file was submitted."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:635
+msgid "The submitted file is empty."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:637
+#, python-format
+msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural ""
+"Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:642
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:710
+msgid ""
+"Upload a valid image. The file you uploaded was either not an image or a "
+"corrupted image."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:882
+#: .\venv\Lib\site-packages\django\forms\fields.py:968
+#: .\venv\Lib\site-packages\django\forms\models.py:1592
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:970
+#: .\venv\Lib\site-packages\django\forms\fields.py:1089
+#: .\venv\Lib\site-packages\django\forms\models.py:1590
+msgid "Enter a list of values."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1090
+msgid "Enter a complete value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1332
+msgid "Enter a valid UUID."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1362
+msgid "Enter a valid JSON."
+msgstr ""
+
+#. Translators: This is the default suffix added to form field labels
+#: .\venv\Lib\site-packages\django\forms\forms.py:94
+msgid ":"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\forms.py:230
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:61
+#, python-format
+msgid ""
+"ManagementForm data is missing or has been tampered with. Missing fields: "
+"%(field_names)s. You may need to file a bug report if the issue persists."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:65
+#, python-format
+msgid "Please submit at most %(num)d form."
+msgid_plural "Please submit at most %(num)d forms."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:70
+#, python-format
+msgid "Please submit at least %(num)d form."
+msgid_plural "Please submit at least %(num)d forms."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:484
+#: .\venv\Lib\site-packages\django\forms\formsets.py:491
+msgid "Order"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:901
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:906
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:913
+#, python-format
+msgid ""
+"Please correct the duplicate data for %(field_name)s which must be unique "
+"for the %(lookup)s in %(date_field)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:922
+msgid "Please correct the duplicate values below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1359
+msgid "The inline value did not match the parent instance."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1450
+msgid "Select a valid choice. That choice is not one of the available choices."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1594
+#, python-format
+msgid "“%(pk)s” is not a valid value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\utils.py:227
+#, python-format
+msgid ""
+"%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
+"may be ambiguous or it may not exist."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:461
+msgid "Clear"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:462
+msgid "Currently"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:463
+msgid "Change"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:800
+msgid "Unknown"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:801
+msgid "Yes"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:802
+msgid "No"
+msgstr ""
+
+#. Translators: Please do not add spaces around commas.
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:873
+msgid "yes,no,maybe"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:903
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:920
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:922
+#, python-format
+msgid "%s KB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:924
+#, python-format
+msgid "%s MB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:926
+#, python-format
+msgid "%s GB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:928
+#, python-format
+msgid "%s TB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:930
+#, python-format
+msgid "%s PB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:74
+msgid "p.m."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:75
+msgid "a.m."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:80
+msgid "PM"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:81
+msgid "AM"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:153
+msgid "midnight"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:155
+msgid "noon"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:7
+msgid "Monday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:8
+msgid "Tuesday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:9
+msgid "Wednesday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:10
+msgid "Thursday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:11
+msgid "Friday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:12
+msgid "Saturday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:13
+msgid "Sunday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:16
+msgid "Mon"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:17
+msgid "Tue"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:18
+msgid "Wed"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:19
+msgid "Thu"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:20
+msgid "Fri"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:21
+#, fuzzy
+#| msgid "Status"
+msgid "Sat"
+msgstr "Status"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:22
+msgid "Sun"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:25
+#, fuzzy
+#| msgid "Manual"
+msgid "January"
+msgstr "Manualna"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:26
+msgid "February"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:27
+#, fuzzy
+#| msgid "Search"
+msgid "March"
+msgstr "Szukaj"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:28
+msgid "April"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:29
+msgid "May"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:30
+msgid "June"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:31
+msgid "July"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:32
+msgid "August"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:33
+msgid "September"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:34
+msgid "October"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:35
+msgid "November"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:36
+msgid "December"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:39
+#, fuzzy
+#| msgid "Van"
+msgid "jan"
+msgstr "Furgonetka"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:40
+msgid "feb"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:41
+msgid "mar"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:42
+msgid "apr"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:43
+msgid "may"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:44
+msgid "jun"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:45
+msgid "jul"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:46
+msgid "aug"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:47
+msgid "sep"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:48
+msgid "oct"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:49
+msgid "nov"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:50
+msgid "dec"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:53
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:54
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:55
+#, fuzzy
+#| msgid "Search"
+msgctxt "abbrev. month"
+msgid "March"
+msgstr "Szukaj"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:56
+msgctxt "abbrev. month"
+msgid "April"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:57
+msgctxt "abbrev. month"
+msgid "May"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:58
+msgctxt "abbrev. month"
+msgid "June"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:59
+msgctxt "abbrev. month"
+msgid "July"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:60
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:61
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:62
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:63
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:64
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:67
+#, fuzzy
+#| msgid "Manual"
+msgctxt "alt. month"
+msgid "January"
+msgstr "Manualna"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:68
+msgctxt "alt. month"
+msgid "February"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:69
+#, fuzzy
+#| msgid "Search"
+msgctxt "alt. month"
+msgid "March"
+msgstr "Szukaj"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:70
+msgctxt "alt. month"
+msgid "April"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:71
+msgctxt "alt. month"
+msgid "May"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:72
+msgctxt "alt. month"
+msgid "June"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:73
+msgctxt "alt. month"
+msgid "July"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:74
+msgctxt "alt. month"
+msgid "August"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:75
+msgctxt "alt. month"
+msgid "September"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:76
+msgctxt "alt. month"
+msgid "October"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:77
+msgctxt "alt. month"
+msgid "November"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:78
+msgctxt "alt. month"
+msgid "December"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\ipv6.py:20
+msgid "This is not a valid IPv6 address."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\text.py:67
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s…"
+msgstr ""
+
+#. Translators: This string is used as a separator between list elements
+#: .\venv\Lib\site-packages\django\utils\text.py:297
+#: .\venv\Lib\site-packages\django\utils\timesince.py:135
+msgid ", "
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:8
+#, python-format
+msgid "%(num)d year"
+msgid_plural "%(num)d years"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:9
+#, python-format
+msgid "%(num)d month"
+msgid_plural "%(num)d months"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:10
+#, python-format
+msgid "%(num)d week"
+msgid_plural "%(num)d weeks"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:11
+#, python-format
+msgid "%(num)d day"
+msgid_plural "%(num)d days"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:12
+#, python-format
+msgid "%(num)d hour"
+msgid_plural "%(num)d hours"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:13
+#, python-format
+msgid "%(num)d minute"
+msgid_plural "%(num)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:29
+msgid "Forbidden"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:30
+msgid "CSRF verification failed. Request aborted."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:34
+msgid ""
+"You are seeing this message because this HTTPS site requires a “Referer "
+"header” to be sent by your web browser, but none was sent. This header is "
+"required for security reasons, to ensure that your browser is not being "
+"hijacked by third parties."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:40
+msgid ""
+"If you have configured your browser to disable “Referer” headers, please re-"
+"enable them, at least for this site, or for HTTPS connections, or for “same-"
+"origin” requests."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:45
+msgid ""
+"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
+"including the “Referrer-Policy: no-referrer” header, please remove them. The "
+"CSRF protection requires the “Referer” header to do strict referer checking. "
+"If you’re concerned about privacy, use alternatives like <a "
+"rel=\"noreferrer\" …> for links to third-party sites."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:54
+msgid ""
+"You are seeing this message because this site requires a CSRF cookie when "
+"submitting forms. This cookie is required for security reasons, to ensure "
+"that your browser is not being hijacked by third parties."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:60
+msgid ""
+"If you have configured your browser to disable cookies, please re-enable "
+"them, at least for this site, or for “same-origin” requests."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:66
+msgid "More information is available with DEBUG=True."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:44
+msgid "No year specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:64
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:115
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:214
+msgid "Date out of range"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:94
+msgid "No month specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:147
+msgid "No day specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:194
+msgid "No week specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:349
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:380
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:652
+#, python-format
+msgid ""
+"Future %(verbose_name_plural)s not available because %(class_name)s."
+"allow_future is False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:692
+#, python-format
+msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\detail.py:56
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:70
+msgid "Page is not “last”, nor can it be converted to an int."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:77
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:169
+#, python-format
+msgid "Empty list and “%(class_name)s.allow_empty” is False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\static.py:49
+msgid "Directory indexes are not allowed here."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\static.py:51
+#, python-format
+msgid "“%(path)s” does not exist"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\static.py:68
+#: .\venv\Lib\site-packages\django\views\templates\directory_index.html:8
+#: .\venv\Lib\site-packages\django\views\templates\directory_index.html:11
+#, python-format
+msgid "Index of %(directory)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:7
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:204
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:206
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:208
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" "
+"rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not "
+"configured any URLs."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:217
+msgid "Django Documentation"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:218
+msgid "Topics, references, &amp; how-to’s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:226
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:227
+msgid "Get started with Django"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:235
+msgid "Django Community"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:236
+msgid "Connect, get help, or contribute"
+msgstr ""
+
+#: .\venv\Lib\site-packages\drf_spectacular\openapi.py:1394
+#: .\venv\Lib\site-packages\drf_spectacular\openapi.py:1447
+#: .\venv\Lib\site-packages\drf_spectacular\openapi.py:1451
+#: .\venv\Lib\site-packages\drf_spectacular\openapi.py:1455
+msgid "No response body"
+msgstr ""
+
+#: .\venv\Lib\site-packages\drf_spectacular\openapi.py:1419
+#: .\venv\Lib\site-packages\drf_spectacular\openapi.py:1473
+msgid "Unspecified response body"
+msgstr ""
+
+#: .\venv\Lib\site-packages\drf_spectacular\plumbing.py:487
+#, python-format
+msgid "Token-based authentication with required prefix \"%s\""
+msgstr ""
+
+#: .\venv\Lib\site-packages\drf_spectacular\views.py:45
+msgid ""
+"\n"
+"    OpenApi3 schema for this API. Format can be selected via content "
+"negotiation.\n"
+"\n"
+"    - YAML: application/vnd.oai.openapi\n"
+"    - JSON: application/vnd.oai.openapi+json\n"
+"    "
+msgstr ""
+
+#: .\venv\Lib\site-packages\httplib2\__init__.py:408
+#, python-format
+msgid "Content purported to be compressed with %s but failed to decompress."
+msgstr ""
+
+#: .\venv\Lib\site-packages\httplib2\__init__.py:572
+#, python-format
+msgid "Unsupported value for qop: %s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\httplib2\__init__.py:576
+#: .\venv\Lib\site-packages\httplib2\__init__.py:654
+#, python-format
+msgid "Unsupported value for algorithm: %s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\httplib2\__init__.py:649
+msgid "The challenge doesn't contain a server nonce, or this one is empty."
+msgstr ""
+
+#: .\venv\Lib\site-packages\httplib2\__init__.py:659
+#, python-format
+msgid "Unsupported value for pw-algorithm: %s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\httplib2\__init__.py:1468
+msgid "Redirected but the response is missing a Location: header."
+msgstr ""
+
+#: .\venv\Lib\site-packages\isort\main.py:158
+msgid "show this help message and exit"
+msgstr ""
+
+#~ msgid "Change Language"
+#~ msgstr "Zmień język"
 
 #~ msgid "Delete Vehicle"
 #~ msgstr "Usuń pojazd"
 
-#~ msgid "Vehicle Details"
-#~ msgstr "Szczegóły pojazdu"
-
 #~ msgid "Make"
 #~ msgstr "Marka"
-
-#~ msgid "Model"
-#~ msgstr "Model"
-
-#~ msgid "Year"
-#~ msgstr "Rok"
-
-#~ msgid "License Plate"
-#~ msgstr "Tablica rejestracyjna"
-
-#~ msgid "VIN"
-#~ msgstr "VIN"
-
-#~ msgid "Mileage"
-#~ msgstr "Przebieg"
-
-msgid "Maintenance"
-msgstr "Konserwacja"
-#~ msgid "Maintenance List"
-#~ msgstr "Lista konserwacji"
 
 #~ msgid "Add Maintenance"
 #~ msgstr "Dodaj konserwację"
 
-#~ msgid "Edit Maintenance"
-#~ msgstr "Edytuj konserwację"
-
-#~ msgid "Delete Maintenance"
-#~ msgstr "Usuń konserwację"
-
-#~ msgid "Maintenance Details"
-#~ msgstr "Szczegóły konserwacji"
-
-#~ msgid "Service Type"
-#~ msgstr "Typ serwisu"
-
-#~ msgid "Date"
-#~ msgstr "Data"
-
-#~ msgid "Cost"
-#~ msgstr "Koszt"
-
 #~ msgid "Technician"
 #~ msgstr "Technik"
 
-msgid "Emergency"
-msgstr "Nagły wypadek"
 #~ msgid "Emergency List"
 #~ msgstr "Lista nagłych wypadków"
 
-#~ msgid "Report Emergency"
-#~ msgstr "Zgłoś nagły wypadek"
-
-#~ msgid "Emergency Details"
-#~ msgstr "Szczegóły nagłego wypadku"
-
-#~ msgid "Incident Type"
-#~ msgstr "Typ incydentu"
-
 #~ msgid "Severity"
 #~ msgstr "Powaga"
-
-msgid "Resolved"
-msgstr "Rozwiązany"
-#~ msgid "Save"
-#~ msgstr "Zapisz"
-
-#~ msgid "Cancel"
-#~ msgstr "Anuluj"
-
-#~ msgid "Edit"
-#~ msgstr "Edytuj"
-
-#~ msgid "View"
-#~ msgstr "Zobacz"
 
 #~ msgid "Back"
 #~ msgstr "Wstecz"
@@ -168,159 +3020,47 @@ msgstr "Rozwiązany"
 #~ msgid "Details"
 #~ msgstr "Szczegóły"
 
-#~ msgid "Are you sure you want to delete this?"
-#~ msgstr "Czy na pewno chcesz to usunąć?"
-
 #~ msgid "Successfully saved"
 #~ msgstr "Pomyślnie zapisano"
 
 #~ msgid "Successfully deleted"
 #~ msgstr "Pomyślnie usunięto"
 
-#~ msgid "No items found"
-#~ msgstr "Nie znaleziono elementów"
-msgid "FleetManager"
-msgstr "MenedżerFloty"
-msgid "Home Page"
-msgstr "Strona główna"
-msgid "Welcome to Fleet Management"
-msgstr "Witamy w zarządzaniu flotą"
-msgid "Manage your vehicle fleet with ease and efficiency"
-msgstr "Zarządzaj swoją flotą pojazdów z łatwością i wydajnością"
-msgid "System Overview"
-msgstr "Przegląd systemu"
-msgid "System Online"
-msgstr "System online"
-msgid "Quick Actions"
-msgstr "Szybkie działania"
-msgid "Register new vehicle"
-msgstr "Zarejestruj nowy pojazd"
-msgid "Report incident"
-msgstr "Zgłoś incydent"
-msgid "Schedule service"
-msgstr "Zaplanuj serwis"
-msgid "Recent Activity"
-msgstr "Ostatnia aktywność"
-msgid "System maintenance completed successfully"
-msgstr "Konserwacja systemu zakończona pomyślnie"
-msgid "New fleet regulations update available"
-msgstr "Dostępna aktualizacja przepisów dotyczących floty"
-msgid "3 vehicles due for inspection this week"
-msgstr "3 pojazdy wymagają przeglądu w tym tygodniu"
-msgid "Premium Fleet Management Solution"
-msgstr "Rozwiązanie premium do zarządzania flotą"
-msgid "Car Fleet Management System"
-msgstr "System zarządzania flotą samochodową"
-msgid "Toggle Theme"
-msgstr "Przełącz motyw"
-msgid "Home - Car Fleet Management"
-msgstr "Strona główna - Zarządzanie flotą samochodową"
-msgid "Car Fleet Management"
-msgstr "Zarządzanie flotą samochodową"
-msgid "Login - Car Fleet Management"
-msgstr "Logowanie - Zarządzanie flotą"
-msgid "Welcome Back"
-msgstr "Witamy ponownie"
-msgid "Sign in to access your fleet dashboard"
-msgstr "Zaloguj się, aby uzyskać dostęp do pulpitu floty"
-msgid "Username"
-msgstr "Nazwa użytkownika"
-msgid "Password"
-msgstr "Hasło"
-msgid "Sign In"
-msgstr "Zaloguj się"
-msgid "Don't have an account?"
-msgstr "Nie masz konta?"
-msgid "Register here"
-msgstr "Zarejestruj się tutaj"
-msgid "Register - Car Fleet Management"
-msgstr "Rejestracja - Zarządzanie flotą"
-msgid "Create Account"
-msgstr "Utwórz konto"
-msgid "Join the fleet management platform"
-msgstr "Dołącz do platformy zarządzania flotą"
-msgid "Already have an account?"
-msgstr "Masz już konto?"
-msgid "Login here"
-msgstr "Zaloguj się tutaj"
-msgid "Emergency Incidents"
-msgstr "Incydenty awaryjne"
-msgid "Report New Incident"
-msgstr "Zgłoś nowy incydent"
-msgid "Location"
-msgstr "Lokalizacja"
-msgid "No emergency incidents found."
-msgstr "Nie znaleziono incydentów awaryjnych."
-msgid "Truck"
-msgstr "Ciężarówka"
-msgid "Van"
-msgstr "Furgonetka"
-msgid "SUV"
-msgstr "SUV"
-msgid "Pickup"
-msgstr "Pickup"
-msgid "Diesel"
-msgstr "Diesel"
-msgid "Petrol"
-msgstr "Benzyna"
-msgid "Hybrid"
-msgstr "Hybryda"
-msgid "Electric"
-msgstr "Elektryczny"
-msgid "Manual"
-msgstr "Manualna"
-msgid "Automatic"
-msgstr "Automatyczna"
-msgid "Available"
-msgstr "Dostępny"
-msgid "In Use"
-msgstr "W użyciu"
-msgid "In Maintenance"
-msgstr "W konserwacji"
-msgid "Out of Service"
-msgstr "Wyłączony z eksploatacji"
-msgid "Routine Maintenance"
-msgstr "Rutynowa konserwacja"
-msgid "Repair"
-msgstr "Naprawa"
-msgid "Inspection"
-msgstr "Przegląd"
-msgid "Scheduled"
-msgstr "Zaplanowany"
-msgid "In Progress"
-msgstr "W toku"
-msgid "Completed"
-msgstr "Zakończony"
-msgid "Cancelled"
-msgstr "Anulowany"
-msgid "Accident"
-msgstr "Wypadek"
-msgid "Breakdown"
-msgstr "Awaria"
-msgid "Medical Emergency"
-msgstr "Nagły wypadek medyczny"
-msgid "Theft"
-msgstr "Kradzież"
-msgid "Reported"
-msgstr "Zgłoszony"
-msgid "Responding"
-msgstr "Reagujący"
-msgid "Closed"
-msgstr "Zamknięty"
-msgid "Maintenance Records"
-msgstr "Rejestry konserwacji"
-msgid "Add New Maintenance Record"
-msgstr "Dodaj nowy wpis konserwacji"
-msgid "Add New Vehicle"
-msgstr "Dodaj nowy pojazd"
-msgid "Actions"
-msgstr "Akcje"
-msgid "Type"
-msgstr "Typ"
-msgid "Description"
-msgstr "Opis"
-msgid "Scheduled Date"
-msgstr "Zaplanowana data"
-msgid "Vehicle"
-msgstr "Pojazd"
+#~ msgid "Home Page"
+#~ msgstr "Strona główna"
 
+#~ msgid "Welcome to Fleet Management"
+#~ msgstr "Witamy w zarządzaniu flotą"
+
+#~ msgid "Manage your vehicle fleet with ease and efficiency"
+#~ msgstr "Zarządzaj swoją flotą pojazdów z łatwością i wydajnością"
+
+#~ msgid "System Online"
+#~ msgstr "System online"
+
+#~ msgid "Quick Actions"
+#~ msgstr "Szybkie działania"
+
+#~ msgid "Register new vehicle"
+#~ msgstr "Zarejestruj nowy pojazd"
+
+#~ msgid "Schedule service"
+#~ msgstr "Zaplanuj serwis"
+
+#~ msgid "Recent Activity"
+#~ msgstr "Ostatnia aktywność"
+
+#~ msgid "System maintenance completed successfully"
+#~ msgstr "Konserwacja systemu zakończona pomyślnie"
+
+#~ msgid "New fleet regulations update available"
+#~ msgstr "Dostępna aktualizacja przepisów dotyczących floty"
+
+#~ msgid "3 vehicles due for inspection this week"
+#~ msgstr "3 pojazdy wymagają przeglądu w tym tygodniu"
+
+#~ msgid "Toggle Theme"
+#~ msgstr "Przełącz motyw"
+
+#~ msgid "Home - Car Fleet Management"
+#~ msgstr "Strona główna - Zarządzanie flotą samochodową"
