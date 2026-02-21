@@ -101,7 +101,7 @@ class UserProfileView(APIView):
             JSON with user profile data.
         """
         serializer = UserSerializer(request.user)
-        return Response(serializer.data)
+        return Response({"user": serializer.data})
 
 
 class LogoutView(APIView):

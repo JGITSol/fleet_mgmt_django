@@ -18,9 +18,11 @@ _LOGIN_DEACTIVATED = "This user has been deactivated."
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the CustomUser model.
     Used for user registration and profile information retrieval."""
+    role_name = serializers.CharField(source='role.name', read_only=True)
+
     class Meta:
         model = CustomUser
-        fields: ClassVar[list[str]] = ['id', 'username', 'email', 'first_name', 'last_name', 'role']
+        fields: ClassVar[list[str]] = ['id', 'username', 'email', 'first_name', 'last_name', 'role', 'role_name']
         read_only_fields: ClassVar[list[str]] = ['id']
 
 

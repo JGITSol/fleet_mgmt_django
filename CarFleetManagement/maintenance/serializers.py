@@ -48,4 +48,5 @@ class MaintenanceSerializer(serializers.ModelSerializer):
         }
 
     def get_days_until_scheduled(self, obj):
-        return obj.days_until_scheduled()
+        res = obj.days_until_scheduled()
+        return res if res is not None else 0

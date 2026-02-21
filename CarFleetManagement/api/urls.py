@@ -114,6 +114,12 @@ emergency_urlpatterns = [
     ),
 ]
 
+# Vehicle Media API URLs
+vehicle_media_urlpatterns = [
+    path("vehicles/media/", views.VehicleMediaListCreateAPIView.as_view(), name="api-vehicle-media-list"),
+    path("vehicles/media/<int:pk>/", views.VehicleMediaRetrieveUpdateDestroyAPIView.as_view(), name="api-vehicle-media-detail"),
+]
+
 # Combine all URL patterns
 urlpatterns = [
     path("", ApiRootView.as_view(), name="api-root"),
@@ -123,6 +129,7 @@ urlpatterns = [
     *maintenance_urlpatterns,
     *driver_urlpatterns,
     *emergency_urlpatterns,
+    *vehicle_media_urlpatterns,
 ]
 
 # OpenAPI schema and documentation UIs (drf-spectacular)

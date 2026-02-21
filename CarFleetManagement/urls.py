@@ -73,7 +73,8 @@ urlpatterns += [
     path('emergency/<int:incident_id>/response/create/', emergency_views.EmergencyResponseCreateView.as_view(), name='emergency_response_create'),
 ]
 
-# Serve static files during development
+# Serve static and media files during development
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0] if settings.STATICFILES_DIRS else None)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

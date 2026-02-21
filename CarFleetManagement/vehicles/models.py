@@ -52,3 +52,45 @@ class Vehicle(models.Model):
         if not self.next_service_date:
             return False
         return self.next_service_date <= timezone.now().date()
+
+
+class VehicleMediaType(models.TextChoices):
+    IMAGE = 'IMAGE', _('Image')
+    VIDEO = 'VIDEO', _('Video')
+    SOUND = 'SOUND', _('Sound')
+
+
+class VehicleMedia(models.Model):
+    vehicle = models.ForeignKey(
+        Vehicle, 
+        on_delete=models.CASCADE, 
+        related_name='media', 
+        verbose_name=_('Vehicle')
+    )
+    media_type = models.CharField(
+        max_length=10, 
+        choices=VehicleMediaType.choices, 
+        verbose_name=_('Media Type')
+    )
+    file = models.FileField(
+        upload_to='vehicle_media/', 
+        verbose_name=_('File')
+    )
+    title = models.CharField(
+        max_length=255, 
+        blank=True, 
+        verbose_name=_('Title')
+    )
+    description = models.TextField(
+        blank=True, 
+        verbose_name=_('Description')
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('Vehicle Media')
+        verbose_name_plural = _('Vehicle Media Gallery')
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.get_media_type_display()} - {self.vehicle} - {self.title or 'Unnamed'}"

@@ -24,12 +24,14 @@ class EmergencyIncident(models.Model):
     reported_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reported_incidents', verbose_name=_('Reported By'))
     emergency_type = models.CharField(max_length=20, choices=EmergencyType.choices, default=EmergencyType.OTHER, verbose_name=_('Emergency Type'))
     status = models.CharField(max_length=20, choices=EmergencyStatus.choices, default=EmergencyStatus.REPORTED, verbose_name=_('Status'))
-    location = models.CharField(max_length=255, verbose_name=_('Location'))
+    location = models.CharField(max_length=255, blank=True, verbose_name=_('Location'))
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name=_('Latitude'))
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name=_('Longitude'))
-    description = models.TextField(verbose_name=_('Description'))
+    description = models.TextField(blank=True, verbose_name=_('Description'))
     reported_time = models.DateTimeField(auto_now_add=True, verbose_name=_('Reported Time'))
     resolved_time = models.DateTimeField(null=True, blank=True, verbose_name=_('Resolved Time'))
+    attachment = models.ImageField(upload_to='emergency/incidents/', null=True, blank=True, verbose_name=_('Attachment'))
+    video_attachment = models.FileField(upload_to='emergency/videos/', null=True, blank=True, verbose_name=_('Video Attachment'))
 
     def __str__(self):
         return f"{self.get_emergency_type_display()} - {self.vehicle} - {self.reported_time.strftime('%Y-%m-%d %H:%M')}"
@@ -40,6 +42,7 @@ class EmergencyResponse(models.Model):
     response_time = models.DateTimeField(auto_now_add=True, verbose_name=_('Response Time'))
     action_taken = models.TextField(null=True, blank=True, verbose_name=_('Action Taken'))
     notes = models.TextField(blank=True, verbose_name=_('Notes'))
+    attachment = models.FileField(upload_to='emergency/responses/', null=True, blank=True, verbose_name=_('Response Attachment'))
 
     def __str__(self):
         return f"Response to {self.incident} by {self.responder.username}"

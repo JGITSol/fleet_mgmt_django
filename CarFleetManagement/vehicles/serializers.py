@@ -4,7 +4,7 @@ from rest_framework import serializers
 
 from CarFleetManagement.accounts.models import Driver
 
-from .models import Vehicle
+from .models import Vehicle, VehicleMedia
 
 
 class DriverNestedSerializer(serializers.ModelSerializer):
@@ -18,6 +18,13 @@ class DriverNestedSerializer(serializers.ModelSerializer):
         return f"{obj.first_name} {obj.last_name}" if obj.first_name and obj.last_name else str(obj)
 
 
+class VehicleMediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VehicleMedia
+        fields: ClassVar[list[str]] = ["id", "vehicle", "media_type", "file", "title", "description", "created_at"]
+        read_only_fields: ClassVar[list[str]] = ["id", "created_at"]
+
+
 class VehicleSerializer(serializers.ModelSerializer):
     # The Driver model defines `assigned_vehicles` with related_name='drivers',
     # so on the Vehicle instance the reverse relation is `drivers`.
@@ -27,6 +34,7 @@ class VehicleSerializer(serializers.ModelSerializer):
     # `drivers` can use the default source (same name) — removing redundant `source` fixes DRF assertion
     drivers = DriverNestedSerializer(many=True, read_only=True)
     maintenance_records = serializers.StringRelatedField(many=True, read_only=True)
+    media = VehicleMediaSerializer(many=True, read_only=True)
 
     class Meta:
         model = Vehicle
@@ -51,5 +59,6 @@ class VehicleSerializer(serializers.ModelSerializer):
             "assigned_drivers",
             "drivers",
             "maintenance_records",
+            "media",
         ]
     read_only_fields: ClassVar[list[str]] = ["id", "created_at", "updated_at"]

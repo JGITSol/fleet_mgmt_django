@@ -6,7 +6,7 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from drf_spectacular.utils import extend_schema
 from rest_framework import generics, status
-from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -21,8 +21,8 @@ from CarFleetManagement.emergency.serializers import (
 )
 from CarFleetManagement.maintenance.models import Maintenance
 from CarFleetManagement.maintenance.serializers import MaintenanceSerializer
-from CarFleetManagement.vehicles.models import Vehicle
-from CarFleetManagement.vehicles.serializers import VehicleSerializer
+from CarFleetManagement.vehicles.models import Vehicle, VehicleMedia
+from CarFleetManagement.vehicles.serializers import VehicleSerializer, VehicleMediaSerializer
 
 from .openrouter_client import get_client
 from .report_generator import generate_report
@@ -53,10 +53,12 @@ class IsAdminRole(BasePermission):
 
     # Emergency API Views
 class EmergencyIncidentListCreateAPIView(generics.ListCreateAPIView):
-    queryset = EmergencyIncident.objects.all()
+    queryset = EmergencyIncident.objects.all().order_by('-reported_time')
     serializer_class = EmergencyIncidentSerializer
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (JSONParser, MultiPartParser, FormParser)
     permission_classes: ClassVar[list] = [IsAuthenticated]
+    pagination_class = None
+    ordering = ['-reported_time']
 
     def create(self, request, *args, **kwargs):
         """Create and, for form POSTs, redirect to the detail HTML page.
@@ -71,10 +73,25 @@ class EmergencyIncidentListCreateAPIView(generics.ListCreateAPIView):
             or 'text/html' in request.META.get('HTTP_ACCEPT', '')
         )
 
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        # Attach the reporting user for form-based POSTs (tests expect this)
-        serializer.save(reported_by=request.user)
+        print(f"DEBUG: Emergency POST - Content-Type: {request.content_type}")
+        # Map 'vehicle_id' to 'vehicle' if provided by the mobile client
+        data = request.data.copy()
+        if 'vehicle_id' in data and 'vehicle' not in data:
+            data['vehicle'] = data['vehicle_id']
+            print(f"DEBUG: Remapped vehicle_id {data['vehicle_id']} to vehicle")
+
+        serializer = self.get_serializer(data=data)
+        if not serializer.is_valid():
+            print(f"DEBUG: Emergency Validation Failed: {serializer.errors}")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Attach the reporting user
+        try:
+            instance = serializer.save(reported_by=request.user)
+            print(f"DEBUG: Emergency Created ID: {instance.id}")
+        except Exception as e:
+            print(f"DEBUG: Internal Error during save: {str(e)}")
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         headers = self.get_success_headers(serializer.data)
 
         if is_form:
@@ -133,10 +150,12 @@ class EmergencyIncidentDeleteAPIView(generics.DestroyAPIView):
     permission_classes: ClassVar[list] = [IsAuthenticated, IsAdminRole]
 
 class EmergencyResponseListCreateAPIView(generics.ListCreateAPIView):
-    queryset = EmergencyResponse.objects.all()
+    queryset = EmergencyResponse.objects.all().order_by('-response_time')
     serializer_class = EmergencyResponseSerializer
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (JSONParser, MultiPartParser, FormParser)
     permission_classes: ClassVar[list] = [IsAuthenticated]
+    pagination_class = None
+    ordering = ['-response_time']
 
     def create(self, request, *args, **kwargs):
         is_form = (
@@ -254,6 +273,7 @@ class BatchAnalyzeScreenshotsView(APIView):
             for screenshot_file in filtered_files:
                 screenshot_path = os.path.join(debug_dir, screenshot_file)
                 # Analyze the screenshot
+                print(f"DEBUG: Analyzing {screenshot_file}")
                 analysis = client.analyze_screenshot(screenshot_path, prompt=prompt)
                 results[screenshot_file] = analysis
             return Response(results)
@@ -269,6 +289,10 @@ class GenerateReportView(APIView):
 
     def post(self, request, format_=None):
         analysis_data = request.data.get('analysis_data', None)
+        
+        # If not in 'analysis_data' key, try the whole body
+        if not analysis_data:
+            analysis_data = request.data
 
         if not analysis_data:
             return Response(
@@ -318,12 +342,13 @@ class GenerateReportView(APIView):
 class VehicleListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating vehicles."""
     authentication_classes: ClassVar[list] = [JWTAuthentication]
-    queryset = Vehicle.objects.all()
+    queryset = Vehicle.objects.all().order_by('-created_at')
     serializer_class = VehicleSerializer
-    permission_classes: ClassVar[list] = [IsAdminRole]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
     # Some tests compare response.data directly to serializer.data; disable
     # pagination to keep list responses as plain lists.
     pagination_class = None
+    ordering = ['-created_at']
 
     def perform_create(self, serializer):
         serializer.save()
@@ -334,18 +359,19 @@ class VehicleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
     authentication_classes: ClassVar[list] = [JWTAuthentication]
     queryset = Vehicle.objects.all()
     serializer_class = VehicleSerializer
-    permission_classes: ClassVar[list] = [IsAdminRole]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
 
 # Maintenance API Views
 class MaintenanceListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating maintenance records."""
-    queryset = Maintenance.objects.all()
+    queryset = Maintenance.objects.all().order_by('-scheduled_date')
     serializer_class = MaintenanceSerializer
-    permission_classes: ClassVar[list] = [IsAdminOrMaintenanceStaff]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
     # Some tests compare response.data directly to serializer.data; disable
     # pagination to keep list responses as plain lists.
     pagination_class = None
+    ordering = ['-scheduled_date']
 
     def perform_create(self, serializer):
         serializer.save()
@@ -355,15 +381,17 @@ class MaintenanceRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIV
     """API view for retrieving, updating, and deleting a maintenance record."""
     queryset = Maintenance.objects.all()
     serializer_class = MaintenanceSerializer
-    permission_classes: ClassVar[list] = [IsAdminOrMaintenanceStaff]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
 
 # Driver API Views
 class DriverListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating drivers."""
-    queryset = Driver.objects.all()
+    ordering = ['last_name', 'first_name']
+    queryset = Driver.objects.all().order_by('last_name', 'first_name')
     serializer_class = DriverSerializer
     permission_classes: ClassVar[list] = [IsAuthenticated]
+    pagination_class = None
 
     def perform_create(self, serializer):
         serializer.save()
@@ -397,3 +425,28 @@ class UnassignDriverFromVehicleAPIView(generics.UpdateAPIView):
         vehicle.driver = None
         vehicle.save()
         return Response({'status': 'driver unassigned'})
+
+
+# Vehicle Media (Gallery) API Views
+class VehicleMediaListCreateAPIView(generics.ListCreateAPIView):
+    """API view for listing and creating vehicle media (gallery items)."""
+    queryset = VehicleMedia.objects.all().order_by('-created_at')
+    serializer_class = VehicleMediaSerializer
+    permission_classes: ClassVar[list] = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser, JSONParser)
+    pagination_class = None
+
+    def get_queryset(self):
+        """Optionally filter by vehicle."""
+        queryset = super().get_queryset()
+        vehicle_id = self.request.query_params.get('vehicle')
+        if vehicle_id:
+            queryset = queryset.filter(vehicle_id=vehicle_id)
+        return queryset
+
+
+class VehicleMediaRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """API view for retrieving, updating, and deleting a vehicle media item."""
+    queryset = VehicleMedia.objects.all()
+    serializer_class = VehicleMediaSerializer
+    permission_classes: ClassVar[list] = [IsAuthenticated]
