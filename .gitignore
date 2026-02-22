@@ -124,3 +124,34 @@ htmlcov/
 
 # UI test screenshots (binary assets)
 ui_test_screenshots/
+ui_screenshots/
+debug_screenshots/
+CarFleetManagement/debug_screenshots/
+
+# All random images that aren't source
+*.png
+*.jpg
+*.jpeg
+*.webp
+!staticfiles/**/*.png
+!icons_src/**/*.png
+!CarFleetManagement/static/**/*.png
+!CarFleetManagement/static/**/*.jpg
+!img_src/**/*.png
+
+# Temporary markdown documentation
+Car Fleet Manager_ComprehensiveSystemDesign.md
+CurrentProjectSpecSheet.md
+CurrentStateOfTheProject.md
+FLUTTER_FULL_SPEC.md
+LYNX_DJANGO_CONNECTOR.md
+MISSING_COMP.md
+MVP_*.md
+SPEC.md
+TODO.md
+based on the list*.md
+flutter_client_format.md
+issues.md
+url_views_spec.md
+ui_test_report.html
+ui_test_log.txt
