@@ -28,7 +28,7 @@ from django.conf.urls.i18n import i18n_patterns
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     # API (DRF) endpoints - moved out of i18n_patterns to avoid localization issues
-    path('api/', include(('CarFleetManagement.api.urls', 'api'), namespace='api')),
+    path('api/v1/', include(('CarFleetManagement.api.urls', 'api'), namespace='api')),
 ]
 
 urlpatterns += i18n_patterns(

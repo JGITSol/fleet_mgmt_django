@@ -1,0 +1,2118 @@
+openapi: 3.0.3
+info:
+  title: Fleet Management API
+  version: 1.0.0
+  description: API documentation for the Fleet Management system
+paths:
+  /api/v1/:
+    get:
+      operationId: api_v1_retrieve
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/auth/login/:
+    post:
+      operationId: api_v1_auth_login_create
+      description: |-
+        Register a new user and return JWT tokens.
+
+        Parameters
+        ----------
+        request : rest_framework.request.Request
+            The HTTP request containing registration data.
+
+        Returns
+        -------
+        rest_framework.response.Response
+            JSON with user data and JWT tokens or validation errors.
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/auth/logout/:
+    post:
+      operationId: api_v1_auth_logout_create
+      description: |-
+        Register a new user and return JWT tokens.
+
+        Parameters
+        ----------
+        request : rest_framework.request.Request
+            The HTTP request containing registration data.
+
+        Returns
+        -------
+        rest_framework.response.Response
+            JSON with user data and JWT tokens or validation errors.
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/auth/profile/:
+    get:
+      operationId: api_v1_auth_profile_retrieve
+      description: |-
+        Retrieve the authenticated user's profile.
+
+        Parameters
+        ----------
+        request : rest_framework.request.Request
+            The HTTP request (must be authenticated).
+
+        Returns
+        -------
+        rest_framework.response.Response
+            JSON with user profile data.
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/auth/refresh/:
+    post:
+      operationId: api_v1_auth_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /api/v1/auth/register/:
+    post:
+      operationId: api_v1_auth_register_create
+      description: |-
+        Register a new user and return JWT tokens.
+
+        Parameters
+        ----------
+        request : rest_framework.request.Request
+            The HTTP request containing registration data.
+
+        Returns
+        -------
+        rest_framework.response.Response
+            JSON with user data and JWT tokens or validation errors.
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/auth/switch-role/:
+    post:
+      operationId: api_v1_auth_switch_role_create
+      description: Allow test users to switch their role dynamically for testing UI
+        scopes.
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/auth/validate-token/:
+    get:
+      operationId: api_v1_auth_validate_token_retrieve
+      description: |-
+        Retrieve the authenticated user's profile.
+
+        Parameters
+        ----------
+        request : rest_framework.request.Request
+            The HTTP request (must be authenticated).
+
+        Returns
+        -------
+        rest_framework.response.Response
+            JSON with user profile data.
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/drivers/:
+    get:
+      operationId: api_v1_drivers_list
+      description: API view for listing and creating drivers.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDriverList'
+          description: ''
+    post:
+      operationId: api_v1_drivers_create
+      description: API view for listing and creating drivers.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Driver'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Driver'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Driver'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+          description: ''
+  /api/v1/drivers/{id}/:
+    get:
+      operationId: api_v1_drivers_retrieve
+      description: API view for retrieving, updating, and deleting a driver.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+          description: ''
+    put:
+      operationId: api_v1_drivers_update
+      description: API view for retrieving, updating, and deleting a driver.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Driver'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Driver'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Driver'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+          description: ''
+    patch:
+      operationId: api_v1_drivers_partial_update
+      description: API view for retrieving, updating, and deleting a driver.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDriver'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDriver'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDriver'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+          description: ''
+    delete:
+      operationId: api_v1_drivers_destroy
+      description: API view for retrieving, updating, and deleting a driver.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/emergencies/:
+    get:
+      operationId: api_v1_emergencies_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEmergencyIncidentList'
+          description: ''
+    post:
+      operationId: api_v1_emergencies_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmergencyIncident'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EmergencyIncident'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmergencyIncident'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmergencyIncident'
+          description: ''
+  /api/v1/emergencies/{id}/:
+    get:
+      operationId: api_v1_emergencies_retrieve
+      description: API view for retrieving, updating, and deleting an emergency incident.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmergencyIncident'
+          description: ''
+    post:
+      operationId: api_v1_emergencies_create_2
+      description: |-
+        Support legacy form-style POST to detail endpoint by treating it as an update.
+
+        If the request looks like a form POST (multipart/form-data or
+        application/x-www-form-urlencoded or accepts text/html), perform an
+        update and return an HTML redirect to the detail page to match older
+        HTML behavior expected by tests.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmergencyIncident'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmergencyIncident'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EmergencyIncident'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmergencyIncident'
+          description: ''
+    put:
+      operationId: api_v1_emergencies_update
+      description: API view for retrieving, updating, and deleting an emergency incident.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmergencyIncident'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmergencyIncident'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EmergencyIncident'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmergencyIncident'
+          description: ''
+    patch:
+      operationId: api_v1_emergencies_partial_update
+      description: API view for retrieving, updating, and deleting an emergency incident.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEmergencyIncident'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEmergencyIncident'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEmergencyIncident'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmergencyIncident'
+          description: ''
+    delete:
+      operationId: api_v1_emergencies_destroy
+      description: API view for retrieving, updating, and deleting an emergency incident.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/emergencies/responses/:
+    get:
+      operationId: api_v1_emergencies_responses_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEmergencyResponseList'
+          description: ''
+    post:
+      operationId: api_v1_emergencies_responses_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmergencyResponse'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EmergencyResponse'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmergencyResponse'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmergencyResponse'
+          description: ''
+  /api/v1/emergencies/responses/{id}/:
+    get:
+      operationId: api_v1_emergencies_responses_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmergencyResponse'
+          description: ''
+    put:
+      operationId: api_v1_emergencies_responses_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmergencyResponse'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmergencyResponse'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EmergencyResponse'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmergencyResponse'
+          description: ''
+    patch:
+      operationId: api_v1_emergencies_responses_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEmergencyResponse'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEmergencyResponse'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEmergencyResponse'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmergencyResponse'
+          description: ''
+    delete:
+      operationId: api_v1_emergencies_responses_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/maintenance/:
+    get:
+      operationId: api_v1_maintenance_list
+      description: API view for listing and creating maintenance records.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMaintenanceList'
+          description: ''
+    post:
+      operationId: api_v1_maintenance_create
+      description: API view for listing and creating maintenance records.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Maintenance'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Maintenance'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Maintenance'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Maintenance'
+          description: ''
+  /api/v1/maintenance/{id}/:
+    get:
+      operationId: api_v1_maintenance_retrieve
+      description: API view for retrieving, updating, and deleting a maintenance record.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Maintenance'
+          description: ''
+    put:
+      operationId: api_v1_maintenance_update
+      description: API view for retrieving, updating, and deleting a maintenance record.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Maintenance'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Maintenance'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Maintenance'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Maintenance'
+          description: ''
+    patch:
+      operationId: api_v1_maintenance_partial_update
+      description: API view for retrieving, updating, and deleting a maintenance record.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMaintenance'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMaintenance'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMaintenance'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Maintenance'
+          description: ''
+    delete:
+      operationId: api_v1_maintenance_destroy
+      description: API view for retrieving, updating, and deleting a maintenance record.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/schema/:
+    get:
+      operationId: api_v1_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - de
+          - en
+          - es
+          - fr
+          - pl
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/v1/vehicles/:
+    get:
+      operationId: api_v1_vehicles_list
+      description: API view for listing and creating vehicles.
+      summary: List and create vehicles
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedVehicleList'
+          description: ''
+    post:
+      operationId: api_v1_vehicles_create
+      description: API view for listing and creating vehicles.
+      summary: List and create vehicles
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedVehicleList'
+          description: ''
+  /api/v1/vehicles/{id}/:
+    get:
+      operationId: api_v1_vehicles_retrieve
+      description: API view for retrieving, updating, and deleting a vehicle.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+          description: ''
+    put:
+      operationId: api_v1_vehicles_update
+      description: API view for retrieving, updating, and deleting a vehicle.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+          description: ''
+    patch:
+      operationId: api_v1_vehicles_partial_update
+      description: API view for retrieving, updating, and deleting a vehicle.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedVehicle'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedVehicle'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedVehicle'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+          description: ''
+    delete:
+      operationId: api_v1_vehicles_destroy
+      description: API view for retrieving, updating, and deleting a vehicle.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/vehicles/{vehicle_pk}/media/:
+    get:
+      operationId: api_v1_vehicles_media_list
+      description: API view for listing and creating vehicle media (gallery items).
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: path
+        name: vehicle_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedVehicleMediaList'
+          description: ''
+    post:
+      operationId: api_v1_vehicles_media_create
+      description: API view for listing and creating vehicle media (gallery items).
+      parameters:
+      - in: path
+        name: vehicle_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VehicleMedia'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VehicleMedia'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleMedia'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleMedia'
+          description: ''
+  /api/v1/vehicles/{vehicle_pk}/media/{id}/:
+    get:
+      operationId: api_v1_vehicles_media_retrieve
+      description: API view for retrieving, updating, and deleting a vehicle media
+        item.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: vehicle_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleMedia'
+          description: ''
+    put:
+      operationId: api_v1_vehicles_media_update
+      description: API view for retrieving, updating, and deleting a vehicle media
+        item.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: vehicle_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleMedia'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VehicleMedia'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VehicleMedia'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleMedia'
+          description: ''
+    patch:
+      operationId: api_v1_vehicles_media_partial_update
+      description: API view for retrieving, updating, and deleting a vehicle media
+        item.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: vehicle_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedVehicleMedia'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedVehicleMedia'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedVehicleMedia'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleMedia'
+          description: ''
+    delete:
+      operationId: api_v1_vehicles_media_destroy
+      description: API view for retrieving, updating, and deleting a vehicle media
+        item.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: vehicle_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/vision/analyze/:
+    post:
+      operationId: api_v1_vision_analyze_create
+      description: API view for analyzing a single screenshot using OpenRouter API.
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/vision/batch-analyze/:
+    post:
+      operationId: api_v1_vision_batch_analyze_create
+      description: API view for analyzing multiple screenshots in the debug_screenshots
+        directory.
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/vision/generate-report/:
+    post:
+      operationId: api_v1_vision_generate_report_create
+      description: API view for generating an HTML report from analysis results.
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+components:
+  schemas:
+    Driver:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        full_name:
+          type: string
+          readOnly: true
+        driver_license_number:
+          type: string
+          maxLength: 50
+        assigned_vehicles:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleNested'
+          readOnly: true
+        phone_number:
+          type: string
+          maxLength: 20
+        email:
+          type: string
+          format: email
+          maxLength: 254
+      required:
+      - assigned_vehicles
+      - driver_license_number
+      - first_name
+      - full_name
+      - id
+      - last_name
+    DriverNested:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        full_name:
+          type: string
+          readOnly: true
+      required:
+      - first_name
+      - full_name
+      - id
+      - last_name
+    EmergencyIncident:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        vehicle:
+          type: integer
+        driver:
+          allOf:
+          - $ref: '#/components/schemas/Driver'
+          readOnly: true
+        reported_by:
+          type: integer
+          readOnly: true
+        emergency_type:
+          $ref: '#/components/schemas/EmergencyTypeEnum'
+        status:
+          $ref: '#/components/schemas/EmergencyIncidentStatusEnum'
+        location:
+          type: string
+          maxLength: 255
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        description:
+          type: string
+        reported_time:
+          type: string
+          format: date-time
+          readOnly: true
+        resolved_time:
+          type: string
+          format: date-time
+          nullable: true
+        attachment:
+          type: string
+          format: uri
+          nullable: true
+        video_attachment:
+          type: string
+          format: uri
+          nullable: true
+        attachment_url:
+          type: string
+          readOnly: true
+      required:
+      - attachment_url
+      - driver
+      - id
+      - reported_by
+      - reported_time
+      - vehicle
+    EmergencyIncidentStatusEnum:
+      enum:
+      - REPORTED
+      - RESPONDING
+      - RESOLVED
+      - CLOSED
+      type: string
+      description: |-
+        * `REPORTED` - Reported
+        * `RESPONDING` - Responding
+        * `RESOLVED` - Resolved
+        * `CLOSED` - Closed
+    EmergencyResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        incident:
+          type: integer
+        responder:
+          type: integer
+          readOnly: true
+        response_time:
+          type: string
+          format: date-time
+          readOnly: true
+        action_taken:
+          type: string
+          nullable: true
+        notes:
+          type: string
+        attachment:
+          type: string
+          format: uri
+          nullable: true
+          title: Response Attachment
+      required:
+      - id
+      - incident
+      - responder
+      - response_time
+    EmergencyTypeEnum:
+      enum:
+      - ACCIDENT
+      - BREAKDOWN
+      - MEDICAL
+      - THEFT
+      - OTHER
+      type: string
+      description: |-
+        * `ACCIDENT` - Accident
+        * `BREAKDOWN` - Breakdown
+        * `MEDICAL` - Medical Emergency
+        * `THEFT` - Theft
+        * `OTHER` - Other
+    FuelTypeEnum:
+      enum:
+      - DIESEL
+      - PETROL
+      - HYBRID
+      - ELECTRIC
+      type: string
+      description: |-
+        * `DIESEL` - Diesel
+        * `PETROL` - Petrol
+        * `HYBRID` - Hybrid
+        * `ELECTRIC` - Electric
+    Maintenance:
+      type: object
+      description: |-
+        Serializer for the Maintenance model.
+        Provides detailed information about maintenance records, including days until scheduled and vehicle details.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        vehicle:
+          type: integer
+          description: ID of the vehicle for this maintenance.
+        vehicle_details:
+          allOf:
+          - $ref: '#/components/schemas/Vehicle'
+          readOnly: true
+        maintenance_type:
+          allOf:
+          - $ref: '#/components/schemas/MaintenanceTypeEnum'
+          description: |-
+            Type of maintenance (routine, repair, inspection, etc).
+
+            * `ROUTINE` - Routine Maintenance
+            * `REPAIR` - Repair
+            * `INSPECTION` - Inspection
+            * `OTHER` - Other
+        status:
+          allOf:
+          - $ref: '#/components/schemas/MaintenanceStatusEnum'
+          title: Maintenance Status
+          description: |-
+            Current status of the maintenance.
+
+            * `SCHEDULED` - Scheduled
+            * `IN_PROGRESS` - In Progress
+            * `COMPLETED` - Completed
+            * `CANCELLED` - Cancelled
+        description:
+          type: string
+          title: Maintenance Description
+          description: Description of the maintenance work.
+        scheduled_date:
+          type: string
+          format: date
+          description: Date the maintenance is scheduled for.
+        completed_date:
+          type: string
+          format: date
+          nullable: true
+          description: Date the maintenance was completed.
+        odometer_reading:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: Odometer reading at the time of maintenance.
+        cost:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Maintenance Cost
+          description: Cost of the maintenance.
+        service_provider:
+          type: string
+          description: Provider performing the maintenance.
+          maxLength: 100
+        notes:
+          type: string
+          title: Additional Notes
+          description: Additional notes about the maintenance.
+        days_until_scheduled:
+          type: string
+          readOnly: true
+      required:
+      - cost
+      - days_until_scheduled
+      - description
+      - id
+      - odometer_reading
+      - scheduled_date
+      - service_provider
+      - vehicle
+      - vehicle_details
+    MaintenanceStatusEnum:
+      enum:
+      - SCHEDULED
+      - IN_PROGRESS
+      - COMPLETED
+      - CANCELLED
+      type: string
+      description: |-
+        * `SCHEDULED` - Scheduled
+        * `IN_PROGRESS` - In Progress
+        * `COMPLETED` - Completed
+        * `CANCELLED` - Cancelled
+    MaintenanceTypeEnum:
+      enum:
+      - ROUTINE
+      - REPAIR
+      - INSPECTION
+      - OTHER
+      type: string
+      description: |-
+        * `ROUTINE` - Routine Maintenance
+        * `REPAIR` - Repair
+        * `INSPECTION` - Inspection
+        * `OTHER` - Other
+    MediaTypeEnum:
+      enum:
+      - IMAGE
+      - VIDEO
+      - SOUND
+      type: string
+      description: |-
+        * `IMAGE` - Image
+        * `VIDEO` - Video
+        * `SOUND` - Sound
+    PaginatedDriverList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Driver'
+    PaginatedEmergencyIncidentList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmergencyIncident'
+    PaginatedEmergencyResponseList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmergencyResponse'
+    PaginatedMaintenanceList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Maintenance'
+    PaginatedVehicleList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+    PaginatedVehicleMediaList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleMedia'
+    PatchedDriver:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        full_name:
+          type: string
+          readOnly: true
+        driver_license_number:
+          type: string
+          maxLength: 50
+        assigned_vehicles:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleNested'
+          readOnly: true
+        phone_number:
+          type: string
+          maxLength: 20
+        email:
+          type: string
+          format: email
+          maxLength: 254
+    PatchedEmergencyIncident:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        vehicle:
+          type: integer
+        driver:
+          allOf:
+          - $ref: '#/components/schemas/Driver'
+          readOnly: true
+        reported_by:
+          type: integer
+          readOnly: true
+        emergency_type:
+          $ref: '#/components/schemas/EmergencyTypeEnum'
+        status:
+          $ref: '#/components/schemas/EmergencyIncidentStatusEnum'
+        location:
+          type: string
+          maxLength: 255
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        description:
+          type: string
+        reported_time:
+          type: string
+          format: date-time
+          readOnly: true
+        resolved_time:
+          type: string
+          format: date-time
+          nullable: true
+        attachment:
+          type: string
+          format: uri
+          nullable: true
+        video_attachment:
+          type: string
+          format: uri
+          nullable: true
+        attachment_url:
+          type: string
+          readOnly: true
+    PatchedEmergencyResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        incident:
+          type: integer
+        responder:
+          type: integer
+          readOnly: true
+        response_time:
+          type: string
+          format: date-time
+          readOnly: true
+        action_taken:
+          type: string
+          nullable: true
+        notes:
+          type: string
+        attachment:
+          type: string
+          format: uri
+          nullable: true
+          title: Response Attachment
+    PatchedMaintenance:
+      type: object
+      description: |-
+        Serializer for the Maintenance model.
+        Provides detailed information about maintenance records, including days until scheduled and vehicle details.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        vehicle:
+          type: integer
+          description: ID of the vehicle for this maintenance.
+        vehicle_details:
+          allOf:
+          - $ref: '#/components/schemas/Vehicle'
+          readOnly: true
+        maintenance_type:
+          allOf:
+          - $ref: '#/components/schemas/MaintenanceTypeEnum'
+          description: |-
+            Type of maintenance (routine, repair, inspection, etc).
+
+            * `ROUTINE` - Routine Maintenance
+            * `REPAIR` - Repair
+            * `INSPECTION` - Inspection
+            * `OTHER` - Other
+        status:
+          allOf:
+          - $ref: '#/components/schemas/MaintenanceStatusEnum'
+          title: Maintenance Status
+          description: |-
+            Current status of the maintenance.
+
+            * `SCHEDULED` - Scheduled
+            * `IN_PROGRESS` - In Progress
+            * `COMPLETED` - Completed
+            * `CANCELLED` - Cancelled
+        description:
+          type: string
+          title: Maintenance Description
+          description: Description of the maintenance work.
+        scheduled_date:
+          type: string
+          format: date
+          description: Date the maintenance is scheduled for.
+        completed_date:
+          type: string
+          format: date
+          nullable: true
+          description: Date the maintenance was completed.
+        odometer_reading:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: Odometer reading at the time of maintenance.
+        cost:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Maintenance Cost
+          description: Cost of the maintenance.
+        service_provider:
+          type: string
+          description: Provider performing the maintenance.
+          maxLength: 100
+        notes:
+          type: string
+          title: Additional Notes
+          description: Additional notes about the maintenance.
+        days_until_scheduled:
+          type: string
+          readOnly: true
+    PatchedVehicle:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        vin:
+          type: string
+          maxLength: 17
+        brand:
+          type: string
+          maxLength: 100
+        model:
+          type: string
+          maxLength: 100
+        year:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        vehicle_type:
+          $ref: '#/components/schemas/VehicleTypeEnum'
+        license_plate:
+          type: string
+          maxLength: 20
+        mileage:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        status:
+          $ref: '#/components/schemas/VehicleStatusEnum'
+        fuel_type:
+          $ref: '#/components/schemas/FuelTypeEnum'
+        transmission:
+          $ref: '#/components/schemas/TransmissionEnum'
+        color:
+          type: string
+          maxLength: 50
+        last_service_date:
+          type: string
+          format: date
+          nullable: true
+        next_service_date:
+          type: string
+          format: date
+          nullable: true
+        insurance_expiry:
+          type: string
+          format: date
+          nullable: true
+          title: Insurance Expiry Date
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        assigned_drivers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DriverNested'
+          readOnly: true
+        drivers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DriverNested'
+          readOnly: true
+        maintenance_records:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        media:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleMedia'
+          readOnly: true
+    PatchedVehicleMedia:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        vehicle:
+          type: integer
+          readOnly: true
+        media_type:
+          $ref: '#/components/schemas/MediaTypeEnum'
+        file:
+          type: string
+          format: uri
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+      required:
+      - access
+      - refresh
+    TransmissionEnum:
+      enum:
+      - MANUAL
+      - AUTOMATIC
+      type: string
+      description: |-
+        * `MANUAL` - Manual
+        * `AUTOMATIC` - Automatic
+    Vehicle:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        vin:
+          type: string
+          maxLength: 17
+        brand:
+          type: string
+          maxLength: 100
+        model:
+          type: string
+          maxLength: 100
+        year:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        vehicle_type:
+          $ref: '#/components/schemas/VehicleTypeEnum'
+        license_plate:
+          type: string
+          maxLength: 20
+        mileage:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        status:
+          $ref: '#/components/schemas/VehicleStatusEnum'
+        fuel_type:
+          $ref: '#/components/schemas/FuelTypeEnum'
+        transmission:
+          $ref: '#/components/schemas/TransmissionEnum'
+        color:
+          type: string
+          maxLength: 50
+        last_service_date:
+          type: string
+          format: date
+          nullable: true
+        next_service_date:
+          type: string
+          format: date
+          nullable: true
+        insurance_expiry:
+          type: string
+          format: date
+          nullable: true
+          title: Insurance Expiry Date
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        assigned_drivers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DriverNested'
+          readOnly: true
+        drivers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DriverNested'
+          readOnly: true
+        maintenance_records:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        media:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleMedia'
+          readOnly: true
+      required:
+      - assigned_drivers
+      - created_at
+      - drivers
+      - id
+      - license_plate
+      - maintenance_records
+      - media
+      - updated_at
+    VehicleMedia:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        vehicle:
+          type: integer
+          readOnly: true
+        media_type:
+          $ref: '#/components/schemas/MediaTypeEnum'
+        file:
+          type: string
+          format: uri
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - file
+      - id
+      - media_type
+      - vehicle
+    VehicleNested:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        brand:
+          type: string
+          maxLength: 100
+        model:
+          type: string
+          maxLength: 100
+        year:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        license_plate:
+          type: string
+          maxLength: 20
+        vin:
+          type: string
+          maxLength: 17
+      required:
+      - id
+      - license_plate
+    VehicleStatusEnum:
+      enum:
+      - AVAILABLE
+      - IN_USE
+      - MAINTENANCE
+      - OUT_OF_SERVICE
+      type: string
+      description: |-
+        * `AVAILABLE` - Available
+        * `IN_USE` - In Use
+        * `MAINTENANCE` - In Maintenance
+        * `OUT_OF_SERVICE` - Out of Service
+    VehicleTypeEnum:
+      enum:
+      - TRUCK
+      - VAN
+      - SUV
+      - PICKUP
+      type: string
+      description: |-
+        * `TRUCK` - Truck
+        * `VAN` - Van
+        * `SUV` - SUV
+        * `PICKUP` - Pickup
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

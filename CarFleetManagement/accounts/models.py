@@ -66,6 +66,14 @@ class Driver(models.Model):
     """
     Represents a driver in the fleet management system.
     """
+    user = models.OneToOneField(
+        'accounts.CustomUser',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='driver_profile',
+        verbose_name=_('User Account'),
+    )
     first_name = models.CharField(max_length=50, verbose_name=_('First Name'))
     last_name = models.CharField(max_length=50, verbose_name=_('Last Name'))
     driver_license_number = models.CharField(max_length=50, unique=True, verbose_name=_('Driver License Number'))

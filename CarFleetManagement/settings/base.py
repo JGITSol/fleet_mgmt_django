@@ -39,9 +39,12 @@ INSTALLED_APPS = [
     "CarFleetManagement.vehicles.apps.VehiclesConfig",
     "CarFleetManagement.maintenance.apps.MaintenanceConfig",
     "CarFleetManagement.emergency.apps.EmergencyConfig",
+    "CarFleetManagement.telematics.apps.TelematicsConfig",
+    "CarFleetManagement.communications.apps.CommunicationsConfig",
 ]
 
 MIDDLEWARE = [
+    "CarFleetManagement.middleware.BotScannerFilterMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
@@ -133,13 +136,25 @@ MEDIA_ROOT = BASE_DIR / "media"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.OrderingFilter",
+        "rest_framework.filters.SearchFilter",
+    ],
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
         "CarFleetManagement.api.renderers.CustomBrowsableAPIRenderer",
     ],
     "DEFAULT_METADATA_CLASS": "rest_framework.metadata.SimpleMetadata",
     "EXCEPTION_HANDLER": "rest_framework.views.exception_handler",
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "100/day",
+        "user": "5000/day",
+    },
 }
 
 REST_FRAMEWORK.setdefault("DEFAULT_PAGINATION_CLASS", "rest_framework.pagination.PageNumberPagination")

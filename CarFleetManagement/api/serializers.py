@@ -19,11 +19,17 @@ class UserSerializer(serializers.ModelSerializer):
     """Serializer for the CustomUser model.
     Used for user registration and profile information retrieval."""
     role_name = serializers.CharField(source='role.name', read_only=True)
+    scopes = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomUser
-        fields: ClassVar[list[str]] = ['id', 'username', 'email', 'first_name', 'last_name', 'role', 'role_name']
+        fields: ClassVar[list[str]] = ['id', 'username', 'email', 'first_name', 'last_name', 'role', 'role_name', 'scopes']
         read_only_fields: ClassVar[list[str]] = ['id']
+
+    def get_scopes(self, obj):
+        if obj.role:
+            return obj.role.permissions
+        return {}
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):

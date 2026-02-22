@@ -19,6 +19,8 @@ class DriverNestedSerializer(serializers.ModelSerializer):
 
 
 class VehicleMediaSerializer(serializers.ModelSerializer):
+    vehicle = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = VehicleMedia
         fields: ClassVar[list[str]] = ["id", "vehicle", "media_type", "file", "title", "description", "created_at"]

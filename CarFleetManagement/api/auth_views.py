@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from CarFleetManagement.accounts.models import UserRole
 from .serializers import LoginSerializer, UserRegistrationSerializer, UserSerializer
 
 
@@ -156,3 +157,31 @@ class ValidateTokenView(APIView):
             JSON with user profile data.
         """
         return Response({"is_valid": True, "user": UserSerializer(request.user).data})
+
+
+class SwitchRoleView(APIView):
+    """
+    Allow test users to switch their role dynamically for testing UI scopes.
+    """
+
+    permission_classes: ClassVar[list] = [IsAuthenticated]
+
+    def post(self, request):
+        role_name = request.data.get('role')
+        if not role_name:
+            return Response({"error": "Role name required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Security check: only superusers or people already in testuser role can switch
+        is_test_user = getattr(request.user.role, 'name', None) == UserRole.TESTUSER
+        if not (request.user.is_superuser or is_test_user):
+            return Response(
+                {"error": "Only test users or admins can switch roles"}, status=status.HTTP_403_FORBIDDEN
+            )
+
+        try:
+            new_role = UserRole.objects.get(name=role_name)
+            request.user.role = new_role
+            request.user.save()
+            return Response({"message": f"Switched to role: {role_name}", "user": UserSerializer(request.user).data})
+        except UserRole.DoesNotExist:
+            return Response({"error": f"Role '{role_name}' not found"}, status=status.HTTP_404_NOT_FOUND)

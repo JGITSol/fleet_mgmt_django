@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from CarFleetManagement.accounts.models import Driver, UserRole
+from CarFleetManagement.accounts.permissions import ScopedPermission
 from CarFleetManagement.accounts.serializers import DriverSerializer
 from CarFleetManagement.emergency.models import EmergencyIncident, EmergencyResponse
 from CarFleetManagement.emergency.serializers import (
@@ -53,12 +54,22 @@ class IsAdminRole(BasePermission):
 
     # Emergency API Views
 class EmergencyIncidentListCreateAPIView(generics.ListCreateAPIView):
+    required_scope = 'emergencies'
     queryset = EmergencyIncident.objects.all().order_by('-reported_time')
     serializer_class = EmergencyIncidentSerializer
     parser_classes = (JSONParser, MultiPartParser, FormParser)
-    permission_classes: ClassVar[list] = [IsAuthenticated]
-    pagination_class = None
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
+    filterset_fields = ['status', 'emergency_type', 'vehicle', 'driver']
+    ordering_fields = ['reported_time', 'resolved_time']
+    search_fields = ['description', 'location']
     ordering = ['-reported_time']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        if user.is_authenticated and getattr(user.role, 'name', None) == UserRole.DRIVER:
+            return queryset.filter(reported_by=user)
+        return queryset
 
     def create(self, request, *args, **kwargs):
         """Create and, for form POSTs, redirect to the detail HTML page.
@@ -73,24 +84,19 @@ class EmergencyIncidentListCreateAPIView(generics.ListCreateAPIView):
             or 'text/html' in request.META.get('HTTP_ACCEPT', '')
         )
 
-        print(f"DEBUG: Emergency POST - Content-Type: {request.content_type}")
         # Map 'vehicle_id' to 'vehicle' if provided by the mobile client
         data = request.data.copy()
         if 'vehicle_id' in data and 'vehicle' not in data:
             data['vehicle'] = data['vehicle_id']
-            print(f"DEBUG: Remapped vehicle_id {data['vehicle_id']} to vehicle")
 
         serializer = self.get_serializer(data=data)
         if not serializer.is_valid():
-            print(f"DEBUG: Emergency Validation Failed: {serializer.errors}")
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         # Attach the reporting user
         try:
             instance = serializer.save(reported_by=request.user)
-            print(f"DEBUG: Emergency Created ID: {instance.id}")
         except Exception as e:
-            print(f"DEBUG: Internal Error during save: {str(e)}")
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         headers = self.get_success_headers(serializer.data)
 
@@ -105,9 +111,18 @@ class EmergencyIncidentListCreateAPIView(generics.ListCreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 class EmergencyIncidentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """API view for retrieving, updating, and deleting an emergency incident."""
+    required_scope = 'emergencies'
     queryset = EmergencyIncident.objects.all()
     serializer_class = EmergencyIncidentSerializer
-    permission_classes: ClassVar[list] = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        if user.is_authenticated and getattr(user.role, 'name', None) == UserRole.DRIVER:
+            return queryset.filter(reported_by=user)
+        return queryset
 
     def post(self, request, *args, **kwargs):
         """Support legacy form-style POST to detail endpoint by treating it as an update.
@@ -140,21 +155,26 @@ class EmergencyIncidentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestr
         return response
 
 class EmergencyIncidentUpdateAPIView(generics.UpdateAPIView):
+    required_scope = 'emergencies'
     queryset = EmergencyIncident.objects.all()
     serializer_class = EmergencyIncidentSerializer
-    permission_classes: ClassVar[list] = [IsAuthenticated, IsAdminRole]
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
 
 class EmergencyIncidentDeleteAPIView(generics.DestroyAPIView):
+    required_scope = 'emergencies'
     queryset = EmergencyIncident.objects.all()
     serializer_class = EmergencyIncidentSerializer
-    permission_classes: ClassVar[list] = [IsAuthenticated, IsAdminRole]
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
 
 class EmergencyResponseListCreateAPIView(generics.ListCreateAPIView):
+    required_scope = 'emergencies'
     queryset = EmergencyResponse.objects.all().order_by('-response_time')
     serializer_class = EmergencyResponseSerializer
     parser_classes = (JSONParser, MultiPartParser, FormParser)
-    permission_classes: ClassVar[list] = [IsAuthenticated]
-    pagination_class = None
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
+    filterset_fields = ['incident']
+    ordering_fields = ['response_time']
+    search_fields = ['notes']
     ordering = ['-response_time']
 
     def create(self, request, *args, **kwargs):
@@ -179,14 +199,16 @@ class EmergencyResponseListCreateAPIView(generics.ListCreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 class EmergencyResponseRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    required_scope = 'emergencies'
     queryset = EmergencyResponse.objects.all()
     serializer_class = EmergencyResponseSerializer
-    permission_classes: ClassVar[list] = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
 
 
 
 class AnalyzeScreenshotView(APIView):
     """API view for analyzing a single screenshot using OpenRouter API."""
+    required_scope = 'media'
 
     parser_classes = (MultiPartParser, FormParser)
 
@@ -228,6 +250,7 @@ class AnalyzeScreenshotView(APIView):
 
 class BatchAnalyzeScreenshotsView(APIView):
     """API view for analyzing multiple screenshots in the debug_screenshots directory."""
+    required_scope = 'media'
 
     def post(self, request, format_=None):
         debug_dir = os.path.join(settings.BASE_DIR, 'debug_screenshots')
@@ -272,8 +295,6 @@ class BatchAnalyzeScreenshotsView(APIView):
             results = {}
             for screenshot_file in filtered_files:
                 screenshot_path = os.path.join(debug_dir, screenshot_file)
-                # Analyze the screenshot
-                print(f"DEBUG: Analyzing {screenshot_file}")
                 analysis = client.analyze_screenshot(screenshot_path, prompt=prompt)
                 results[screenshot_file] = analysis
             return Response(results)
@@ -286,6 +307,7 @@ class BatchAnalyzeScreenshotsView(APIView):
 
 class GenerateReportView(APIView):
     """API view for generating an HTML report from analysis results."""
+    required_scope = 'media'
 
     def post(self, request, format_=None):
         analysis_data = request.data.get('analysis_data', None)
@@ -341,14 +363,25 @@ class GenerateReportView(APIView):
 
 class VehicleListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating vehicles."""
+    required_scope = 'vehicles'
     authentication_classes: ClassVar[list] = [JWTAuthentication]
     queryset = Vehicle.objects.all().order_by('-created_at')
     serializer_class = VehicleSerializer
-    permission_classes: ClassVar[list] = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
+    filterset_fields = ['status', 'fuel_type', 'vehicle_type', 'brand', 'year']
+    ordering_fields = ['created_at', 'year', 'mileage', 'brand', 'model']
+    search_fields = ['brand', 'model', 'license_plate', 'vin']
     # Some tests compare response.data directly to serializer.data; disable
     # pagination to keep list responses as plain lists.
-    pagination_class = None
     ordering = ['-created_at']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        if user.is_authenticated and getattr(user.role, 'name', None) == UserRole.DRIVER:
+            # assigned_vehicles related name is 'drivers' (Driver -> Vehicle)
+            return queryset.filter(drivers__user=user)
+        return queryset
 
     def perform_create(self, serializer):
         serializer.save()
@@ -356,22 +389,40 @@ class VehicleListCreateAPIView(generics.ListCreateAPIView):
 
 class VehicleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     """API view for retrieving, updating, and deleting a vehicle."""
+    required_scope = 'vehicles'
     authentication_classes: ClassVar[list] = [JWTAuthentication]
     queryset = Vehicle.objects.all()
     serializer_class = VehicleSerializer
-    permission_classes: ClassVar[list] = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        if user.is_authenticated and getattr(user.role, 'name', None) == UserRole.DRIVER:
+            return queryset.filter(drivers__user=user)
+        return queryset
 
 
 # Maintenance API Views
 class MaintenanceListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating maintenance records."""
+    required_scope = 'maintenance'
     queryset = Maintenance.objects.all().order_by('-scheduled_date')
     serializer_class = MaintenanceSerializer
-    permission_classes: ClassVar[list] = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
+    filterset_fields = ['status', 'maintenance_type', 'vehicle']
+    ordering_fields = ['scheduled_date', 'cost']
+    search_fields = ['description', 'notes', 'service_provider']
     # Some tests compare response.data directly to serializer.data; disable
     # pagination to keep list responses as plain lists.
-    pagination_class = None
     ordering = ['-scheduled_date']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        if user.is_authenticated and getattr(user.role, 'name', None) == UserRole.DRIVER:
+            return queryset.filter(vehicle__drivers__user=user)
+        return queryset
 
     def perform_create(self, serializer):
         serializer.save()
@@ -379,19 +430,30 @@ class MaintenanceListCreateAPIView(generics.ListCreateAPIView):
 
 class MaintenanceRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     """API view for retrieving, updating, and deleting a maintenance record."""
+    required_scope = 'maintenance'
     queryset = Maintenance.objects.all()
     serializer_class = MaintenanceSerializer
-    permission_classes: ClassVar[list] = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        if user.is_authenticated and getattr(user.role, 'name', None) == UserRole.DRIVER:
+            return queryset.filter(vehicle__drivers__user=user)
+        return queryset
 
 
 # Driver API Views
 class DriverListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating drivers."""
+    required_scope = 'drivers'
     ordering = ['last_name', 'first_name']
     queryset = Driver.objects.all().order_by('last_name', 'first_name')
     serializer_class = DriverSerializer
-    permission_classes: ClassVar[list] = [IsAuthenticated]
-    pagination_class = None
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
+    filterset_fields = ['status']
+    ordering_fields = ['last_name', 'first_name', 'hire_date', 'license_expiry_date']
+    search_fields = ['first_name', 'last_name', 'driver_license_number', 'email', 'phone_number']
 
     def perform_create(self, serializer):
         serializer.save()
@@ -399,12 +461,14 @@ class DriverListCreateAPIView(generics.ListCreateAPIView):
 
 class DriverRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     """API view for retrieving, updating, and deleting a driver."""
+    required_scope = 'drivers'
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer
-    permission_classes: ClassVar[list] = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
 
 
 class AssignDriverToVehicleAPIView(generics.UpdateAPIView):
+    required_scope = 'drivers'
     queryset = Vehicle.objects.all()
     serializer_class = VehicleSerializer
 
@@ -417,6 +481,7 @@ class AssignDriverToVehicleAPIView(generics.UpdateAPIView):
         return Response({'status': 'driver assigned'})
 
 class UnassignDriverFromVehicleAPIView(generics.UpdateAPIView):
+    required_scope = 'drivers'
     queryset = Vehicle.objects.all()
     serializer_class = VehicleSerializer
 
@@ -430,23 +495,42 @@ class UnassignDriverFromVehicleAPIView(generics.UpdateAPIView):
 # Vehicle Media (Gallery) API Views
 class VehicleMediaListCreateAPIView(generics.ListCreateAPIView):
     """API view for listing and creating vehicle media (gallery items)."""
+    required_scope = 'media'
     queryset = VehicleMedia.objects.all().order_by('-created_at')
     serializer_class = VehicleMediaSerializer
-    permission_classes: ClassVar[list] = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
     parser_classes = (MultiPartParser, FormParser, JSONParser)
-    pagination_class = None
 
     def get_queryset(self):
-        """Optionally filter by vehicle."""
-        queryset = super().get_queryset()
-        vehicle_id = self.request.query_params.get('vehicle')
-        if vehicle_id:
-            queryset = queryset.filter(vehicle_id=vehicle_id)
+        """Optionally filter by vehicle and enforce driver isolation."""
+        queryset = VehicleMedia.objects.all().order_by('-created_at')
+        user = self.request.user
+        if user.is_authenticated and getattr(user.role, 'name', None) == UserRole.DRIVER:
+            queryset = queryset.filter(vehicle__drivers__user=user)
+
+        vehicle_pk = self.kwargs.get('vehicle_pk')
+        if vehicle_pk:
+            queryset = queryset.filter(vehicle_id=vehicle_pk)
         return queryset
+
+    def perform_create(self, serializer):
+        vehicle_pk = self.kwargs.get('vehicle_pk')
+        if vehicle_pk:
+            serializer.save(vehicle_id=vehicle_pk)
+        else:
+            serializer.save()
 
 
 class VehicleMediaRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     """API view for retrieving, updating, and deleting a vehicle media item."""
+    required_scope = 'media'
     queryset = VehicleMedia.objects.all()
     serializer_class = VehicleMediaSerializer
-    permission_classes: ClassVar[list] = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated, ScopedPermission]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        vehicle_pk = self.kwargs.get('vehicle_pk')
+        if vehicle_pk:
+            queryset = queryset.filter(vehicle_id=vehicle_pk)
+        return queryset

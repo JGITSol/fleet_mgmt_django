@@ -14,6 +14,7 @@ from drf_spectacular.views import (
 )
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenRefreshView
 
 from . import auth_views, views
 
@@ -25,12 +26,13 @@ class ApiRootView(APIView):
         return Response({
             "message": "Welcome to the Car Fleet Management API.",
             "endpoints": [
-                "/api/auth/",
-                "/api/screenshots/",
-                "/api/vehicles/",
-                "/api/maintenance/",
-                "/api/drivers/",
-                "/api/emergencies/",
+                "/api/v1/auth/",
+                "/api/v1/vision/",
+                "/api/v1/vehicles/",
+                "/api/v1/telematics/",
+                "/api/v1/maintenance/",
+                "/api/v1/drivers/",
+                "/api/v1/emergencies/",
             ],
         })
 
@@ -42,14 +44,16 @@ auth_urlpatterns = [
     path("auth/logout/", auth_views.LogoutView.as_view(), name="api_logout"),
     path("auth/profile/", auth_views.UserProfileView.as_view(), name="api_profile"),
     path("auth/validate-token/", auth_views.ValidateTokenView.as_view(), name="api_validate_token"),
+    path("auth/switch-role/", auth_views.SwitchRoleView.as_view(), name="api_switch_role"),
+    path("auth/refresh/", TokenRefreshView.as_view(), name="api_refresh_token"),
     # Removed legacy token endpoint. Use JWT endpoints only.
 ]
 
-# Screenshot analysis URLs
-screenshot_urlpatterns = [
-    path("screenshots/analyze/", views.AnalyzeScreenshotView.as_view(), name="analyze_screenshot"),
-    path("screenshots/batch-analyze/", views.BatchAnalyzeScreenshotsView.as_view(), name="batch_analyze_screenshots"),
-    path("screenshots/generate-report/", views.GenerateReportView.as_view(), name="generate_report"),
+# Vision (Screenshot Analysis) URLs
+vision_urlpatterns = [
+    path("vision/analyze/", views.AnalyzeScreenshotView.as_view(), name="analyze_screenshot"),
+    path("vision/batch-analyze/", views.BatchAnalyzeScreenshotsView.as_view(), name="batch_analyze_screenshots"),
+    path("vision/generate-report/", views.GenerateReportView.as_view(), name="generate_report"),
 ]
 
 # Vehicle API URLs
@@ -60,34 +64,8 @@ vehicle_urlpatterns = [
 
 # Maintenance API URLs
 maintenance_urlpatterns = [
-    path("maintenance/", views.MaintenanceListCreateAPIView.as_view(), name="maintenance_list"),
     path("maintenance/", views.MaintenanceListCreateAPIView.as_view(), name="api-maintenance-list"),
-    path("maintenance/create/", views.MaintenanceListCreateAPIView.as_view(), name="maintenance_create"),
-    path("maintenance/create/", views.MaintenanceListCreateAPIView.as_view(), name="api-maintenance-create"),
-    path("maintenance/<int:pk>/", views.MaintenanceRetrieveUpdateDestroyAPIView.as_view(), name="maintenance_detail"),
-    path(
-        "maintenance/<int:pk>/", views.MaintenanceRetrieveUpdateDestroyAPIView.as_view(), name="api-maintenance-detail"
-    ),
-    path(
-        "maintenance/<int:pk>/update/",
-        views.MaintenanceRetrieveUpdateDestroyAPIView.as_view(),
-        name="maintenance_update",
-    ),
-    path(
-        "maintenance/<int:pk>/update/",
-        views.MaintenanceRetrieveUpdateDestroyAPIView.as_view(),
-        name="api-maintenance-update",
-    ),
-    path(
-        "maintenance/<int:pk>/delete/",
-        views.MaintenanceRetrieveUpdateDestroyAPIView.as_view(),
-        name="maintenance_delete",
-    ),
-    path(
-        "maintenance/<int:pk>/delete/",
-        views.MaintenanceRetrieveUpdateDestroyAPIView.as_view(),
-        name="api-maintenance-delete",
-    ),
+    path("maintenance/<int:pk>/", views.MaintenanceRetrieveUpdateDestroyAPIView.as_view(), name="api-maintenance-detail"),
 ]
 
 # Driver API URLs
@@ -116,15 +94,16 @@ emergency_urlpatterns = [
 
 # Vehicle Media API URLs
 vehicle_media_urlpatterns = [
-    path("vehicles/media/", views.VehicleMediaListCreateAPIView.as_view(), name="api-vehicle-media-list"),
-    path("vehicles/media/<int:pk>/", views.VehicleMediaRetrieveUpdateDestroyAPIView.as_view(), name="api-vehicle-media-detail"),
+    path("vehicles/<int:vehicle_pk>/media/", views.VehicleMediaListCreateAPIView.as_view(), name="api-vehicle-media-list"),
+    path("vehicles/<int:vehicle_pk>/media/<int:pk>/", views.VehicleMediaRetrieveUpdateDestroyAPIView.as_view(), name="api-vehicle-media-detail"),
 ]
 
 # Combine all URL patterns
 urlpatterns = [
     path("", ApiRootView.as_view(), name="api-root"),
+    path("telematics/", include("CarFleetManagement.telematics.api.urls")),
     *auth_urlpatterns,
-    *screenshot_urlpatterns,
+    *vision_urlpatterns,
     *vehicle_urlpatterns,
     *maintenance_urlpatterns,
     *driver_urlpatterns,
@@ -137,8 +116,8 @@ urlpatterns = [
 schema_urlpatterns = [
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     # Use explicit schema URL to avoid reverse lookup issues when included under a namespace
-    path("schema/swagger-ui/", SpectacularSwaggerView.as_view(url="/api/schema/"), name="swagger-ui"),
-    path("schema/redoc/", SpectacularRedocView.as_view(url="/api/schema/"), name="redoc"),
+    path("schema/swagger-ui/", SpectacularSwaggerView.as_view(url="/api/v1/schema/"), name="swagger-ui"),
+    path("schema/redoc/", SpectacularRedocView.as_view(url="/api/v1/schema/"), name="redoc"),
 ]
 
 urlpatterns += schema_urlpatterns
